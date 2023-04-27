@@ -11,6 +11,7 @@ Supports several learning schedules
 * Yerushalmi Yomi (Jerusalem Talmud)
   * Vilna edition - `yerushalmi-vilna`
   * Schottenstein edition - `yerushalmi-schottenstei`
+* Chofetz Chaim - `chofetzChaim`
 
 ## Installation
 ```bash
@@ -43,6 +44,9 @@ and Ketuvim (Writings).</p>
 <dt><a href="#YerushalmiYomiEvent">YerushalmiYomiEvent</a></dt>
 <dd><p>Event wrapper around a Yerushalmi Yomi result</p>
 </dd>
+<dt><a href="#ChofetzChaimEvent">ChofetzChaimEvent</a></dt>
+<dd><p>Event wrapper around a Chofetz Chaim instance</p>
+</dd>
 </dl>
 
 ## Constants
@@ -71,6 +75,9 @@ Edition which is used since 1900.</p>
 <p>Throws an exception if the date is before Daf Yomi Yerushalmi
 cycle began (2 February 1980 for Vilna,
 14 November 2022 for Schottenstein).</p>
+</dd>
+<dt><a href="#chofetzChaim">chofetzChaim(hdate)</a> ⇒ <code>any</code></dt>
+<dd><p>Looks up Chofetz Chaim Calendar for date</p>
 </dd>
 </dl>
 
@@ -139,6 +146,7 @@ Event wrapper around a DafYomi instance
     * [.render([locale])](#DafYomiEvent+render) ⇒ <code>string</code>
     * [.renderBrief([locale])](#DafYomiEvent+renderBrief) ⇒ <code>string</code>
     * [.url()](#DafYomiEvent+url) ⇒ <code>string</code>
+    * [.getCategories()](#DafYomiEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
 
 <a name="new_DafYomiEvent_new"></a>
 
@@ -176,6 +184,10 @@ Returns Daf Yomi name without the 'Daf Yomi: ' prefix (e.g. "Pesachim 107").
 Returns a link to sefaria.org or dafyomi.org
 
 **Kind**: instance method of [<code>DafYomiEvent</code>](#DafYomiEvent)  
+<a name="DafYomiEvent+getCategories"></a>
+
+### dafYomiEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>DafYomiEvent</code>](#DafYomiEvent)  
 <a name="MishnaYomiEvent"></a>
 
 ## MishnaYomiEvent
@@ -187,6 +199,7 @@ Event wrapper around a Mishna Yomi instance
     * [new MishnaYomiEvent(date, mishnaYomi)](#new_MishnaYomiEvent_new)
     * [.render([locale])](#MishnaYomiEvent+render) ⇒ <code>string</code>
     * [.url()](#MishnaYomiEvent+url) ⇒ <code>string</code>
+    * [.getCategories()](#MishnaYomiEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
 
 <a name="new_MishnaYomiEvent_new"></a>
 
@@ -213,6 +226,10 @@ Returns Mishna Yomi name (e.g. "Bava Metzia 10:5-6" or "Berakhot 9:5-Peah 1:1").
 ### mishnaYomiEvent.url() ⇒ <code>string</code>
 Returns a link to sefaria.org
 
+**Kind**: instance method of [<code>MishnaYomiEvent</code>](#MishnaYomiEvent)  
+<a name="MishnaYomiEvent+getCategories"></a>
+
+### mishnaYomiEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>MishnaYomiEvent</code>](#MishnaYomiEvent)  
 <a name="MishnaYomiIndex"></a>
 
@@ -258,6 +275,7 @@ Event wrapper around a Nach Yomi instance
     * [new NachYomiEvent(date, nachYomi)](#new_NachYomiEvent_new)
     * [.render([locale])](#NachYomiEvent+render) ⇒ <code>string</code>
     * [.url()](#NachYomiEvent+url) ⇒ <code>string</code>
+    * [.getCategories()](#NachYomiEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
 
 <a name="new_NachYomiEvent_new"></a>
 
@@ -284,6 +302,10 @@ Returns name of tractate and page (e.g. "Beitzah 21").
 ### nachYomiEvent.url() ⇒ <code>string</code>
 Returns a link to sefaria.org
 
+**Kind**: instance method of [<code>NachYomiEvent</code>](#NachYomiEvent)  
+<a name="NachYomiEvent+getCategories"></a>
+
+### nachYomiEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>NachYomiEvent</code>](#NachYomiEvent)  
 <a name="NachYomiIndex"></a>
 
@@ -325,6 +347,7 @@ Event wrapper around a Yerushalmi Yomi result
     * [.render([locale])](#YerushalmiYomiEvent+render) ⇒ <code>string</code>
     * [.renderBrief([locale])](#YerushalmiYomiEvent+renderBrief) ⇒ <code>string</code>
     * [.url()](#YerushalmiYomiEvent+url) ⇒ <code>string</code>
+    * [.getCategories()](#YerushalmiYomiEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
 
 <a name="new_YerushalmiYomiEvent_new"></a>
 
@@ -363,6 +386,49 @@ Returns name of tractate and page (e.g. "Beitzah 21").
 Returns a link to sefaria.org
 
 **Kind**: instance method of [<code>YerushalmiYomiEvent</code>](#YerushalmiYomiEvent)  
+<a name="YerushalmiYomiEvent+getCategories"></a>
+
+### yerushalmiYomiEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>YerushalmiYomiEvent</code>](#YerushalmiYomiEvent)  
+<a name="ChofetzChaimEvent"></a>
+
+## ChofetzChaimEvent
+Event wrapper around a Chofetz Chaim instance
+
+**Kind**: global class  
+
+* [ChofetzChaimEvent](#ChofetzChaimEvent)
+    * [new ChofetzChaimEvent(date, reading)](#new_ChofetzChaimEvent_new)
+    * [.render([locale])](#ChofetzChaimEvent+render) ⇒ <code>string</code>
+    * [.url()](#ChofetzChaimEvent+url) ⇒ <code>string</code>
+
+<a name="new_ChofetzChaimEvent_new"></a>
+
+### new ChofetzChaimEvent(date, reading)
+
+| Param | Type |
+| --- | --- |
+| date | <code>HDate</code> | 
+| reading | <code>any</code> | 
+
+<a name="ChofetzChaimEvent+render"></a>
+
+### chofetzChaimEvent.render([locale]) ⇒ <code>string</code>
+Returns name of reading
+
+**Kind**: instance method of [<code>ChofetzChaimEvent</code>](#ChofetzChaimEvent)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
+
+<a name="ChofetzChaimEvent+url"></a>
+
+### chofetzChaimEvent.url() ⇒ <code>string</code>
+Returns a link to sefaria.org
+ e.g. https://www.sefaria.org/Chofetz_Chaim%2C_Part_One%2C_The_Prohibition_Against_Lashon_Hara%2C_Principle_7.7
+
+**Kind**: instance method of [<code>ChofetzChaimEvent</code>](#ChofetzChaimEvent)  
 <a name="vilna"></a>
 
 ## vilna
@@ -400,6 +466,17 @@ cycle began (2 February 1980 for Vilna,
 | --- | --- | --- |
 | date | <code>HDate</code> \| <code>Date</code> \| <code>number</code> | Hebrew or Gregorian date |
 | config | <code>any</code> | either vilna or schottenstein |
+
+<a name="chofetzChaim"></a>
+
+## chofetzChaim(hdate) ⇒ <code>any</code>
+Looks up Chofetz Chaim Calendar for date
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| hdate | <code>HDate</code> | 
 
 <a name="MishnaYomi"></a>
 

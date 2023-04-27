@@ -5,6 +5,7 @@ import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi';
 import {NachYomiEvent} from './NachYomiEvent';
 import {NachYomiIndex, nachYomiStart} from './nachYomi';
 import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi';
+import {chofetzChaim, ChofetzChaimEvent} from './chofetzChaim';
 
 DailyLearning.addCalendar('dafYomi', function(hd) {
   const abs = hd.abs();
@@ -56,4 +57,9 @@ DailyLearning.addCalendar('yerushalmi-schottenstein', function(hd) {
     return null;
   }
   return new YerushalmiYomiEvent(hd, daf);
+});
+
+DailyLearning.addCalendar('chofetzChaim', function(hd) {
+  const reading = chofetzChaim(hd);
+  return new ChofetzChaimEvent(hd, reading);
 });
