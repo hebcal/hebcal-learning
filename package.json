@@ -30,7 +30,9 @@
     "test": "ava"
   },
   "ava": {
-    "require": ["@babel/register"]
+    "require": [
+      "@babel/register"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
@@ -40,6 +42,7 @@
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-terser": "^0.3.0",
     "ava": "^5.1.0",
+    "core-js": "^3.30.1",
     "eslint": "^8.31.0",
     "eslint-config-google": "^0.14.0",
     "rollup": "^3.9.1"

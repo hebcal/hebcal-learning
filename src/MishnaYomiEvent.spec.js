@@ -1,8 +1,6 @@
 import test from 'ava';
 import {MishnaYomiEvent} from './MishnaYomiEvent';
-import {HDate} from './hdate';
-import './locale-ashkenazi';
-import './locale-he';
+import {HDate} from '@hebcal/core';
 
 test('MishnaYomiEvent-url', (t) => {
   const my = [{k: 'Berakhot', v: '3:6'}, {k: 'Berakhot', v: '4:1'}];

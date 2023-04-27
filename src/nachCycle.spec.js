@@ -1,5 +1,5 @@
 import test from 'ava';
-import {HebrewCalendar} from './hebcal';
+import {HebrewCalendar} from '@hebcal/core';
 
 // eslint-disable-next-line require-jsdoc
 function hd2iso(hd) {

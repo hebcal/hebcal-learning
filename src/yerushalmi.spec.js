@@ -1,9 +1,6 @@
 import test from 'ava';
 import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi';
-import {greg2abs} from './greg0';
-import {HDate} from '../dist';
-import './locale-ashkenazi';
-import './locale-he';
+import {HDate, greg} from '@hebcal/core';
 
 test('yerushalmiYomi-small', (t) => {
   const toTest = [
@@ -30,8 +27,8 @@ function hd2iso(hd) {
 }
 
 test('yerushalmiYomi-big', (t) => {
-  const start = greg2abs(new Date(1997, 2, 14));
-  const endAbs = greg2abs(new Date(2001, 5, 22));
+  const start = greg.greg2abs(new Date(1997, 2, 14));
+  const endAbs = greg.greg2abs(new Date(2001, 5, 22));
   const actual = [];
   for (let abs = start; abs <= endAbs; abs++) {
     const daf = yerushalmiYomi(abs, vilna);
@@ -1606,8 +1603,8 @@ test('yerushalmiYomi-big', (t) => {
 });
 
 test('schottenstein', (t) => {
-  const start = greg2abs(new Date(2022, 10, 14));
-  const endAbs = greg2abs(new Date(2028, 7, 7));
+  const start = greg.greg2abs(new Date(2022, 10, 14));
+  const endAbs = greg.greg2abs(new Date(2028, 7, 7));
   const actual = [];
   for (let abs = start; abs <= endAbs; abs++) {
     const daf = yerushalmiYomi(abs, schottenstein);

@@ -81,7 +81,7 @@ export class DafYomi {
    */
   constructor(date) {
     const cday = (typeof date === 'number' && !isNaN(date)) ? date :
-      greg.isDate(date) ? greg2abs(date) :
+      greg.isDate(date) ? greg.greg2abs(date) :
       HDate.isHDate(date) ? date.abs() :
       throwTypeError(`non-date given to dafyomi: ${date}`);
     if (cday < osday) {
