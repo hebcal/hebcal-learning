@@ -1,0 +1,47 @@
+{
+  "name": "@hebcal/learning",
+  "version": "1.0.0",
+  "description": "Daily learning schedules",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjradwin/hebcal-learning.git"
+  },
+  "author": "Michael J. Radwin (https://github.com/mjradwin)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/mjradwin/hebcal-learning/issues"
+  },
+  "homepage": "https://github.com/mjradwin/hebcal-learning#readme",
+  "dependencies": {
+    "@hebcal/core": "^3.49.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "prepublish": "npm run build",
+    "test": "ava"
+  },
+  "ava": {
+    "require": ["@babel/register"]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/register": "^7.18.9",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-terser": "^0.3.0",
+    "ava": "^5.1.0",
+    "eslint": "^8.31.0",
+    "eslint-config-google": "^0.14.0",
+    "rollup": "^3.9.1"
+  }
+}
