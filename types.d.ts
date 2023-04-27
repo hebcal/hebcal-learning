@@ -107,7 +107,7 @@ declare module '@hebcal/learning' {
   /**
    * Looks up Chofetz Chaim Calendar for date
    */
-  export function chofetzChaim(hdate: HDate);
+  export function chofetzChaim(hdate: HDate): any;
 
   export class ChofetzChaimEvent extends Event {
     constructor(date: HDate, reading: any);
