@@ -1,5 +1,7 @@
 /// <reference types="node"/>
 
+import {HDate, Event} from '@hebcal/core';
+
 declare module '@hebcal/learning' {
   /**
    * Returns the Daf Yomi for given date
@@ -100,5 +102,16 @@ declare module '@hebcal/learning' {
       renderBrief(locale?: string): string;
       url(): string;
       readonly daf: any;
+  }
+
+  /**
+   * Looks up Chofetz Chaim Calendar for date
+   */
+  export function chofetzChaim(hdate: HDate);
+
+  export class ChofetzChaimEvent extends Event {
+    constructor(date: HDate, reading: any);
+    render(locale?: string): string;
+    url(): string;
   }
 }
