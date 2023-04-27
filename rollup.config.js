@@ -66,7 +66,7 @@ module.exports = [
       {
         file: 'dist/bundle.min.js',
         format: 'iife',
-        name: 'hebcal__rest_api',
+        name: 'hebcal__learning',
         globals: {
           '@hebcal/core': 'hebcal',
         },
@@ -87,6 +87,9 @@ module.exports = [
             },
             useBuiltIns: 'usage',
             corejs: 3,
+            exclude: [
+              'es.string.replace',
+            ],
           }],
         ],
         exclude: ['node_modules/**'],

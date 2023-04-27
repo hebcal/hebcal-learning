@@ -8,6 +8,10 @@
     "import": "./dist/index.mjs",
     "require": "./dist/index.js"
   },
+  "typings": "types.d.ts",
+  "engines": {
+    "node": ">= 12.17.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mjradwin/hebcal-learning.git"
@@ -19,7 +23,7 @@
   },
   "homepage": "https://github.com/mjradwin/hebcal-learning#readme",
   "dependencies": {
-    "@hebcal/core": "^3.49.0"
+    "@hebcal/core": "^4.0.0"
   },
   "files": [
     "dist"
@@ -27,6 +31,8 @@
   "scripts": {
     "build": "rollup -c",
     "prepublish": "npm run build",
+    "pretest": "npm run build",
+    "readme": "npx -p jsdoc-to-markdown jsdoc2md dist/index.js",
     "test": "ava"
   },
   "ava": {
@@ -35,16 +41,18 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
-    "@babel/preset-env": "^7.20.2",
-    "@babel/register": "^7.18.9",
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/register": "^7.21.0",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-terser": "^0.3.0",
-    "ava": "^5.1.0",
+    "@rollup/plugin-terser": "^0.4.1",
+    "ava": "^5.2.0",
     "core-js": "^3.30.1",
-    "eslint": "^8.31.0",
+    "eslint": "^8.39.0",
     "eslint-config-google": "^0.14.0",
-    "rollup": "^3.9.1"
+    "jsdoc": "^4.0.2",
+    "jsdoc-to-markdown": "^8.0.0",
+    "rollup": "^3.21.0"
   }
 }

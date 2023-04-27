@@ -23,7 +23,7 @@ import {greg, Event, flags, HDate, Locale, gematriya} from '@hebcal/core';
 import {throwTypeError} from './throwTypeError';
 
 const osdate = new Date(1923, 8, 11);
-const osday = greg.greg2abs(osdate);
+export const osday = greg.greg2abs(osdate);
 const nsday = greg.greg2abs(new Date(1975, 5, 24));
 
 const shas0 = [

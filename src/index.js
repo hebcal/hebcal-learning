@@ -1,13 +1,7 @@
-import {DafYomiEvent} from './dafyomi';
-import {MishnaYomiEvent} from './MishnaYomiEvent';
-import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi';
-import {NachYomiEvent} from './NachYomiEvent';
-import {NachYomiIndex, nachYomiStart} from './nachYomi';
-import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi';
-
-
-export {DafYomiEvent, MishnaYomiEvent,
-  MishnaYomiIndex, mishnaYomiStart,
-  NachYomiEvent, NachYomiIndex, nachYomiStart, 
-  yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein
-};
+import './register';
+export {DafYomiEvent} from './dafyomi';
+export {MishnaYomiEvent} from './MishnaYomiEvent';
+export {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi';
+export {NachYomiEvent} from './NachYomiEvent';
+export {NachYomiIndex, nachYomiStart} from './nachYomi';
+export {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi';
