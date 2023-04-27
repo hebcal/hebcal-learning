@@ -37,4 +37,8 @@ export class NachYomiEvent extends Event {
     const chapter = this.nachYomi.v;
     return `https://www.sefaria.org/${name}.${chapter}?lang=bi`;
   }
+  /** @return {string[]} */
+  getCategories() {
+    return ['nachyomi'];
+  }
 }

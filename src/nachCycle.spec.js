@@ -12,7 +12,7 @@ test('nachyomi-2022', (t) => {
     start: new Date(2022, 0, 20),
     end: new Date(2024, 0, 31),
     noHolidays: true,
-    nachYomi: true,
+    dailyLearning: {nachYomi: true},
   });
   const actual = [];
   for (const ev of events) {

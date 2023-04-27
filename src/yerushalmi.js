@@ -279,4 +279,8 @@ export class YerushalmiYomiEvent extends Event {
     const verses = verses0.replace(/:/g, '.');
     return `https://www.sefaria.org/${name}.${verses}?lang=bi`;
   }
+  /** @return {string[]} */
+  getCategories() {
+    return ['yerushalmi'];
+  }
 }

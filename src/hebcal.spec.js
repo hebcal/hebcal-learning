@@ -17,7 +17,7 @@ test('dafyomi-only', (t) => {
     isHebrewYear: false,
     month: 6,
     noHolidays: true,
-    dafyomi: true,
+    dailyLearning: {dafYomi: true},
   };
   const events = HebrewCalendar.calendar(options);
   t.is(events.length, 30);
@@ -43,7 +43,7 @@ test('mishnaYomi-only', (t) => {
     year: 2022,
     isHebrewYear: false,
     noHolidays: true,
-    mishnaYomi: true,
+    dailyLearning: {mishnaYomi: true},
   });
   t.is(events.length, 365);
   t.is(events[0].getDesc(), 'Berakhot 3:2-3');
@@ -56,7 +56,7 @@ test('yerushalmiYomi-Vilna', (t) => {
     start: new Date(1997, 2, 14),
     end: new Date(2001, 5, 22),
     noHolidays: true,
-    yerushalmi: true,
+    dailyLearning: {yerushalmi: true},
   });
   t.is(events.length, 1554);
   const daf1 = events.filter((ev) => ev.daf.blatt === 1);
@@ -110,8 +110,7 @@ test('yerushalmiYomi-Schottenstein', (t) => {
     start: new Date(2022, 10, 14),
     end: new Date(2028, 7, 7),
     noHolidays: true,
-    yerushalmi: true,
-    yerushalmiEdition: 2,
+    dailyLearning: {yerushalmi: 2},
   });
   t.is(events.length, 2094);
   const daf1 = events.filter((ev) => ev.daf.blatt === 1);

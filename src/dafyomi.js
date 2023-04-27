@@ -228,4 +228,8 @@ export class DafYomiEvent extends Event {
       return `https://www.sefaria.org/${name}.${blatt}a?lang=bi`;
     }
   }
+  /** @return {string[]} */
+  getCategories() {
+    return ['dafyomi'];
+  }
 }

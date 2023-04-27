@@ -65,4 +65,8 @@ export class MishnaYomiEvent extends Event {
     const verse2 = (p1[0] === p2[0]) ? p2[1] : p2.join('.');
     return `${prefix}.${verse1}-${verse2}?lang=bi`;
   }
+  /** @return {string[]} */
+  getCategories() {
+    return ['mishnayomi'];
+  }
 }
