@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import {HDate, greg, Locale, gematriya} from '@hebcal/core';
+import {HDate, Event, flags, greg, Locale, gematriya} from '@hebcal/core';
 import {throwTypeError} from './throwTypeError';
 
 // On 9 July 2020 all three tracks completed the Rambam learning cycle.
