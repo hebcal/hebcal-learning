@@ -26,6 +26,7 @@ declare module '@hebcal/learning' {
     render(locale?: string): string;
     renderBrief(locale?: string): string;
     url(): string;
+    getCategories(): string[];
     readonly daf: DafYomi;
   }
 
@@ -51,7 +52,7 @@ declare module '@hebcal/learning' {
   /**
    * Event wrapper around a Mishna Yomi instance
    */
-  export class MishnaYomiEvent {
+  export class MishnaYomiEvent extends Event {
     constructor(date: HDate, mishnaYomi: MishnaYomi[]);
     /**
      * Returns Mishna Yomi name (e.g. "Bava Metzia 10:5-6" or "Berakhot 9:5-Peah 1:1").
@@ -92,7 +93,7 @@ declare module '@hebcal/learning' {
   /**
    * Event wrapper around a Yerushalmi Yomi result
    */
-   export class YerushalmiYomiEvent {
+   export class YerushalmiYomiEvent extends Event {
       constructor(date: HDate, daf: any);
       /**
        * Returns name of tractate and page (e.g. "Yerushalmi Beitzah 21").
@@ -104,6 +105,13 @@ declare module '@hebcal/learning' {
       readonly daf: any;
   }
 
+  export class NachYomiEvent extends Event {
+    constructor(date: HDate, nachYomi: any);
+    render(locale?: string): string;
+    url(): string;
+    getCategories(): string[];
+  }
+
   /**
    * Looks up Chofetz Chaim Calendar for date
    */
@@ -113,5 +121,18 @@ declare module '@hebcal/learning' {
     constructor(date: HDate, reading: any);
     render(locale?: string): string;
     url(): string;
+    getCategories(): string[];
+  }
+
+  /**
+   * Calculates Daily Rambam (Mishneh Torah) for 1 chapter a day cycle
+   */
+  export function dailyRambam1(date: Date | HDate | number): any;
+
+  export class DailyRambamEvent extends Event {
+    constructor(date: HDate, reading: any);
+    render(locale?: string): string;
+    url(): string;
+    getCategories(): string[];
   }
 }

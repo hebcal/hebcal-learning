@@ -47,6 +47,9 @@ and Ketuvim (Writings).</p>
 <dt><a href="#ChofetzChaimEvent">ChofetzChaimEvent</a></dt>
 <dd><p>Event wrapper around a Chofetz Chaim instance</p>
 </dd>
+<dt><a href="#DailyRambamEvent">DailyRambamEvent</a></dt>
+<dd><p>Event wrapper around a Daily Rambam instance</p>
+</dd>
 </dl>
 
 ## Constants
@@ -78,6 +81,9 @@ cycle began (2 February 1980 for Vilna,
 </dd>
 <dt><a href="#chofetzChaim">chofetzChaim(hdate)</a> ⇒ <code>any</code></dt>
 <dd><p>Looks up Chofetz Chaim Calendar for date</p>
+</dd>
+<dt><a href="#dailyRambam1">dailyRambam1(date)</a> ⇒ <code>any</code></dt>
+<dd><p>Calculates Daily Rambam (Mishneh Torah) for 1 chapter a day cycle.</p>
 </dd>
 </dl>
 
@@ -401,6 +407,7 @@ Event wrapper around a Chofetz Chaim instance
     * [new ChofetzChaimEvent(date, reading)](#new_ChofetzChaimEvent_new)
     * [.render([locale])](#ChofetzChaimEvent+render) ⇒ <code>string</code>
     * [.url()](#ChofetzChaimEvent+url) ⇒ <code>string</code>
+    * [.getCategories()](#ChofetzChaimEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
 
 <a name="new_ChofetzChaimEvent_new"></a>
 
@@ -429,6 +436,53 @@ Returns a link to sefaria.org
  e.g. https://www.sefaria.org/Chofetz_Chaim%2C_Part_One%2C_The_Prohibition_Against_Lashon_Hara%2C_Principle_7.7
 
 **Kind**: instance method of [<code>ChofetzChaimEvent</code>](#ChofetzChaimEvent)  
+<a name="ChofetzChaimEvent+getCategories"></a>
+
+### chofetzChaimEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>ChofetzChaimEvent</code>](#ChofetzChaimEvent)  
+<a name="DailyRambamEvent"></a>
+
+## DailyRambamEvent
+Event wrapper around a Daily Rambam instance
+
+**Kind**: global class  
+
+* [DailyRambamEvent](#DailyRambamEvent)
+    * [new DailyRambamEvent(date, reading)](#new_DailyRambamEvent_new)
+    * [.render([locale])](#DailyRambamEvent+render) ⇒ <code>string</code>
+    * [.url()](#DailyRambamEvent+url) ⇒ <code>string</code>
+    * [.getCategories()](#DailyRambamEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
+
+<a name="new_DailyRambamEvent_new"></a>
+
+### new DailyRambamEvent(date, reading)
+
+| Param | Type |
+| --- | --- |
+| date | <code>HDate</code> | 
+| reading | <code>any</code> | 
+
+<a name="DailyRambamEvent+render"></a>
+
+### dailyRambamEvent.render([locale]) ⇒ <code>string</code>
+Returns name of reading
+
+**Kind**: instance method of [<code>DailyRambamEvent</code>](#DailyRambamEvent)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
+
+<a name="DailyRambamEvent+url"></a>
+
+### dailyRambamEvent.url() ⇒ <code>string</code>
+Returns a link to sefaria.org
+
+**Kind**: instance method of [<code>DailyRambamEvent</code>](#DailyRambamEvent)  
+<a name="DailyRambamEvent+getCategories"></a>
+
+### dailyRambamEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>DailyRambamEvent</code>](#DailyRambamEvent)  
 <a name="vilna"></a>
 
 ## vilna
@@ -477,6 +531,17 @@ Looks up Chofetz Chaim Calendar for date
 | Param | Type |
 | --- | --- |
 | hdate | <code>HDate</code> | 
+
+<a name="dailyRambam1"></a>
+
+## dailyRambam1(date) ⇒ <code>any</code>
+Calculates Daily Rambam (Mishneh Torah) for 1 chapter a day cycle.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| date | <code>HDate</code> \| <code>Date</code> \| <code>number</code> | Hebrew or Gregorian date |
 
 <a name="MishnaYomi"></a>
 
