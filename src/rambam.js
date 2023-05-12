@@ -11,7 +11,7 @@ const cycleLen = 1017;
 
 // The cycle of Rambam began on Sunday, 27 Nissan, 5744 - Apr. 29, 1984.
 const startDate = new Date(1984, 3, 29);
-export const rambam1StartAbs = greg.greg2abs(startDate);
+export const rambam1Start = greg.greg2abs(startDate);
 
 const mishnehTorah = [
   ['Transmission of the Oral Law', 3],
@@ -123,10 +123,10 @@ export function dailyRambam1(date) {
     greg.isDate(date) ? greg.greg2abs(date) :
     HDate.isHDate(date) ? date.abs() :
     throwTypeError(`non-date given to dailyRambam: ${date}`);
-  if (cday < rambam1StartAbs) {
+  if (cday < rambam1Start) {
     throw new RangeError(`Date ${date} too early; Daily Rambam cycle began on ${startDate}`);
   }
-  const dno = (cday - rambam1StartAbs) % cycleLen;
+  const dno = (cday - rambam1Start) % cycleLen;
   let total = dno;
   for (let j = 0; j < mishnehTorah.length; j++) {
     if (total < mishnehTorah[j].ch) {

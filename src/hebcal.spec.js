@@ -158,3 +158,55 @@ test('yerushalmiYomi-Schottenstein', (t) => {
   ];
   t.deepEqual(actual, expected);
 });
+
+test('shemiratHaLashon', (t) => {
+  const events = HebrewCalendar.calendar({
+    start: new Date(1997, 3, 25),
+    end: new Date(1997, 5, 2),
+    noHolidays: true,
+    dailyLearning: {shemiratHaLashon: true},
+  });
+  const actual = events.map((ev) => gregDtString(ev) + ' ' + ev.render('en'));
+  const expected = [
+    '4/25/1997 Book I, Shar Hatorah 9.15-9.17',
+    '4/26/1997 Book I, Shar Hatorah 10.1-10.4',
+    '4/27/1997 Book I, Shar Hatorah 10.5-10.7',
+    '4/28/1997 Book I, Shar Hatorah 10.8-10.9',
+    '4/29/1997 Book I, Shar Hatorah 10.10-10.11',
+    '4/30/1997 Book I, Chasimas Hasefer 1.1-1.4',
+    '5/1/1997 Book I, Chasimas Hasefer 1.5',
+    '5/2/1997 Book I, Chasimas Hasefer 2.1-2.4',
+    '5/3/1997 Book I, Chasimas Hasefer 2.5',
+    '5/4/1997 Book I, Chasimas Hasefer 3.1-3.2',
+    '5/5/1997 Book I, Chasimas Hasefer 3.3-3.4',
+    '5/6/1997 Book I, Chasimas Hasefer 3.5',
+    '5/7/1997 Book I, Chasimas Hasefer 3.6',
+    '5/8/1997 Book I, Chasimas Hasefer 4.1-4.3',
+    '5/9/1997 Book I, Chasimas Hasefer 4.4-4.5',
+    '5/10/1997 Book I, Chasimas Hasefer 4.6-4.8',
+    '5/11/1997 Book I, Chasimas Hasefer 5.1-5.3',
+    '5/12/1997 Book I, Chasimas Hasefer 6.1-6.2',
+    '5/13/1997 Book I, Chasimas Hasefer 6.3-6.4',
+    '5/14/1997 Book I, Chasimas Hasefer 6.5-6.6',
+    '5/15/1997 Book I, Chasimas Hasefer 6.7-6.9',
+    '5/16/1997 Book I, Chasimas Hasefer 6.10-6.11',
+    '5/17/1997 Book I, Chasimas Hasefer 7.1-7.5',
+    '5/18/1997 Book I, Chasimas Hasefer 7.6',
+    '5/19/1997 Book I, Chasimas Hasefer 7.7-7.8',
+    '5/20/1997 Book I, Chasimas Hasefer 7.9',
+    '5/21/1997 Book I, Chasimas Hasefer 7.10',
+    '5/22/1997 Book I, Chasimas Hasefer 7.11',
+    '5/23/1997 Book I, Chasimas Hasefer 7.12-7.13',
+    '5/24/1997 Book II 1.1-1.2',
+    '5/25/1997 Book II 1.3-1.5',
+    '5/26/1997 Book II 1.6-1.7',
+    '5/27/1997 Book II 1.8',
+    '5/28/1997 Book II 2.1-2.4',
+    '5/29/1997 Book II 2.5-2.6',
+    '5/30/1997 Book II 2.7',
+    '5/31/1997 Book II 2.8',
+    '6/1/1997 Book II 2.9',
+    '6/2/1997 Book II 2.10',
+  ];
+  t.deepEqual(actual, expected);
+});

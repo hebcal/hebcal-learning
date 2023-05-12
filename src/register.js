@@ -5,9 +5,9 @@ import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi';
 import {NachYomiEvent} from './NachYomiEvent';
 import {NachYomiIndex, nachYomiStart} from './nachYomi';
 import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi';
-import {chofetzChaim, ChofetzChaimEvent} from './chofetzChaim';
-import {dailyRambam1, DailyRambamEvent} from './rambam';
-import {shemiratHaLashon, ShemiratHaLashonEvent} from './shemiratHaLashon';
+import {chofetzChaim, ChofetzChaimEvent, chofetzChaimStart} from './chofetzChaim';
+import {dailyRambam1, DailyRambamEvent, rambam1Start} from './rambam';
+import {shemiratHaLashon, ShemiratHaLashonEvent, shemiratHaLashonStart} from './shemiratHaLashon';
 
 DailyLearning.addCalendar('dafYomi', function(hd) {
   const abs = hd.abs();
@@ -62,16 +62,25 @@ DailyLearning.addCalendar('yerushalmi-schottenstein', function(hd) {
 });
 
 DailyLearning.addCalendar('chofetzChaim', function(hd) {
+  if (hd.abs() < chofetzChaimStart) {
+    return null;
+  }
   const reading = chofetzChaim(hd);
   return new ChofetzChaimEvent(hd, reading);
 });
 
 DailyLearning.addCalendar('rambam1', function(hd) {
+  if (hd.abs() < rambam1Start) {
+    return null;
+  }
   const reading = dailyRambam1(hd);
   return new DailyRambamEvent(hd, reading);
 });
 
 DailyLearning.addCalendar('shemiratHaLashon', function(hd) {
+  if (hd.abs() < shemiratHaLashonStart) {
+    return null;
+  }
   const reading = shemiratHaLashon(hd);
   return new ShemiratHaLashonEvent(hd, reading);
 });

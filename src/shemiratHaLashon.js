@@ -17,6 +17,11 @@ const Adar = months.ADAR_I;
 const Adar1 = months.ADAR_I;
 const Adar2 = months.ADAR_II;
 
+// Sefer Shemirat HaLashon was written 1865-1875 CE
+// יום ד׳ כ״א ימים לחודש שבט שנת תרל״ו לפ״ק
+const startDate = new HDate(21, Shvat, 5636);
+export const shemiratHaLashonStart = startDate.abs();
+
 const Book1 = 1;
 const Book2 = 2;
 const Hakdamah = 'Hakdamah';
@@ -434,6 +439,10 @@ export function shemiratHaLashon(hdate) {
   if (!HDate.isHDate(hdate)) {
     throw new TypeError(`Invalid date: ${hdate}`);
   }
+  const cday = hdate.abs();
+  if (cday < shemiratHaLashonStart) {
+    throw new RangeError(`Date ${hdate} too early; Sefer Shemirat HaLashon cycle began on ${startDate}`);
+  }
 
   const day = hdate.getDate();
   const month = hdate.getMonth();
@@ -504,29 +513,31 @@ export class ShemiratHaLashonEvent extends Event {
     if (typeof locale === 'string') {
       locale = locale.toLowerCase();
     }
+    const prefix = this.renderPrefix(locale);
+    return prefix + formatReadingPages(this.reading);
+  }
+
+  /**
+   * @private
+   * @param {string} locale
+   * @return {string}
+   */
+  renderPrefix(locale) {
     const reading = this.reading;
     const book = reading.bk === 1 ? 'Book I' : 'Book II';
     const section0 = reading.k.replace(/ /g, '_');
-    const section = locale === 'memo' ? englishNames[section0] : Locale.gettext(section0, locale);
-    let name = section ? `${book}, ${section}` : book;
-    name += formatReadingPages(reading);
-    return name;
+    const section = locale === 'memo' ? englishNames[section0] :
+      reading.k === Chapters ? null : Locale.gettext(reading.k, locale);
+    return section ? `${book}, ${section}` : book;
   }
+
   /**
    * Returns a link to sefaria.org
    *  e.g. https://www.sefaria.org/Shemirat_HaLashon%2C_Book_I%2C_The_Gate_of_Torah.4.2?lang=b
    * @return {string}
    */
   url() {
-    const reading = this.reading;
-    const book = reading.bk === 1 ? 'Book I' : 'Book II';
-    const section0 = reading.k.replace(/ /g, '_');
-    const section = englishNames[section0];
-    let name = 'Shemirat HaLashon, ' + book;
-    if (section) {
-      name += ', ' + section;
-    }
-    name += '.' + reading.b;
+    const name = 'Shemirat HaLashon, ' + this.renderPrefix('memo') + '.' + this.reading.b;
     const urlName = encodeURIComponent(name.replace(/ /g, '_'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }

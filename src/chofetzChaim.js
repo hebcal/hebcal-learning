@@ -15,6 +15,10 @@ const Adar = months.ADAR_I;
 const Adar1 = months.ADAR_I;
 const Adar2 = months.ADAR_II;
 
+// Sefer Chofetz Chaim was published in 1873 CE
+const startDate = new HDate(1, Tishrei, 5634);
+export const chofetzChaimStart = startDate.abs();
+
 const Hakdamah = 'Hakdamah';
 const Psichah = 'Psichah';
 const Lavin = 'Lavin';
@@ -298,6 +302,10 @@ const leap = [
 export function chofetzChaim(hdate) {
   if (!HDate.isHDate(hdate)) {
     throw new TypeError(`Invalid date: ${hdate}`);
+  }
+  const cday = hdate.abs();
+  if (cday < chofetzChaimStart) {
+    throw new RangeError(`Date ${hdate} too early; Sefer Chofetz Chaim cycle began on ${startDate}`);
   }
 
   const readings = hdate.isLeapYear() ? leap : simple;
