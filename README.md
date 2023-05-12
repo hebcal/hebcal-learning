@@ -12,6 +12,7 @@ Supports several learning schedules
   * Vilna edition - `yerushalmi-vilna`
   * Schottenstein edition - `yerushalmi-schottenstei`
 * Chofetz Chaim - `chofetzChaim`
+* Sefer Shemirat HaLashon - `shemiratHaLashon`
 
 ## Installation
 ```bash
@@ -50,6 +51,9 @@ and Ketuvim (Writings).</p>
 <dt><a href="#DailyRambamEvent">DailyRambamEvent</a></dt>
 <dd><p>Event wrapper around a Daily Rambam instance</p>
 </dd>
+<dt><a href="#ShemiratHaLashonEvent">ShemiratHaLashonEvent</a></dt>
+<dd><p>Event wrapper around a Sefer Shemirat HaLashon instance</p>
+</dd>
 </dl>
 
 ## Constants
@@ -84,6 +88,9 @@ cycle began (2 February 1980 for Vilna,
 </dd>
 <dt><a href="#dailyRambam1">dailyRambam1(date)</a> ⇒ <code>any</code></dt>
 <dd><p>Calculates Daily Rambam (Mishneh Torah) for 1 chapter a day cycle.</p>
+</dd>
+<dt><a href="#shemiratHaLashon">shemiratHaLashon(hdate)</a> ⇒ <code>any</code></dt>
+<dd><p>Looks up Sefer Shemirat HaLashon Calendar for date</p>
 </dd>
 </dl>
 
@@ -483,6 +490,50 @@ Returns a link to sefaria.org
 
 ### dailyRambamEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>DailyRambamEvent</code>](#DailyRambamEvent)  
+<a name="ShemiratHaLashonEvent"></a>
+
+## ShemiratHaLashonEvent
+Event wrapper around a Sefer Shemirat HaLashon instance
+
+**Kind**: global class  
+
+* [ShemiratHaLashonEvent](#ShemiratHaLashonEvent)
+    * [new ShemiratHaLashonEvent(date, reading)](#new_ShemiratHaLashonEvent_new)
+    * [.render([locale])](#ShemiratHaLashonEvent+render) ⇒ <code>string</code>
+    * [.url()](#ShemiratHaLashonEvent+url) ⇒ <code>string</code>
+    * [.getCategories()](#ShemiratHaLashonEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
+
+<a name="new_ShemiratHaLashonEvent_new"></a>
+
+### new ShemiratHaLashonEvent(date, reading)
+
+| Param | Type |
+| --- | --- |
+| date | <code>HDate</code> | 
+| reading | <code>any</code> | 
+
+<a name="ShemiratHaLashonEvent+render"></a>
+
+### shemiratHaLashonEvent.render([locale]) ⇒ <code>string</code>
+Returns name of reading
+
+**Kind**: instance method of [<code>ShemiratHaLashonEvent</code>](#ShemiratHaLashonEvent)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
+
+<a name="ShemiratHaLashonEvent+url"></a>
+
+### shemiratHaLashonEvent.url() ⇒ <code>string</code>
+Returns a link to sefaria.org
+ e.g. https://www.sefaria.org/Shemirat_HaLashon%2C_Book_I%2C_The_Gate_of_Torah.4.2?lang=b
+
+**Kind**: instance method of [<code>ShemiratHaLashonEvent</code>](#ShemiratHaLashonEvent)  
+<a name="ShemiratHaLashonEvent+getCategories"></a>
+
+### shemiratHaLashonEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>ShemiratHaLashonEvent</code>](#ShemiratHaLashonEvent)  
 <a name="vilna"></a>
 
 ## vilna
@@ -542,6 +593,17 @@ Calculates Daily Rambam (Mishneh Torah) for 1 chapter a day cycle.
 | Param | Type | Description |
 | --- | --- | --- |
 | date | <code>HDate</code> \| <code>Date</code> \| <code>number</code> | Hebrew or Gregorian date |
+
+<a name="shemiratHaLashon"></a>
+
+## shemiratHaLashon(hdate) ⇒ <code>any</code>
+Looks up Sefer Shemirat HaLashon Calendar for date
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| hdate | <code>HDate</code> | 
 
 <a name="MishnaYomi"></a>
 

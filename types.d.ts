@@ -135,4 +135,16 @@ declare module '@hebcal/learning' {
     url(): string;
     getCategories(): string[];
   }
+
+  /**
+   * Looks up Sefer Shemirat HaLashon Calendar for date
+   */
+  export function shemiratHaLashon(hdate: HDate): any;
+
+  export class ShemiratHaLashonEvent extends Event {
+    constructor(date: HDate, reading: any);
+    render(locale?: string): string;
+    url(): string;
+    getCategories(): string[];
+  }
 }

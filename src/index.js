@@ -7,3 +7,4 @@ export {NachYomiIndex, nachYomiStart} from './nachYomi';
 export {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi';
 export {chofetzChaim, ChofetzChaimEvent} from './chofetzChaim';
 export {dailyRambam1, DailyRambamEvent} from './rambam';
+export {shemiratHaLashon, ShemiratHaLashonEvent} from './shemiratHaLashon';

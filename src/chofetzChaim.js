@@ -358,7 +358,7 @@ function lookupReading(readings, day, month) {
  * @param {any} reading
  * @return {string}
  */
-function formatReadingPages(reading) {
+export function formatReadingPages(reading) {
   let str = '';
   if (typeof reading.b !== 'undefined') {
     str += ' ' + reading.b;
