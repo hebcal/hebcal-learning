@@ -10,7 +10,9 @@ Supports several learning schedules
 * Nach Yomi - `nachYomi`
 * Yerushalmi Yomi (Jerusalem Talmud)
   * Vilna edition - `yerushalmi-vilna`
-  * Schottenstein edition - `yerushalmi-schottenstei`
+  * Schottenstein edition - `yerushalmi-schottenstein`
+* Daily Rambam (Mishneh Torah)
+  * 1 chapter a day cycle - `rambam1`
 * Chofetz Chaim - `chofetzChaim`
 * Sefer Shemirat HaLashon - `shemiratHaLashon`
 
