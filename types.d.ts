@@ -105,8 +105,30 @@ declare module '@hebcal/learning' {
       readonly daf: any;
   }
 
+  /**
+   * Describes a chapter to be read
+   * @property k - tractate name in Sephardic transliteration (e.g. "Berakhot", "Moed Katan")
+   * @property v - verse (e.g. "2:1")
+   */
+  export type NachYomi = {
+    k: string;
+    v: string;
+  };
+
+  /**
+   * A daily regimen of learning the books of Nevi'im (Prophets)
+   * and Ketuvim (Writings).
+   */
+  export class NachYomiIndex {
+    constructor();
+    /**
+     * Looks up a Mishna Yomi
+     */
+    lookup(date: Date | HDate | number): NachYomi;
+  }
+
   export class NachYomiEvent extends Event {
-    constructor(date: HDate, nachYomi: any);
+    constructor(date: HDate, nachYomi: NachYomi);
     render(locale?: string): string;
     url(): string;
     getCategories(): string[];
