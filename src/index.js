@@ -1,5 +1,5 @@
 import './register';
-export {DafYomiEvent} from './dafyomi';
+export {DafYomi, DafYomiEvent} from './dafyomi';
 export {MishnaYomiEvent} from './MishnaYomiEvent';
 export {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi';
 export {NachYomiEvent} from './NachYomiEvent';
