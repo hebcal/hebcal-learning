@@ -1,4 +1,4 @@
-import {DailyLearning} from '@hebcal/core';
+import {DailyLearning, Locale} from '@hebcal/core';
 import {DafYomiEvent, osday} from './dafyomi';
 import {MishnaYomiEvent} from './MishnaYomiEvent';
 import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi';
@@ -8,6 +8,7 @@ import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerus
 import {chofetzChaim, ChofetzChaimEvent, chofetzChaimStart} from './chofetzChaim';
 import {dailyRambam1, DailyRambamEvent, rambam1Start} from './rambam';
 import {shemiratHaLashon, ShemiratHaLashonEvent, shemiratHaLashonStart} from './shemiratHaLashon';
+import po_he from './he.po.json';
 
 DailyLearning.addCalendar('dafYomi', function(hd) {
   const abs = hd.abs();
@@ -84,3 +85,5 @@ DailyLearning.addCalendar('shemiratHaLashon', function(hd) {
   const reading = shemiratHaLashon(hd);
   return new ShemiratHaLashonEvent(hd, reading);
 });
+
+Locale.addTranslations('he', po_he);
