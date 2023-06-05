@@ -9,6 +9,7 @@ import {chofetzChaim, ChofetzChaimEvent, chofetzChaimStart} from './chofetzChaim
 import {dailyRambam1, DailyRambamEvent, rambam1Start} from './rambam';
 import {shemiratHaLashon, ShemiratHaLashonEvent, shemiratHaLashonStart} from './shemiratHaLashon';
 import po_he from './he.po.json';
+import po_ashkenazi from './ashkenazi.po.json';
 
 DailyLearning.addCalendar('dafYomi', function(hd) {
   const abs = hd.abs();
@@ -87,3 +88,6 @@ DailyLearning.addCalendar('shemiratHaLashon', function(hd) {
 });
 
 Locale.addTranslations('he', po_he);
+Locale.addTranslations('h', po_he);
+Locale.addTranslations('ashkenazi', po_ashkenazi);
+Locale.addTranslations('a', po_ashkenazi);
