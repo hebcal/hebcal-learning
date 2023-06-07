@@ -8,8 +8,9 @@ import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerus
 import {chofetzChaim, ChofetzChaimEvent, chofetzChaimStart} from './chofetzChaim';
 import {dailyRambam1, DailyRambamEvent, rambam1Start} from './rambam';
 import {shemiratHaLashon, ShemiratHaLashonEvent, shemiratHaLashonStart} from './shemiratHaLashon';
-import po_he from './he.po.json';
-import po_ashkenazi from './ashkenazi.po.json';
+import {dailyPsalms, PsalmsEvent} from './psalms';
+import poHe from './he.po.json';
+import poAshkenazi from './ashkenazi.po.json';
 
 DailyLearning.addCalendar('dafYomi', function(hd) {
   const abs = hd.abs();
@@ -87,7 +88,12 @@ DailyLearning.addCalendar('shemiratHaLashon', function(hd) {
   return new ShemiratHaLashonEvent(hd, reading);
 });
 
-Locale.addTranslations('he', po_he);
-Locale.addTranslations('h', po_he);
-Locale.addTranslations('ashkenazi', po_ashkenazi);
-Locale.addTranslations('a', po_ashkenazi);
+DailyLearning.addCalendar('psalms', function(hd) {
+  const reading = dailyPsalms(hd);
+  return new PsalmsEvent(hd, reading);
+});
+
+Locale.addTranslations('he', poHe);
+Locale.addTranslations('h', poHe);
+Locale.addTranslations('ashkenazi', poAshkenazi);
+Locale.addTranslations('a', poAshkenazi);

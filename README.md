@@ -8,6 +8,7 @@ Supports several learning schedules
 * Daf Yomi (Babylonian Talmud / Bavli) - `dafYomi`
 * Mishna Yomi - `mishnaYomi`
 * Nach Yomi - `nachYomi`
+* Psalms / Tehillim (30 day cycle) - `psalms`
 * Yerushalmi Yomi (Jerusalem Talmud)
   * Vilna edition - `yerushalmi-vilna`
   * Schottenstein edition - `yerushalmi-schottenstein`
@@ -56,6 +57,9 @@ and Ketuvim (Writings).</p>
 <dt><a href="#ShemiratHaLashonEvent">ShemiratHaLashonEvent</a></dt>
 <dd><p>Event wrapper around a Sefer Shemirat HaLashon instance</p>
 </dd>
+<dt><a href="#PsalmsEvent">PsalmsEvent</a></dt>
+<dd><p>Event wrapper around a daily Psalms / Tehillim</p>
+</dd>
 </dl>
 
 ## Constants
@@ -93,6 +97,9 @@ cycle began (2 February 1980 for Vilna,
 </dd>
 <dt><a href="#shemiratHaLashon">shemiratHaLashon(hdate)</a> ⇒ <code>any</code></dt>
 <dd><p>Looks up Sefer Shemirat HaLashon Calendar for date</p>
+</dd>
+<dt><a href="#dailyPsalms">dailyPsalms(date)</a> ⇒ <code>any</code></dt>
+<dd><p>Calculates Daily Psalms (Tehillim) for 30-day cycle.</p>
 </dd>
 </dl>
 
@@ -536,6 +543,50 @@ Returns a link to sefaria.org
 
 ### shemiratHaLashonEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>ShemiratHaLashonEvent</code>](#ShemiratHaLashonEvent)  
+<a name="PsalmsEvent"></a>
+
+## PsalmsEvent
+Event wrapper around a daily Psalms / Tehillim
+
+**Kind**: global class  
+
+* [PsalmsEvent](#PsalmsEvent)
+    * [new PsalmsEvent(date, reading)](#new_PsalmsEvent_new)
+    * [.render([locale])](#PsalmsEvent+render) ⇒ <code>string</code>
+    * [.url()](#PsalmsEvent+url) ⇒ <code>string</code>
+    * [.getCategories()](#PsalmsEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
+
+<a name="new_PsalmsEvent_new"></a>
+
+### new PsalmsEvent(date, reading)
+
+| Param | Type |
+| --- | --- |
+| date | <code>HDate</code> | 
+| reading | <code>Array.&lt;number&gt;</code> \| <code>Array.&lt;string&gt;</code> | 
+
+<a name="PsalmsEvent+render"></a>
+
+### psalmsEvent.render([locale]) ⇒ <code>string</code>
+Returns name of reading
+
+**Kind**: instance method of [<code>PsalmsEvent</code>](#PsalmsEvent)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
+
+<a name="PsalmsEvent+url"></a>
+
+### psalmsEvent.url() ⇒ <code>string</code>
+Returns a link to sefaria.org
+ e.g. https://www.sefaria.org/Psalms.1-9?lang=b
+
+**Kind**: instance method of [<code>PsalmsEvent</code>](#PsalmsEvent)  
+<a name="PsalmsEvent+getCategories"></a>
+
+### psalmsEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>PsalmsEvent</code>](#PsalmsEvent)  
 <a name="vilna"></a>
 
 ## vilna
@@ -606,6 +657,17 @@ Looks up Sefer Shemirat HaLashon Calendar for date
 | Param | Type |
 | --- | --- |
 | hdate | <code>HDate</code> | 
+
+<a name="dailyPsalms"></a>
+
+## dailyPsalms(date) ⇒ <code>any</code>
+Calculates Daily Psalms (Tehillim) for 30-day cycle.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| date | <code>HDate</code> \| <code>Date</code> \| <code>number</code> | Hebrew or Gregorian date |
 
 <a name="MishnaYomi"></a>
 

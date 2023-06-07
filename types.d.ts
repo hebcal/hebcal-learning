@@ -169,4 +169,17 @@ declare module '@hebcal/learning' {
     url(): string;
     getCategories(): string[];
   }
+
+  /**
+   * Calculates Daily Psalms (Tehillim) for 30-day cycle.
+   * @param date - Hebrew or Gregorian date
+   */
+  export function dailyPsalms(date: Date | HDate | number): any;
+
+  export class PsalmsEvent extends Event {
+    constructor(date: HDate, reading: any);
+    render(locale?: string): string;
+    url(): string;
+    getCategories(): string[];
+  }
 }

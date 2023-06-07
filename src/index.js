@@ -8,3 +8,4 @@ export {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerus
 export {chofetzChaim, ChofetzChaimEvent} from './chofetzChaim';
 export {dailyRambam1, DailyRambamEvent} from './rambam';
 export {shemiratHaLashon, ShemiratHaLashonEvent} from './shemiratHaLashon';
+export {dailyPsalms, PsalmsEvent} from './psalms';
