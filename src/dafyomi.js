@@ -72,68 +72,16 @@ export const shas0 = [
 });
 
 /**
- * Returns the Daf Yomi for given date
+ * Represents a tractate and page number
  */
-export class DafYomi {
+export class DafPage {
   /**
    * Initializes a daf yomi instance
-   * @param {Date|HDate|number} date Gregorian or Hebrew date
+   * @param {string} name
+   * @param {number} blatt
    */
-  constructor(date) {
-    const cday = getAbsDate(date);
-    checkTooEarly(cday, osday, 'Daf Yomi');
-    let cno;
-    let dno;
-    if (cday >= nsday) { // "new" cycle
-      cno = 8 + Math.floor( (cday - nsday) / 2711 );
-      dno = (cday - nsday) % 2711;
-    } else { // old cycle
-      cno = 1 + Math.floor( (cday - osday) / 2702 );
-      dno = (cday - osday) % 2702;
-    }
-
-    // Find the daf taking note that the cycle changed slightly after cycle 7.
-
-    let total = 0;
-    let blatt = 0;
-    let count = -1;
-
-    // Fix Shekalim for old cycles
-    const shortShekalim = cno <= 7;
-    const shas = shortShekalim ? shas0.slice() : shas0;
-    if (shortShekalim) {
-      shas[4] = {name: 'Shekalim', blatt: 13};
-    }
-
-    // Find the daf
-    let j = 0;
-    const dafcnt = 40;
-    while (j < dafcnt) {
-      count++;
-      total = total + shas[j].blatt - 1;
-      if (dno < total) {
-        blatt = (shas[j].blatt + 1) - (total - dno);
-        // fiddle with the weird ones near the end
-        switch (count) {
-          case 36:
-            blatt = blatt + 21;
-            break;
-          case 37:
-            blatt = blatt + 24;
-            break;
-          case 38:
-            blatt = blatt + 32;
-            break;
-          default:
-            break;
-        }
-        // Bailout
-        j = 1 + dafcnt;
-      }
-      j++;
-    }
-
-    this.name = shas[count].name;
+  constructor(name, blatt) {
+    this.name = name;
     this.blatt = blatt;
   }
   /**
@@ -166,6 +114,81 @@ export class DafYomi {
   }
 }
 
+/**
+ * @private
+ * @param {Date|HDate|number} date Gregorian or Hebrew date
+ * @return {DafPage}
+ */
+function calculateDaf(date) {
+  const cday = getAbsDate(date);
+  checkTooEarly(cday, osday, 'Daf Yomi');
+  let cno;
+  let dno;
+  if (cday >= nsday) { // "new" cycle
+    cno = 8 + Math.floor( (cday - nsday) / 2711 );
+    dno = (cday - nsday) % 2711;
+  } else { // old cycle
+    cno = 1 + Math.floor( (cday - osday) / 2702 );
+    dno = (cday - osday) % 2702;
+  }
+
+  // Find the daf taking note that the cycle changed slightly after cycle 7.
+
+  let total = 0;
+  let blatt = 0;
+  let count = -1;
+
+  // Fix Shekalim for old cycles
+  const shortShekalim = cno <= 7;
+  const shas = shortShekalim ? shas0.slice() : shas0;
+  if (shortShekalim) {
+    shas[4] = {name: 'Shekalim', blatt: 13};
+  }
+
+  // Find the daf
+  let j = 0;
+  const dafcnt = 40;
+  while (j < dafcnt) {
+    count++;
+    total = total + shas[j].blatt - 1;
+    if (dno < total) {
+      blatt = (shas[j].blatt + 1) - (total - dno);
+      // fiddle with the weird ones near the end
+      switch (count) {
+        case 36:
+          blatt = blatt + 21;
+          break;
+        case 37:
+          blatt = blatt + 24;
+          break;
+        case 38:
+          blatt = blatt + 32;
+          break;
+        default:
+          break;
+      }
+      // Bailout
+      j = 1 + dafcnt;
+    }
+    j++;
+  }
+  return new DafPage(shas[count].name, blatt);
+}
+
+/**
+ * Returns the Daf Yomi for given date
+ */
+export class DafYomi extends DafPage {
+  /**
+   * Initializes a daf yomi instance
+   * @param {Date|HDate|number} date Gregorian or Hebrew date
+   */
+  constructor(date) {
+    const d = calculateDaf(date);
+    super(d.name, d.blatt);
+  }
+}
+
 const dafYomiSefaria = {
   'Berachot': 'Berakhot',
   'Rosh Hashana': 'Rosh Hashanah',
@@ -180,14 +203,14 @@ const dafYomiSefaria = {
 };
 
 /**
- * Event wrapper around a DafYomi instance
+ * Event wrapper around a DafPage instance
  */
-export class DafYomiEvent extends Event {
+export class DafPageEvent extends Event {
   /**
    * @param {HDate} date
+   * @param {DafPage} daf
    */
-  constructor(date) {
-    const daf = new DafYomi(date.greg());
+  constructor(date, daf) {
     super(date, daf.render('en'), flags.DAF_YOMI);
     this.daf = daf;
   }
@@ -197,7 +220,7 @@ export class DafYomiEvent extends Event {
    * @return {string}
    */
   render(locale) {
-    return Locale.gettext('Daf Yomi', locale) + ': ' + this.daf.render(locale);
+    return this.daf.render(locale);
   }
   /**
    * Returns Daf Yomi name without the 'Daf Yomi: ' prefix (e.g. "Pesachim 107").
@@ -222,6 +245,27 @@ export class DafYomiEvent extends Event {
       const name = name0.replace(/ /g, '_');
       return `https://www.sefaria.org/${name}.${blatt}a?lang=bi`;
     }
+  }
+}
+
+/**
+ * Event wrapper around a DafYomi instance
+ */
+export class DafYomiEvent extends DafPageEvent {
+  /**
+   * @param {HDate} date
+   */
+  constructor(date) {
+    const daf = new DafYomi(date.greg());
+    super(date, daf);
+  }
+  /**
+   * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
+   * @param {string} [locale] Optional locale name (defaults to active locale).
+   * @return {string}
+   */
+  render(locale) {
+    return Locale.gettext('Daf Yomi', locale) + ': ' + this.daf.render(locale);
   }
   /** @return {string[]} */
   getCategories() {

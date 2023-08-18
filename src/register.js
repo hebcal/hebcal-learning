@@ -9,6 +9,7 @@ import {chofetzChaim, ChofetzChaimEvent, chofetzChaimStart} from './chofetzChaim
 import {dailyRambam1, DailyRambamEvent, rambam1Start} from './rambam';
 import {shemiratHaLashon, ShemiratHaLashonEvent, shemiratHaLashonStart} from './shemiratHaLashon';
 import {dailyPsalms, PsalmsEvent} from './psalms';
+import {dafWeekly, DafWeeklyEvent, dafWeeklyStart} from './dafWeekly';
 import poHe from './he.po.json';
 import poAshkenazi from './ashkenazi.po.json';
 
@@ -91,6 +92,15 @@ DailyLearning.addCalendar('shemiratHaLashon', function(hd) {
 DailyLearning.addCalendar('psalms', function(hd) {
   const reading = dailyPsalms(hd);
   return new PsalmsEvent(hd, reading);
+});
+
+DailyLearning.addCalendar('dafWeekly', function(hd) {
+  const abs = hd.abs();
+  if (abs < dafWeeklyStart) {
+    return null;
+  }
+  const daf = dafWeekly(abs);
+  return new DafWeeklyEvent(hd, daf);
 });
 
 Locale.addTranslations('he', poHe);

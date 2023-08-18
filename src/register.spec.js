@@ -8,3 +8,11 @@ test('lookup', (t) => {
   t.is(typeof ev, 'object');
   t.is(ev.getDesc(), 'Psalms 83-87');
 });
+
+test('dafWeekly', (t) => {
+  const hd = new HDate(17, 'Sivan', 5783);
+  const ev = DailyLearning.lookup('dafWeekly', hd);
+  t.is(typeof ev, 'object');
+  t.is(ev.getDesc(), 'Ketubot 39');
+  t.deepEqual(ev.getCategories(), ['dafWeekly']);
+});
