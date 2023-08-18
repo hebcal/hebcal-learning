@@ -1,6 +1,6 @@
 import {HDate, months, Locale, Event, flags, greg, gematriya} from '@hebcal/core';
 import vilnaMap from './yerushalmiVilnaMap.json';
-import {throwTypeError} from './throwTypeError';
+import {getAbsDate, checkTooEarly} from './common';
 
 const vilnaStartDate = new Date(1980, 1, 2);
 /**
@@ -134,14 +134,9 @@ export function yerushalmiYomi(date, config) {
   if (typeof config !== 'object' || !Array.isArray(config.shas)) {
     throw new Error('invalid yerushalmi config');
   }
-  const cday = (typeof date === 'number' && !isNaN(date)) ? date :
-    greg.isDate(date) ? greg.greg2abs(date) :
-    HDate.isHDate(date) ? date.abs() :
-    throwTypeError(`non-date given to dafyomi: ${date}`);
+  const cday = getAbsDate(date);
   const startAbs = config.startAbs;
-  if (cday < startAbs) {
-    throw new RangeError(`Date ${date} too early; Yerushalmi Yomi cycle began on ${config.startDate}`);
-  }
+  checkTooEarly(cday, startAbs, 'Yerushalmi Yomi');
   const hd = new HDate(cday);
   // No Daf for Yom Kippur and Tisha B'Av
   if (config.skipYK9Av && skipDay(hd)) {

@@ -19,14 +19,14 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import {greg, Event, flags, HDate, Locale, gematriya} from '@hebcal/core';
-import {throwTypeError} from './throwTypeError';
+import {greg, Event, flags, Locale, gematriya} from '@hebcal/core';
+import {getAbsDate, checkTooEarly} from './common';
 
 const osdate = new Date(1923, 8, 11);
 export const osday = greg.greg2abs(osdate);
 const nsday = greg.greg2abs(new Date(1975, 5, 24));
 
-const shas0 = [
+export const shas0 = [
   ['Berachot',       64],
   ['Shabbat',        157],
   ['Eruvin',         105],
@@ -80,13 +80,8 @@ export class DafYomi {
    * @param {Date|HDate|number} date Gregorian or Hebrew date
    */
   constructor(date) {
-    const cday = (typeof date === 'number' && !isNaN(date)) ? date :
-      greg.isDate(date) ? greg.greg2abs(date) :
-      HDate.isHDate(date) ? date.abs() :
-      throwTypeError(`non-date given to dafyomi: ${date}`);
-    if (cday < osday) {
-      throw new RangeError(`Date ${date} too early; Daf Yomi cycle began on ${osdate}`);
-    }
+    const cday = getAbsDate(date);
+    checkTooEarly(cday, osday, 'Daf Yomi');
     let cno;
     let dno;
     if (cday >= nsday) { // "new" cycle

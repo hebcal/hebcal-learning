@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import {HDate, Event, flags, greg, Locale, gematriya} from '@hebcal/core';
-import {throwTypeError} from './throwTypeError';
+import {Event, flags, greg, Locale, gematriya} from '@hebcal/core';
+import {getAbsDate, checkTooEarly} from './common';
 
 // On 9 July 2020 all three tracks completed the Rambam learning cycle.
 // The 3 chapter daily track completed its 39th cycle while the one chapter
@@ -119,13 +119,8 @@ const first4verses = [
  * @return {any}
  */
 export function dailyRambam1(date) {
-  const cday = (typeof date === 'number' && !isNaN(date)) ? date :
-    greg.isDate(date) ? greg.greg2abs(date) :
-    HDate.isHDate(date) ? date.abs() :
-    throwTypeError(`non-date given to dailyRambam: ${date}`);
-  if (cday < rambam1Start) {
-    throw new RangeError(`Date ${date} too early; Daily Rambam cycle began on ${startDate}`);
-  }
+  const cday = getAbsDate(date);
+  checkTooEarly(cday, rambam1Start, 'Daily Rambam');
   const dno = (cday - rambam1Start) % cycleLen;
   let total = dno;
   for (let j = 0; j < mishnehTorah.length; j++) {

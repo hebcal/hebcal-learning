@@ -1,5 +1,5 @@
-import {HDate, greg} from '@hebcal/core';
-import {throwTypeError} from './throwTypeError';
+import {greg} from '@hebcal/core';
+import {getAbsDate, checkTooEarly} from './common';
 
 const nach = [
   ['Joshua', 24],
@@ -77,15 +77,8 @@ export class NachYomiIndex {
    * @return {NachYomi}
    */
   lookup(date) {
-    const abs = (typeof date === 'number' && !isNaN(date)) ? date :
-      greg.isDate(date) ? greg.greg2abs(date) :
-      HDate.isHDate(date) ? date.abs() :
-      throwTypeError(`Invalid date: ${date}`);
-    if (abs < nachYomiStart) {
-      const dt = greg.abs2greg(abs);
-      const s = dt.toISOString().substring(0, 10);
-      throw new RangeError(`Date ${s} too early; Nach Yomi cycle began on 2007-11-01`);
-    }
+    const abs = getAbsDate(date);
+    checkTooEarly(abs, nachYomiStart, 'Nach Yomi');
     const dayNum = (abs - nachYomiStart) % numChapters;
     return this.days[dayNum];
   }

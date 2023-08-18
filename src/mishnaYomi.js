@@ -1,6 +1,6 @@
-import {HDate, greg} from '@hebcal/core';
+import {greg} from '@hebcal/core';
 import mishnayot from './mishnayot.json';
-import {throwTypeError} from './throwTypeError';
+import {getAbsDate, checkTooEarly} from './common';
 
 const cycleStartDate = new Date(1947, 4, 20);
 export const mishnaYomiStart = greg.greg2abs(cycleStartDate);
@@ -51,15 +51,8 @@ export class MishnaYomiIndex {
    * @return {MishnaYomi[]}
    */
   lookup(date) {
-    const abs = (typeof date === 'number' && !isNaN(date)) ? date :
-      greg.isDate(date) ? greg.greg2abs(date) :
-      HDate.isHDate(date) ? date.abs() :
-      throwTypeError(`Invalid date: ${date}`);
-    if (abs < mishnaYomiStart) {
-      const dt = greg.abs2greg(abs);
-      const s = dt.toISOString().substring(0, 10);
-      throw new RangeError(`Date ${s} too early; Mishna Yomi cycle began on 1947-05-20`);
-    }
+    const abs = getAbsDate(date);
+    checkTooEarly(abs, mishnaYomiStart, 'Mishna Yomi');
     const dayNum = (abs - mishnaYomiStart) % numDays;
     return this.days[dayNum];
   }
