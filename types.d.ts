@@ -3,10 +3,42 @@
 import {HDate, Event} from '@hebcal/core';
 
 declare module '@hebcal/learning' {
+  export class DafPage {
+    constructor(name: string, blatt: number);
+    getBlatt(): number;
+    getName(): string;
+    /**
+     * Formats (with translation) the dafyomi result as a string like "Pesachim 34"
+     * @param [locale] - Optional locale name (defaults to active locale).
+     */
+    render(locale?: string): string;
+  }
+
+  /**
+   * Event wrapper around a DafPage instance
+   */
+  export class DafPageEvent extends Event {
+    constructor(date: HDate, daf: DafPage);
+    /**
+     * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
+     * @param [locale] - Optional locale name (defaults to active locale).
+     */
+    render(locale?: string): string;
+    /**
+     * Returns Daf Yomi name without the 'Daf Yomi: ' prefix (e.g. "Pesachim 107").
+     * @param [locale] - Optional locale name (defaults to active locale).
+     */
+    renderBrief(locale?: string): string;
+    /**
+     * Returns a link to sefaria.org or dafyomi.org
+     */
+    url(): string;
+  }
+
   /**
    * Returns the Daf Yomi for given date
    */
-  export class DafYomi {
+  export class DafYomi extends DafPage {
     /**
      * Initializes a daf yomi instance
      * @param date Gregorian or Hebrew date
@@ -21,7 +53,7 @@ declare module '@hebcal/learning' {
     render(locale?: string): string;
   }
 
-  export class DafYomiEvent extends Event {
+  export class DafYomiEvent extends DafPageEvent {
     constructor(date: HDate);
     render(locale?: string): string;
     renderBrief(locale?: string): string;
@@ -181,5 +213,19 @@ declare module '@hebcal/learning' {
     render(locale?: string): string;
     url(): string;
     getCategories(): string[];
+  }
+
+  /**
+   * Daf-a-Week
+   * @param date - Hebrew or Gregorian date
+   */
+  export function dafWeekly(date: HDate | Date | number): DafPage;
+
+  /**
+   * Event wrapper around a daily weekly
+   */
+  export class DafWeeklyEvent extends DafPageEvent {
+      constructor(date: HDate, daf: DafPage);
+      getCategories(): string[];
   }
 }

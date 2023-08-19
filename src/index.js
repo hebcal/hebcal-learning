@@ -1,5 +1,5 @@
 import './register';
-export {DafYomi, DafYomiEvent} from './dafyomi';
+export {DafPage, DafPageEvent, DafYomi, DafYomiEvent} from './dafyomi';
 export {MishnaYomiEvent} from './MishnaYomiEvent';
 export {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi';
 export {NachYomiEvent} from './NachYomiEvent';
@@ -9,3 +9,4 @@ export {chofetzChaim, ChofetzChaimEvent} from './chofetzChaim';
 export {dailyRambam1, DailyRambamEvent} from './rambam';
 export {shemiratHaLashon, ShemiratHaLashonEvent} from './shemiratHaLashon';
 export {dailyPsalms, PsalmsEvent} from './psalms';
+export {dafWeekly, DafWeeklyEvent, dafWeeklyStart} from './dafWeekly';
