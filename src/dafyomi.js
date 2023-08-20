@@ -133,17 +133,26 @@ function calculateDaf(date) {
   }
 
   // Find the daf taking note that the cycle changed slightly after cycle 7.
-
-  let total = 0;
-  let blatt = 0;
-  let count = -1;
-
   // Fix Shekalim for old cycles
   const shortShekalim = cno <= 7;
   const shas = shortShekalim ? shas0.slice() : shas0;
   if (shortShekalim) {
     shas[4] = {name: 'Shekalim', blatt: 13};
   }
+
+  return findDaf(shas, dno);
+}
+
+/**
+ * @private
+ * @param {any[]} shas
+ * @param {number} dno
+ * @return {DafPage}
+ */
+export function findDaf(shas, dno) {
+  let total = 0;
+  let blatt = 0;
+  let count = -1;
 
   // Find the daf
   let j = 0;
@@ -209,9 +218,10 @@ export class DafPageEvent extends Event {
   /**
    * @param {HDate} date
    * @param {DafPage} daf
+   * @param {number} mask
    */
-  constructor(date, daf) {
-    super(date, daf.render('en'), flags.DAF_YOMI);
+  constructor(date, daf, mask) {
+    super(date, daf.render('en'), mask);
     this.daf = daf;
   }
   /**
@@ -257,7 +267,7 @@ export class DafYomiEvent extends DafPageEvent {
    */
   constructor(date) {
     const daf = new DafYomi(date.greg());
-    super(date, daf);
+    super(date, daf, flags.DAF_YOMI);
   }
   /**
    * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").

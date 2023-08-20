@@ -103,6 +103,20 @@ DailyLearning.addCalendar('dafWeekly', function(hd) {
   return new DafWeeklyEvent(hd, daf);
 });
 
+DailyLearning.addCalendar('dafWeeklySunday', function(hd) {
+  const abs = hd.abs();
+  if (abs < dafWeeklyStart) {
+    return null;
+  }
+  // Only return the weekly daf on Sundays
+  const dow = hd.getDay();
+  if (dow !== 0) {
+    return null;
+  }
+  const daf = dafWeekly(abs);
+  return new DafWeeklyEvent(hd, daf);
+});
+
 Locale.addTranslations('he', poHe);
 Locale.addTranslations('h', poHe);
 Locale.addTranslations('ashkenazi', poAshkenazi);

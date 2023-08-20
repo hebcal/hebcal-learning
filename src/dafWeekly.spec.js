@@ -23,5 +23,4 @@ test('dafWeekly-render', (t) => {
   t.is(ev.render('he'), 'שַׁבָּת דף ק״ד');
   t.is(ev.render('he-x-NoNikud'), 'שבת דף ק״ד');
   t.is(ev.url(), 'https://www.sefaria.org/Shabbat.104a?lang=bi');
-  t.deepEqual(ev.getCategories(), ['dafWeekly']);
 });

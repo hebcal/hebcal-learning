@@ -18,7 +18,7 @@ declare module '@hebcal/learning' {
    * Event wrapper around a DafPage instance
    */
   export class DafPageEvent extends Event {
-    constructor(date: HDate, daf: DafPage);
+    constructor(date: HDate, daf: DafPage, mask: number);
     /**
      * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
      * @param [locale] - Optional locale name (defaults to active locale).

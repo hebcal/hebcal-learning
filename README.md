@@ -16,6 +16,9 @@ Supports several learning schedules
   * 1 chapter a day cycle - `rambam1`
 * Chofetz Chaim - `chofetzChaim`
 * Sefer Shemirat HaLashon - `shemiratHaLashon`
+* Daf-a-Week
+  * Daily - `dafWeekly`
+  * Sundays only - `dafWeeklySunday`
 
 ## Installation
 ```bash
@@ -25,8 +28,14 @@ $ npm install @hebcal/learning
 ## Classes
 
 <dl>
+<dt><a href="#DafPage">DafPage</a></dt>
+<dd><p>Represents a tractate and page number</p>
+</dd>
 <dt><a href="#DafYomi">DafYomi</a></dt>
 <dd><p>Returns the Daf Yomi for given date</p>
+</dd>
+<dt><a href="#DafPageEvent">DafPageEvent</a></dt>
+<dd><p>Event wrapper around a DafPage instance</p>
 </dd>
 <dt><a href="#DafYomiEvent">DafYomiEvent</a></dt>
 <dd><p>Event wrapper around a DafYomi instance</p>
@@ -59,6 +68,9 @@ and Ketuvim (Writings).</p>
 </dd>
 <dt><a href="#PsalmsEvent">PsalmsEvent</a></dt>
 <dd><p>Event wrapper around a daily Psalms / Tehillim</p>
+</dd>
+<dt><a href="#DafWeeklyEvent">DafWeeklyEvent</a></dt>
+<dd><p>Event wrapper around a daily weekly</p>
 </dd>
 </dl>
 
@@ -101,6 +113,9 @@ cycle began (2 February 1980 for Vilna,
 <dt><a href="#dailyPsalms">dailyPsalms(date)</a> ⇒ <code>any</code></dt>
 <dd><p>Calculates Daily Psalms (Tehillim) for 30-day cycle.</p>
 </dd>
+<dt><a href="#dafWeekly">dafWeekly(date)</a> ⇒ <code><a href="#DafPage">DafPage</a></code></dt>
+<dd><p>Daf-a-Week</p>
+</dd>
 </dl>
 
 ## Typedefs
@@ -114,19 +129,55 @@ cycle began (2 February 1980 for Vilna,
 </dd>
 </dl>
 
+<a name="DafPage"></a>
+
+## DafPage
+Represents a tractate and page number
+
+**Kind**: global class  
+
+* [DafPage](#DafPage)
+    * [new DafPage(name, blatt)](#new_DafPage_new)
+    * [.getBlatt()](#DafPage+getBlatt) ⇒ <code>number</code>
+    * [.getName()](#DafPage+getName) ⇒ <code>string</code>
+    * [.render([locale])](#DafPage+render) ⇒ <code>string</code>
+
+<a name="new_DafPage_new"></a>
+
+### new DafPage(name, blatt)
+Initializes a daf yomi instance
+
+
+| Param | Type |
+| --- | --- |
+| name | <code>string</code> | 
+| blatt | <code>number</code> | 
+
+<a name="DafPage+getBlatt"></a>
+
+### dafPage.getBlatt() ⇒ <code>number</code>
+**Kind**: instance method of [<code>DafPage</code>](#DafPage)  
+<a name="DafPage+getName"></a>
+
+### dafPage.getName() ⇒ <code>string</code>
+**Kind**: instance method of [<code>DafPage</code>](#DafPage)  
+<a name="DafPage+render"></a>
+
+### dafPage.render([locale]) ⇒ <code>string</code>
+Formats (with translation) the dafyomi result as a string like "Pesachim 34"
+
+**Kind**: instance method of [<code>DafPage</code>](#DafPage)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
+
 <a name="DafYomi"></a>
 
 ## DafYomi
 Returns the Daf Yomi for given date
 
 **Kind**: global class  
-
-* [DafYomi](#DafYomi)
-    * [new DafYomi(date)](#new_DafYomi_new)
-    * [.getBlatt()](#DafYomi+getBlatt) ⇒ <code>number</code>
-    * [.getName()](#DafYomi+getName) ⇒ <code>string</code>
-    * [.render([locale])](#DafYomi+render) ⇒ <code>string</code>
-
 <a name="new_DafYomi_new"></a>
 
 ### new DafYomi(date)
@@ -137,25 +188,56 @@ Initializes a daf yomi instance
 | --- | --- | --- |
 | date | <code>Date</code> \| <code>HDate</code> \| <code>number</code> | Gregorian or Hebrew date |
 
-<a name="DafYomi+getBlatt"></a>
+<a name="DafPageEvent"></a>
 
-### dafYomi.getBlatt() ⇒ <code>number</code>
-**Kind**: instance method of [<code>DafYomi</code>](#DafYomi)  
-<a name="DafYomi+getName"></a>
+## DafPageEvent
+Event wrapper around a DafPage instance
 
-### dafYomi.getName() ⇒ <code>string</code>
-**Kind**: instance method of [<code>DafYomi</code>](#DafYomi)  
-<a name="DafYomi+render"></a>
+**Kind**: global class  
 
-### dafYomi.render([locale]) ⇒ <code>string</code>
-Formats (with translation) the dafyomi result as a string like "Pesachim 34"
+* [DafPageEvent](#DafPageEvent)
+    * [new DafPageEvent(date, daf)](#new_DafPageEvent_new)
+    * [.render([locale])](#DafPageEvent+render) ⇒ <code>string</code>
+    * [.renderBrief([locale])](#DafPageEvent+renderBrief) ⇒ <code>string</code>
+    * [.url()](#DafPageEvent+url) ⇒ <code>string</code>
 
-**Kind**: instance method of [<code>DafYomi</code>](#DafYomi)  
+<a name="new_DafPageEvent_new"></a>
+
+### new DafPageEvent(date, daf)
+
+| Param | Type |
+| --- | --- |
+| date | <code>HDate</code> | 
+| daf | [<code>DafPage</code>](#DafPage) | 
+
+<a name="DafPageEvent+render"></a>
+
+### dafPageEvent.render([locale]) ⇒ <code>string</code>
+Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
+
+**Kind**: instance method of [<code>DafPageEvent</code>](#DafPageEvent)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
 
+<a name="DafPageEvent+renderBrief"></a>
+
+### dafPageEvent.renderBrief([locale]) ⇒ <code>string</code>
+Returns Daf Yomi name without the 'Daf Yomi: ' prefix (e.g. "Pesachim 107").
+
+**Kind**: instance method of [<code>DafPageEvent</code>](#DafPageEvent)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
+
+<a name="DafPageEvent+url"></a>
+
+### dafPageEvent.url() ⇒ <code>string</code>
+Returns a link to sefaria.org or dafyomi.org
+
+**Kind**: instance method of [<code>DafPageEvent</code>](#DafPageEvent)  
 <a name="DafYomiEvent"></a>
 
 ## DafYomiEvent
@@ -166,8 +248,6 @@ Event wrapper around a DafYomi instance
 * [DafYomiEvent](#DafYomiEvent)
     * [new DafYomiEvent(date)](#new_DafYomiEvent_new)
     * [.render([locale])](#DafYomiEvent+render) ⇒ <code>string</code>
-    * [.renderBrief([locale])](#DafYomiEvent+renderBrief) ⇒ <code>string</code>
-    * [.url()](#DafYomiEvent+url) ⇒ <code>string</code>
     * [.getCategories()](#DafYomiEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
 
 <a name="new_DafYomiEvent_new"></a>
@@ -189,23 +269,6 @@ Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachi
 | --- | --- | --- |
 | [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
 
-<a name="DafYomiEvent+renderBrief"></a>
-
-### dafYomiEvent.renderBrief([locale]) ⇒ <code>string</code>
-Returns Daf Yomi name without the 'Daf Yomi: ' prefix (e.g. "Pesachim 107").
-
-**Kind**: instance method of [<code>DafYomiEvent</code>](#DafYomiEvent)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
-
-<a name="DafYomiEvent+url"></a>
-
-### dafYomiEvent.url() ⇒ <code>string</code>
-Returns a link to sefaria.org or dafyomi.org
-
-**Kind**: instance method of [<code>DafYomiEvent</code>](#DafYomiEvent)  
 <a name="DafYomiEvent+getCategories"></a>
 
 ### dafYomiEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
@@ -587,6 +650,30 @@ Returns a link to sefaria.org
 
 ### psalmsEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>PsalmsEvent</code>](#PsalmsEvent)  
+<a name="DafWeeklyEvent"></a>
+
+## DafWeeklyEvent
+Event wrapper around a daily weekly
+
+**Kind**: global class  
+
+* [DafWeeklyEvent](#DafWeeklyEvent)
+    * [new DafWeeklyEvent(date, daf)](#new_DafWeeklyEvent_new)
+    * [.getCategories()](#DafWeeklyEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
+
+<a name="new_DafWeeklyEvent_new"></a>
+
+### new DafWeeklyEvent(date, daf)
+
+| Param | Type |
+| --- | --- |
+| date | <code>HDate</code> | 
+| daf | [<code>DafPage</code>](#DafPage) | 
+
+<a name="DafWeeklyEvent+getCategories"></a>
+
+### dafWeeklyEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>DafWeeklyEvent</code>](#DafWeeklyEvent)  
 <a name="vilna"></a>
 
 ## vilna
@@ -662,6 +749,17 @@ Looks up Sefer Shemirat HaLashon Calendar for date
 
 ## dailyPsalms(date) ⇒ <code>any</code>
 Calculates Daily Psalms (Tehillim) for 30-day cycle.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| date | <code>HDate</code> \| <code>Date</code> \| <code>number</code> | Hebrew or Gregorian date |
+
+<a name="dafWeekly"></a>
+
+## dafWeekly(date) ⇒ [<code>DafPage</code>](#DafPage)
+Daf-a-Week
 
 **Kind**: global function  
 
