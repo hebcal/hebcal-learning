@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mjradwin/hebcal-learning.git"
+    "url": "git+https://github.com/hebcal/hebcal-learning.git"
   },
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/mjradwin/hebcal-learning/issues"
+    "url": "https://github.com/hebcal/hebcal-learning/issues"
   },
-  "homepage": "https://github.com/mjradwin/hebcal-learning#readme",
+  "homepage": "https://github.com/hebcal/hebcal-learning#readme",
   "dependencies": {
     "@hebcal/core": "^5.0.1"
   },
@@ -40,11 +40,11 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.23.5",
-    "@babel/preset-env": "^7.23.5",
+    "@babel/core": "^7.23.6",
+    "@babel/preset-env": "^7.23.6",
     "@babel/register": "^7.22.15",
     "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-terser": "^0.4.4",
     "ava": "^6.0.1",
     "core-js": "^3.34.0",
@@ -52,7 +52,7 @@
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^4.0.2",
     "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^4.7.0",
+    "rollup": "^4.9.0",
     "ttag-cli": "^1.10.9"
   }
 }
