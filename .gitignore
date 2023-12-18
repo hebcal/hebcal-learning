@@ -1,3 +1,8 @@
+src/*.po.js
+src/mishnayot.js
+src/rambam1cycle.js
+src/yerushalmiVilnaMap.js
+
 # Logs
 logs
 *.log

@@ -1,6 +1,6 @@
 import test from 'ava';
 import {HebrewCalendar, flags} from '@hebcal/core';
-import './register';
+import './register.js';
 
 /**
  * @param {Event} ev

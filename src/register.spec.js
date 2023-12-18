@@ -1,5 +1,5 @@
 import test from 'ava';
-import './register';
+import './register.js';
 import {DailyLearning, HDate} from '@hebcal/core';
 
 test('lookup', (t) => {

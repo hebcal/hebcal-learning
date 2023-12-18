@@ -1,6 +1,6 @@
 import test from 'ava';
 import {HebrewCalendar} from '@hebcal/core';
-import './register';
+import './register.js';
 
 // eslint-disable-next-line require-jsdoc
 function hd2iso(hd) {

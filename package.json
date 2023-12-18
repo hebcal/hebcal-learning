@@ -1,9 +1,14 @@
 {
   "name": "@hebcal/learning",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Daily learning schedules: Daf Yomi, Mishna Yomi, etc",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
+  "type": "module",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
+  },
   "typings": "types.d.ts",
   "engines": {
     "node": ">= 16.0.0"
@@ -19,7 +24,7 @@
   },
   "homepage": "https://github.com/hebcal/hebcal-learning#readme",
   "dependencies": {
-    "@hebcal/core": "^5.0.1"
+    "@hebcal/core": "^5.0.3"
   },
   "files": [
     "types.d.ts",
@@ -27,32 +32,24 @@
   ],
   "scripts": {
     "build:rollup": "rollup -c",
-    "po2json": "node ./po2json.js po/*.po",
-    "build": "npm run po2json && npm run build:rollup",
+    "build:json2js": "for f in src/*.json; do bn=`basename $f .json`; echo 'export default' > src/$bn.js && cat $f >> src/$bn.js; done",
+    "po2json": "node ./po2json.cjs po/*.po",
+    "build": "npm run po2json && npm run build:json2js && npm run build:rollup",
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "readme": "npx -p jsdoc-to-markdown jsdoc2md dist/index.js",
     "test": "ava"
   },
-  "ava": {
-    "require": [
-      "@babel/register"
-    ]
-  },
   "devDependencies": {
-    "@babel/core": "^7.23.6",
-    "@babel/preset-env": "^7.23.6",
-    "@babel/register": "^7.22.15",
-    "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-terser": "^0.4.4",
     "ava": "^6.0.1",
     "core-js": "^3.34.0",
-    "eslint": "^8.55.0",
+    "eslint": "^8.56.0",
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^4.0.2",
     "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^4.9.0",
-    "ttag-cli": "^1.10.9"
+    "rollup": "^4.9.1",
+    "ttag-cli": "^1.10.10"
   }
 }

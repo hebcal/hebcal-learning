@@ -20,7 +20,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import {greg, Event, flags, Locale, gematriya} from '@hebcal/core';
-import {getAbsDate, checkTooEarly} from './common';
+import {getAbsDate, checkTooEarly} from './common.js';
 
 const osdate = new Date(1923, 8, 11);
 export const osday = greg.greg2abs(osdate);

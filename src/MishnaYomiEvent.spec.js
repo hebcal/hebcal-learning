@@ -1,8 +1,8 @@
 import test from 'ava';
-import {MishnaYomiEvent} from './MishnaYomiEvent';
+import {MishnaYomiEvent} from './MishnaYomiEvent.js';
 import {HDate, Locale} from '@hebcal/core';
-import poAshkenazi from './ashkenazi.po.json';
-import poHe from './he.po.json';
+import poAshkenazi from './ashkenazi.po.js';
+import poHe from './he.po.js';
 
 Locale.addTranslations('ashkenazi', poAshkenazi);
 Locale.addTranslations('a', poAshkenazi);

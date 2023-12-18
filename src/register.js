@@ -1,17 +1,17 @@
 import {DailyLearning, Locale} from '@hebcal/core';
-import {DafYomiEvent, osday} from './dafyomi';
-import {MishnaYomiEvent} from './MishnaYomiEvent';
-import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi';
-import {NachYomiEvent} from './NachYomiEvent';
-import {NachYomiIndex, nachYomiStart} from './nachYomi';
-import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi';
-import {chofetzChaim, ChofetzChaimEvent, chofetzChaimStart} from './chofetzChaim';
-import {dailyRambam1, DailyRambamEvent, rambam1Start} from './rambam';
-import {shemiratHaLashon, ShemiratHaLashonEvent, shemiratHaLashonStart} from './shemiratHaLashon';
-import {dailyPsalms, PsalmsEvent} from './psalms';
-import {dafWeekly, DafWeeklyEvent, dafWeeklyStart} from './dafWeekly';
-import poHe from './he.po.json';
-import poAshkenazi from './ashkenazi.po.json';
+import {DafYomiEvent, osday} from './dafyomi.js';
+import {MishnaYomiEvent} from './MishnaYomiEvent.js';
+import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi.js';
+import {NachYomiEvent} from './NachYomiEvent.js';
+import {NachYomiIndex, nachYomiStart} from './nachYomi.js';
+import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi.js';
+import {chofetzChaim, ChofetzChaimEvent, chofetzChaimStart} from './chofetzChaim.js';
+import {dailyRambam1, DailyRambamEvent, rambam1Start} from './rambam.js';
+import {shemiratHaLashon, ShemiratHaLashonEvent, shemiratHaLashonStart} from './shemiratHaLashon.js';
+import {dailyPsalms, PsalmsEvent} from './psalms.js';
+import {dafWeekly, DafWeeklyEvent, dafWeeklyStart} from './dafWeekly.js';
+import poHe from './he.po.js';
+import poAshkenazi from './ashkenazi.po.js';
 
 DailyLearning.addCalendar('dafYomi', function(hd) {
   const abs = hd.abs();

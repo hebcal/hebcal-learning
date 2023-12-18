@@ -1,5 +1,5 @@
 import test from 'ava';
-import {MishnaYomiIndex} from './mishnaYomi';
+import {MishnaYomiIndex} from './mishnaYomi.js';
 
 test('year1', (t) => {
   const index = new MishnaYomiIndex();

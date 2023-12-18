@@ -1,7 +1,7 @@
 import test from 'ava';
-import {dailyRambam1} from './rambam';
+import {dailyRambam1} from './rambam.js';
 import {greg} from '@hebcal/core';
-import fullCycle from './rambam1cycle.json';
+import fullCycle from './rambam1cycle.js';
 
 // eslint-disable-next-line require-jsdoc
 function abs2iso(abs) {

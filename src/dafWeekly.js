@@ -1,6 +1,6 @@
 import {flags, greg} from '@hebcal/core';
-import {shas0, findDaf, DafPageEvent} from './dafyomi';
-import {getAbsDate, checkTooEarly} from './common';
+import {shas0, findDaf, DafPageEvent} from './dafyomi.js';
+import {getAbsDate, checkTooEarly} from './common.js';
 
 const startDate = new Date(2005, 2, 6);
 export const dafWeeklyStart = greg.greg2abs(startDate);

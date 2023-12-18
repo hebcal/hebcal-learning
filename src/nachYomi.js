@@ -1,5 +1,5 @@
 import {greg} from '@hebcal/core';
-import {getAbsDate, checkTooEarly} from './common';
+import {getAbsDate, checkTooEarly} from './common.js';
 
 const nach = [
   ['Joshua', 24],

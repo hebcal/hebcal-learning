@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import {months, HDate, Event, flags, Locale} from '@hebcal/core';
-import {formatReadingPages} from './chofetzChaim';
+import {formatReadingPages} from './chofetzChaim.js';
 
 const Nisan = months.NISAN;
 const Iyyar = months.IYYAR;

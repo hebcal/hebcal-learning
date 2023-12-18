@@ -1,6 +1,6 @@
 import {HDate, months, Locale, Event, flags, greg, gematriya} from '@hebcal/core';
-import vilnaMap from './yerushalmiVilnaMap.json';
-import {getAbsDate, checkTooEarly} from './common';
+import vilnaMap from './yerushalmiVilnaMap.js';
+import {getAbsDate, checkTooEarly} from './common.js';
 
 const vilnaStartDate = new Date(1980, 1, 2);
 /**

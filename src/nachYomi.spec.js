@@ -1,5 +1,5 @@
 import test from 'ava';
-import {NachYomiIndex} from './nachYomi';
+import {NachYomiIndex} from './nachYomi.js';
 
 test('throws-lookup-string', (t) => {
   const index = new NachYomiIndex();

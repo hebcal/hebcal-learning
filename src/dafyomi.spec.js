@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 import test from 'ava';
-import {DafYomi, DafYomiEvent} from './dafyomi';
+import {DafYomi, DafYomiEvent} from './dafyomi.js';
 import {HDate, months, greg} from '@hebcal/core';
 
 test('dafyomi-single', (t) => {

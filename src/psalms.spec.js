@@ -1,5 +1,5 @@
 import test from 'ava';
-import {dailyPsalms, PsalmsEvent} from './psalms';
+import {dailyPsalms, PsalmsEvent} from './psalms.js';
 import {HDate} from '@hebcal/core';
 
 test('dailyPsalms', (t) => {

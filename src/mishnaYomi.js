@@ -1,6 +1,6 @@
 import {greg} from '@hebcal/core';
-import mishnayot from './mishnayot.json';
-import {getAbsDate, checkTooEarly} from './common';
+import mishnayot from './mishnayot.js';
+import {getAbsDate, checkTooEarly} from './common.js';
 
 const cycleStartDate = new Date(1947, 4, 20);
 export const mishnaYomiStart = greg.greg2abs(cycleStartDate);

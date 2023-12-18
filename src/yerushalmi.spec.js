@@ -1,8 +1,8 @@
 import test from 'ava';
-import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi';
+import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi.js';
 import {HDate, greg, Locale} from '@hebcal/core';
-import poAshkenazi from './ashkenazi.po.json';
-import poHe from './he.po.json';
+import poAshkenazi from './ashkenazi.po.js';
+import poHe from './he.po.js';
 
 Locale.addTranslations('ashkenazi', poAshkenazi);
 Locale.addTranslations('a', poAshkenazi);

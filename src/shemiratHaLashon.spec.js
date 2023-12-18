@@ -1,6 +1,6 @@
 import test from 'ava';
 import {HDate, greg} from '@hebcal/core';
-import {shemiratHaLashon, ShemiratHaLashonEvent} from './shemiratHaLashon';
+import {shemiratHaLashon, ShemiratHaLashonEvent} from './shemiratHaLashon.js';
 
 // eslint-disable-next-line require-jsdoc
 function hd2iso(hd) {
