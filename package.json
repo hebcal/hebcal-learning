@@ -7,7 +7,8 @@
   "type": "module",
   "exports": {
     "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs"
+    "require": "./dist/index.cjs",
+    "types": "./types.d.ts"
   },
   "typings": "types.d.ts",
   "engines": {
@@ -24,7 +25,7 @@
   },
   "homepage": "https://github.com/hebcal/hebcal-learning#readme",
   "dependencies": {
-    "@hebcal/core": "^5.0.3"
+    "@hebcal/core": "^5.0.7"
   },
   "files": [
     "types.d.ts",
@@ -32,7 +33,7 @@
   ],
   "scripts": {
     "build:rollup": "rollup -c",
-    "build:json2js": "for f in src/*.json; do bn=`basename $f .json`; echo 'export default' > src/$bn.js && cat $f >> src/$bn.js; done",
+    "build:json2js": "for f in src/*.json; do echo 'export default' > $f.js && cat $f >> $f.js; done",
     "po2json": "node ./po2json.cjs po/*.po",
     "build": "npm run po2json && npm run build:json2js && npm run build:rollup",
     "prepublish": "npm run build",
@@ -44,12 +45,11 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-terser": "^0.4.4",
     "ava": "^6.0.1",
-    "core-js": "^3.34.0",
     "eslint": "^8.56.0",
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^4.0.2",
     "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^4.9.1",
+    "rollup": "^4.9.2",
     "ttag-cli": "^1.10.10"
   }
 }
