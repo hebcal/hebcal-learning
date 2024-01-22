@@ -1,5 +1,6 @@
 import {flags, greg} from '@hebcal/core';
-import {shas0, findDaf, DafPageEvent} from './dafyomi.js';
+import {shas0, findDaf} from './dafyomi.js';
+import {DafPageEvent} from './DafPageEvent.js';
 import {getAbsDate, checkTooEarly} from './common.js';
 
 const startDate = new Date(2005, 2, 6);

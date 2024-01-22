@@ -1,5 +1,7 @@
 import './register.js';
-export {DafPage, DafPageEvent, DafYomi, DafYomiEvent} from './dafyomi.js';
+export {DafPage} from './DafPage.js';
+export {DafPageEvent} from './DafPageEvent.js';
+export {DafYomi, DafYomiEvent} from './dafyomi.js';
 export {MishnaYomiEvent} from './MishnaYomiEvent.js';
 export {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi.js';
 export {NachYomiEvent} from './NachYomiEvent.js';

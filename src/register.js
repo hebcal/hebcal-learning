@@ -10,6 +10,7 @@ import {dailyRambam1, DailyRambamEvent, rambam1Start} from './rambam.js';
 import {shemiratHaLashon, ShemiratHaLashonEvent, shemiratHaLashonStart} from './shemiratHaLashon.js';
 import {dailyPsalms, PsalmsEvent} from './psalms.js';
 import {dafWeekly, DafWeeklyEvent, dafWeeklyStart} from './dafWeekly.js';
+import {tanakhYomi, tanakhYomiStart, TanakhYomiEvent} from './tanakhYomi.js';
 import poHe from './he.po.js';
 import poAshkenazi from './ashkenazi.po.js';
 
@@ -115,6 +116,15 @@ DailyLearning.addCalendar('dafWeeklySunday', function(hd) {
   }
   const daf = dafWeekly(abs);
   return new DafWeeklyEvent(hd, daf);
+});
+
+DailyLearning.addCalendar('tanakhYomi', function(hd) {
+  const abs = hd.abs();
+  if (abs < tanakhYomiStart) {
+    return null;
+  }
+  const daf = tanakhYomi(abs);
+  return new TanakhYomiEvent(hd, daf);
 });
 
 Locale.addTranslations('he', poHe);

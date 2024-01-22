@@ -19,8 +19,10 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import {greg, Event, flags, Locale, gematriya} from '@hebcal/core';
+import {greg, flags, Locale} from '@hebcal/core';
 import {getAbsDate, checkTooEarly} from './common.js';
+import {DafPage} from './DafPage.js';
+import {DafPageEvent} from './DafPageEvent.js';
 
 const osdate = new Date(1923, 8, 11);
 export const osday = greg.greg2abs(osdate);
@@ -70,49 +72,6 @@ export const shas0 = [
 ].map((m) => {
   return {name: m[0], blatt: m[1]};
 });
-
-/**
- * Represents a tractate and page number
- */
-export class DafPage {
-  /**
-   * Initializes a daf yomi instance
-   * @param {string} name
-   * @param {number} blatt
-   */
-  constructor(name, blatt) {
-    this.name = name;
-    this.blatt = blatt;
-  }
-  /**
-   * @return {number}
-   */
-  getBlatt() {
-    return this.blatt;
-  }
-  /**
-   * @return {string}
-   */
-  getName() {
-    return this.name;
-  }
-  /**
-   * Formats (with translation) the dafyomi result as a string like "Pesachim 34"
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
-   */
-  render(locale) {
-    locale = locale || Locale.getLocaleName();
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
-    if (locale === 'he' || locale === 'he-x-nonikud') {
-      return Locale.gettext(this.name, locale) + ' דף ' +
-        gematriya(this.blatt);
-    }
-    return Locale.gettext(this.name, locale) + ' ' + this.blatt;
-  }
-}
 
 /**
  * @private
@@ -195,66 +154,6 @@ export class DafYomi extends DafPage {
   constructor(date) {
     const d = calculateDaf(date);
     super(d.name, d.blatt);
-  }
-}
-
-const dafYomiSefaria = {
-  'Berachot': 'Berakhot',
-  'Rosh Hashana': 'Rosh Hashanah',
-  'Gitin': 'Gittin',
-  'Baba Kamma': 'Bava Kamma',
-  'Baba Metzia': 'Bava Metzia',
-  'Baba Batra': 'Bava Batra',
-  'Bechorot': 'Bekhorot',
-  'Arachin': 'Arakhin',
-  'Midot': 'Middot',
-  'Shekalim': 'Jerusalem_Talmud_Shekalim',
-};
-
-/**
- * Event wrapper around a DafPage instance
- */
-export class DafPageEvent extends Event {
-  /**
-   * @param {HDate} date
-   * @param {DafPage} daf
-   * @param {number} mask
-   */
-  constructor(date, daf, mask) {
-    super(date, daf.render('en'), mask);
-    this.daf = daf;
-  }
-  /**
-   * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
-   */
-  render(locale) {
-    return this.daf.render(locale);
-  }
-  /**
-   * Returns Daf Yomi name without the 'Daf Yomi: ' prefix (e.g. "Pesachim 107").
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
-   */
-  renderBrief(locale) {
-    return this.daf.render(locale);
-  }
-  /**
-   * Returns a link to sefaria.org or dafyomi.org
-   * @return {string}
-   */
-  url() {
-    const daf = this.daf;
-    const tractate = daf.getName();
-    const blatt = daf.getBlatt();
-    if (tractate == 'Kinnim' || tractate == 'Midot') {
-      return `https://www.dafyomi.org/index.php?masechta=meilah&daf=${blatt}a`;
-    } else {
-      const name0 = dafYomiSefaria[tractate] || tractate;
-      const name = name0.replace(/ /g, '_');
-      return `https://www.sefaria.org/${name}.${blatt}a?lang=bi`;
-    }
   }
 }
 
