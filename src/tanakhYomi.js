@@ -1,6 +1,9 @@
-import {HDate, HebrewCalendar, flags, greg, months} from '@hebcal/core';
+import {HDate, HebrewCalendar, flags, greg, months,
+  Locale, gematriya} from '@hebcal/core';
+import {DafPage} from './DafPage.js';
 import {DafPageEvent} from './DafPageEvent.js';
 import {checkTooEarly} from './common.js';
+import masoretic from './masoretic.json.js';
 
 // Cycle starts 23 Tishrei (day after Shmini Atzeret in Israel)
 // Sunday, Oct 11, 2020
@@ -12,7 +15,7 @@ const JEREMIAH = 'Jeremiah';
 const RUTH = 'Ruth';
 const SHIR_HASHIRIM = 'Song of Songs';
 
-const masoretic = [
+const books = [
   ['Joshua', 14],
   ['Judges', 14],
   ['Samuel', 34],
@@ -30,7 +33,7 @@ const masoretic = [
   ['Ecclesiastes', 4],
   ['Esther', 5],
   ['Daniel', 7],
-  ['Ezra', 10],
+  ['Ezra and Nehemiah', 10],
   ['Chronicles', 25],
   ['Chronicles', 25],
 ].map((m) => {
@@ -48,7 +51,7 @@ const toSkip = new Set([
 /**
  * Calculates Tanakh Yomi.
  * @param {HDate|Date|number} date - Hebrew or Gregorian date
- * @return {any}
+ * @return {TanakhYomi}
  */
 export function tanakhYomi(date) {
   const hd = HDate.isHDate(date) ? date : new HDate(date);
@@ -60,7 +63,7 @@ export function tanakhYomi(date) {
   const hyear = hd.getFullYear();
   const rh = HDate.hebrew2abs(hyear, months.TISHREI, 1);
   const startAbs = rh + 22;
-  const table = masoretic.slice();
+  const table = books.slice();
   const longCheshvan = HDate.longCheshvan(hyear);
   let longRuth = false;
   if (HDate.isLeapYear(hyear) || longCheshvan) {
@@ -78,7 +81,6 @@ export function tanakhYomi(date) {
     longJeremiah = true;
   }
 
-  let dno = 0;
   if (cday < startAbs) {
     let blatt = rh % 7 === 6 ? 10 : 12;
     for (let i = rh + 2; i < cday; i++) {
@@ -87,33 +89,34 @@ export function tanakhYomi(date) {
         blatt++;
       }
     }
-    return {name: 'Chronicles', blatt};
+    return new TanakhYomi('Chronicles', blatt);
   }
+
+  let total = 0;
   for (let i = startAbs; i < cday; i++) {
     const hdate = new HDate(i);
     if (!skipDay(hdate)) {
-      dno++;
+      total++;
     }
   }
-  let total = dno;
   for (let j = 0; j < table.length; j++) {
     if (total < table[j].blatt) {
       const blatt = total + 1;
       const name = table[j].name;
       if ((longShirHaShirim && name === SHIR_HASHIRIM) ||
           (longRuth && name === RUTH)) {
-        return {name, blatt: '1.' + blatt};
+        return new TanakhYomi(name, '1.' + blatt);
       }
       if (longJeremiah && name === JEREMIAH && blatt >= 9) {
         if (blatt === 9) {
-          return {name, blatt: '9.1'};
+          return new TanakhYomi(name, '9.1');
         } else if (blatt === 10) {
-          return {name, blatt: '9.2'};
+          return new TanakhYomi(name, '9.2');
         } else {
-          return {name, blatt: blatt - 1};
+          return new TanakhYomi(name, blatt - 1);
         }
       }
-      return {name, blatt};
+      return new TanakhYomi(name, blatt);
     }
     total -= table[j].blatt;
   }
@@ -143,6 +146,48 @@ function skipDay(hd) {
   return false;
 }
 
+const splitSeder = {
+  'Jeremiah': {'9.1': '17:7-25', '9.2': '17:26-18:18'},
+  'Song of Songs': {'1.1': '1:1-5:1', '1.2': '5:2-8:14'},
+  'Ruth': {'1.1': '1:1-2:11', '1.2': '2:12-4:22'},
+};
+
+/**
+ * Returns the Daf Yomi for given date
+ */
+export class TanakhYomi extends DafPage {
+  /**
+   * Initializes a daf yomi instance
+   * @param {string} name
+   * @param {number} blatt
+   */
+  constructor(name, blatt) {
+    super(name, blatt);
+    const seders = masoretic[name];
+    const verses = typeof blatt === 'number' ?
+      seders[blatt - 1] : splitSeder[name][blatt];
+    const firstChar = verses.charCodeAt(0);
+    this.verses = firstChar >= 48 && firstChar <= 57 ?
+      `${name} ${verses}` : verses;
+  }
+
+  /**
+   * Formats (with translation) the dafyomi result as a string like "Pesachim 34"
+   * @param {string} [locale] Optional locale name (defaults to active locale).
+   * @return {string}
+   */
+  render(locale) {
+    locale = locale || Locale.getLocaleName();
+    if (typeof locale === 'string') {
+      locale = locale.toLowerCase();
+    }
+    const name = Locale.gettext(this.name, locale);
+    if (locale === 'he' || locale === 'he-x-nonikud') {
+      return name + ' ס׳ ' + gematriya(this.blatt);
+    }
+    return name + ' Seder ' + this.blatt;
+  }
+}
 
 /**
  * Event wrapper around a tanakhYomi
@@ -150,28 +195,24 @@ function skipDay(hd) {
 export class TanakhYomiEvent extends DafPageEvent {
   /**
    * @param {HDate} date
-   * @param {DafPage} daf
+   * @param {TanakhYomi} daf
    */
   constructor(date, daf) {
     super(date, daf, flags.USER_EVENT);
     this.alarm = false;
     this.category = 'Tanakh Yomi';
+    this.memo = daf.verses;
   }
   /**
    * Returns a link to sefaria.org or dafyomi.org
    * @return {string}
    */
   url() {
-    const daf = this.daf;
-    const tractate = daf.getName();
-    const blatt = daf.getBlatt();
-    if (tractate == 'Kinnim' || tractate == 'Midot') {
-      return `https://www.dafyomi.org/index.php?masechta=meilah&daf=${blatt}a`;
-    } else {
-      const name0 = dafYomiSefaria[tractate] || tractate;
-      const name = name0.replace(/ /g, '_');
-      return `https://www.sefaria.org/${name}.${blatt}a?lang=bi`;
-    }
+    const memo = this.daf.verses;
+    const space = memo.lastIndexOf(' ');
+    const book = memo.substring(0, space).replace(/ /g, '_');
+    const verses = memo.substring(space + 1).replace(/:/g, '.');
+    return `https://www.sefaria.org/${book}.${verses}?lang=bi`;
   }
   /** @return {string[]} */
   getCategories() {

@@ -26,3 +26,14 @@ test('dafWeeklySunday', (t) => {
   t.is(ev3.getDesc(), 'Ketubot 50');
   t.deepEqual(ev3.getCategories(), ['dafWeekly']);
 });
+
+test('tanakhYomi', (t) => {
+  const hd = new HDate(17, 'Sivan', 5783);
+  const ev = DailyLearning.lookup('tanakhYomi', hd);
+  t.is(typeof ev, 'object');
+  t.is(ev.getDesc(), 'Minor Prophets Seder 10');
+  t.deepEqual(ev.getCategories(), ['tanakhYomi']);
+
+  const ev2 = DailyLearning.lookup('tanakhYomi', new HDate(2, 'Elul', 5783));
+  t.is(ev2, null);
+});

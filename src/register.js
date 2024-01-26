@@ -124,6 +124,9 @@ DailyLearning.addCalendar('tanakhYomi', function(hd) {
     return null;
   }
   const daf = tanakhYomi(abs);
+  if (daf === null) {
+    return null;
+  }
   return new TanakhYomiEvent(hd, daf);
 });
 

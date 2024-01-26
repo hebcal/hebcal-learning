@@ -1,5 +1,5 @@
 import test from 'ava';
-import {tanakhYomi} from './tanakhYomi.js';
+import {tanakhYomi, TanakhYomiEvent} from './tanakhYomi.js';
 import {HDate, greg} from '@hebcal/core';
 
 // eslint-disable-next-line require-jsdoc
@@ -11,7 +11,9 @@ function abs2iso(abs) {
 test('tanakhYomi-single', (t) => {
   const dt = new Date(2021, 1, 28);
   const reading = tanakhYomi(dt);
-  t.deepEqual(reading, {name: 'Isaiah', blatt: 23});
+  t.is(reading.name, 'Isaiah');
+  t.is(reading.blatt, 23);
+  t.is(reading.verses, 'Isaiah 55:13-58:13');
 });
 
 test('tanakhYomi-skip-Shabbat', (t) => {
@@ -20,6 +22,33 @@ test('tanakhYomi-skip-Shabbat', (t) => {
   t.is(reading, null);
 });
 
+test('TanakhYomiEvent', (t) => {
+  const dt = new Date(2021, 1, 28);
+  const reading = tanakhYomi(dt);
+  const ev = new TanakhYomiEvent(new HDate(dt), reading);
+  t.is(ev.render('en'), 'Isaiah Seder 23');
+  t.is(ev.render('he'), 'יְשַׁעְיָהוּ ס׳ כ״ג');
+  t.is(ev.render('he-x-NoNikud'), 'ישעיהו ס׳ כ״ג');
+  t.is(ev.url(), 'https://www.sefaria.org/Isaiah.55.13-58.13?lang=bi');
+  t.is(ev.memo, 'Isaiah 55:13-58:13');
+});
+
+test('TanakhYomiEvent-2', (t) => {
+  const dt = new Date(2021, 5, 2);
+  const reading = tanakhYomi(dt);
+  const ev = new TanakhYomiEvent(new HDate(dt), reading);
+  t.is(ev.render('en'), 'Minor Prophets Seder 15');
+  t.is(ev.memo, 'Zephaniah 3:20');
+});
+
+test('TanakhYomiEvent-3', (t) => {
+  const dt = new Date(2021, 8, 22);
+  const reading = tanakhYomi(dt);
+  const ev = new TanakhYomiEvent(new HDate(dt), reading);
+  t.is(ev.render('en'), 'Chronicles Seder 21');
+  t.is(ev.url(), 'https://www.sefaria.org/II_Chronicles.26.2-29.10?lang=bi');
+  t.is(ev.memo, 'II Chronicles 26:2-29:10');
+});
 
 test('tanakhYomi-5781', (t) => {
   const startHD = new HDate(23, 'Tishrei', 5781);
@@ -339,18 +368,18 @@ test('tanakhYomi-5781', (t) => {
     '2021-08-10': 'Daniel 5',
     '2021-08-11': 'Daniel 6',
     '2021-08-12': 'Daniel 7',
-    '2021-08-13': 'Ezra 1',
+    '2021-08-13': 'Ezra and Nehemiah 1',
     '2021-08-14': null,
-    '2021-08-15': 'Ezra 2',
-    '2021-08-16': 'Ezra 3',
-    '2021-08-17': 'Ezra 4',
-    '2021-08-18': 'Ezra 5',
-    '2021-08-19': 'Ezra 6',
-    '2021-08-20': 'Ezra 7',
+    '2021-08-15': 'Ezra and Nehemiah 2',
+    '2021-08-16': 'Ezra and Nehemiah 3',
+    '2021-08-17': 'Ezra and Nehemiah 4',
+    '2021-08-18': 'Ezra and Nehemiah 5',
+    '2021-08-19': 'Ezra and Nehemiah 6',
+    '2021-08-20': 'Ezra and Nehemiah 7',
     '2021-08-21': null,
-    '2021-08-22': 'Ezra 8',
-    '2021-08-23': 'Ezra 9',
-    '2021-08-24': 'Ezra 10',
+    '2021-08-22': 'Ezra and Nehemiah 8',
+    '2021-08-23': 'Ezra and Nehemiah 9',
+    '2021-08-24': 'Ezra and Nehemiah 10',
     '2021-08-25': 'Chronicles 1',
     '2021-08-26': 'Chronicles 2',
     '2021-08-27': 'Chronicles 3',
@@ -712,18 +741,18 @@ test('tanakhYomi-5783', (t) => {
     '2023-08-22': 'Daniel 5',
     '2023-08-23': 'Daniel 6',
     '2023-08-24': 'Daniel 7',
-    '2023-08-25': 'Ezra 1',
+    '2023-08-25': 'Ezra and Nehemiah 1',
     '2023-08-26': null,
-    '2023-08-27': 'Ezra 2',
-    '2023-08-28': 'Ezra 3',
-    '2023-08-29': 'Ezra 4',
-    '2023-08-30': 'Ezra 5',
-    '2023-08-31': 'Ezra 6',
-    '2023-09-01': 'Ezra 7',
+    '2023-08-27': 'Ezra and Nehemiah 2',
+    '2023-08-28': 'Ezra and Nehemiah 3',
+    '2023-08-29': 'Ezra and Nehemiah 4',
+    '2023-08-30': 'Ezra and Nehemiah 5',
+    '2023-08-31': 'Ezra and Nehemiah 6',
+    '2023-09-01': 'Ezra and Nehemiah 7',
     '2023-09-02': null,
-    '2023-09-03': 'Ezra 8',
-    '2023-09-04': 'Ezra 9',
-    '2023-09-05': 'Ezra 10',
+    '2023-09-03': 'Ezra and Nehemiah 8',
+    '2023-09-04': 'Ezra and Nehemiah 9',
+    '2023-09-05': 'Ezra and Nehemiah 10',
     '2023-09-06': 'Chronicles 1',
     '2023-09-07': 'Chronicles 2',
     '2023-09-08': 'Chronicles 3',
