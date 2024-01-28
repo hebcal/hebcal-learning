@@ -788,3 +788,207 @@ test('tanakhYomi-5783', (t) => {
   t.deepEqual(actual, expected);
 });
 
+test('tanakhYomi-2024', (t) => {
+  const startAbs = greg.greg2abs(new Date(2024, 7, 22));
+  const endAbs = greg.greg2abs(new Date(2024, 9, 30));
+  const actual = {};
+  for (let abs = startAbs; abs <= endAbs; abs++) {
+    const reading = tanakhYomi(abs);
+    actual[abs2iso(abs)] = reading === null ? null :
+      `${reading.name} ${reading.blatt}`;
+  }
+  const expected = {
+    '2024-08-22': 'Ezra and Nehemiah 10',
+    '2024-08-23': 'Chronicles 1',
+    '2024-08-24': null,
+    '2024-08-25': 'Chronicles 2',
+    '2024-08-26': 'Chronicles 3',
+    '2024-08-27': 'Chronicles 4',
+    '2024-08-28': 'Chronicles 5',
+    '2024-08-29': 'Chronicles 6',
+    '2024-08-30': 'Chronicles 7',
+    '2024-08-31': null,
+    '2024-09-01': 'Chronicles 8',
+    '2024-09-02': 'Chronicles 9',
+    '2024-09-03': 'Chronicles 10',
+    '2024-09-04': 'Chronicles 11',
+    '2024-09-05': 'Chronicles 12',
+    '2024-09-06': 'Chronicles 13',
+    '2024-09-07': null,
+    '2024-09-08': 'Chronicles 14',
+    '2024-09-09': 'Chronicles 15',
+    '2024-09-10': 'Chronicles 16',
+    '2024-09-11': 'Chronicles 17',
+    '2024-09-12': 'Chronicles 18',
+    '2024-09-13': 'Chronicles 19',
+    '2024-09-14': null,
+    '2024-09-15': 'Chronicles 20',
+    '2024-09-16': 'Chronicles 21',
+    '2024-09-17': 'Chronicles 22',
+    '2024-09-18': 'Chronicles 23',
+    '2024-09-19': 'Chronicles 24',
+    '2024-09-20': 'Chronicles 25',
+    '2024-09-21': null,
+    '2024-09-22': 'Chronicles 1',
+    '2024-09-23': 'Chronicles 2',
+    '2024-09-24': 'Chronicles 3',
+    '2024-09-25': 'Chronicles 4',
+    '2024-09-26': 'Chronicles 5',
+    '2024-09-27': 'Chronicles 6',
+    '2024-09-28': null,
+    '2024-09-29': 'Chronicles 7',
+    '2024-09-30': 'Chronicles 8',
+    '2024-10-01': 'Chronicles 9',
+    '2024-10-02': 'Chronicles 10',
+    '2024-10-03': null,
+    '2024-10-04': null,
+    '2024-10-05': null,
+    '2024-10-06': 'Chronicles 11',
+    '2024-10-07': 'Chronicles 12',
+    '2024-10-08': 'Chronicles 13',
+    '2024-10-09': 'Chronicles 14',
+    '2024-10-10': 'Chronicles 15',
+    '2024-10-11': 'Chronicles 16',
+    '2024-10-12': null,
+    '2024-10-13': 'Chronicles 17',
+    '2024-10-14': 'Chronicles 18',
+    '2024-10-15': 'Chronicles 19',
+    '2024-10-16': 'Chronicles 20',
+    '2024-10-17': null,
+    '2024-10-18': 'Chronicles 21',
+    '2024-10-19': null,
+    '2024-10-20': 'Chronicles 22',
+    '2024-10-21': 'Chronicles 23',
+    '2024-10-22': 'Chronicles 24',
+    '2024-10-23': 'Chronicles 25',
+    '2024-10-24': null,
+    '2024-10-25': 'Joshua 1',
+    '2024-10-26': null,
+    '2024-10-27': 'Joshua 2',
+    '2024-10-28': 'Joshua 3',
+    '2024-10-29': 'Joshua 4',
+    '2024-10-30': 'Joshua 5',
+  };
+  t.deepEqual(actual, expected);
+});
+
+test('tanakhYomi-summer-2026', (t) => {
+  const startAbs = greg.greg2abs(new Date(2026, 6, 26));
+  const endAbs = greg.greg2abs(new Date(2026, 9, 9));
+  const actual = {};
+  for (let abs = startAbs; abs <= endAbs; abs++) {
+    const reading = tanakhYomi(abs);
+    actual[abs2iso(abs)] = reading === null ? null :
+      `${reading.name} ${reading.blatt}`;
+  }
+  const expected = {
+    '2026-07-26': 'Job 7',
+    '2026-07-27': 'Job 8',
+    '2026-07-28': 'Song of Songs 1.1',
+    '2026-07-29': 'Song of Songs 1.2',
+    '2026-07-30': 'Ruth 1.1',
+    '2026-07-31': 'Ruth 1.2',
+    '2026-08-01': null,
+    '2026-08-02': 'Lamentations 1',
+    '2026-08-03': 'Ecclesiastes 1',
+    '2026-08-04': 'Ecclesiastes 2',
+    '2026-08-05': 'Ecclesiastes 3',
+    '2026-08-06': 'Ecclesiastes 4',
+    '2026-08-07': 'Esther 1',
+    '2026-08-08': null,
+    '2026-08-09': 'Esther 2',
+    '2026-08-10': 'Esther 3',
+    '2026-08-11': 'Esther 4',
+    '2026-08-12': 'Esther 5',
+    '2026-08-13': 'Daniel 1',
+    '2026-08-14': 'Daniel 2',
+    '2026-08-15': null,
+    '2026-08-16': 'Daniel 3',
+    '2026-08-17': 'Daniel 4',
+    '2026-08-18': 'Daniel 5',
+    '2026-08-19': 'Daniel 6',
+    '2026-08-20': 'Daniel 7',
+    '2026-08-21': 'Ezra and Nehemiah 1',
+    '2026-08-22': null,
+    '2026-08-23': 'Ezra and Nehemiah 2',
+    '2026-08-24': 'Ezra and Nehemiah 3',
+    '2026-08-25': 'Ezra and Nehemiah 4',
+    '2026-08-26': 'Ezra and Nehemiah 5',
+    '2026-08-27': 'Ezra and Nehemiah 6',
+    '2026-08-28': 'Ezra and Nehemiah 7',
+    '2026-08-29': null,
+    '2026-08-30': 'Ezra and Nehemiah 8',
+    '2026-08-31': 'Ezra and Nehemiah 9',
+    '2026-09-01': 'Ezra and Nehemiah 10',
+    '2026-09-02': 'Chronicles 1',
+    '2026-09-03': 'Chronicles 2',
+    '2026-09-04': 'Chronicles 3',
+    '2026-09-05': null,
+    '2026-09-06': 'Chronicles 4',
+    '2026-09-07': 'Chronicles 5',
+    '2026-09-08': 'Chronicles 6',
+    '2026-09-09': 'Chronicles 7',
+    '2026-09-10': 'Chronicles 8',
+    '2026-09-11': 'Chronicles 9',
+    '2026-09-12': null,
+    '2026-09-13': null,
+    '2026-09-14': 'Chronicles 10',
+    '2026-09-15': 'Chronicles 11',
+    '2026-09-16': 'Chronicles 12',
+    '2026-09-17': 'Chronicles 13',
+    '2026-09-18': 'Chronicles 14',
+    '2026-09-19': null,
+    '2026-09-20': 'Chronicles 15',
+    '2026-09-21': null,
+    '2026-09-22': 'Chronicles 16',
+    '2026-09-23': 'Chronicles 17',
+    '2026-09-24': 'Chronicles 18',
+    '2026-09-25': 'Chronicles 19',
+    '2026-09-26': null,
+    '2026-09-27': 'Chronicles 20',
+    '2026-09-28': 'Chronicles 21',
+    '2026-09-29': 'Chronicles 22',
+    '2026-09-30': 'Chronicles 23',
+    '2026-10-01': 'Chronicles 24',
+    '2026-10-02': 'Chronicles 25',
+    '2026-10-03': null,
+    '2026-10-04': 'Joshua 1',
+    '2026-10-05': 'Joshua 2',
+    '2026-10-06': 'Joshua 3',
+    '2026-10-07': 'Joshua 4.1',
+    '2026-10-08': 'Joshua 4.2',
+    '2026-10-09': 'Joshua 5',
+  };
+  t.deepEqual(actual, expected);
+});
+
+test('Joshua', (t) => {
+  const events = [];
+  for (let i = 6; i <= 9; i++) {
+    const dt = new Date(2026, 9, i);
+    const reading = tanakhYomi(dt);
+    const ev = new TanakhYomiEvent(new HDate(dt), reading);
+    events.push(ev);
+  }
+  // '2026-10-06': 'Joshua 3',
+  // '2026-10-07': 'Joshua 4.1',
+  // '2026-10-08': 'Joshua 4.2',
+  // '2026-10-09': 'Joshua 5',
+  const expected = [
+    'יהושוע ס׳ ג׳',
+    'יהושוע ס׳ ד׳1',
+    'יהושוע ס׳ ד׳2',
+    'יהושוע ס׳ ה׳',
+  ];
+  const strs = events.map((ev) => ev.render('he-x-NoNikud'));
+  t.deepEqual(strs, expected);
+});
+
+test.skip('tanakhYomi-huge', (t) => {
+  const startAbs = greg.greg2abs(new Date(2001, 0, 1));
+  const endAbs = greg.greg2abs(new Date(2029, 11, 31));
+  for (let abs = startAbs; abs <= endAbs; abs++) {
+    tanakhYomi(abs);
+  }
+  t.pass();
+});
