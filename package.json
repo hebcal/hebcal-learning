@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/learning",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "description": "Daily learning schedules: Daf Yomi, Mishna Yomi, etc",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -38,7 +38,7 @@
     "build": "npm run po2json && npm run build:json2js && npm run build:rollup",
     "prepublish": "npm run build",
     "pretest": "npm run build",
-    "readme": "npx -p jsdoc-to-markdown jsdoc2md dist/index.js",
+    "readme": "cp dist/index.mjs tmp.js && npx -p jsdoc-to-markdown jsdoc2md tmp.js",
     "test": "ava"
   },
   "devDependencies": {

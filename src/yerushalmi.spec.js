@@ -1,13 +1,7 @@
 import test from 'ava';
 import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from './yerushalmi.js';
-import {HDate, greg, Locale} from '@hebcal/core';
-import poAshkenazi from './ashkenazi.po.js';
-import poHe from './he.po.js';
-
-Locale.addTranslations('ashkenazi', poAshkenazi);
-Locale.addTranslations('a', poAshkenazi);
-Locale.addTranslations('he', poHe);
-Locale.addTranslations('h', poHe);
+import {HDate, greg} from '@hebcal/core';
+import './locale.js';
 
 test('yerushalmiYomi-small', (t) => {
   const toTest = [

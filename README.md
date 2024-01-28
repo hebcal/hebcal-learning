@@ -8,6 +8,7 @@ Supports several learning schedules
 * Daf Yomi (Babylonian Talmud / Bavli) - `dafYomi`
 * Mishna Yomi - `mishnaYomi`
 * Nach Yomi - `nachYomi`
+* Tanakh Yomi - `tanakhYomi`
 * Psalms / Tehillim (30 day cycle) - `psalms`
 * Yerushalmi Yomi (Jerusalem Talmud)
   * Vilna edition - `yerushalmi-vilna`
@@ -35,18 +36,17 @@ const hd = new HDate(dt);
 const ev = DailyLearning.lookup('dafYomi', hd);
 console.log(dt.toLocaleDateString(), hd.toString(), ev.render('en'));
 ```
-
 ## Classes
 
 <dl>
 <dt><a href="#DafPage">DafPage</a></dt>
 <dd><p>Represents a tractate and page number</p>
 </dd>
-<dt><a href="#DafYomi">DafYomi</a></dt>
-<dd><p>Returns the Daf Yomi for given date</p>
-</dd>
 <dt><a href="#DafPageEvent">DafPageEvent</a></dt>
 <dd><p>Event wrapper around a DafPage instance</p>
+</dd>
+<dt><a href="#DafYomi">DafYomi</a></dt>
+<dd><p>Returns the Daf Yomi for given date</p>
 </dd>
 <dt><a href="#DafYomiEvent">DafYomiEvent</a></dt>
 <dd><p>Event wrapper around a DafYomi instance</p>
@@ -82,6 +82,12 @@ and Ketuvim (Writings).</p>
 </dd>
 <dt><a href="#DafWeeklyEvent">DafWeeklyEvent</a></dt>
 <dd><p>Event wrapper around a daily weekly</p>
+</dd>
+<dt><a href="#TanakhYomi">TanakhYomi</a></dt>
+<dd><p>Returns the Daf Yomi for given date</p>
+</dd>
+<dt><a href="#TanakhYomiEvent">TanakhYomiEvent</a></dt>
+<dd><p>Event wrapper around a tanakhYomi</p>
 </dd>
 </dl>
 
@@ -126,6 +132,9 @@ cycle began (2 February 1980 for Vilna,
 </dd>
 <dt><a href="#dafWeekly">dafWeekly(date)</a> ⇒ <code><a href="#DafPage">DafPage</a></code></dt>
 <dd><p>Daf-a-Week</p>
+</dd>
+<dt><a href="#tanakhYomi">tanakhYomi(date)</a> ⇒ <code><a href="#TanakhYomi">TanakhYomi</a></code></dt>
+<dd><p>Calculates Tanakh Yomi.</p>
 </dd>
 </dl>
 
@@ -183,22 +192,6 @@ Formats (with translation) the dafyomi result as a string like "Pesachim 34"
 | --- | --- | --- |
 | [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
 
-<a name="DafYomi"></a>
-
-## DafYomi
-Returns the Daf Yomi for given date
-
-**Kind**: global class  
-<a name="new_DafYomi_new"></a>
-
-### new DafYomi(date)
-Initializes a daf yomi instance
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| date | <code>Date</code> \| <code>HDate</code> \| <code>number</code> | Gregorian or Hebrew date |
-
 <a name="DafPageEvent"></a>
 
 ## DafPageEvent
@@ -207,19 +200,20 @@ Event wrapper around a DafPage instance
 **Kind**: global class  
 
 * [DafPageEvent](#DafPageEvent)
-    * [new DafPageEvent(date, daf)](#new_DafPageEvent_new)
+    * [new DafPageEvent(date, daf, mask)](#new_DafPageEvent_new)
     * [.render([locale])](#DafPageEvent+render) ⇒ <code>string</code>
     * [.renderBrief([locale])](#DafPageEvent+renderBrief) ⇒ <code>string</code>
     * [.url()](#DafPageEvent+url) ⇒ <code>string</code>
 
 <a name="new_DafPageEvent_new"></a>
 
-### new DafPageEvent(date, daf)
+### new DafPageEvent(date, daf, mask)
 
 | Param | Type |
 | --- | --- |
 | date | <code>HDate</code> | 
 | daf | [<code>DafPage</code>](#DafPage) | 
+| mask | <code>number</code> | 
 
 <a name="DafPageEvent+render"></a>
 
@@ -249,6 +243,22 @@ Returns Daf Yomi name without the 'Daf Yomi: ' prefix (e.g. "Pesachim 107").
 Returns a link to sefaria.org or dafyomi.org
 
 **Kind**: instance method of [<code>DafPageEvent</code>](#DafPageEvent)  
+<a name="DafYomi"></a>
+
+## DafYomi
+Returns the Daf Yomi for given date
+
+**Kind**: global class  
+<a name="new_DafYomi_new"></a>
+
+### new DafYomi(date)
+Initializes a daf yomi instance
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| date | <code>Date</code> \| <code>HDate</code> \| <code>number</code> | Gregorian or Hebrew date |
+
 <a name="DafYomiEvent"></a>
 
 ## DafYomiEvent
@@ -685,6 +695,70 @@ Event wrapper around a daily weekly
 
 ### dafWeeklyEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>DafWeeklyEvent</code>](#DafWeeklyEvent)  
+<a name="TanakhYomi"></a>
+
+## TanakhYomi
+Returns the Daf Yomi for given date
+
+**Kind**: global class  
+
+* [TanakhYomi](#TanakhYomi)
+    * [new TanakhYomi(name, blatt)](#new_TanakhYomi_new)
+    * [.render([locale])](#TanakhYomi+render) ⇒ <code>string</code>
+
+<a name="new_TanakhYomi_new"></a>
+
+### new TanakhYomi(name, blatt)
+Initializes a daf yomi instance
+
+
+| Param | Type |
+| --- | --- |
+| name | <code>string</code> | 
+| blatt | <code>number</code> | 
+
+<a name="TanakhYomi+render"></a>
+
+### tanakhYomi.render([locale]) ⇒ <code>string</code>
+Formats (with translation) the dafyomi result as a string like "Pesachim 34"
+
+**Kind**: instance method of [<code>TanakhYomi</code>](#TanakhYomi)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
+
+<a name="TanakhYomiEvent"></a>
+
+## TanakhYomiEvent
+Event wrapper around a tanakhYomi
+
+**Kind**: global class  
+
+* [TanakhYomiEvent](#TanakhYomiEvent)
+    * [new TanakhYomiEvent(date, daf)](#new_TanakhYomiEvent_new)
+    * [.url()](#TanakhYomiEvent+url) ⇒ <code>string</code>
+    * [.getCategories()](#TanakhYomiEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
+
+<a name="new_TanakhYomiEvent_new"></a>
+
+### new TanakhYomiEvent(date, daf)
+
+| Param | Type |
+| --- | --- |
+| date | <code>HDate</code> | 
+| daf | [<code>TanakhYomi</code>](#TanakhYomi) | 
+
+<a name="TanakhYomiEvent+url"></a>
+
+### tanakhYomiEvent.url() ⇒ <code>string</code>
+Returns a link to sefaria.org or dafyomi.org
+
+**Kind**: instance method of [<code>TanakhYomiEvent</code>](#TanakhYomiEvent)  
+<a name="TanakhYomiEvent+getCategories"></a>
+
+### tanakhYomiEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>TanakhYomiEvent</code>](#TanakhYomiEvent)  
 <a name="vilna"></a>
 
 ## vilna
@@ -771,6 +845,17 @@ Calculates Daily Psalms (Tehillim) for 30-day cycle.
 
 ## dafWeekly(date) ⇒ [<code>DafPage</code>](#DafPage)
 Daf-a-Week
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| date | <code>HDate</code> \| <code>Date</code> \| <code>number</code> | Hebrew or Gregorian date |
+
+<a name="tanakhYomi"></a>
+
+## tanakhYomi(date) ⇒ [<code>TanakhYomi</code>](#TanakhYomi)
+Calculates Tanakh Yomi.
 
 **Kind**: global function  
 

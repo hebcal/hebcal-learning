@@ -1,13 +1,7 @@
 import test from 'ava';
 import {MishnaYomiEvent} from './MishnaYomiEvent.js';
-import {HDate, Locale} from '@hebcal/core';
-import poAshkenazi from './ashkenazi.po.js';
-import poHe from './he.po.js';
-
-Locale.addTranslations('ashkenazi', poAshkenazi);
-Locale.addTranslations('a', poAshkenazi);
-Locale.addTranslations('he', poHe);
-Locale.addTranslations('h', poHe);
+import {HDate} from '@hebcal/core';
+import './locale.js';
 
 test('MishnaYomiEvent-url', (t) => {
   const my = [{k: 'Berakhot', v: '3:6'}, {k: 'Berakhot', v: '4:1'}];

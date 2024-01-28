@@ -1,4 +1,4 @@
-import {DailyLearning, Locale} from '@hebcal/core';
+import {DailyLearning} from '@hebcal/core';
 import {DafYomiEvent, osday} from './dafyomi.js';
 import {MishnaYomiEvent} from './MishnaYomiEvent.js';
 import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi.js';
@@ -11,8 +11,7 @@ import {shemiratHaLashon, ShemiratHaLashonEvent, shemiratHaLashonStart} from './
 import {dailyPsalms, PsalmsEvent} from './psalms.js';
 import {dafWeekly, DafWeeklyEvent, dafWeeklyStart} from './dafWeekly.js';
 import {tanakhYomi, tanakhYomiStart, TanakhYomiEvent} from './tanakhYomi.js';
-import poHe from './he.po.js';
-import poAshkenazi from './ashkenazi.po.js';
+import './locale.js';
 
 DailyLearning.addCalendar('dafYomi', function(hd) {
   const abs = hd.abs();
@@ -129,8 +128,3 @@ DailyLearning.addCalendar('tanakhYomi', function(hd) {
   }
   return new TanakhYomiEvent(hd, daf);
 });
-
-Locale.addTranslations('he', poHe);
-Locale.addTranslations('h', poHe);
-Locale.addTranslations('ashkenazi', poAshkenazi);
-Locale.addTranslations('a', poAshkenazi);

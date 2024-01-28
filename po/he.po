@@ -652,3 +652,19 @@ msgstr "שער התורה"
 
 msgid "Chasimas Hasefer"
 msgstr "חתימת הספר"
+
+# Tanakh Yomi
+msgid "Kings"
+msgstr "מְלָכִים"
+
+msgid "Minor Prophets"
+msgstr "תרי עשר"
+
+msgid "Ezra and Nehemiah"
+msgstr "עֶזְרָא וְנְחֶמְיָה"
+
+msgid "Chronicles"
+msgstr "דִברֵי הַיָמִים"
+
+msgid "Samuel"
+msgstr "שְׁמוּאֵל"
