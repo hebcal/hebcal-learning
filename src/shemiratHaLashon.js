@@ -497,7 +497,7 @@ export class ShemiratHaLashonEvent extends Event {
     const book = reading.bk === 1 ? 'Book I' : 'Book II';
     const section = reading.k === Chapters ? '' : `, ${reading.k}`;
     const desc = book + section + formatReadingPages(reading);
-    super(date, desc, flags.USER_EVENT);
+    super(date, desc, flags.DAILY_LEARNING);
     this.reading = reading;
     this.memo = this.render('memo');
     this.alarm = false;

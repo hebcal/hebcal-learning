@@ -143,7 +143,7 @@ export class DailyRambamEvent extends Event {
    * @param {any} reading
    */
   constructor(date, reading) {
-    super(date, `${reading.name} ${reading.perek}`, flags.USER_EVENT);
+    super(date, `${reading.name} ${reading.perek}`, flags.DAILY_LEARNING);
     this.reading = reading;
     // this.memo = this.render('memo');
     this.alarm = false;

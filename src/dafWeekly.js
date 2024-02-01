@@ -32,7 +32,7 @@ export class DafWeeklyEvent extends DafPageEvent {
    * @param {DafPage} daf
    */
   constructor(date, daf) {
-    super(date, daf, flags.USER_EVENT);
+    super(date, daf, flags.DAILY_LEARNING);
     this.alarm = false;
     this.category = 'Daf Weekly';
   }

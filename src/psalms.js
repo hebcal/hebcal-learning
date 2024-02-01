@@ -57,7 +57,7 @@ export class PsalmsEvent extends Event {
    * @param {number[]|string[]} reading
    */
   constructor(date, reading) {
-    super(date, `Psalms ${reading[0]}-${reading[1]}`, flags.USER_EVENT);
+    super(date, `Psalms ${reading[0]}-${reading[1]}`, flags.DAILY_LEARNING);
     this.reading = reading;
     this.alarm = false;
     this.category = 'Psalms';

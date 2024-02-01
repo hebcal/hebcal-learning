@@ -389,7 +389,7 @@ export class ChofetzChaimEvent extends Event {
    */
   constructor(date, reading) {
     const desc = reading.k + formatReadingPages(reading);
-    super(date, desc, flags.USER_EVENT);
+    super(date, desc, flags.DAILY_LEARNING);
     this.reading = reading;
     this.memo = this.render('memo');
     this.alarm = false;
@@ -400,7 +400,7 @@ export class ChofetzChaimEvent extends Event {
    * @param {string} [locale] Optional locale name (defaults to active locale).
    * @return {string}
    */
-  render(locale) {
+  renderBrief(locale) {
     locale = locale || Locale.getLocaleName();
     if (typeof locale === 'string') {
       locale = locale.toLowerCase();
@@ -410,10 +410,21 @@ export class ChofetzChaimEvent extends Event {
     const book2 = book.replace('Hilchos', 'Hilchos ');
     let name = locale === 'memo' ? englishNames[book] : Locale.gettext(book2, locale);
     name += formatReadingPages(reading);
-    if (typeof reading.textBegin === 'string') {
-      name += ' ' + reading.textBegin + ' - ' + reading.textEnd;
-    }
     return name;
+  }
+  /**
+   * Returns name of reading
+   * @param {string} [locale] Optional locale name (defaults to active locale).
+   * @return {string}
+   */
+  render(locale) {
+    const str = this.renderBrief(locale);
+    const reading = this.reading;
+    if (typeof reading.textBegin === 'string') {
+      return str + ' ' + reading.textBegin + ' - ' + reading.textEnd;
+    } else {
+      return str;
+    }
   }
   /**
    * Returns a link to sefaria.org

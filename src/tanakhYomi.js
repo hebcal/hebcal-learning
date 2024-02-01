@@ -279,7 +279,7 @@ export class TanakhYomiEvent extends DafPageEvent {
    * @param {TanakhYomi} daf
    */
   constructor(date, daf) {
-    super(date, daf, flags.USER_EVENT);
+    super(date, daf, flags.DAILY_LEARNING);
     this.alarm = false;
     this.category = 'Tanakh Yomi';
     this.memo = daf.verses;
