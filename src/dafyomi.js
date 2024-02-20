@@ -167,6 +167,7 @@ export class DafYomiEvent extends DafPageEvent {
   constructor(date) {
     const daf = new DafYomi(date.greg());
     super(date, daf, flags.DAF_YOMI);
+    this.category = 'Daf Yomi';
   }
   /**
    * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").

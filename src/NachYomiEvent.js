@@ -11,6 +11,7 @@ export class NachYomiEvent extends Event {
   constructor(date, nachYomi) {
     super(date, `${nachYomi.k} ${nachYomi.v}`, flags.NACH_YOMI);
     this.nachYomi = nachYomi;
+    this.category = 'Nach Yomi';
   }
   /**
    * Returns name of tractate and page (e.g. "Beitzah 21").

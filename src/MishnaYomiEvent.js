@@ -34,6 +34,7 @@ export class MishnaYomiEvent extends Event {
   constructor(date, mishnaYomi) {
     super(date, formatMyomi(mishnaYomi, null), flags.MISHNA_YOMI);
     this.mishnaYomi = mishnaYomi;
+    this.category = 'Mishna Yomi';
   }
   /**
    * Returns Mishna Yomi name (e.g. "Bava Metzia 10:5-6" or "Berakhot 9:5-Peah 1:1").
