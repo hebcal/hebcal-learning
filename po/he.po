@@ -668,3 +668,27 @@ msgstr "דִברֵי הַיָמִים"
 
 msgid "Samuel"
 msgstr "שְׁמוּאֵל"
+
+msgid "Chofetz Chaim"
+msgstr "חָפֵץ חַיִּים"
+
+msgid "Daf Weekly"
+msgstr "דַף שְׁבוּעִי"
+
+msgid "Daily Rambam"
+msgstr "רמב״ם יוֹמִי"
+
+msgid "Mishna Yomi"
+msgstr "מִשְׁנָה יוֹמִי"
+
+msgid "Nach Yomi"
+msgstr "נ״ך יוֹמִי"
+
+msgid "Tanakh Yomi"
+msgstr "תנ״ך יוֹמִי"
+
+msgid "Shemirat HaLashon"
+msgstr "שמירת הלשון"
+
+msgid "Yerushalmi Yomi"
+msgstr "יְרוּשַׁלְמִי יוֹמִי"
