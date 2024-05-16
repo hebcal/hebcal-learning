@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/hebcal/hebcal-learning#readme",
   "dependencies": {
-    "@hebcal/core": "^5.3.8"
+    "@hebcal/core": "^5.3.9"
   },
   "files": [
     "types.d.ts",
