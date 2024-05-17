@@ -1,5 +1,4 @@
-
-import {HDate, months} from '@hebcal/core';
+import {HDate, months, Event, flags, Locale, gematriya} from '@hebcal/core';
 
 /**
  * Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana
@@ -67,4 +66,52 @@ export function pirkeiAvot(dt, il) {
       return [1];
   }
   return null;
+}
+
+const PIRKEI_AVOT = 'Pirkei Avot';
+
+/**
+ * Event wrapper for
+ * Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana
+ */
+export class PirkeiAvotSummerEvent extends Event {
+  /**
+   * @param {HDate} date
+   * @param {number[]} reading
+   */
+  constructor(date, reading) {
+    super(date, PIRKEI_AVOT + ' ' + reading.join('-'), flags.DAILY_LEARNING);
+    this.reading = reading;
+    this.alarm = false;
+    this.category = PIRKEI_AVOT;
+  }
+  /**
+   * Returns name of reading
+   * @param {string} [locale] Optional locale name (defaults to active locale).
+   * @return {string}
+   */
+  render(locale) {
+    locale = locale || Locale.getLocaleName();
+    if (typeof locale === 'string') {
+      locale = locale.toLowerCase();
+    }
+    const book = Locale.gettext(PIRKEI_AVOT, locale);
+    const reading = this.reading;
+    if (locale === 'he' || locale === 'he-x-nonikud') {
+      return book + ' ' + reading.map(gematriya).join('-');
+    }
+    return book + ' ' + reading.join('-');
+  }
+  /**
+   * Returns a link to sefaria.org
+   * @return {string}
+   */
+  url() {
+    const chaps = this.reading.join('-');
+    return `https://www.sefaria.org/Pirkei_Avot.${chaps}?lang=bi`;
+  }
+  /** @return {string[]} */
+  getCategories() {
+    return ['pirkeiAvotSummer'];
+  }
 }

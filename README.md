@@ -20,6 +20,7 @@ Supports several learning schedules
 * Daf-a-Week
   * Daily - `dafWeekly`
   * Sundays only - `dafWeeklySunday`
+* Pirkei Avot studied on Shabbat between Pesach and Rosh Hashana - `pirkeiAvotSummer`
 
 ## Installation
 ```bash
@@ -36,6 +37,7 @@ const hd = new HDate(dt);
 const ev = DailyLearning.lookup('dafYomi', hd);
 console.log(dt.toLocaleDateString(), hd.toString(), ev.render('en'));
 ```
+
 ## Classes
 
 <dl>
@@ -89,6 +91,10 @@ and Ketuvim (Writings).</p>
 <dt><a href="#TanakhYomiEvent">TanakhYomiEvent</a></dt>
 <dd><p>Event wrapper around a tanakhYomi</p>
 </dd>
+<dt><a href="#PirkeiAvotSummerEvent">PirkeiAvotSummerEvent</a></dt>
+<dd><p>Event wrapper for
+Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana</p>
+</dd>
 </dl>
 
 ## Constants
@@ -135,6 +141,19 @@ cycle began (2 February 1980 for Vilna,
 </dd>
 <dt><a href="#tanakhYomi">tanakhYomi(date)</a> ⇒ <code><a href="#TanakhYomi">TanakhYomi</a></code></dt>
 <dd><p>Calculates Tanakh Yomi.</p>
+</dd>
+<dt><a href="#pirkeiAvot">pirkeiAvot(dt, il)</a> ⇒ <code>Array.&lt;number&gt;</code></dt>
+<dd><p>Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana</p>
+<p>&quot;From at least the time of Saadia Gaon (10th century),
+it has been customary to study one chapter a week on each Shabbat
+between Passover and Shavuot; today, the tractate is generally studied
+on each Shabbat of the summer, from Passover to Rosh Hashanah,
+the entire cycle repeating a few times with doubling of chapters
+at the end if there are not a perfect multiple of six weeks&quot;
+<a href="https://en.wikipedia.org/wiki/Pirkei_Avot#Study_of_the_work">https://en.wikipedia.org/wiki/Pirkei_Avot#Study_of_the_work</a></p>
+<p>returns array (since it can return 2 chapters) or undefined if there is no Pirkei Avot on that day
+optimized for diaspora and il
+feel free to modify whatever you want, i am sure this task can be done in different ways and orders</p>
 </dd>
 </dl>
 
@@ -505,6 +524,7 @@ Event wrapper around a Chofetz Chaim instance
 
 * [ChofetzChaimEvent](#ChofetzChaimEvent)
     * [new ChofetzChaimEvent(date, reading)](#new_ChofetzChaimEvent_new)
+    * [.renderBrief([locale])](#ChofetzChaimEvent+renderBrief) ⇒ <code>string</code>
     * [.render([locale])](#ChofetzChaimEvent+render) ⇒ <code>string</code>
     * [.url()](#ChofetzChaimEvent+url) ⇒ <code>string</code>
     * [.getCategories()](#ChofetzChaimEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
@@ -517,6 +537,17 @@ Event wrapper around a Chofetz Chaim instance
 | --- | --- |
 | date | <code>HDate</code> | 
 | reading | <code>any</code> | 
+
+<a name="ChofetzChaimEvent+renderBrief"></a>
+
+### chofetzChaimEvent.renderBrief([locale]) ⇒ <code>string</code>
+Returns name of reading
+
+**Kind**: instance method of [<code>ChofetzChaimEvent</code>](#ChofetzChaimEvent)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
 
 <a name="ChofetzChaimEvent+render"></a>
 
@@ -759,6 +790,50 @@ Returns a link to sefaria.org or dafyomi.org
 
 ### tanakhYomiEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>TanakhYomiEvent</code>](#TanakhYomiEvent)  
+<a name="PirkeiAvotSummerEvent"></a>
+
+## PirkeiAvotSummerEvent
+Event wrapper for
+Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana
+
+**Kind**: global class  
+
+* [PirkeiAvotSummerEvent](#PirkeiAvotSummerEvent)
+    * [new PirkeiAvotSummerEvent(date, reading)](#new_PirkeiAvotSummerEvent_new)
+    * [.render([locale])](#PirkeiAvotSummerEvent+render) ⇒ <code>string</code>
+    * [.url()](#PirkeiAvotSummerEvent+url) ⇒ <code>string</code>
+    * [.getCategories()](#PirkeiAvotSummerEvent+getCategories) ⇒ <code>Array.&lt;string&gt;</code>
+
+<a name="new_PirkeiAvotSummerEvent_new"></a>
+
+### new PirkeiAvotSummerEvent(date, reading)
+
+| Param | Type |
+| --- | --- |
+| date | <code>HDate</code> | 
+| reading | <code>Array.&lt;number&gt;</code> | 
+
+<a name="PirkeiAvotSummerEvent+render"></a>
+
+### pirkeiAvotSummerEvent.render([locale]) ⇒ <code>string</code>
+Returns name of reading
+
+**Kind**: instance method of [<code>PirkeiAvotSummerEvent</code>](#PirkeiAvotSummerEvent)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [locale] | <code>string</code> | Optional locale name (defaults to active locale). |
+
+<a name="PirkeiAvotSummerEvent+url"></a>
+
+### pirkeiAvotSummerEvent.url() ⇒ <code>string</code>
+Returns a link to sefaria.org
+
+**Kind**: instance method of [<code>PirkeiAvotSummerEvent</code>](#PirkeiAvotSummerEvent)  
+<a name="PirkeiAvotSummerEvent+getCategories"></a>
+
+### pirkeiAvotSummerEvent.getCategories() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>PirkeiAvotSummerEvent</code>](#PirkeiAvotSummerEvent)  
 <a name="vilna"></a>
 
 ## vilna
@@ -862,6 +937,30 @@ Calculates Tanakh Yomi.
 | Param | Type | Description |
 | --- | --- | --- |
 | date | <code>HDate</code> \| <code>Date</code> \| <code>number</code> | Hebrew or Gregorian date |
+
+<a name="pirkeiAvot"></a>
+
+## pirkeiAvot(dt, il) ⇒ <code>Array.&lt;number&gt;</code>
+Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana
+
+"From at least the time of Saadia Gaon (10th century),
+it has been customary to study one chapter a week on each Shabbat
+between Passover and Shavuot; today, the tractate is generally studied
+on each Shabbat of the summer, from Passover to Rosh Hashanah,
+the entire cycle repeating a few times with doubling of chapters
+at the end if there are not a perfect multiple of six weeks"
+https://en.wikipedia.org/wiki/Pirkei_Avot#Study_of_the_work
+
+returns array (since it can return 2 chapters) or undefined if there is no Pirkei Avot on that day
+optimized for diaspora and il
+feel free to modify whatever you want, i am sure this task can be done in different ways and orders
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| dt | <code>Date</code> \| <code>HDate</code> | 
+| il | <code>boolean</code> | 
 
 <a name="MishnaYomi"></a>
 

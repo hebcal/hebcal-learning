@@ -11,6 +11,7 @@ import {shemiratHaLashon, ShemiratHaLashonEvent, shemiratHaLashonStart} from './
 import {dailyPsalms, PsalmsEvent} from './psalms.js';
 import {dafWeekly, DafWeeklyEvent, dafWeeklyStart} from './dafWeekly.js';
 import {tanakhYomi, tanakhYomiStart, TanakhYomiEvent} from './tanakhYomi.js';
+import {pirkeiAvot, PirkeiAvotSummerEvent} from './pirkeiAvot.js';
 import './locale.js';
 
 DailyLearning.addCalendar('dafYomi', function(hd) {
@@ -127,4 +128,12 @@ DailyLearning.addCalendar('tanakhYomi', function(hd) {
     return null;
   }
   return new TanakhYomiEvent(hd, daf);
+});
+
+DailyLearning.addCalendar('pirkeiAvotSummer', function(hd) {
+  const reading = pirkeiAvot(hd);
+  if (reading === null) {
+    return null;
+  }
+  return new PirkeiAvotSummerEvent(hd, reading);
 });

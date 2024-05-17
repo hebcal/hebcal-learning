@@ -1,5 +1,5 @@
 import test from 'ava';
-import {pirkeiAvot} from './pirkeiAvot.js';
+import {pirkeiAvot, PirkeiAvotSummerEvent} from './pirkeiAvot.js';
 import {HDate, months} from '@hebcal/core';
 
 // eslint-disable-next-line require-jsdoc
@@ -114,4 +114,17 @@ test('pirkeiAvot 5783 israel', (t) => {
     '23 Elul 5783': [5, 6],
   };
   t.deepEqual(actual, expected);
+});
+
+test('PirkeiAvotSummerEvent', (t) => {
+  const ev2 = new PirkeiAvotSummerEvent(new HDate(9, 'Elul', 5783), [2]);
+  const ev34 = new PirkeiAvotSummerEvent(new HDate(16, 'Elul', 5783), [3, 4]);
+  t.is(ev2.url(), 'https://www.sefaria.org/Pirkei_Avot.2?lang=bi');
+  t.is(ev34.url(), 'https://www.sefaria.org/Pirkei_Avot.3-4?lang=bi');
+  t.is(ev2.render('en'), 'Pirkei Avot 2');
+  t.is(ev34.render('en'), 'Pirkei Avot 3-4');
+  t.is(ev2.render('he'), 'פִּרְקֵי אָבוֹת ב׳');
+  t.is(ev34.render('he'), 'פִּרְקֵי אָבוֹת ג׳-ד׳');
+  t.is(ev2.render('he-x-NoNikud'), 'פרקי אבות ב׳');
+  t.is(ev34.render('he-x-NoNikud'), 'פרקי אבות ג׳-ד׳');
 });

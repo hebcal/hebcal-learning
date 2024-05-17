@@ -12,4 +12,4 @@ export {dailyRambam1, DailyRambamEvent} from './rambam.js';
 export {shemiratHaLashon, ShemiratHaLashonEvent} from './shemiratHaLashon.js';
 export {dailyPsalms, PsalmsEvent} from './psalms.js';
 export {dafWeekly, DafWeeklyEvent, dafWeeklyStart} from './dafWeekly.js';
-export {pirkeiAvot} from './pirkeiAvot.js';
+export {pirkeiAvot, PirkeiAvotSummerEvent} from './pirkeiAvot.js';
