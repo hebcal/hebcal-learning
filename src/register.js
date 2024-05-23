@@ -130,8 +130,8 @@ DailyLearning.addCalendar('tanakhYomi', function(hd) {
   return new TanakhYomiEvent(hd, daf);
 });
 
-DailyLearning.addCalendar('pirkeiAvotSummer', function(hd) {
-  const reading = pirkeiAvot(hd);
+DailyLearning.addCalendar('pirkeiAvotSummer', function(hd, il) {
+  const reading = pirkeiAvot(hd, il);
   if (reading === null) {
     return null;
   }
