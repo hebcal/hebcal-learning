@@ -1,7 +1,5 @@
-src/*.po.js
-src/mishnayot.js
-src/rambam1cycle.js
-src/yerushalmiVilnaMap.js
+src/*.po.ts
+src/*.json.ts
 
 # Logs
 logs

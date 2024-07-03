@@ -5,7 +5,7 @@ const parser = require('ttag-cli/dist/src/lib/parser');
 const utils = require('ttag-cli/dist/src/lib/utils');
 
 for (const arg of process.argv.slice(2)) {
-  const outpath = './src/' + path.basename(arg) + '.js';
+  const outpath = './src/' + path.basename(arg) + '.ts';
   console.log(`${arg} => ${outpath}`);
   writePoFile(arg, outpath, false);
 }
