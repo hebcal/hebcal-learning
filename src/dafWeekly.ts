@@ -28,10 +28,6 @@ export function dafWeekly(date: HDate | Date | number): DafPage {
  * Event wrapper around a daily weekly
  */
 export class DafWeeklyEvent extends DafPageEvent {
-  /**
-   * @param {HDate} date
-   * @param {DafPage} daf
-   */
   constructor(date: HDate, daf: DafPage) {
     super(date, daf, flags.DAILY_LEARNING);
     this.alarm = false;

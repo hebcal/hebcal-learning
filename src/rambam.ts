@@ -118,12 +118,15 @@ const first4verses = [
   ['1:1-4:8', '5:1-9:9', '10:1-14:10'], // Overview of Mishneh Torah Contents
 ];
 
+export type RambamReading = {
+  name: string;
+  perek: number | string;
+};
+
 /**
  * Calculates Daily Rambam (Mishneh Torah) for 1 chapter a day cycle.
- * @param {HDate|Date|number} date - Hebrew or Gregorian date
- * @return {any}
  */
-export function dailyRambam1(date: HDate | Date | number): any {
+export function dailyRambam1(date: HDate | Date | number): RambamReading {
   const cday = getAbsDate(date);
   checkTooEarly(cday, rambam1Start, 'Daily Rambam');
   const dno = (cday - rambam1Start) % cycleLen;
@@ -143,13 +146,9 @@ export function dailyRambam1(date: HDate | Date | number): any {
  * Event wrapper around a Daily Rambam instance
  */
 export class DailyRambamEvent extends Event {
-  reading: any;
+  reading: RambamReading;
   category: string;
-  /**
-   * @param {HDate} date
-   * @param {any} reading
-   */
-  constructor(date: HDate, reading: any) {
+  constructor(date: HDate, reading: RambamReading) {
     super(date, `${reading.name} ${reading.perek}`, flags.DAILY_LEARNING);
     this.reading = reading;
     // this.memo = this.render('memo');

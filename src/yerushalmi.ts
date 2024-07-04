@@ -115,6 +115,12 @@ export const schottenstein = {
 const SUN = 0;
 const SAT = 6;
 
+export type YerushalmiReading = {
+  name: string;
+  blatt: number;
+  ed: string;
+};
+
 /**
  * Using the Vilna edition, the Yerushalmi Daf Yomi program takes
  * ~4.25 years or 51 months.
@@ -132,9 +138,8 @@ const SAT = 6;
  *
  * @param {HDate|Date|number} date - Hebrew or Gregorian date
  * @param {any} config - either vilna or schottenstein
- * @return {any}
  */
-export function yerushalmiYomi(date: HDate | Date | number, config: any): any {
+export function yerushalmiYomi(date: HDate | Date | number, config: any): YerushalmiReading | null {
   if (typeof config !== 'object' || !Array.isArray(config.shas)) {
     throw new Error('invalid yerushalmi config');
   }
@@ -171,11 +176,6 @@ export function yerushalmiYomi(date: HDate | Date | number, config: any): any {
   throw new Error('Interal error, this code should be unreachable');
 }
 
-/**
- * @private
- * @param {HDate} hd
- * @return {boolean}
- */
 function skipDay(hd: HDate): boolean {
   if ((hd.getMonth() === months.TISHREI && hd.getDate() === 10) ||
       (hd.getMonth() === months.AV &&
@@ -186,13 +186,6 @@ function skipDay(hd: HDate): boolean {
   return false;
 }
 
-/**
- * @private
- * @param {any} config
- * @param {number} startAbs
- * @param {number} endAbs
- * @return {number}
- */
 function numSpecialDays(config: any, startAbs: number, endAbs: number): number {
   if (!config.skipYK9Av) {
     return 0;
@@ -221,13 +214,9 @@ function numSpecialDays(config: any, startAbs: number, endAbs: number): number {
  * Event wrapper around a Yerushalmi Yomi result
  */
 export class YerushalmiYomiEvent extends Event {
-  daf: any;
+  daf: YerushalmiReading;
   category: string;
-  /**
-   * @param {HDate} date
-   * @param {any} daf
-   */
-  constructor(date: HDate, daf: any) {
+  constructor(date: HDate, daf: YerushalmiReading) {
     super(date, `${daf.name} ${daf.blatt}`, flags.YERUSHALMI_YOMI);
     this.daf = daf;
     this.category = 'Yerushalmi Yomi';
@@ -235,7 +224,6 @@ export class YerushalmiYomiEvent extends Event {
   /**
    * Returns name of tractate and page (e.g. "Yerushalmi Beitzah 21").
    * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
    */
   render(locale?: string): string {
     const prefix = Locale.gettext('Yerushalmi', locale);
@@ -244,7 +232,6 @@ export class YerushalmiYomiEvent extends Event {
   /**
    * Returns name of tractate and page (e.g. "Beitzah 21").
    * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
    */
   renderBrief(locale?: string): string {
     locale = locale || Locale.getLocaleName();
@@ -259,7 +246,6 @@ export class YerushalmiYomiEvent extends Event {
   }
   /**
    * Returns a link to sefaria.org
-   * @return {string}
    */
   url(): string | undefined {
     const daf = this.daf;
@@ -281,7 +267,6 @@ export class YerushalmiYomiEvent extends Event {
     const verses = verses0.replace(/:/g, '.');
     return `https://www.sefaria.org/${name}.${verses}?lang=bi`;
   }
-  /** @return {string[]} */
   getCategories(): string[] {
     return ['yerushalmi'];
   }
