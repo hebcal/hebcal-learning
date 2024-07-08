@@ -74,10 +74,6 @@ const PIRKEI_AVOT = 'Pirkei Avot';
 export class PirkeiAvotSummerEvent extends Event {
   reading: number[];
   category: string;
-  /**
-   * @param {HDate} date
-   * @param {number[]} reading
-   */
   constructor(date: HDate, reading: number[]) {
     super(date, PIRKEI_AVOT + ' ' + reading.join('-'), flags.DAILY_LEARNING);
     this.reading = reading;
@@ -86,8 +82,7 @@ export class PirkeiAvotSummerEvent extends Event {
   }
   /**
    * Returns name of reading
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
     locale = locale || Locale.getLocaleName();
@@ -103,7 +98,6 @@ export class PirkeiAvotSummerEvent extends Event {
   }
   /**
    * Returns a link to sefaria.org
-   * @return {string}
    */
   url(): string {
     const chaps = this.reading.join('-');

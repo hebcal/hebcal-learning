@@ -448,8 +448,6 @@ export type ShemiratHaLashonReading = {
 
 /**
  * Looks up Sefer Shemirat HaLashon Calendar for date
- * @param {HDate} hdate
- * @return {any}
  */
 export function shemiratHaLashon(hdate: HDate): ShemiratHaLashonReading {
   if (!HDate.isHDate(hdate)) {
@@ -504,10 +502,6 @@ export class ShemiratHaLashonEvent extends Event {
   reading: any;
   category: string;
   memo: string;
-  /**
-   * @param {HDate} date
-   * @param {any} reading
-   */
   constructor(date: HDate, reading: ShemiratHaLashonReading) {
     const book = reading.bk === 1 ? 'Book I' : 'Book II';
     const section = reading.k === Chapters ? '' : `, ${reading.k}`;
@@ -520,8 +514,7 @@ export class ShemiratHaLashonEvent extends Event {
   }
   /**
    * Returns name of reading
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
     locale = locale || Locale.getLocaleName();
@@ -534,8 +527,7 @@ export class ShemiratHaLashonEvent extends Event {
 
   /**
    * @private
-   * @param {string} locale
-   * @return {string}
+   * @param locale
    */
   renderPrefix(locale: string): string {
     const reading = this.reading;
@@ -549,14 +541,12 @@ export class ShemiratHaLashonEvent extends Event {
   /**
    * Returns a link to sefaria.org
    *  e.g. https://www.sefaria.org/Shemirat_HaLashon%2C_Book_I%2C_The_Gate_of_Torah.4.2?lang=b
-   * @return {string}
    */
   url(): string {
     const name = 'Shemirat HaLashon, ' + this.renderPrefix('memo') + '.' + this.reading.b;
     const urlName = encodeURIComponent(name.replace(/ /g, '_'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }
-  /** @return {string[]} */
   getCategories(): string[] {
     return ['shemiratHaLashon'];
   }

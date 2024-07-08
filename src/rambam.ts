@@ -157,8 +157,7 @@ export class DailyRambamEvent extends Event {
   }
   /**
    * Returns name of reading
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
     locale = locale || Locale.getLocaleName();
@@ -174,7 +173,6 @@ export class DailyRambamEvent extends Event {
   }
   /**
    * Returns a link to sefaria.org
-   * @return {string}
    */
   url(): string {
     const reading = this.reading;

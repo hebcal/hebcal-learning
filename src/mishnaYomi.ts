@@ -50,8 +50,6 @@ export class MishnaYomiIndex {
 
   /**
    * Looks up a Mishna Yomi
-   * @param {Date|HDate|number} date Gregorian date
-   * @return {MishnaYomi[]}
    */
   lookup(date: Date | HDate | number): MishnaYomi[] {
     const abs = getAbsDate(date);

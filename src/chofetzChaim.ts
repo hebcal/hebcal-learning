@@ -409,8 +409,7 @@ export class ChofetzChaimEvent extends Event {
   }
   /**
    * Returns name of reading
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   renderBrief(locale?: string): string {
     locale = locale || Locale.getLocaleName();
@@ -426,8 +425,7 @@ export class ChofetzChaimEvent extends Event {
   }
   /**
    * Returns name of reading
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
     const str = this.renderBrief(locale);
@@ -441,7 +439,6 @@ export class ChofetzChaimEvent extends Event {
   /**
    * Returns a link to sefaria.org
    *  e.g. https://www.sefaria.org/Chofetz_Chaim%2C_Part_One%2C_The_Prohibition_Against_Lashon_Hara%2C_Principle_7.7
-   * @return {string}
    */
   url(): string {
     const reading = this.reading;

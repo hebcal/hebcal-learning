@@ -2,8 +2,6 @@ import {HebrewCalendar, flags} from '@hebcal/core';
 import '../src/register';
 
 /**
- * @param {Event} ev
- * @return {string}
  * @private
  */
 function gregDtString(ev) {

@@ -77,8 +77,6 @@ export class NachYomiIndex {
 
   /**
    * Looks up a Nach Yomi
-   * @param {Date|HDate|number} date Gregorian date
-   * @return {NachYomi}
    */
   lookup(date: Date | HDate | number): NachYomi {
     const abs = getAbsDate(date);

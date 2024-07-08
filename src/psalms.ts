@@ -62,8 +62,7 @@ export class PsalmsEvent extends Event {
   }
   /**
    * Returns name of reading
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
     locale = locale || Locale.getLocaleName();
@@ -80,7 +79,6 @@ export class PsalmsEvent extends Event {
   /**
    * Returns a link to sefaria.org
    *  e.g. https://www.sefaria.org/Psalms.1-9?lang=b
-   * @return {string}
    */
   url(): string {
     const str = this.getDesc().replace(' ', '.').replace(/:/g, '.');

@@ -20,34 +20,26 @@ export const dafYomiSefaria: {[key: string]: string} = {
 export class DafPageEvent extends Event {
   daf: DafPage;
   category?: string;
-  /**
-   * @param {HDate} date
-   * @param {DafPage} daf
-   * @param {number} mask
-   */
   constructor(date: HDate, daf: DafPage, mask: number) {
     super(date, daf.render('en'), mask);
     this.daf = daf;
   }
   /**
    * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
     return this.daf.render(locale);
   }
   /**
    * Returns Daf Yomi name without the 'Daf Yomi: ' prefix (e.g. "Pesachim 107").
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   renderBrief(locale?: string): string {
     return this.daf.render(locale);
   }
   /**
    * Returns a link to sefaria.org or dafyomi.org
-   * @return {string}
    */
   url(): string {
     const daf = this.daf;

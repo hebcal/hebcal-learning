@@ -11,8 +11,7 @@ const numDays = 2711 * 7;
 
 /**
  * Daf-a-Week
- * @param {HDate|Date|number} date - Hebrew or Gregorian date
- * @return {DafPage}
+ * @param date - Hebrew or Gregorian date
  */
 export function dafWeekly(date: HDate | Date | number): DafPage {
   const abs = getAbsDate(date);
@@ -33,7 +32,6 @@ export class DafWeeklyEvent extends DafPageEvent {
     this.alarm = false;
     this.category = 'Daf Weekly';
   }
-  /** @return {string[]} */
   getCategories(): string[] {
     return ['dafWeekly'];
   }

@@ -2,8 +2,7 @@ import {HDate, greg} from '@hebcal/core';
 
 /**
  * @private
- * @param {HDate|Date|number} date - Hebrew or Gregorian date
- * @return {number}
+ * @param date - Hebrew or Gregorian date
  */
 export function getAbsDate(date: HDate | Date | number): number {
   const abs = typeof date === 'number' ? date :
@@ -18,9 +17,9 @@ export function getAbsDate(date: HDate | Date | number): number {
 
 /**
  * @private
- * @param {number} abs
- * @param {number} startAbs
- * @param {string} name
+ * @param abs
+ * @param startAbs
+ * @param name
  */
 export function checkTooEarly(abs: number, startAbs: number, name: string) {
   if (abs < startAbs) {

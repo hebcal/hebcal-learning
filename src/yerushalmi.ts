@@ -136,8 +136,8 @@ export type YerushalmiReading = {
  * cycle began (2 February 1980 for Vilna,
  * 14 November 2022 for Schottenstein).
  *
- * @param {HDate|Date|number} date - Hebrew or Gregorian date
- * @param {any} config - either vilna or schottenstein
+ * @param date - Hebrew or Gregorian date
+ * @param config - either vilna or schottenstein
  */
 export function yerushalmiYomi(date: HDate | Date | number, config: any): YerushalmiReading | null {
   if (typeof config !== 'object' || !Array.isArray(config.shas)) {
@@ -223,7 +223,7 @@ export class YerushalmiYomiEvent extends Event {
   }
   /**
    * Returns name of tractate and page (e.g. "Yerushalmi Beitzah 21").
-   * @param {string} [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
     const prefix = Locale.gettext('Yerushalmi', locale);
@@ -231,7 +231,7 @@ export class YerushalmiYomiEvent extends Event {
   }
   /**
    * Returns name of tractate and page (e.g. "Beitzah 21").
-   * @param {string} [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   renderBrief(locale?: string): string {
     locale = locale || Locale.getLocaleName();

@@ -66,8 +66,7 @@ const toSkip = new Set([
 
 /**
  * Calculates Tanakh Yomi.
- * @param {HDate|Date|number} date - Hebrew or Gregorian date
- * @return {TanakhYomi}
+ * @param date - Hebrew or Gregorian date
  */
 export function tanakhYomi(date: HDate | Date | number): TanakhYomi | null {
   const hd: HDate = HDate.isHDate(date) ? date as HDate : new HDate(date);
@@ -138,8 +137,6 @@ export function tanakhYomi(date: HDate | Date | number): TanakhYomi | null {
 
 /**
  * @private
- * @param {HDate} hd
- * @return {boolean}
  */
 function skipDay(hd: HDate): boolean {
   if (hd.getDay() === 6) {
@@ -161,8 +158,6 @@ function skipDay(hd: HDate): boolean {
 
 /**
  * @private
- * @param {number} year
- * @return {number}
  */
 function calculateNumDaysToRead(year: number): number {
   const startAbs = HDate.hebrew2abs(year, months.TISHREI, 23);
@@ -251,8 +246,8 @@ function makeReadingTable(year: number): ReadingsForYear {
 export class TanakhYomi extends DafPage {
   /**
    * Initializes a daf yomi instance
-   * @param {string} name
-   * @param {number} blatt
+   * @param name
+   * @param blatt
    */
   constructor(name: string, blatt: number | string) {
     super(name, blatt);
@@ -269,8 +264,7 @@ export class TanakhYomi extends DafPage {
 
   /**
    * Formats (with translation) the dafyomi result as a string like "Pesachim 34"
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
     locale = locale || Locale.getLocaleName();
@@ -296,10 +290,6 @@ export class TanakhYomi extends DafPage {
  * Event wrapper around a tanakhYomi
  */
 export class TanakhYomiEvent extends DafPageEvent {
-  /**
-   * @param {HDate} date
-   * @param {TanakhYomi} daf
-   */
   constructor(date: HDate, daf: TanakhYomi) {
     super(date, daf, flags.DAILY_LEARNING);
     this.alarm = false;

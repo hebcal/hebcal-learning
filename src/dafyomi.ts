@@ -28,7 +28,12 @@ const osdate = new Date(1923, 8, 11);
 export const osday = greg.greg2abs(osdate);
 const nsday = greg.greg2abs(new Date(1975, 5, 24));
 
-export const shas0 = [
+type Daf = {
+  name: string;
+  blatt: number;
+};
+
+export const shas0: Daf[] = [
   ['Berachot',       64],
   ['Shabbat',        157],
   ['Eruvin',         105],
@@ -75,8 +80,6 @@ export const shas0 = [
 
 /**
  * @private
- * @param {Date|HDate|number} date Gregorian or Hebrew date
- * @return {DafPage}
  */
 function calculateDaf(date: Date | HDate | number): DafPage {
   const cday = getAbsDate(date);
@@ -104,11 +107,8 @@ function calculateDaf(date: Date | HDate | number): DafPage {
 
 /**
  * @private
- * @param {any[]} shas
- * @param {number} dno
- * @return {DafPage}
  */
-export function findDaf(shas: any[], dno: number): DafPage {
+export function findDaf(shas: Daf[], dno: number): DafPage {
   let total = 0;
   let blatt = 0;
   let count = -1;
@@ -149,7 +149,7 @@ export function findDaf(shas: any[], dno: number): DafPage {
 export class DafYomi extends DafPage {
   /**
    * Initializes a daf yomi instance
-   * @param {Date|HDate|number} date Gregorian or Hebrew date
+   * @param date Gregorian or Hebrew date
    */
   constructor(date: Date | HDate | number) {
     const d = calculateDaf(date);
@@ -161,9 +161,6 @@ export class DafYomi extends DafPage {
  * Event wrapper around a DafYomi instance
  */
 export class DafYomiEvent extends DafPageEvent {
-  /**
-   * @param {HDate} date
-   */
   constructor(date: HDate) {
     const daf = new DafYomi(date.greg());
     super(date, daf, flags.DAF_YOMI);
@@ -171,13 +168,11 @@ export class DafYomiEvent extends DafPageEvent {
   }
   /**
    * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
     return Locale.gettext('Daf Yomi', locale) + ': ' + this.daf.render(locale);
   }
-  /** @return {string[]} */
   getCategories(): string[] {
     return ['dafyomi'];
   }

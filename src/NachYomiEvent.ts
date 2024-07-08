@@ -14,8 +14,7 @@ export class NachYomiEvent extends Event {
   }
   /**
    * Returns name of tractate and page (e.g. "Beitzah 21").
-   * @param {string} [locale] Optional locale name (defaults to active locale).
-   * @return {string}
+   * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
     locale = locale || Locale.getLocaleName();
@@ -30,7 +29,6 @@ export class NachYomiEvent extends Event {
   }
   /**
    * Returns a link to sefaria.org
-   * @return {string}
    */
   url(): string {
     const name = this.nachYomi.k.replace(/ /g, '_');

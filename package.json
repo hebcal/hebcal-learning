@@ -28,7 +28,6 @@
     "@hebcal/core": "^5.4.8"
   },
   "files": [
-    "types.d.ts",
     "dist"
   ],
   "scripts": {
@@ -36,6 +35,11 @@
     "build:json2js": "for f in src/*.json; do echo 'export default' > $f.ts && cat $f >> $f.ts; done",
     "po2json": "node ./po2json.cjs po/*.po",
     "build": "npm run po2json && npm run build:json2js && npm run build:rollup",
+    "docs": "typedoc",
+    "clean": "gts clean",
+    "coverage": "jest --coverage",
+    "fix": "gts fix",
+    "lint": "gts lint",
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "readme": "cp dist/index.mjs tmp.js && npx -p jsdoc-to-markdown jsdoc2md tmp.js",
@@ -55,11 +59,10 @@
     "@types/jest": "^29.5.12",
     "gts": "^5.3.1",
     "jest": "^29.7.0",
-    "jsdoc": "^4.0.3",
-    "jsdoc-to-markdown": "^8.0.1",
     "rollup": "^4.18.0",
     "ts-jest": "^29.1.5",
     "ttag-cli": "^1.10.12",
+    "typedoc": "^0.26.3",
     "typescript": "^5.5.3"
   }
 }

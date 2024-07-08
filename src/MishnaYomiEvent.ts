@@ -24,10 +24,6 @@ function formatMyomi(mishnaYomi: MishnaYomi[], locale?: string): string {
 export class MishnaYomiEvent extends Event {
   mishnaYomi: MishnaYomi[];
   category: string;
-  /**
-   * @param {HDate} date
-   * @param {MishnaYomi[]} mishnaYomi
-   */
   constructor(date: HDate, mishnaYomi: MishnaYomi[]) {
     super(date, formatMyomi(mishnaYomi), flags.MISHNA_YOMI);
     this.mishnaYomi = mishnaYomi;
