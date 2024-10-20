@@ -1,7 +1,7 @@
 import { Event, HDate } from '@hebcal/core';
 import { DafPage } from './DafPage';
 
-export const dafYomiSefaria: {[key: string]: string} = {
+const dafYomiSefaria: {[key: string]: string} = {
   'Berachot': 'Berakhot',
   'Rosh Hashana': 'Rosh Hashanah',
   'Gitin': 'Gittin',
@@ -12,7 +12,7 @@ export const dafYomiSefaria: {[key: string]: string} = {
   'Arachin': 'Arakhin',
   'Midot': 'Middot',
   'Shekalim': 'Jerusalem_Talmud_Shekalim',
-};
+} as const;
 
 /**
  * Event wrapper around a DafPage instance

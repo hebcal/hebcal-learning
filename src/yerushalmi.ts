@@ -57,7 +57,7 @@ export const vilna = {
     ['Horayot', 19],
     ['Niddah', 13],
   ],
-};
+} as const;
 
 const schottensteinStartDate = new Date(2022, 10, 14);
 /**
@@ -110,7 +110,7 @@ export const schottenstein = {
     ['Horayot', 18],
     ['Niddah', 11],
   ],
-};
+} as const;
 
 const SUN = 0;
 const SAT = 6;
