@@ -10,17 +10,6 @@ module.exports = [
   {
     input: 'src/index.ts',
     output: [
-      {file: pkg.main, format: 'cjs', name: pkg.name, banner},
-    ],
-    plugins: [
-      json({compact: true, preferConst: true}),
-      typescript(),
-    ],
-    external: ['@hebcal/core'],
-  },
-  {
-    input: 'src/index.ts',
-    output: [
       {file: pkg.module, format: 'es', name: pkg.name, banner},
     ],
     plugins: [
