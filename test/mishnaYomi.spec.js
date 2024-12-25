@@ -1,3 +1,4 @@
+import {expect, test} from 'vitest';
 import {MishnaYomiIndex} from '../src/mishnaYomi';
 
 test('year1', () => {

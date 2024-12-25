@@ -1,7 +1,7 @@
+import {expect, test} from 'vitest';
 import {pirkeiAvot, PirkeiAvotSummerEvent} from '../src/pirkeiAvot';
 import {HDate, months} from '@hebcal/core';
 
-// eslint-disable-next-line require-jsdoc
 function makeSaturdays(currentYear) {
   const pesach7 = new HDate(21, months.NISAN, currentYear);
   const firstSaturday = pesach7.onOrAfter(6).abs();

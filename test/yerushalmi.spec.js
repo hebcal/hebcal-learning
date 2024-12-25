@@ -1,3 +1,4 @@
+import {expect, test} from 'vitest';
 import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from '../src/yerushalmi';
 import {HDate, greg} from '@hebcal/core';
 import '../src/locale';
@@ -21,7 +22,6 @@ test('yerushalmiYomi-small', () => {
 });
 
 
-// eslint-disable-next-line require-jsdoc
 function hd2iso(hd) {
   return hd.greg().toISOString().substring(0, 10);
 }

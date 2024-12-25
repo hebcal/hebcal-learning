@@ -1,7 +1,7 @@
+import {expect, test} from 'vitest';
 import {HebrewCalendar} from '@hebcal/core';
 import '../src/register';
 
-// eslint-disable-next-line require-jsdoc
 function hd2iso(hd) {
   return hd.greg().toISOString().substring(0, 10);
 }

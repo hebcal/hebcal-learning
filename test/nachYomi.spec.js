@@ -1,3 +1,4 @@
+import {expect, test} from 'vitest';
 import {NachYomiIndex} from '../src/nachYomi';
 
 test('throws-lookup-string', () => {

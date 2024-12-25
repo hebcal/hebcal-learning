@@ -1,3 +1,4 @@
+import {expect, test} from 'vitest';
 import '../src/register';
 import {DailyLearning, HDate} from '@hebcal/core';
 

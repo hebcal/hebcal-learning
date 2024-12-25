@@ -1,3 +1,4 @@
+import {expect, test} from 'vitest';
 import {tanakhYomi, TanakhYomiEvent} from '../src/tanakhYomi';
 import {HDate, greg, months} from '@hebcal/core';
 import '../src/locale';

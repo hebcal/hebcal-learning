@@ -1,3 +1,4 @@
+import {expect, test} from 'vitest';
 import {dailyPsalms, PsalmsEvent} from '../src/psalms';
 import {HDate} from '@hebcal/core';
 

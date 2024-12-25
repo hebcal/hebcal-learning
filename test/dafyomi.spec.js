@@ -1,4 +1,4 @@
-/* eslint-disable require-jsdoc */
+import {expect, test} from 'vitest';
 import {DafYomi, DafYomiEvent} from '../src/dafyomi';
 import {HDate, months, greg} from '@hebcal/core';
 

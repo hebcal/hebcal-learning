@@ -1,3 +1,4 @@
+import {expect, test} from 'vitest';
 import {HDate, greg} from '@hebcal/core';
 import {shemiratHaLashon, ShemiratHaLashonEvent} from '../src/shemiratHaLashon';
 
