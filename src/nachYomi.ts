@@ -1,5 +1,5 @@
-import { HDate, greg } from '@hebcal/core';
-import { checkTooEarly, getAbsDate } from './common';
+import {HDate, greg} from '@hebcal/core';
+import {checkTooEarly, getAbsDate} from './common';
 
 const nach: [string, number][] = [
   ['Joshua', 24],

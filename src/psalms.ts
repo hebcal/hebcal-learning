@@ -1,6 +1,6 @@
-import { Event, HDate, Locale, flags, gematriya } from '@hebcal/core';
+import {Event, HDate, Locale, flags, gematriya} from '@hebcal/core';
 
-export type PsalmBeginEnd = [number|string, number|string];
+export type PsalmBeginEnd = [number | string, number | string];
 
 const schedule: PsalmBeginEnd[] = [
   [0, 0],
@@ -71,7 +71,10 @@ export class PsalmsEvent extends Event {
     }
     const book = Locale.gettext('Psalms', locale);
     const reading = this.reading;
-    if ((locale === 'he' || locale === 'he-x-nonikud') && typeof reading[0] === 'number') {
+    if (
+      (locale === 'he' || locale === 'he-x-nonikud') &&
+      typeof reading[0] === 'number'
+    ) {
       return book + ' ' + gematriya(reading[0]) + '-' + gematriya(reading[1]);
     }
     return book + ' ' + reading[0] + '-' + reading[1];

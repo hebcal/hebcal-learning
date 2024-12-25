@@ -1,9 +1,17 @@
-import { Event, HDate, Locale, flags, gematriya, greg, months } from '@hebcal/core';
-import { checkTooEarly, getAbsDate } from './common';
+import {
+  Event,
+  HDate,
+  Locale,
+  flags,
+  gematriya,
+  greg,
+  months,
+} from '@hebcal/core';
+import {checkTooEarly, getAbsDate} from './common';
 import vilnaMap0 from './yerushalmiVilnaMap.json';
 
 const vilnaMap: {
-  [key: string]: (string|null)[],
+  [key: string]: (string | null)[];
 } = vilnaMap0;
 
 const vilnaStartDate = new Date(1980, 1, 2);
@@ -139,7 +147,10 @@ export type YerushalmiReading = {
  * @param date - Hebrew or Gregorian date
  * @param config - either vilna or schottenstein
  */
-export function yerushalmiYomi(date: HDate | Date | number, config: any): YerushalmiReading | null {
+export function yerushalmiYomi(
+  date: HDate | Date | number,
+  config: any
+): YerushalmiReading | null {
   if (typeof config !== 'object' || !Array.isArray(config.shas)) {
     throw new Error('invalid yerushalmi config');
   }
@@ -177,10 +188,12 @@ export function yerushalmiYomi(date: HDate | Date | number, config: any): Yerush
 }
 
 function skipDay(hd: HDate): boolean {
-  if ((hd.getMonth() === months.TISHREI && hd.getDate() === 10) ||
-      (hd.getMonth() === months.AV &&
-        ((hd.getDate() === 9 && hd.getDay() !== SAT) ||
-          (hd.getDate() === 10 && hd.getDay() === SUN)))) {
+  if (
+    (hd.getMonth() === months.TISHREI && hd.getDate() === 10) ||
+    (hd.getMonth() === months.AV &&
+      ((hd.getDate() === 9 && hd.getDay() !== SAT) ||
+        (hd.getDate() === 10 && hd.getDay() === SUN)))
+  ) {
     return true;
   }
   return false;

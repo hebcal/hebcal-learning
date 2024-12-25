@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import { Event, HDate, Locale, flags, months } from '@hebcal/core';
-import { formatReadingPages } from './chofetzChaim';
+import {Event, HDate, Locale, flags, months} from '@hebcal/core';
+import {formatReadingPages} from './chofetzChaim';
 
 const Nisan = months.NISAN;
 const Iyyar = months.IYYAR;
@@ -45,8 +45,8 @@ type Entry = [
   [number, number], // leap
   number, // Book1 or Book2
   string, // Sub-book name
-  number|string, // begin chapter
-  number|string|undefined, // end chapter
+  number | string, // begin chapter
+  number | string | undefined, // end chapter
 ];
 
 const schedule: Entry[] = [
@@ -455,7 +455,9 @@ export function shemiratHaLashon(hdate: HDate): ShemiratHaLashonReading {
   }
   const cday = hdate.abs();
   if (cday < shemiratHaLashonStart) {
-    throw new RangeError(`Date ${hdate} too early; Sefer Shemirat HaLashon cycle began on ${startDate}`);
+    throw new RangeError(
+      `Date ${hdate} too early; Sefer Shemirat HaLashon cycle began on ${startDate}`
+    );
   }
 
   const day = hdate.getDate();
@@ -465,16 +467,22 @@ export function shemiratHaLashon(hdate: HDate): ShemiratHaLashonReading {
 
   // check for 29th of Kislev or Cheshvan
   const year = hdate.getFullYear();
-  if (day === 29 &&
-      ((month === Kislev && HDate.shortKislev(year)) ||
-       (month === Cheshvan && !HDate.longCheshvan(year)))) {
+  if (
+    day === 29 &&
+    ((month === Kislev && HDate.shortKislev(year)) ||
+      (month === Cheshvan && !HDate.longCheshvan(year)))
+  ) {
     const extra = lookupReading(30, month, isLeapYear);
     result.e = extra.e;
   }
   return result;
 }
 
-function lookupReading(day: number, month: number, isLeapYear: boolean): ShemiratHaLashonReading {
+function lookupReading(
+  day: number,
+  month: number,
+  isLeapYear: boolean
+): ShemiratHaLashonReading {
   let bk = 0;
   let k = '';
   let b: number | string = 0;
@@ -492,7 +500,7 @@ function lookupReading(day: number, month: number, isLeapYear: boolean): Shemira
       e = reading[5] || reading[4]; // end
     }
   }
-  return { bk, k, b, e };
+  return {bk, k, b, e};
 }
 
 /**
@@ -533,8 +541,12 @@ export class ShemiratHaLashonEvent extends Event {
     const reading = this.reading;
     const book = reading.bk === 1 ? 'Book I' : 'Book II';
     const section0 = reading.k.replace(/ /g, '_');
-    const section = locale === 'memo' ? englishNames[section0] :
-      reading.k === Chapters ? null : Locale.gettext(reading.k, locale);
+    const section =
+      locale === 'memo'
+        ? englishNames[section0]
+        : reading.k === Chapters
+          ? null
+          : Locale.gettext(reading.k, locale);
     return section ? `${book}, ${section}` : book;
   }
 
@@ -543,7 +555,8 @@ export class ShemiratHaLashonEvent extends Event {
    *  e.g. https://www.sefaria.org/Shemirat_HaLashon%2C_Book_I%2C_The_Gate_of_Torah.4.2?lang=b
    */
   url(): string {
-    const name = 'Shemirat HaLashon, ' + this.renderPrefix('memo') + '.' + this.reading.b;
+    const name =
+      'Shemirat HaLashon, ' + this.renderPrefix('memo') + '.' + this.reading.b;
     const urlName = encodeURIComponent(name.replace(/ /g, '_'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }

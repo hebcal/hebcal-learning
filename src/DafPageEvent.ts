@@ -1,17 +1,17 @@
-import { Event, HDate } from '@hebcal/core';
-import { DafPage } from './DafPage';
+import {Event, HDate} from '@hebcal/core';
+import {DafPage} from './DafPage';
 
 const dafYomiSefaria: {[key: string]: string} = {
-  'Berachot': 'Berakhot',
+  Berachot: 'Berakhot',
   'Rosh Hashana': 'Rosh Hashanah',
-  'Gitin': 'Gittin',
+  Gitin: 'Gittin',
   'Baba Kamma': 'Bava Kamma',
   'Baba Metzia': 'Bava Metzia',
   'Baba Batra': 'Bava Batra',
-  'Bechorot': 'Bekhorot',
-  'Arachin': 'Arakhin',
-  'Midot': 'Middot',
-  'Shekalim': 'Jerusalem_Talmud_Shekalim',
+  Bechorot: 'Bekhorot',
+  Arachin: 'Arakhin',
+  Midot: 'Middot',
+  Shekalim: 'Jerusalem_Talmud_Shekalim',
 } as const;
 
 /**

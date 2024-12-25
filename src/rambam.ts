@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import { Event, HDate, Locale, flags, gematriya, greg } from '@hebcal/core';
-import { checkTooEarly, getAbsDate } from './common';
+import {Event, HDate, Locale, flags, gematriya, greg} from '@hebcal/core';
+import {checkTooEarly, getAbsDate} from './common';
 
 // On 9 July 2020 all three tracks completed the Rambam learning cycle.
 // The 3 chapter daily track completed its 39th cycle while the one chapter
@@ -61,7 +61,7 @@ const mishnehTorah: Daf[] = [
   ['Gifts to the Poor', 10],
   ['Heave Offerings', 15],
   ['Tithes', 14],
-  ['Second Tithes and Fourth Year\'s Fruit', 11],
+  ["Second Tithes and Fourth Year's Fruit", 11],
   ['First Fruits and other Gifts to Priests Outside the Sanctuary', 12],
   ['Sabbatical Year and the Jubilee', 13],
   ['The Chosen Temple', 8],
@@ -107,7 +107,7 @@ const mishnehTorah: Daf[] = [
   ['Rebels', 7],
   ['Mourning', 14],
   ['Kings and Wars', 12],
-].map((m) => {
+].map(m => {
   return {name: m[0] as string, ch: m[1] as number};
 });
 
@@ -165,9 +165,15 @@ export class DailyRambamEvent extends Event {
       locale = locale.toLowerCase();
     }
     const reading = this.reading;
-    if ((locale === 'he' || locale === 'he-x-nonikud') && typeof reading.perek === 'number') {
-      return Locale.gettext(reading.name, locale) + ' פרק ' +
-        gematriya(reading.perek);
+    if (
+      (locale === 'he' || locale === 'he-x-nonikud') &&
+      typeof reading.perek === 'number'
+    ) {
+      return (
+        Locale.gettext(reading.name, locale) +
+        ' פרק ' +
+        gematriya(reading.perek)
+      );
     }
     return Locale.gettext(reading.name, locale) + ' ' + reading.perek;
   }
@@ -177,7 +183,9 @@ export class DailyRambamEvent extends Event {
   url(): string {
     const reading = this.reading;
     const name = 'Mishneh Torah, ' + reading.name + '.' + reading.perek;
-    const urlName = encodeURIComponent(name.replace(/ /g, '_').replace(/:/g, '.'));
+    const urlName = encodeURIComponent(
+      name.replace(/ /g, '_').replace(/:/g, '.')
+    );
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }
   getCategories(): string[] {

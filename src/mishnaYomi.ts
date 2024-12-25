@@ -1,5 +1,5 @@
-import { HDate, greg } from '@hebcal/core';
-import { checkTooEarly, getAbsDate } from './common';
+import {HDate, greg} from '@hebcal/core';
+import {checkTooEarly, getAbsDate} from './common';
 import mishnayot from './mishnayot.json';
 
 const cycleStartDate = new Date(1947, 4, 20);

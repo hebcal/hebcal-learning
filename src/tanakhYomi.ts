@@ -1,18 +1,20 @@
 import {
-  HDate, HebrewCalendar,
+  HDate,
+  HebrewCalendar,
   Locale,
   flags,
   gematriya,
-  greg, months
+  greg,
+  months,
 } from '@hebcal/core';
-import { DafPage } from './DafPage';
-import { DafPageEvent } from './DafPageEvent';
-import { checkTooEarly } from './common';
+import {DafPage} from './DafPage';
+import {DafPageEvent} from './DafPageEvent';
+import {checkTooEarly} from './common';
 import masoretic0 from './masoretic.json';
 
 const masoretic: {
-  split: {[key: string]: any},
-  regular: {[key: string]: any},
+  split: {[key: string]: any};
+  regular: {[key: string]: any};
 } = masoretic0;
 
 // Cycle starts 23 Tishrei (day after Shmini Atzeret in Israel)
@@ -52,16 +54,16 @@ const books: Daf[] = [
   ['Ezra and Nehemiah', 10],
   ['Chronicles', 25],
   ['Chronicles', 25],
-].map((m) => {
+].map(m => {
   return {name: m[0] as string, blatt: m[1] as number};
 });
 
 // Also Pesach 1 and 7, Shavuot, RH 1 and 2, YK, Sukkot 1, Shmini Atz,
 const toSkip = new Set([
   'Purim',
-  'Yom HaAtzma\'ut',
-  'Tish\'a B\'Av',
-  'Tish\'a B\'Av (observed)',
+  "Yom HaAtzma'ut",
+  "Tish'a B'Av",
+  "Tish'a B'Av (observed)",
 ]);
 
 /**
@@ -69,7 +71,7 @@ const toSkip = new Set([
  * @param date - Hebrew or Gregorian date
  */
 export function tanakhYomi(date: HDate | Date | number): TanakhYomi | null {
-  const hd: HDate = HDate.isHDate(date) ? date as HDate : new HDate(date);
+  const hd: HDate = HDate.isHDate(date) ? (date as HDate) : new HDate(date);
   if (skipDay(hd)) {
     return null;
   }
@@ -106,8 +108,10 @@ export function tanakhYomi(date: HDate | Date | number): TanakhYomi | null {
     if (total < element.blatt) {
       const blatt = total + 1;
       const name = element.name;
-      if ((readingTable.longShirHaShirim && name === SHIR_HASHIRIM) ||
-          (readingTable.longRuth && name === RUTH)) {
+      if (
+        (readingTable.longShirHaShirim && name === SHIR_HASHIRIM) ||
+        (readingTable.longRuth && name === RUTH)
+      ) {
         return new TanakhYomi(name, '1.' + blatt);
       }
       if (readingTable.longJoshua && name === JOSHUA && blatt >= 4) {
@@ -218,17 +222,17 @@ function makeReadingTable(year: number): ReadingsForYear {
       // Joshua 4 gets split across two days
       table[0] = {name: JOSHUA, blatt: 15};
       result.longJoshua = true;
-      /* FALLTHROUGH */
+    /* FALLTHROUGH */
     case 3:
       // Jeremiah 9 gets split across two days
       table[5] = {name: JEREMIAH, blatt: 32};
       result.longJeremiah = true;
-      /* FALLTHROUGH */
+    /* FALLTHROUGH */
     case 2:
       // Shir HaShirim gets 2 days
       table[11] = {name: SHIR_HASHIRIM, blatt: 2};
       result.longShirHaShirim = true;
-      /* FALLTHROUGH */
+    /* FALLTHROUGH */
     case 1:
       // Ruth gets 2 days
       table[12] = {name: RUTH, blatt: 2};
@@ -252,14 +256,16 @@ export class TanakhYomi extends DafPage {
   constructor(name: string, blatt: number | string) {
     super(name, blatt);
     const seders = masoretic.regular[name];
-    const verses = typeof blatt === 'number' ?
-      seders[blatt - 1] : masoretic.split[name][blatt];
+    const verses =
+      typeof blatt === 'number'
+        ? seders[blatt - 1]
+        : masoretic.split[name][blatt];
     if (!verses) {
       throw new Error(`${name} ${blatt}`);
     }
     const firstChar = verses.charCodeAt(0);
-    this.verses = firstChar >= 48 && firstChar <= 57 ?
-      `${name} ${verses}` : verses;
+    this.verses =
+      firstChar >= 48 && firstChar <= 57 ? `${name} ${verses}` : verses;
   }
 
   /**

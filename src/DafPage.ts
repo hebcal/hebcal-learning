@@ -30,8 +30,7 @@ export class DafPage {
       locale = locale.toLowerCase();
     }
     if (locale === 'he' || locale === 'he-x-nonikud') {
-      return Locale.gettext(this.name, locale) + ' דף ' +
-        gematriya(this.blatt);
+      return Locale.gettext(this.name, locale) + ' דף ' + gematriya(this.blatt);
     }
     return Locale.gettext(this.name, locale) + ' ' + this.blatt;
   }

@@ -1,20 +1,33 @@
-import { HDate, DailyLearning } from '@hebcal/core';
-import { MishnaYomiEvent } from './MishnaYomiEvent';
-import { NachYomiEvent } from './NachYomiEvent';
-import { ChofetzChaimEvent, chofetzChaim, chofetzChaimStart } from './chofetzChaim';
-import { DafWeeklyEvent, dafWeekly, dafWeeklyStart } from './dafWeekly';
-import { DafYomiEvent, osday } from './dafyomi';
+import {HDate, DailyLearning} from '@hebcal/core';
+import {MishnaYomiEvent} from './MishnaYomiEvent';
+import {NachYomiEvent} from './NachYomiEvent';
+import {
+  ChofetzChaimEvent,
+  chofetzChaim,
+  chofetzChaimStart,
+} from './chofetzChaim';
+import {DafWeeklyEvent, dafWeekly, dafWeeklyStart} from './dafWeekly';
+import {DafYomiEvent, osday} from './dafyomi';
 import './locale';
-import { MishnaYomiIndex, mishnaYomiStart } from './mishnaYomi';
-import { NachYomiIndex, nachYomiStart } from './nachYomi';
-import { PirkeiAvotSummerEvent, pirkeiAvot } from './pirkeiAvot';
-import { PsalmsEvent, dailyPsalms } from './psalms';
-import { DailyRambamEvent, dailyRambam1, rambam1Start } from './rambam';
-import { ShemiratHaLashonEvent, shemiratHaLashon, shemiratHaLashonStart } from './shemiratHaLashon';
-import { TanakhYomiEvent, tanakhYomi, tanakhYomiStart } from './tanakhYomi';
-import { YerushalmiYomiEvent, schottenstein, vilna, yerushalmiYomi } from './yerushalmi';
+import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi';
+import {NachYomiIndex, nachYomiStart} from './nachYomi';
+import {PirkeiAvotSummerEvent, pirkeiAvot} from './pirkeiAvot';
+import {PsalmsEvent, dailyPsalms} from './psalms';
+import {DailyRambamEvent, dailyRambam1, rambam1Start} from './rambam';
+import {
+  ShemiratHaLashonEvent,
+  shemiratHaLashon,
+  shemiratHaLashonStart,
+} from './shemiratHaLashon';
+import {TanakhYomiEvent, tanakhYomi, tanakhYomiStart} from './tanakhYomi';
+import {
+  YerushalmiYomiEvent,
+  schottenstein,
+  vilna,
+  yerushalmiYomi,
+} from './yerushalmi';
 
-DailyLearning.addCalendar('dafYomi', function(hd: HDate) {
+DailyLearning.addCalendar('dafYomi', (hd: HDate) => {
   const abs = hd.abs();
   if (abs < osday) {
     return null;
@@ -23,7 +36,7 @@ DailyLearning.addCalendar('dafYomi', function(hd: HDate) {
 });
 
 const mishnaYomiIndex = new MishnaYomiIndex();
-DailyLearning.addCalendar('mishnaYomi', function(hd: HDate) {
+DailyLearning.addCalendar('mishnaYomi', (hd: HDate) => {
   const abs = hd.abs();
   if (abs < mishnaYomiStart) {
     return null;
@@ -33,7 +46,7 @@ DailyLearning.addCalendar('mishnaYomi', function(hd: HDate) {
 });
 
 const nachYomiIndex = new NachYomiIndex();
-DailyLearning.addCalendar('nachYomi', function(hd: HDate) {
+DailyLearning.addCalendar('nachYomi', (hd: HDate) => {
   const abs = hd.abs();
   if (abs < nachYomiStart) {
     return null;
@@ -42,7 +55,7 @@ DailyLearning.addCalendar('nachYomi', function(hd: HDate) {
   return new NachYomiEvent(hd, nachYomi);
 });
 
-DailyLearning.addCalendar('yerushalmi-vilna', function(hd: HDate) {
+DailyLearning.addCalendar('yerushalmi-vilna', (hd: HDate) => {
   const abs = hd.abs();
   if (abs < vilna.startAbs) {
     return null;
@@ -54,7 +67,7 @@ DailyLearning.addCalendar('yerushalmi-vilna', function(hd: HDate) {
   return new YerushalmiYomiEvent(hd, daf);
 });
 
-DailyLearning.addCalendar('yerushalmi-schottenstein', function(hd: HDate) {
+DailyLearning.addCalendar('yerushalmi-schottenstein', (hd: HDate) => {
   const abs = hd.abs();
   if (abs < schottenstein.startAbs) {
     return null;
@@ -66,7 +79,7 @@ DailyLearning.addCalendar('yerushalmi-schottenstein', function(hd: HDate) {
   return new YerushalmiYomiEvent(hd, daf);
 });
 
-DailyLearning.addCalendar('chofetzChaim', function(hd: HDate) {
+DailyLearning.addCalendar('chofetzChaim', (hd: HDate) => {
   if (hd.abs() < chofetzChaimStart) {
     return null;
   }
@@ -74,7 +87,7 @@ DailyLearning.addCalendar('chofetzChaim', function(hd: HDate) {
   return new ChofetzChaimEvent(hd, reading);
 });
 
-DailyLearning.addCalendar('rambam1', function(hd: HDate) {
+DailyLearning.addCalendar('rambam1', (hd: HDate) => {
   if (hd.abs() < rambam1Start) {
     return null;
   }
@@ -82,7 +95,7 @@ DailyLearning.addCalendar('rambam1', function(hd: HDate) {
   return new DailyRambamEvent(hd, reading);
 });
 
-DailyLearning.addCalendar('shemiratHaLashon', function(hd: HDate) {
+DailyLearning.addCalendar('shemiratHaLashon', (hd: HDate) => {
   if (hd.abs() < shemiratHaLashonStart) {
     return null;
   }
@@ -90,12 +103,12 @@ DailyLearning.addCalendar('shemiratHaLashon', function(hd: HDate) {
   return new ShemiratHaLashonEvent(hd, reading);
 });
 
-DailyLearning.addCalendar('psalms', function(hd: HDate) {
+DailyLearning.addCalendar('psalms', (hd: HDate) => {
   const reading = dailyPsalms(hd);
   return new PsalmsEvent(hd, reading);
 });
 
-DailyLearning.addCalendar('dafWeekly', function(hd: HDate) {
+DailyLearning.addCalendar('dafWeekly', (hd: HDate) => {
   const abs = hd.abs();
   if (abs < dafWeeklyStart) {
     return null;
@@ -104,7 +117,7 @@ DailyLearning.addCalendar('dafWeekly', function(hd: HDate) {
   return new DafWeeklyEvent(hd, daf);
 });
 
-DailyLearning.addCalendar('dafWeeklySunday', function(hd: HDate) {
+DailyLearning.addCalendar('dafWeeklySunday', (hd: HDate) => {
   const abs = hd.abs();
   if (abs < dafWeeklyStart) {
     return null;
@@ -118,7 +131,7 @@ DailyLearning.addCalendar('dafWeeklySunday', function(hd: HDate) {
   return new DafWeeklyEvent(hd, daf);
 });
 
-DailyLearning.addCalendar('tanakhYomi', function(hd: HDate) {
+DailyLearning.addCalendar('tanakhYomi', (hd: HDate) => {
   const abs = hd.abs();
   if (abs < tanakhYomiStart) {
     return null;
@@ -130,7 +143,7 @@ DailyLearning.addCalendar('tanakhYomi', function(hd: HDate) {
   return new TanakhYomiEvent(hd, daf);
 });
 
-DailyLearning.addCalendar('pirkeiAvotSummer', function(hd: HDate, il: boolean) {
+DailyLearning.addCalendar('pirkeiAvotSummer', (hd: HDate, il: boolean) => {
   const reading = pirkeiAvot(hd, il);
   if (reading === null) {
     return null;

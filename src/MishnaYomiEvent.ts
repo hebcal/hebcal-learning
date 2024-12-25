@@ -1,5 +1,5 @@
-import { Event, flags, HDate, Locale } from '@hebcal/core';
-import { MishnaYomi } from './mishnaYomi';
+import {Event, flags, HDate, Locale} from '@hebcal/core';
+import {MishnaYomi} from './mishnaYomi';
 
 function formatMyomi(mishnaYomi: MishnaYomi[], locale?: string): string {
   const k1 = mishnaYomi[0].k;
@@ -42,7 +42,7 @@ export class MishnaYomiEvent extends Event {
   url(): string {
     const mishnaYomi = this.mishnaYomi;
     const k1 = mishnaYomi[0].k;
-    const mishna = (k1 === 'Avot') ? 'Pirkei' : 'Mishnah';
+    const mishna = k1 === 'Avot' ? 'Pirkei' : 'Mishnah';
     const name = k1.replace(/ /g, '_');
     const prefix = `https://www.sefaria.org/${mishna}_${name}`;
     const cv1 = mishnaYomi[0].v;
@@ -54,7 +54,7 @@ export class MishnaYomiEvent extends Event {
     const p1 = cv1.split(':');
     const p2 = cv2.split(':');
     const verse1 = p1.join('.');
-    const verse2 = (p1[0] === p2[0]) ? p2[1] : p2.join('.');
+    const verse2 = p1[0] === p2[0] ? p2[1] : p2.join('.');
     return `${prefix}.${verse1}-${verse2}?lang=bi`;
   }
   getCategories(): string[] {

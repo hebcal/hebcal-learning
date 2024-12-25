@@ -1,4 +1,4 @@
-import { Locale, LocaleData, StringArrayMap } from '@hebcal/core';
+import {Locale, LocaleData, StringArrayMap} from '@hebcal/core';
 import poAshkenazi from './ashkenazi.po';
 import poHe from './he.po';
 

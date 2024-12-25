@@ -1,4 +1,4 @@
-import { Event, HDate, Locale, flags, gematriya, months } from '@hebcal/core';
+import {Event, HDate, Locale, flags, gematriya, months} from '@hebcal/core';
 
 /**
  * Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana
@@ -49,7 +49,7 @@ export function pirkeiAvot(dt: Date | HDate, il: boolean): number[] | null {
     return [(weekDiff % 6) + 1];
   }
   // fourth round is different
-  const rh = new HDate(1, months.TISHREI, hd.getFullYear() +1);
+  const rh = new HDate(1, months.TISHREI, hd.getFullYear() + 1);
   const last = rh.before(6);
   const weeksRemain = Math.ceil(last.deltaDays(hd) / 7);
   switch (weeksRemain) {
@@ -58,7 +58,7 @@ export function pirkeiAvot(dt: Date | HDate, il: boolean): number[] | null {
     case 1:
       return [3, 4];
     case 2:
-      return (weekDiff % 6 == 1) ? [2] : [1, 2];
+      return weekDiff % 6 == 1 ? [2] : [1, 2];
     case 3:
       return [1];
   }
