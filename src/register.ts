@@ -26,6 +26,8 @@ import {
   vilna,
   yerushalmiYomi,
 } from './yerushalmi';
+import {arukhHaShulchanYomi} from './arukhHaShulchanYomi';
+import {ArukhHaShulchanYomiEvent} from './ArukhHaShulchanYomiEvent';
 
 DailyLearning.addCalendar('dafYomi', (hd: HDate) => {
   const abs = hd.abs();
@@ -149,4 +151,12 @@ DailyLearning.addCalendar('pirkeiAvotSummer', (hd: HDate, il: boolean) => {
     return null;
   }
   return new PirkeiAvotSummerEvent(hd, reading);
+});
+
+DailyLearning.addCalendar('arukhHaShulchanYomi', (hd: HDate) => {
+  const reading = arukhHaShulchanYomi(hd);
+  if (reading === null) {
+    return null;
+  }
+  return new ArukhHaShulchanYomiEvent(hd, reading);
 });

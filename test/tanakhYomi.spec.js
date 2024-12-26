@@ -3,7 +3,6 @@ import {tanakhYomi, TanakhYomiEvent} from '../src/tanakhYomi';
 import {HDate, greg, months} from '@hebcal/core';
 import '../src/locale';
 
-// eslint-disable-next-line require-jsdoc
 function abs2iso(abs) {
   return greg.abs2greg(abs).toISOString().substring(0, 10);
 }

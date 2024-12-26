@@ -1,4 +1,5 @@
 import './register';
+export type {DLDate} from './common';
 export {DafPage} from './DafPage';
 export {DafPageEvent} from './DafPageEvent';
 export {MishnaYomiEvent} from './MishnaYomiEvent';

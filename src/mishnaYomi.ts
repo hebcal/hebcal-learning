@@ -1,5 +1,5 @@
-import {HDate, greg} from '@hebcal/core';
-import {checkTooEarly, getAbsDate} from './common';
+import {greg} from '@hebcal/core';
+import {checkTooEarly, getAbsDate, DLDate} from './common';
 import mishnayot from './mishnayot.json';
 
 const cycleStartDate = new Date(1947, 4, 20);
@@ -51,7 +51,7 @@ export class MishnaYomiIndex {
   /**
    * Looks up a Mishna Yomi
    */
-  lookup(date: Date | HDate | number): MishnaYomi[] {
+  lookup(date: DLDate): MishnaYomi[] {
     const abs = getAbsDate(date);
     checkTooEarly(abs, mishnaYomiStart, 'Mishna Yomi');
     const dayNum = (abs - mishnaYomiStart) % numDays;

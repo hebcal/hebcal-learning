@@ -7,7 +7,7 @@ import {
   greg,
   months,
 } from '@hebcal/core';
-import {checkTooEarly, getAbsDate} from './common';
+import {checkTooEarly, getAbsDate, DLDate} from './common';
 import vilnaMap0 from './yerushalmiVilnaMap.json';
 
 const vilnaMap: {
@@ -148,7 +148,7 @@ export type YerushalmiReading = {
  * @param config - either vilna or schottenstein
  */
 export function yerushalmiYomi(
-  date: HDate | Date | number,
+  date: DLDate,
   config: any
 ): YerushalmiReading | null {
   if (typeof config !== 'object' || !Array.isArray(config.shas)) {

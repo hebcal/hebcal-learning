@@ -1,5 +1,5 @@
-import {HDate, greg} from '@hebcal/core';
-import {checkTooEarly, getAbsDate} from './common';
+import {greg} from '@hebcal/core';
+import {checkTooEarly, getAbsDate, DLDate} from './common';
 
 const nach: [string, number][] = [
   ['Joshua', 24],
@@ -78,7 +78,7 @@ export class NachYomiIndex {
   /**
    * Looks up a Nach Yomi
    */
-  lookup(date: Date | HDate | number): NachYomi {
+  lookup(date: DLDate): NachYomi {
     const abs = getAbsDate(date);
     checkTooEarly(abs, nachYomiStart, 'Nach Yomi');
     const dayNum = (abs - nachYomiStart) % numChapters;

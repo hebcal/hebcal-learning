@@ -1,10 +1,15 @@
 import {HDate, greg} from '@hebcal/core';
 
 /**
+ * most daily learning APIs accept Hebrew or Gregorian dates
+ */
+export type DLDate = HDate | Date | number;
+
+/**
  * @private
  * @param date - Hebrew or Gregorian date
  */
-export function getAbsDate(date: HDate | Date | number): number {
+export function getAbsDate(date: DLDate): number {
   const abs =
     typeof date === 'number'
       ? date

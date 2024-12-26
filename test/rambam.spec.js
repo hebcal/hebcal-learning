@@ -3,7 +3,6 @@ import {dailyRambam1} from '../src/rambam';
 import {greg} from '@hebcal/core';
 import fullCycle from '../src/rambam1cycle.json';
 
-// eslint-disable-next-line require-jsdoc
 function abs2iso(abs) {
   return greg.abs2greg(abs).toISOString().substring(0, 10);
 }

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import {Event, HDate, Locale, flags, gematriya, greg} from '@hebcal/core';
-import {checkTooEarly, getAbsDate} from './common';
+import {checkTooEarly, getAbsDate, DLDate} from './common';
 
 // On 9 July 2020 all three tracks completed the Rambam learning cycle.
 // The 3 chapter daily track completed its 39th cycle while the one chapter
@@ -126,7 +126,7 @@ export type RambamReading = {
 /**
  * Calculates Daily Rambam (Mishneh Torah) for 1 chapter a day cycle.
  */
-export function dailyRambam1(date: HDate | Date | number): RambamReading {
+export function dailyRambam1(date: DLDate): RambamReading {
   const cday = getAbsDate(date);
   checkTooEarly(cday, rambam1Start, 'Daily Rambam');
   const dno = (cday - rambam1Start) % cycleLen;

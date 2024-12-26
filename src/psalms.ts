@@ -1,4 +1,5 @@
 import {Event, HDate, Locale, flags, gematriya} from '@hebcal/core';
+import {DLDate} from './common';
 
 export type PsalmBeginEnd = [number | string, number | string];
 
@@ -39,7 +40,7 @@ const schedule: PsalmBeginEnd[] = [
 /**
  * Calculates Daily Psalms (Tehillim) for 30-day cycle.
  */
-export function dailyPsalms(date: HDate | Date | number): PsalmBeginEnd {
+export function dailyPsalms(date: DLDate): PsalmBeginEnd {
   const hd = new HDate(date);
   const dd = hd.getDate();
   if (dd === 29 && hd.daysInMonth() === 29) {

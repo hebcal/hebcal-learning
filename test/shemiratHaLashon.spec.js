@@ -2,7 +2,6 @@ import {expect, test} from 'vitest';
 import {HDate, greg} from '@hebcal/core';
 import {shemiratHaLashon, ShemiratHaLashonEvent} from '../src/shemiratHaLashon';
 
-// eslint-disable-next-line require-jsdoc
 function hd2iso(hd) {
   return hd.greg().toISOString().substring(0, 10);
 }

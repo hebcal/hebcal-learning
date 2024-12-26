@@ -9,7 +9,7 @@ import {
 } from '@hebcal/core';
 import {DafPage} from './DafPage';
 import {DafPageEvent} from './DafPageEvent';
-import {checkTooEarly} from './common';
+import {checkTooEarly, DLDate} from './common';
 import masoretic0 from './masoretic.json';
 
 const masoretic: {
@@ -70,7 +70,7 @@ const toSkip = new Set([
  * Calculates Tanakh Yomi.
  * @param date - Hebrew or Gregorian date
  */
-export function tanakhYomi(date: HDate | Date | number): TanakhYomi | null {
+export function tanakhYomi(date: DLDate): TanakhYomi | null {
   const hd: HDate = HDate.isHDate(date) ? (date as HDate) : new HDate(date);
   if (skipDay(hd)) {
     return null;

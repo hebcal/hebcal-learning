@@ -22,7 +22,7 @@
 import { HDate, Locale, flags, greg } from '@hebcal/core';
 import { DafPage } from './DafPage';
 import { DafPageEvent } from './DafPageEvent';
-import { checkTooEarly, getAbsDate } from './common';
+import { checkTooEarly, getAbsDate, DLDate } from './common';
 
 const osdate = new Date(1923, 8, 11);
 export const osday = greg.greg2abs(osdate);
@@ -81,7 +81,7 @@ export const shas0: Daf[] = [
 /**
  * @private
  */
-function calculateDaf(date: Date | HDate | number): DafPage {
+function calculateDaf(date: DLDate): DafPage {
   const cday = getAbsDate(date);
   checkTooEarly(cday, osday, 'Daf Yomi');
   let cno;
@@ -151,7 +151,7 @@ export class DafYomi extends DafPage {
    * Initializes a daf yomi instance
    * @param date Gregorian or Hebrew date
    */
-  constructor(date: Date | HDate | number) {
+  constructor(date: DLDate) {
     const d = calculateDaf(date);
     super(d.name, d.blatt);
   }
