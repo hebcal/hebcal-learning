@@ -1,5 +1,5 @@
-import {greg} from '@hebcal/core';
-import {checkTooEarly, getAbsDate, DLDate} from './common';
+import {HDate, greg} from '@hebcal/core';
+import {checkTooEarly, getAbsDate} from './common';
 import ahsyJson from './arukhHaShulchanYomi.json';
 
 /**
@@ -31,7 +31,7 @@ const sections = [
 /**
  * Calculates Arukh HaShulchan Yomi
  */
-export function arukhHaShulchanYomi(date: DLDate): AhSYomiReading {
+export function arukhHaShulchanYomi(date: HDate | Date | number): AhSYomiReading {
   const cday = getAbsDate(date);
   checkTooEarly(cday, arukhHaShulchanYomiStart, 'Daily Rambam');
   const dayNum = (cday - arukhHaShulchanYomiStart) % cycleLen;

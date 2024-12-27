@@ -19,9 +19,9 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import { greg } from '@hebcal/core';
+import { HDate, greg } from '@hebcal/core';
 import { DafPage } from './DafPage';
-import { checkTooEarly, getAbsDate, DLDate } from './common';
+import { checkTooEarly, getAbsDate } from './common';
 
 const osdate = new Date(1923, 8, 11);
 export const osday = greg.greg2abs(osdate);
@@ -80,7 +80,7 @@ export const shas0: Daf[] = [
 /**
  * @private
  */
-function calculateDaf(date: DLDate): DafPage {
+function calculateDaf(date: HDate | Date | number): DafPage {
   const cday = getAbsDate(date);
   checkTooEarly(cday, osday, 'Daf Yomi');
   let cno;
@@ -150,7 +150,7 @@ export class DafYomi extends DafPage {
    * Initializes a daf yomi instance
    * @param date Gregorian or Hebrew date
    */
-  constructor(date: DLDate) {
+  constructor(date: HDate | Date | number) {
     const d = calculateDaf(date);
     super(d.name, d.blatt);
   }
