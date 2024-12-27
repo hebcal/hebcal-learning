@@ -29,3 +29,5 @@ export {
   yerushalmiYomi,
 } from './yerushalmiBase';
 export {YerushalmiYomiEvent} from './YerushalmiYomiEvent';
+export {arukhHaShulchanYomi} from './arukhHaShulchanYomiBase';
+export {ArukhHaShulchanYomiEvent} from './ArukhHaShulchanYomiEvent';
