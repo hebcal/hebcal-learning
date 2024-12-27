@@ -5,6 +5,7 @@ import {
   Chapters,
   englishNames,
 } from './shemiratHaLashonBase';
+import './locale';
 
 /**
  * Event wrapper around a Sefer Shemirat HaLashon instance

@@ -155,4 +155,3 @@ export class DafYomi extends DafPage {
     super(d.name, d.blatt);
   }
 }
-

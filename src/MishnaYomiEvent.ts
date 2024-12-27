@@ -1,5 +1,6 @@
 import {Event, flags, HDate, Locale} from '@hebcal/core';
 import {MishnaYomi} from './mishnaYomiBase';
+import './locale';
 
 function formatMyomi(mishnaYomi: MishnaYomi[], locale?: string): string {
   const k1 = mishnaYomi[0].k;

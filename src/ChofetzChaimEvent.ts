@@ -7,6 +7,7 @@ import {
   HilchosRechilus,
   Tziyurim,
 } from './chofetzChaimBase';
+import './locale';
 
 /**
  * Event wrapper around a Chofetz Chaim instance

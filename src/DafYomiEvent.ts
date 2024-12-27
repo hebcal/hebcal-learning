@@ -1,6 +1,7 @@
 import {HDate, flags, Locale} from '@hebcal/core';
 import {DafPageEvent} from './DafPageEvent';
 import {DafYomi} from './dafYomiBase';
+import './locale';
 
 /**
  * Event wrapper around a DafYomi instance

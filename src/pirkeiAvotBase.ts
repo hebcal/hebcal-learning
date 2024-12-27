@@ -58,7 +58,7 @@ export function pirkeiAvot(dt: Date | HDate, il: boolean): number[] | null {
     case 1:
       return [3, 4];
     case 2:
-      return weekDiff % 6 == 1 ? [2] : [1, 2];
+      return weekDiff % 6 === 1 ? [2] : [1, 2];
     case 3:
       return [1];
   }

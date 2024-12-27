@@ -1,5 +1,6 @@
 import {Event, HDate, flags, Locale, gematriya} from '@hebcal/core';
 import {PsalmBeginEnd} from './psalmsBase';
+import './locale';
 
 /**
  * Event wrapper around a daily Psalms / Tehillim

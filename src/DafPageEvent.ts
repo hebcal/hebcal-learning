@@ -1,5 +1,6 @@
 import {Event, HDate} from '@hebcal/core';
 import {DafPage} from './DafPage';
+import './locale';
 
 const dafYomiSefaria: {[key: string]: string} = {
   Berachot: 'Berakhot',
@@ -45,7 +46,7 @@ export class DafPageEvent extends Event {
     const daf = this.daf;
     const tractate = daf.getName();
     const blatt = daf.getBlatt();
-    if (tractate == 'Kinnim' || tractate == 'Midot') {
+    if (tractate === 'Kinnim' || tractate === 'Midot') {
       return `https://www.dafyomi.org/index.php?masechta=meilah&daf=${blatt}a`;
     } else {
       const name0 = dafYomiSefaria[tractate] || tractate;

@@ -1,5 +1,6 @@
 import {Event, HDate, flags, Locale, gematriya} from '@hebcal/core';
 import {YerushalmiReading, vilnaMap} from './yerushalmiBase';
+import './locale';
 
 /**
  * Event wrapper around a Yerushalmi Yomi result

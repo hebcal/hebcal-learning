@@ -6,7 +6,8 @@
   "type": "module",
   "typings": "dist/esm/index.d.ts",
   "exports": {
-    ".": "./dist/esm/index.js"
+    ".": "./dist/esm/index.js",
+    "./*": "./dist/esm/*.js"
   },
   "engines": {
     "node": ">= 16.0.0"

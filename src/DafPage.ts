@@ -1,4 +1,5 @@
 import {Locale, gematriya} from '@hebcal/core';
+import './locale';
 
 /**
  * Represents a tractate and page number

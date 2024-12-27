@@ -1,5 +1,6 @@
 import {Event, HDate, flags, Locale, gematriya} from '@hebcal/core';
 import {RambamReading} from './rambam1Base';
+import './locale';
 
 /**
  * Event wrapper around a Daily Rambam instance

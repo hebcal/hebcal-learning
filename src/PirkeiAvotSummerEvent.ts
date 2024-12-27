@@ -1,4 +1,5 @@
 import {Event, HDate, flags, Locale, gematriya} from '@hebcal/core';
+import './locale';
 
 const PIRKEI_AVOT = 'Pirkei Avot';
 

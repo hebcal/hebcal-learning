@@ -141,4 +141,3 @@ export function dailyRambam1(date: DLDate): RambamReading {
   }
   throw new Error('Interal error, this code should be unreachable');
 }
-

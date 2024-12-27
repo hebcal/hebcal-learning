@@ -386,7 +386,7 @@ export function formatReadingPages(reading: ChofetzChaimReading): string {
     str += ' ' + reading.b;
     if (Array.isArray(reading.e)) {
       str += ', ' + reading.e.join(', ');
-    } else if (typeof reading.e !== 'undefined' && reading.e != reading.b) {
+    } else if (typeof reading.e !== 'undefined' && reading.e !== reading.b) {
       str += '-' + reading.e;
     }
   }

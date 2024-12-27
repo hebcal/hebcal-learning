@@ -1,5 +1,6 @@
 import {Event, HDate, Locale, flags, gematriya} from '@hebcal/core';
 import {NachYomi} from './nachYomiBase';
+import './locale';
 
 /**
  * Event wrapper around a Nach Yomi instance
