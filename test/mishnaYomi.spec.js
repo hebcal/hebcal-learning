@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {MishnaYomiIndex} from '../src/mishnaYomi';
+import {MishnaYomiIndex} from '../src/mishnaYomiBase';
 
 test('year1', () => {
   const index = new MishnaYomiIndex();

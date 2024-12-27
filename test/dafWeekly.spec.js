@@ -1,6 +1,7 @@
 import {expect, test} from 'vitest';
 import {HDate} from '@hebcal/core';
-import {dafWeekly, DafWeeklyEvent} from '../src/dafWeekly';
+import {dafWeekly} from '../src/dafWeeklyBase';
+import {DafWeeklyEvent} from '../src/DafWeeklyEvent';
 
 test('dafWeekly', () => {
   const daf1 = dafWeekly(new Date(2015, 8, 26));

@@ -1,5 +1,6 @@
 import {expect, test} from 'vitest';
-import {pirkeiAvot, PirkeiAvotSummerEvent} from '../src/pirkeiAvot';
+import {pirkeiAvot} from '../src/pirkeiAvotBase';
+import {PirkeiAvotSummerEvent} from '../src/PirkeiAvotSummerEvent';
 import {HDate, months} from '@hebcal/core';
 
 function makeSaturdays(currentYear) {

@@ -1,5 +1,6 @@
 import {expect, test} from 'vitest';
-import {DafYomi, DafYomiEvent} from '../src/dafyomi';
+import {DafYomi} from '../src/dafYomiBase';
+import {DafYomiEvent} from '../src/DafYomiEvent';
 import {HDate, months, greg} from '@hebcal/core';
 
 test('dafyomi-single', () => {

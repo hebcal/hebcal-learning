@@ -1,12 +1,22 @@
 import {expect, test} from 'vitest';
 import {HebrewCalendar} from '@hebcal/core';
+import {arukhHaShulchanYomi} from '../src/arukhHaShulchanYomiBase'
 import '../src/register';
 
 function hd2iso(hd) {
   return hd.greg().toISOString().substring(0, 10);
 }
 
-test('arukhHaShulchanYomi', () => {
+test('arukhHaShulchanYomi-sample', () => {
+  expect(arukhHaShulchanYomi(new Date(2020, 4, 29))).toEqual({k: 'Orach Chaim', v: '1.1-8'});
+  expect(arukhHaShulchanYomi(new Date(2020, 5, 3))).toEqual({k: 'Orach Chaim', v: '2.9-3.5'});
+  expect(arukhHaShulchanYomi(new Date(2025, 1, 10))).toEqual({k: 'Choshen Mishpat', v: '427.10-11'});
+  expect(arukhHaShulchanYomi(new Date(2025, 1, 11))).toEqual({k: 'Orach Chaim', v: '1.1-8'});
+  expect(arukhHaShulchanYomi(new Date(2029, 8, 21))).toEqual({k: 'Even HaEzer', v: '21.8-22.3'});
+  expect(arukhHaShulchanYomi(new Date(2033, 5, 3))).toEqual({k: "Yoreh De'ah", v: '200.4-201.9'});
+});
+
+test('arukhHaShulchanYomi-range', () => {
   const events = HebrewCalendar.calendar({
     start: new Date(2024, 11, 26),
     end: new Date(2025, 2, 5),

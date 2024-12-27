@@ -1,6 +1,7 @@
 import {expect, test} from 'vitest';
 import {HDate, greg} from '@hebcal/core';
-import {shemiratHaLashon, ShemiratHaLashonEvent} from '../src/shemiratHaLashon';
+import {shemiratHaLashon} from '../src/shemiratHaLashonBase';
+import {ShemiratHaLashonEvent} from '../src/ShemiratHaLashonEvent';
 
 function hd2iso(hd) {
   return hd.greg().toISOString().substring(0, 10);

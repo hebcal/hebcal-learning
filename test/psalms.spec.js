@@ -1,5 +1,6 @@
 import {expect, test} from 'vitest';
-import {dailyPsalms, PsalmsEvent} from '../src/psalms';
+import {dailyPsalms} from '../src/psalmsBase';
+import {PsalmsEvent} from '../src/PsalmsEvent';
 import {HDate} from '@hebcal/core';
 
 test('dailyPsalms', () => {

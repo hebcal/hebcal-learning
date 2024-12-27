@@ -1,8 +1,7 @@
-import {HDate, flags, greg} from '@hebcal/core';
+import {greg} from '@hebcal/core';
 import {DafPage} from './DafPage';
-import {DafPageEvent} from './DafPageEvent';
 import {checkTooEarly, getAbsDate, DLDate} from './common';
-import {findDaf, shas0} from './dafyomi';
+import {findDaf, shas0} from './dafYomiBase';
 
 const startDate = new Date(2005, 2, 6);
 export const dafWeeklyStart = greg.greg2abs(startDate);
@@ -21,18 +20,4 @@ export function dafWeekly(date: DLDate): DafPage {
   const weekNum = Math.trunc(dayNum / 7);
 
   return findDaf(shas0, weekNum);
-}
-
-/**
- * Event wrapper around a daily weekly
- */
-export class DafWeeklyEvent extends DafPageEvent {
-  constructor(date: HDate, daf: DafPage) {
-    super(date, daf, flags.DAILY_LEARNING);
-    this.alarm = false;
-    this.category = 'Daf Weekly';
-  }
-  getCategories(): string[] {
-    return ['dafWeekly'];
-  }
 }

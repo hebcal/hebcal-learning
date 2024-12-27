@@ -1,33 +1,27 @@
 import {HDate, DailyLearning} from '@hebcal/core';
 import {MishnaYomiEvent} from './MishnaYomiEvent';
 import {NachYomiEvent} from './NachYomiEvent';
-import {
-  ChofetzChaimEvent,
-  chofetzChaim,
-  chofetzChaimStart,
-} from './chofetzChaim';
-import {DafWeeklyEvent, dafWeekly, dafWeeklyStart} from './dafWeekly';
-import {DafYomiEvent, osday} from './dafyomi';
+import {chofetzChaim, chofetzChaimStart} from './chofetzChaimBase';
+import {ChofetzChaimEvent} from './ChofetzChaimEvent';
+import {dafWeekly, dafWeeklyStart} from './dafWeeklyBase';
+import {DafWeeklyEvent} from './DafWeeklyEvent';
+import {osday} from './dafYomiBase';
+import {DafYomiEvent} from './DafYomiEvent';
 import './locale';
-import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomi';
-import {NachYomiIndex, nachYomiStart} from './nachYomi';
-import {PirkeiAvotSummerEvent, pirkeiAvot} from './pirkeiAvot';
-import {PsalmsEvent, dailyPsalms} from './psalms';
-import {DailyRambamEvent, dailyRambam1, rambam1Start} from './rambam';
-import {
-  ShemiratHaLashonEvent,
-  shemiratHaLashon,
-  shemiratHaLashonStart,
-} from './shemiratHaLashon';
-import {TanakhYomiEvent, tanakhYomi, tanakhYomiStart} from './tanakhYomi';
-import {
-  YerushalmiYomiEvent,
-  schottenstein,
-  vilna,
-  yerushalmiYomi,
-} from './yerushalmi';
-import {arukhHaShulchanYomi} from './arukhHaShulchanYomi';
-import {ArukhHaShulchanYomiEvent} from './ArukhHaShulchanYomiEvent';
+import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomiBase';
+import {NachYomiIndex, nachYomiStart} from './nachYomiBase';
+import {pirkeiAvot} from './pirkeiAvotBase';
+import {PirkeiAvotSummerEvent} from './PirkeiAvotSummerEvent';
+import {dailyPsalms} from './psalmsBase';
+import {PsalmsEvent} from './PsalmsEvent';
+import {dailyRambam1, rambam1Start} from './rambam1Base';
+import {DailyRambamEvent} from './DailyRambamEvent';
+import {shemiratHaLashon, shemiratHaLashonStart} from './shemiratHaLashonBase';
+import {ShemiratHaLashonEvent} from './ShemiratHaLashonEvent';
+import {TanakhYomiEvent, tanakhYomi, tanakhYomiStart} from './tanakhYomiBase';
+import {schottenstein, vilna, yerushalmiYomi} from './yerushalmiBase';
+import {YerushalmiYomiEvent} from './YerushalmiYomiEvent';
+import './arukhHaShulchanYomi';
 
 DailyLearning.addCalendar('dafYomi', (hd: HDate) => {
   const abs = hd.abs();
@@ -151,12 +145,4 @@ DailyLearning.addCalendar('pirkeiAvotSummer', (hd: HDate, il: boolean) => {
     return null;
   }
   return new PirkeiAvotSummerEvent(hd, reading);
-});
-
-DailyLearning.addCalendar('arukhHaShulchanYomi', (hd: HDate) => {
-  const reading = arukhHaShulchanYomi(hd);
-  if (reading === null) {
-    return null;
-  }
-  return new ArukhHaShulchanYomiEvent(hd, reading);
 });

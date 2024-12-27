@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {NachYomiIndex} from '../src/nachYomi';
+import {NachYomiIndex} from '../src/nachYomiBase';
 
 test('throws-lookup-string', () => {
   const index = new NachYomiIndex();

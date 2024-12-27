@@ -1,16 +1,8 @@
-import {
-  Event,
-  HDate,
-  Locale,
-  flags,
-  gematriya,
-  greg,
-  months,
-} from '@hebcal/core';
+import {HDate, greg, months} from '@hebcal/core';
 import {checkTooEarly, getAbsDate, DLDate} from './common';
 import vilnaMap0 from './yerushalmiVilnaMap.json';
 
-const vilnaMap: {
+export const vilnaMap: {
   [key: string]: (string | null)[];
 } = vilnaMap0;
 
@@ -212,7 +204,7 @@ function numSpecialDays(config: any, startAbs: number, endAbs: number): number {
       specialDays++;
     }
     let av9dt = new HDate(9, months.AV, year);
-    if (av9dt.getDay() == SAT) {
+    if (av9dt.getDay() === SAT) {
       av9dt = av9dt.next();
     }
     const av9abs = av9dt.abs();
@@ -221,66 +213,4 @@ function numSpecialDays(config: any, startAbs: number, endAbs: number): number {
     }
   }
   return specialDays;
-}
-
-/**
- * Event wrapper around a Yerushalmi Yomi result
- */
-export class YerushalmiYomiEvent extends Event {
-  daf: YerushalmiReading;
-  category: string;
-  constructor(date: HDate, daf: YerushalmiReading) {
-    super(date, `${daf.name} ${daf.blatt}`, flags.YERUSHALMI_YOMI);
-    this.daf = daf;
-    this.category = 'Yerushalmi Yomi';
-  }
-  /**
-   * Returns name of tractate and page (e.g. "Yerushalmi Beitzah 21").
-   * @param [locale] Optional locale name (defaults to active locale).
-   */
-  render(locale?: string): string {
-    const prefix = Locale.gettext('Yerushalmi', locale);
-    return prefix + ' ' + this.renderBrief(locale);
-  }
-  /**
-   * Returns name of tractate and page (e.g. "Beitzah 21").
-   * @param [locale] Optional locale name (defaults to active locale).
-   */
-  renderBrief(locale?: string): string {
-    locale = locale || Locale.getLocaleName();
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
-    const name = Locale.gettext(this.daf.name, locale);
-    if (locale === 'he' || locale === 'he-x-nonikud') {
-      return name + ' דף ' + gematriya(this.daf.blatt);
-    }
-    return name + ' ' + this.daf.blatt;
-  }
-  /**
-   * Returns a link to sefaria.org
-   */
-  url(): string | undefined {
-    const daf = this.daf;
-    if (daf.ed !== 'vilna') {
-      return undefined;
-    }
-    const tractate = daf.name;
-    const pageMap = vilnaMap[tractate];
-    if (!Array.isArray(pageMap)) {
-      return undefined;
-    }
-    const idx = daf.blatt - 1;
-    const verses0 = pageMap[idx];
-    if (typeof verses0 !== 'string') {
-      return undefined;
-    }
-    const name0 = 'Jerusalem Talmud ' + tractate;
-    const name = name0.replace(/ /g, '_');
-    const verses = verses0.replace(/:/g, '.');
-    return `https://www.sefaria.org/${name}.${verses}?lang=bi`;
-  }
-  getCategories(): string[] {
-    return ['yerushalmi'];
-  }
 }

@@ -19,9 +19,8 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import { HDate, Locale, flags, greg } from '@hebcal/core';
+import { greg } from '@hebcal/core';
 import { DafPage } from './DafPage';
-import { DafPageEvent } from './DafPageEvent';
 import { checkTooEarly, getAbsDate, DLDate } from './common';
 
 const osdate = new Date(1923, 8, 11);
@@ -157,23 +156,3 @@ export class DafYomi extends DafPage {
   }
 }
 
-/**
- * Event wrapper around a DafYomi instance
- */
-export class DafYomiEvent extends DafPageEvent {
-  constructor(date: HDate) {
-    const daf = new DafYomi(date.greg());
-    super(date, daf, flags.DAF_YOMI);
-    this.category = 'Daf Yomi';
-  }
-  /**
-   * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
-   * @param [locale] Optional locale name (defaults to active locale).
-   */
-  render(locale?: string): string {
-    return Locale.gettext('Daf Yomi', locale) + ': ' + this.daf.render(locale);
-  }
-  getCategories(): string[] {
-    return ['dafyomi'];
-  }
-}

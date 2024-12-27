@@ -1,5 +1,5 @@
 import {Event, HDate, Locale, flags, gematriya} from '@hebcal/core';
-import {AhSYomiReading} from './arukhHaShulchanYomi';
+import {AhSYomiReading} from './arukhHaShulchanYomiBase';
 
 /**
  * Event wrapper around a Arukh HaShulchan Yomi reading

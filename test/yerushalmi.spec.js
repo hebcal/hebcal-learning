@@ -1,5 +1,6 @@
 import {expect, test} from 'vitest';
-import {yerushalmiYomi, YerushalmiYomiEvent, vilna, schottenstein} from '../src/yerushalmi';
+import {yerushalmiYomi, vilna, schottenstein} from '../src/yerushalmiBase';
+import {YerushalmiYomiEvent} from '../src/YerushalmiYomiEvent';
 import {HDate, greg} from '@hebcal/core';
 import '../src/locale';
 
