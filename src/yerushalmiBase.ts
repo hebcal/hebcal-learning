@@ -1,10 +1,5 @@
 import {HDate, greg, months} from '@hebcal/core';
 import {checkTooEarly, getAbsDate} from './common';
-import vilnaMap0 from './yerushalmiVilnaMap.json';
-
-export const vilnaMap: {
-  [key: string]: (string | null)[];
-} = vilnaMap0;
 
 const vilnaStartDate = new Date(1980, 1, 2);
 /**
