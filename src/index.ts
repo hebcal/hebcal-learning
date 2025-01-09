@@ -23,6 +23,7 @@ export {
 } from './shemiratHaLashonBase';
 export {ShemiratHaLashonEvent} from './ShemiratHaLashonEvent';
 export {
+  YerushalmiYomiConfig,
   YerushalmiReading,
   schottenstein,
   vilna,

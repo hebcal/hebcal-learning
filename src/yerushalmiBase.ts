@@ -1,12 +1,20 @@
 import {HDate, greg, months} from '@hebcal/core';
 import {checkTooEarly, getAbsDate} from './common';
 
+export type YerushalmiYomiConfig = {
+  ed: string;
+  startDate: Date;
+  startAbs: number;
+  skipYK9Av: boolean;
+  shas: [string, number][];
+};
+
 const vilnaStartDate = new Date(1980, 1, 2);
 /**
  * Yerushalmi Yomi configuration for Vilna Edition
  * @readonly
  */
-export const vilna = {
+export const vilna: YerushalmiYomiConfig = {
   ed: 'vilna',
   startDate: vilnaStartDate,
   startAbs: greg.greg2abs(vilnaStartDate),
@@ -59,7 +67,7 @@ const schottensteinStartDate = new Date(2022, 10, 14);
  * Yerushalmi Yomi configuration for Schottenstein Edition
  * @readonly
  */
-export const schottenstein = {
+export const schottenstein: YerushalmiYomiConfig = {
   ed: 'schottenstein',
   startDate: schottensteinStartDate,
   startAbs: greg.greg2abs(schottensteinStartDate),
@@ -107,61 +115,6 @@ export const schottenstein = {
   ],
 } as const;
 
-const ozVeHadarStartDate = new Date(2020, 0, 5);
-/**
- * Yerushalmi Yomi configuration for Oz V'Hadar
- * Retrieved from https://www.dafyomi.co.il/general/info/dafyomi14cycle.zip
- * @readonly
- */
-export const ozVeHadar = {
-  ed: 'ozVeHadar',
-  startDate: ozVeHadarStartDate,
-  startAbs: greg.greg2abs(ozVeHadarStartDate),
-  skipYK9Av: false,
-  shas: [
-    ['Berakhot', 64],
-    ['Shabbat', 157],
-    ['Eruvin', 105],
-    ['Pesachim', 121],
-    ['Shekalim', 22],
-    ['Yoma', 88],
-    ['Sukkah', 56],
-    ['Beitzah', 40],
-    ['Rosh Hashanah', 35],
-    ['Taanit', 31],
-    ['Megillah', 32],
-    ['Moed Katan', 29],
-    ['Chagigah', 27],
-    ['Yevamot', 122],
-    ['Ketubot', 112],
-    ['Nedarim', 91],
-    ['Nazir', 66],
-    ['Sotah', 49],
-    ['Gittin', 90],
-    ['Kiddushin', 82],
-    ['Bava Kamma', 119],
-    ['Bava Metzia', 119],
-    ['Bava Batra', 176],
-    ['Sanhedrin', 113],
-    ['Makkot', 24],
-    ['Shevuot', 49],
-    ['Avodah Zarah', 76],
-    ['Horayot', 14],
-    ['Zevachim', 120],
-    ['Menachot', 110],
-    ['Chulin', 142],
-    ['Bechorot', 61],
-    ['Arachin', 34],
-    ['Temurah', 34],
-    ['Keritot', 28],
-    ['Meilah', 22],
-    ['Kinnim', 4],
-    ['Tamid', 10],
-    ['Midot', 4],
-    ['Niddah', 73],
-  ],
-} as const;
-
 const SUN = 0;
 const SAT = 6;
 
@@ -191,7 +144,7 @@ export type YerushalmiReading = {
  */
 export function yerushalmiYomi(
   date: HDate | Date | number,
-  config: any
+  config: YerushalmiYomiConfig
 ): YerushalmiReading | null {
   if (typeof config !== 'object' || !Array.isArray(config.shas)) {
     throw new Error('invalid yerushalmi config');
@@ -241,7 +194,11 @@ function skipDay(hd: HDate): boolean {
   return false;
 }
 
-function numSpecialDays(config: any, startAbs: number, endAbs: number): number {
+function numSpecialDays(
+  config: YerushalmiYomiConfig,
+  startAbs: number,
+  endAbs: number
+): number {
   if (!config.skipYK9Av) {
     return 0;
   }
