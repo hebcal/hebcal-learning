@@ -65,6 +65,6 @@ export class YerushalmiYomiEvent extends Event {
     return `https://www.sefaria.org/${name}.${verses}?lang=bi`;
   }
   getCategories(): string[] {
-    return ['yerushalmi'];
+    return ['yerushalmi-' + this.daf.ed, 'yerushalmi'];
   }
 }
