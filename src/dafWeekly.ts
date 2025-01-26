@@ -2,16 +2,18 @@ import {HDate, DailyLearning} from '@hebcal/core';
 import {dafWeekly, dafWeeklyStart} from './dafWeeklyBase';
 import {DafWeeklyEvent} from './DafWeeklyEvent';
 
-DailyLearning.addCalendar('dafWeekly', (hd: HDate) => {
+const startDate = new HDate(dafWeeklyStart);
+
+function wrapperDaily(hd: HDate): DafWeeklyEvent | null {
   const abs = hd.abs();
   if (abs < dafWeeklyStart) {
     return null;
   }
   const daf = dafWeekly(abs);
   return new DafWeeklyEvent(hd, daf);
-});
+}
 
-DailyLearning.addCalendar('dafWeeklySunday', (hd: HDate) => {
+function wrapperSun(hd: HDate): DafWeeklyEvent | null {
   const abs = hd.abs();
   if (abs < dafWeeklyStart) {
     return null;
@@ -23,4 +25,7 @@ DailyLearning.addCalendar('dafWeeklySunday', (hd: HDate) => {
   }
   const daf = dafWeekly(abs);
   return new DafWeeklyEvent(hd, daf);
-});
+}
+
+DailyLearning.addCalendar('dafWeekly', wrapperDaily, startDate);
+DailyLearning.addCalendar('dafWeeklySunday', wrapperSun, startDate);

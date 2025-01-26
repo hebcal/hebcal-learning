@@ -1676,7 +1676,7 @@ test('YerushalmiYomiEvent.url', () => {
   const daf = {name: 'Berakhot', blatt: 10, ed: 'vilna'};
   const ev = new YerushalmiYomiEvent(hd, daf);
   expect(ev.url()).toBe('https://www.sefaria.org/Jerusalem_Talmud_Berakhot.1.5.9-14?lang=bi');
-  expect(ev.getCategories()).toEqual(['yerushalmi-vilna', 'yerushalmi']);
+  expect(ev.getCategories()).toEqual(['yerushalmi', 'vilna']);
 });
 
 test('YerushalmiYomiEvent.url schottenstein', () => {
@@ -1684,7 +1684,7 @@ test('YerushalmiYomiEvent.url schottenstein', () => {
   const daf = {name: 'Berakhot', blatt: 69, ed: 'schottenstein'};
   const ev = new YerushalmiYomiEvent(hd, daf);
   expect(ev.url()).toBeUndefined();
-  expect(ev.getCategories()).toEqual(['yerushalmi-schottenstein', 'yerushalmi']);
+  expect(ev.getCategories()).toEqual(['yerushalmi', 'schottenstein']);
 });
 
 test('YerushalmiYomiEvent.url bogus', () => {

@@ -1,11 +1,13 @@
 import {HDate, DailyLearning} from '@hebcal/core';
-import {arukhHaShulchanYomi} from './arukhHaShulchanYomiBase';
+import {arukhHaShulchanYomi, ahsyStart} from './arukhHaShulchanYomiBase';
 import {ArukhHaShulchanYomiEvent} from './ArukhHaShulchanYomiEvent';
 
-DailyLearning.addCalendar('arukhHaShulchanYomi', (hd: HDate) => {
-  const reading = arukhHaShulchanYomi(hd);
-  if (reading === null) {
+function wrapper(hd: HDate): ArukhHaShulchanYomiEvent | null {
+  if (hd.abs() < ahsyStart) {
     return null;
   }
+  const reading = arukhHaShulchanYomi(hd);
   return new ArukhHaShulchanYomiEvent(hd, reading);
-});
+}
+
+DailyLearning.addCalendar('arukhHaShulchanYomi', wrapper, new HDate(ahsyStart));

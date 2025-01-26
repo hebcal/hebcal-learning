@@ -2,7 +2,7 @@ import {HDate, DailyLearning} from '@hebcal/core';
 import {tanakhYomi, tanakhYomiStart} from './tanakhYomiBase';
 import {TanakhYomiEvent} from './TanakhYomiEvent';
 
-DailyLearning.addCalendar('tanakhYomi', (hd: HDate) => {
+function wrapper(hd: HDate): TanakhYomiEvent | null {
   const abs = hd.abs();
   if (abs < tanakhYomiStart) {
     return null;
@@ -12,4 +12,6 @@ DailyLearning.addCalendar('tanakhYomi', (hd: HDate) => {
     return null;
   }
   return new TanakhYomiEvent(hd, daf);
-});
+}
+
+DailyLearning.addCalendar('tanakhYomi', wrapper, new HDate(tanakhYomiStart));

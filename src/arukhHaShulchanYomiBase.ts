@@ -18,7 +18,7 @@ export type AhSYomiReading = {
 const cycleLen = ahsyJson.length; // 1719
 
 const cycleStartDate = new Date(2020, 4, 29);
-export const arukhHaShulchanYomiStart = greg.greg2abs(cycleStartDate);
+export const ahsyStart = greg.greg2abs(cycleStartDate);
 
 const sections = [
   '',
@@ -31,10 +31,12 @@ const sections = [
 /**
  * Calculates Arukh HaShulchan Yomi
  */
-export function arukhHaShulchanYomi(date: HDate | Date | number): AhSYomiReading {
+export function arukhHaShulchanYomi(
+  date: HDate | Date | number
+): AhSYomiReading {
   const cday = getAbsDate(date);
-  checkTooEarly(cday, arukhHaShulchanYomiStart, 'Daily Rambam');
-  const dayNum = (cday - arukhHaShulchanYomiStart) % cycleLen;
+  checkTooEarly(cday, ahsyStart, 'Arukh HaShulchan Yomi');
+  const dayNum = (cday - ahsyStart) % cycleLen;
   const [s, v] = (ahsyJson as [number, string][])[dayNum];
   return {k: sections[s], v};
 }

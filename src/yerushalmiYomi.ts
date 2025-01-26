@@ -2,7 +2,7 @@ import {HDate, DailyLearning} from '@hebcal/core';
 import {schottenstein, vilna, yerushalmiYomi} from './yerushalmiBase';
 import {YerushalmiYomiEvent} from './YerushalmiYomiEvent';
 
-DailyLearning.addCalendar('yerushalmi-vilna', (hd: HDate) => {
+function wrapperVilna(hd: HDate): YerushalmiYomiEvent | null {
   const abs = hd.abs();
   if (abs < vilna.startAbs) {
     return null;
@@ -12,16 +12,25 @@ DailyLearning.addCalendar('yerushalmi-vilna', (hd: HDate) => {
     return null;
   }
   return new YerushalmiYomiEvent(hd, daf);
-});
+}
 
-DailyLearning.addCalendar('yerushalmi-schottenstein', (hd: HDate) => {
+DailyLearning.addCalendar(
+  'yerushalmi-vilna',
+  wrapperVilna,
+  new HDate(vilna.startAbs)
+);
+
+function wrapperSchottenstein(hd: HDate): YerushalmiYomiEvent | null {
   const abs = hd.abs();
   if (abs < schottenstein.startAbs) {
     return null;
   }
   const daf = yerushalmiYomi(abs, schottenstein);
-  if (daf === null) {
-    return null;
-  }
-  return new YerushalmiYomiEvent(hd, daf);
-});
+  return new YerushalmiYomiEvent(hd, daf!);
+}
+
+DailyLearning.addCalendar(
+  'yerushalmi-schottenstein',
+  wrapperSchottenstein,
+  new HDate(schottenstein.startAbs)
+);
