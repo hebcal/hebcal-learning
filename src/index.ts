@@ -5,6 +5,7 @@ export {MishnaYomiEvent} from './MishnaYomiEvent';
 export {DailyChapterEvent} from './DailyChapterEvent';
 export {NachYomiEvent} from './NachYomiEvent';
 export {PerekYomiEvent} from './PerekYomiEvent';
+export {perekYomi, perekYomiStart} from './perekYomiBase';
 export {ChofetzChaimReading, chofetzChaim} from './chofetzChaimBase';
 export {ChofetzChaimEvent} from './ChofetzChaimEvent';
 export {dafWeekly, dafWeeklyStart} from './dafWeeklyBase';
