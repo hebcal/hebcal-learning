@@ -41,3 +41,12 @@ test('tanakhYomi', () => {
   const ev2 = DailyLearning.lookup('tanakhYomi', new HDate(2, 'Elul', 5783));
   expect(ev2).toBeNull();
 });
+
+test('perekYomi', () => {
+  const hd = new HDate(17, 'Sivan', 5783);
+  const ev = DailyLearning.lookup('perekYomi', hd);
+  expect(typeof ev).toBe('object');
+  expect(ev).not.toBeNull();
+  expect(ev.getDesc()).toBe('Oholot 9');
+  expect(ev.getCategories()).toEqual(['perekYomi']);
+});
