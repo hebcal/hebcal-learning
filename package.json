@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/learning",
-  "version": "6.2.0",
+  "version": "6.2.1",
   "description": "Daily learning schedules: Daf Yomi, Mishna Yomi, etc",
   "module": "dist/esm/index.js",
   "type": "module",

@@ -49,4 +49,5 @@ test('perekYomi', () => {
   expect(ev).not.toBeNull();
   expect(ev.getDesc()).toBe('Oholot 9');
   expect(ev.getCategories()).toEqual(['perekYomi']);
+  expect(ev.url()).toBe('https://www.sefaria.org/Mishnah_Oholot.9?lang=bi');
 });
