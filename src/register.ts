@@ -7,6 +7,7 @@ import './nachYomi';
 import './pirkeiAvotSummer';
 import './psalms';
 import './rambam1';
+import './rambam3';
 import './perekYomi';
 import './shemiratHaLashon';
 import './tanakhYomi';

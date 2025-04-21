@@ -20,6 +20,8 @@ export {PsalmBeginEnd, dailyPsalms} from './psalmsBase';
 export {PsalmsEvent} from './PsalmsEvent';
 export {RambamReading, dailyRambam1} from './rambam1Base';
 export {DailyRambamEvent} from './DailyRambamEvent';
+export {dailyRambam3} from './rambam3Base';
+export {DailyRambam3Event} from './DailyRambam3Event';
 export {
   ShemiratHaLashonReading,
   shemiratHaLashon,

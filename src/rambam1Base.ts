@@ -7,7 +7,7 @@ import {checkTooEarly, getAbsDate} from './common';
 // daily track completed its 13th.
 // https://en.wikipedia.org/wiki/Daily_Rambam_Study
 
-const cycleLen = 1017;
+export const rambam1cycleLen = 1017;
 
 // The cycle of Rambam began on Sunday, 27 Nissan, 5744 - Apr. 29, 1984.
 const startDate = new Date(1984, 3, 29);
@@ -18,7 +18,7 @@ type Daf = {
   ch: number;
 };
 
-const mishnehTorah: Daf[] = [
+export const mishnehTorah: Daf[] = [
   ['Transmission of the Oral Law', 3],
   ['Positive Mitzvot', 3],
   ['Negative Mitzvot', 3],
@@ -128,9 +128,13 @@ export type RambamReading = {
  */
 export function dailyRambam1(date: HDate | Date | number): RambamReading {
   const cday = getAbsDate(date);
-  checkTooEarly(cday, rambam1Start, 'Daily Rambam');
-  const dno = (cday - rambam1Start) % cycleLen;
-  let total = dno;
+  checkTooEarly(cday, rambam1Start, 'Daily Rambam 1');
+  const dno = (cday - rambam1Start) % rambam1cycleLen;
+  return getChap(dno);
+}
+
+export function getChap(idx: number): RambamReading {
+  let total = idx;
   for (let j = 0; j < mishnehTorah.length; j++) {
     if (total < mishnehTorah[j].ch) {
       const chapNum = total + 1;
