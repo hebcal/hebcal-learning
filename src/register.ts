@@ -9,6 +9,7 @@ import './psalms';
 import './rambam1';
 import './rambam3';
 import './perekYomi';
+import './seferHaMitzvot';
 import './shemiratHaLashon';
 import './tanakhYomi';
 import './yerushalmiYomi';

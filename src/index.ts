@@ -37,3 +37,5 @@ export {
 export {YerushalmiYomiEvent} from './YerushalmiYomiEvent';
 export {arukhHaShulchanYomi, AhSYomiReading} from './arukhHaShulchanYomiBase';
 export {ArukhHaShulchanYomiEvent} from './ArukhHaShulchanYomiEvent';
+export {seferHaMitzvot, SeferHaMitzvotReading} from './seferHaMitzvotBase';
+export {SeferHaMitzvotEvent} from './SeferHaMitzvotEvent';

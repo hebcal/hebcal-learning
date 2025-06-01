@@ -51,3 +51,14 @@ test('perekYomi', () => {
   expect(ev.getCategories()).toEqual(['perekYomi']);
   expect(ev.url()).toBe('https://www.sefaria.org/Mishnah_Oholot.9?lang=bi');
 });
+
+test('seferHaMitzvot', () => {
+  const dt = new Date(2025, 7, 8);
+  const ev = DailyLearning.lookup('seferHaMitzvot', new HDate(dt));
+  expect(typeof ev).toBe('object');
+  expect(ev).not.toBeNull();
+  expect(ev.getDesc()).toBe('Day 161: P89, N145, N148');
+  expect(ev.getCategories()).toEqual(['seferHaMitzvot']);
+  expect(ev.url()).toBe('https://www.chabad.org/dailystudy/seferHamitzvos.asp?tdate=8/8/2025');
+  expect(ev.render('en')).toBe('Day 161: Positive Commandment 89; Negative Commandment 145, 148; Note About Varying Customs');
+});
