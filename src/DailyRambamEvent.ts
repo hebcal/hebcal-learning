@@ -1,5 +1,6 @@
-import {Event, HDate, flags, Locale, gematriya} from '@hebcal/core';
+import {Event, HDate, flags, Locale} from '@hebcal/core';
 import {RambamReading} from './rambam1Base';
+import {gematriyaNN} from './gematriyaNN';
 import './locale';
 
 /**
@@ -32,7 +33,7 @@ export class DailyRambamEvent extends Event {
       return (
         Locale.gettext(reading.name, locale) +
         ' פרק ' +
-        gematriya(reading.perek)
+        gematriyaNN(reading.perek)
       );
     }
     return Locale.gettext(reading.name, locale) + ' ' + reading.perek;

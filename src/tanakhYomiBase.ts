@@ -1,14 +1,7 @@
-import {
-  HDate,
-  HebrewCalendar,
-  Locale,
-  flags,
-  gematriya,
-  greg,
-  months,
-} from '@hebcal/core';
+import {HDate, HebrewCalendar, Locale, flags, greg, months} from '@hebcal/core';
 import {DafPage} from './DafPage';
 import {checkTooEarly} from './common';
+import {gematriyaNN} from './gematriyaNN';
 import masoretic0 from './masoretic.json';
 import './locale';
 
@@ -284,9 +277,9 @@ export class TanakhYomi extends DafPage {
       if (typeof blatt === 'string') {
         const major = blatt[0];
         const minor = blatt[2];
-        return prefix + gematriya(+major) + minor;
+        return prefix + gematriyaNN(+major) + minor;
       }
-      return prefix + gematriya(blatt);
+      return prefix + gematriyaNN(blatt);
     }
     return name + ' Seder ' + blatt;
   }

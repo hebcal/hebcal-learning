@@ -1664,11 +1664,11 @@ test('YerushalmiYomiEvent.render', () => {
   const ev = new YerushalmiYomiEvent(hd, daf);
   expect(ev.render('en')).toBe('Yerushalmi Berakhot 2');
   expect(ev.render('ashkenazi')).toBe('Yerushalmi Berakhos 2');
-  expect(ev.render('he')).toBe('יְרוּשַׁלְמִי ברכות דף ב׳');
+  expect(ev.render('he')).toBe('יְרוּשַׁלְמִי ברכות דף ב');
 
   expect(ev.renderBrief('en')).toBe('Berakhot 2');
   expect(ev.renderBrief('ashkenazi')).toBe('Berakhos 2');
-  expect(ev.renderBrief('he')).toBe('ברכות דף ב׳');
+  expect(ev.renderBrief('he')).toBe('ברכות דף ב');
 });
 
 test('YerushalmiYomiEvent.url', () => {

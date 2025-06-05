@@ -1,5 +1,6 @@
-import {Event, HDate, flags, Locale, gematriya} from '@hebcal/core';
+import {Event, HDate, flags, Locale} from '@hebcal/core';
 import {YerushalmiReading} from './yerushalmiBase';
+import {gematriyaNN} from './gematriyaNN';
 import './locale';
 import vilnaMap0 from './yerushalmiVilnaMap.json';
 
@@ -37,7 +38,7 @@ export class YerushalmiYomiEvent extends Event {
     }
     const name = Locale.gettext(this.daf.name, locale);
     if (locale === 'he' || locale === 'he-x-nonikud') {
-      return name + ' דף ' + gematriya(this.daf.blatt);
+      return name + ' דף ' + gematriyaNN(this.daf.blatt);
     }
     return name + ' ' + this.daf.blatt;
   }

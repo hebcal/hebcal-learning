@@ -44,5 +44,5 @@ test('DailyRambam3Event-render', () => {
   const ev = new DailyRambam3Event(hd, r1);
   expect(ev.render('en')).toBe('Foundations of the Torah 10, Human Dispositions 1, Human Dispositions 2');
   expect(ev.render('ashkenazi')).toBe('Foundations of the Torah 10, Human Dispositions 1, Human Dispositions 2');
-  expect(ev.render('he')).toBe("הלכות יסודי התורה פרק י׳, הלכות דעות פרק א׳, הלכות דעות פרק ב׳");
+  expect(ev.render('he')).toBe("הלכות יסודי התורה פרק י, הלכות דעות פרק א, הלכות דעות פרק ב");
 });

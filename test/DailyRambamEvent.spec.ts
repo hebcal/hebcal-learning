@@ -21,5 +21,5 @@ test('DailyRambamEvent-render', () => {
   const ev = new DailyRambamEvent(hd, r1);
   expect(ev.render('en')).toBe('Kings and Wars 4');
   expect(ev.render('ashkenazi')).toBe('Kings and Wars 4');
-  expect(ev.render('he')).toBe('הלכות מלכים ומלחמות פרק ד׳');
+  expect(ev.render('he')).toBe('הלכות מלכים ומלחמות פרק ד');
 });
