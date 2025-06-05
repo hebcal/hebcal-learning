@@ -5,8 +5,8 @@ import {HDate, months} from '@hebcal/core';
 import '../src/locale';
 
 test('year', () => {
-  const startAbs = HDate.hebrew2abs(5780, months.TISHREI, 1);
-  const endAbs = HDate.hebrew2abs(5781, months.TISHREI, 1) - 1;
+  const startAbs = HDate.hebrew2abs(5787, months.TISHREI, 1);
+  const endAbs = HDate.hebrew2abs(5788, months.TISHREI, 1) - 1;
   for (let abs = startAbs; abs <= endAbs; abs++) {
     const hd = new HDate(abs);
     const reading = kitzurShulchanAruch(hd, 'A');

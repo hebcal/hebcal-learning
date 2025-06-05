@@ -6,6 +6,10 @@ import './locale';
 
 const BOOK_NAME = 'Kitzur Shulchan Arukh';
 
+function gematriyaOrSof(s: string): string {
+  return s === 'E' ? 'סוף' : gematriyaNN(s);
+}
+
 function renderReading(
   reading: KitzurShulchanAruchReading,
   locale?: string
@@ -19,14 +23,18 @@ function renderReading(
       return Locale.gettext(reading.b, locale);
     }
     const cv1 = reading.b.split(':');
-    const begin = cv1.map(gematriyaNN).join(':');
+    const begin = cv1
+      .map(s => {
+        return s === 'Shmita' ? 'שמיטה' : gematriyaNN(s);
+      })
+      .join(':');
     if (reading.e) {
       const end = reading.e.split(':');
-      const chap = gematriyaNN(end[0]);
+      const chap = gematriyaOrSof(end[0]);
       if (!end[1]) {
         return begin + `-${chap}`;
       }
-      const verse = end[1] === 'E' ? 'סוף' : gematriyaNN(end[1]);
+      const verse = gematriyaOrSof(end[1]);
       const chapColon = end[0] === cv1[0] ? '' : chap + ':';
       return begin + `-${chapColon}${verse}`;
     }
