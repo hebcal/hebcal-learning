@@ -36,3 +36,10 @@ export function checkTooEarly(abs: number, startAbs: number, name: string) {
     );
   }
 }
+
+export function formatBeginEndRange(begin: string, end: string): string {
+  const p1 = begin.split(':');
+  const p2 = end.split(':');
+  const verse2 = p1[0] === p2[0] ? p2[1] : p2.join(':');
+  return begin + '-' + verse2;
+}

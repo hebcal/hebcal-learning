@@ -39,3 +39,8 @@ export {arukhHaShulchanYomi, AhSYomiReading} from './arukhHaShulchanYomiBase';
 export {ArukhHaShulchanYomiEvent} from './ArukhHaShulchanYomiEvent';
 export {seferHaMitzvot, SeferHaMitzvotReading} from './seferHaMitzvotBase';
 export {SeferHaMitzvotEvent} from './SeferHaMitzvotEvent';
+export {
+  kitzurShulchanAruch,
+  KitzurShulchanAruchReading,
+} from './kitzurShulchanAruchBase';
+export {KitzurShulchanAruchEvent} from './KitzurShulchanAruchEvent';

@@ -2,6 +2,7 @@ import './arukhHaShulchanYomi';
 import './chofetzChaim';
 import './dafWeekly';
 import './dafYomi';
+import './kitzurShulchanAruch';
 import './mishnaYomi';
 import './nachYomi';
 import './pirkeiAvotSummer';

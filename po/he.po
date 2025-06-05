@@ -692,3 +692,12 @@ msgstr "שמירת הלשון"
 
 msgid "Yerushalmi Yomi"
 msgstr "יְרוּשַׁלְמִי יוֹמִי"
+
+msgid "Klalim"
+msgstr "כללים"
+
+msgid "Hilchot Shmita v'Terumah"
+msgstr "הלכות שמיטה ותרו״מ"
+
+msgid "Hilchot Brachot v'Tefilah"
+msgstr "הלכות ברכות ותפלה"

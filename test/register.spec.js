@@ -5,7 +5,7 @@ import {DailyLearning, HDate} from '@hebcal/core';
 test('lookup', () => {
   const hd = new HDate(17, 'Sivan', 5783);
   const ev = DailyLearning.lookup('psalms', hd);
-  expect(typeof ev).toBe('object');
+  expect(ev).toBeTypeOf('object');
   expect(ev).not.toBeNull();
   expect(ev.getDesc()).toBe('Psalms 83-87');
 });
@@ -13,7 +13,7 @@ test('lookup', () => {
 test('dafWeekly', () => {
   const hd = new HDate(17, 'Sivan', 5783);
   const ev = DailyLearning.lookup('dafWeekly', hd);
-  expect(typeof ev).toBe('object');
+  expect(ev).toBeTypeOf('object');
   expect(ev).not.toBeNull();
   expect(ev.getDesc()).toBe('Ketubot 39');
   expect(ev.getCategories()).toEqual(['dafWeekly']);
@@ -33,7 +33,7 @@ test('dafWeeklySunday', () => {
 test('tanakhYomi', () => {
   const hd = new HDate(17, 'Sivan', 5783);
   const ev = DailyLearning.lookup('tanakhYomi', hd);
-  expect(typeof ev).toBe('object');
+  expect(ev).toBeTypeOf('object');
   expect(ev).not.toBeNull();
   expect(ev.getDesc()).toBe('Minor Prophets Seder 10');
   expect(ev.getCategories()).toEqual(['tanakhYomi']);
@@ -45,7 +45,7 @@ test('tanakhYomi', () => {
 test('perekYomi', () => {
   const hd = new HDate(17, 'Sivan', 5783);
   const ev = DailyLearning.lookup('perekYomi', hd);
-  expect(typeof ev).toBe('object');
+  expect(ev).toBeTypeOf('object');
   expect(ev).not.toBeNull();
   expect(ev.getDesc()).toBe('Oholot 9');
   expect(ev.getCategories()).toEqual(['perekYomi']);
@@ -55,10 +55,23 @@ test('perekYomi', () => {
 test('seferHaMitzvot', () => {
   const dt = new Date(2025, 7, 8);
   const ev = DailyLearning.lookup('seferHaMitzvot', new HDate(dt));
-  expect(typeof ev).toBe('object');
+  expect(ev).toBeTypeOf('object');
   expect(ev).not.toBeNull();
   expect(ev.getDesc()).toBe('Day 161: P89, N145, N148');
   expect(ev.getCategories()).toEqual(['seferHaMitzvot']);
   expect(ev.url()).toBe('https://www.chabad.org/dailystudy/seferHamitzvos.asp?tdate=8/8/2025');
   expect(ev.render('en')).toBe('Day 161: Positive Commandment 89; Negative Commandment 145, 148; Note About Varying Customs');
+});
+
+test('kitzurShulchanAruch', () => {
+  const hd = new HDate(5, 'Adar II', 5787);
+  const ev = DailyLearning.lookup('kitzurShulchanAruch', hd);
+  expect(ev).toBeTypeOf('object');
+  expect(ev).not.toBeNull();
+  expect(ev.getDesc()).toBe("19-23 / 15:1-15:6");
+  expect(ev.getCategories()).toEqual(['kitzurShulchanAruch']);
+  expect(ev.url()).toBeUndefined();
+  expect(ev.render('en')).toBe("Hilchot Shmita v'Terumah 19-23 / Hilchot Brachot v'Tefilah 15:1-6");
+  expect(ev.renderBrief('en')).toBe("Hilchot Shmita v'Terumah 19-23 / Hilchot Brachot v'Tefilah 15:1-6");
+  expect(ev.renderBrief('he')).toBe("הלכות שמיטה ותרו״מ יט-כג / הלכות ברכות ותפלה טו:א-ו");
 });

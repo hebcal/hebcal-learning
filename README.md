@@ -28,6 +28,10 @@ Supports several learning schedules
 * Pirkei Avot (“Ethics of the Fathers”), studied one chapter on each Shabbat of the summer between Passover and Rosh Hashanah - `pirkeiAvotSummer`
 * Arukh HaShulchan Yomi - `arukhHaShulchanYomi`
   * Daily study of the Arukh HaShulchan Yomi, a work of halacha written by Yechiel Michel Epstein. The work attempts to be a clear, organized summary of the sources for each chapter of the Shulchan Arukh and its commentaries, with special emphasis on the positions of the Jerusalem Talmud and Maimonides
+* Sefer Hamitzvos - Daily Mitzvah (Rambam) - `seferHaMitzvot`
+* Kitzur Shulchan Aruch Yomi - `kitzurShulchanAruch`
+  * Summary of the Shulchan Aruch of Rabbi Yosef Karo,
+    authored by Rabbi Shlomo Ganzfried in 1864.
 
 ## Installation
 ```bash
