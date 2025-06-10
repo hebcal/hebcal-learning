@@ -1,5 +1,6 @@
-import {Event, HDate, Locale, flags, gematriya} from '@hebcal/core';
+import {Event, HDate, Locale, flags} from '@hebcal/core';
 import {AhSYomiReading} from './arukhHaShulchanYomiBase';
+import {gematriyaNN} from './common';
 import './locale';
 
 /**
@@ -13,10 +14,6 @@ export class ArukhHaShulchanYomiEvent extends Event {
     this.reading = reading;
     this.category = 'Arukh HaShulchan Yomi';
   }
-  /**
-   * Returns name of tractate and page (e.g. "Beitzah 21").
-   * @param [locale] Optional locale name (defaults to active locale).
-   */
   render(locale?: string): string {
     locale = locale || Locale.getLocaleName();
     if (typeof locale === 'string') {
@@ -25,9 +22,11 @@ export class ArukhHaShulchanYomiEvent extends Event {
     const reading = this.reading;
     const name = Locale.gettext(reading.k, locale);
     if (locale === 'he' || locale === 'he-x-nonikud') {
-      return name + ' ' + gematriya(reading.v);
+      const parts = reading.v.split('-');
+      const beginEnd = parts.map(x => x.split(/\./).map(gematriyaNN).join(':'));
+      return name + ' ' + beginEnd.join('-');
     }
-    return name + ' ' + reading.v;
+    return name + ' ' + reading.v.replace(/\./g, ':');
   }
   /**
    * Returns a link to sefaria.org

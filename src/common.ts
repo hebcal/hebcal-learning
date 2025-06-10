@@ -1,4 +1,4 @@
-import {HDate, greg} from '@hebcal/core';
+import {HDate, greg, gematriya} from '@hebcal/core';
 
 /**
  * @private
@@ -42,4 +42,12 @@ export function formatBeginEndRange(begin: string, end: string): string {
   const p2 = end.split(':');
   const verse2 = p1[0] === p2[0] ? p2[1] : p2.join(':');
   return begin + '-' + verse2;
+}
+
+/**
+ * Gematriya without nikkud (geresh or gershayim)
+ */
+export function gematriyaNN(num: number | string): string {
+  const s = gematriya(num);
+  return s.replace(/[׳״]/g, '');
 }

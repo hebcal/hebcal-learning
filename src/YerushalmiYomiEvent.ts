@@ -1,6 +1,6 @@
 import {Event, HDate, flags, Locale} from '@hebcal/core';
 import {YerushalmiReading} from './yerushalmiBase';
-import {gematriyaNN} from './gematriyaNN';
+import {gematriyaNN} from './common';
 import './locale';
 import vilnaMap0 from './yerushalmiVilnaMap.json';
 

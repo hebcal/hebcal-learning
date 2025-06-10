@@ -1,7 +1,6 @@
 import {Event, HDate, flags, Locale, months} from '@hebcal/core';
 import {KitzurShulchanAruchReading} from './kitzurShulchanAruchBase';
-import {gematriyaNN} from './gematriyaNN';
-import {formatBeginEndRange} from './common';
+import {gematriyaNN, formatBeginEndRange} from './common';
 import './locale';
 
 const BOOK_NAME = 'Kitzur Shulchan Arukh';

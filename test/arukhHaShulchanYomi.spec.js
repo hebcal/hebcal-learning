@@ -25,7 +25,7 @@ test('arukhHaShulchanYomi-range', () => {
   });
   const actual = [];
   for (const ev of events) {
-    actual.push([hd2iso(ev.getDate()), ev.render('en')]);
+    actual.push([hd2iso(ev.getDate()), ev.getDesc()]);
   }
   const expected = [
     ['2024-12-26', "Yoreh De'ah 402.17-403.8"],

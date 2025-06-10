@@ -701,3 +701,18 @@ msgstr "הלכות שמיטה ותרו״מ"
 
 msgid "Hilchot Brachot v'Tefilah"
 msgstr "הלכות ברכות ותפלה"
+
+msgid "Arukh HaShulchan"
+msgstr "ערוך השולחן"
+
+msgid "Orach Chaim"
+msgstr "אורח חיים"
+
+msgid "Yoreh De'ah"
+msgstr "יורה דעה"
+
+msgid "Even HaEzer"
+msgstr "אבן העזר"
+
+msgid "Choshen Mishpat"
+msgstr "חושן משפט"

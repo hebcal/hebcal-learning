@@ -1,7 +1,6 @@
 import {HDate, HebrewCalendar, Locale, flags, greg, months} from '@hebcal/core';
 import {DafPage} from './DafPage';
-import {checkTooEarly} from './common';
-import {gematriyaNN} from './gematriyaNN';
+import {checkTooEarly, gematriyaNN} from './common';
 import masoretic0 from './masoretic.json';
 import './locale';
 

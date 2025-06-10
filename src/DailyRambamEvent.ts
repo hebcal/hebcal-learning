@@ -1,6 +1,6 @@
 import {Event, HDate, flags, Locale} from '@hebcal/core';
 import {RambamReading} from './rambam1Base';
-import {gematriyaNN} from './gematriyaNN';
+import {gematriyaNN} from './common';
 import './locale';
 
 /**
