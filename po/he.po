@@ -716,3 +716,12 @@ msgstr "אבן העזר"
 
 msgid "Choshen Mishpat"
 msgstr "חושן משפט"
+
+msgid "Daf Yomi"
+msgstr "דַף יוֹמִי"
+
+msgid "Yerushalmi"
+msgstr "יְרוּשַׁלְמִי"
+
+msgid "Pirkei Avot"
+msgstr "פִּרְקֵי אָבוֹת"
