@@ -2,7 +2,7 @@ import {Event, HDate} from '@hebcal/core';
 import {DafPage} from './DafPage';
 import './locale';
 
-const dafYomiSefaria: {[key: string]: string} = {
+const dafYomiSefaria: Record<string, string> = {
   Berachot: 'Berakhot',
   'Rosh Hashana': 'Rosh Hashanah',
   Gitin: 'Gittin',

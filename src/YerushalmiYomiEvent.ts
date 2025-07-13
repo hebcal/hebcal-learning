@@ -4,9 +4,7 @@ import {gematriyaNN} from './common';
 import './locale';
 import vilnaMap0 from './yerushalmiVilnaMap.json';
 
-const vilnaMap: {
-  [key: string]: (string | null)[];
-} = vilnaMap0;
+const vilnaMap: Record<string, (string | null)[]> = vilnaMap0;
 
 /**
  * Event wrapper around a Yerushalmi Yomi result

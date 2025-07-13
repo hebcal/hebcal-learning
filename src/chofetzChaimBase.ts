@@ -29,7 +29,7 @@ export const HilchosRechilus = 'HilchosRechilus';
 export const Tziyurim = 'Tziyurim';
 
 const intro = 'Introduction to the Laws of the Prohibition of Lashon Hara and Rechilut';
-export const englishNames: {[key: string]: string} = {
+export const englishNames: Record<string, string> = {
   Hakdamah: 'Preface',
   Psichah: `${intro}, Opening Comments`,
   Lavin: `${intro}, Negative Commandments`,

@@ -30,7 +30,7 @@ const Shar_Hatvuna = 'Shar Hatvuna';
 const Epilogue = 'Chasimas Hasefer';
 export const Chapters = 'x';
 
-export const englishNames: {[key: string]: string | null} = {
+export const englishNames: Record<string, string | null> = {
   Hakdamah: 'Introduction',
   Shar_Hazechira: 'The Gate of Remembering',
   Shar_Hatvuna: 'The Gate of Discerning',

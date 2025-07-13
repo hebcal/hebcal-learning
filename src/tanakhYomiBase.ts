@@ -5,8 +5,8 @@ import masoretic0 from './masoretic.json';
 import './locale';
 
 const masoretic: {
-  split: {[key: string]: any};
-  regular: {[key: string]: any};
+  split: Record<string, any>;
+  regular: Record<string, any>;
 } = masoretic0;
 
 // Cycle starts 23 Tishrei (day after Shmini Atzeret in Israel)
