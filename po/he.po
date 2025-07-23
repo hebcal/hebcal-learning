@@ -352,7 +352,7 @@ msgstr "עוקצין"
 ####### Mishneh Torah #######
 
 msgid "Transmission of the Oral Law"
-msgstr "מסירת התורה שבעל פה"
+msgstr "מסירת תורה שבעל פה"
 
 msgid "Positive Mitzvot"
 msgstr "מצוות עשה"
