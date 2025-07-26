@@ -347,7 +347,7 @@ msgstr "ידים"
 
 # Mishna Oktzin
 msgid "Oktzin"
-msgstr "עוקצין"
+msgstr "עוקצים"
 
 ####### Mishneh Torah #######
 
