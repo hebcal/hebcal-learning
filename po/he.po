@@ -623,7 +623,7 @@ msgid "Psichah"
 msgstr "פתיחה"
 
 msgid "Lavin"
-msgstr "לאוין"
+msgstr "לאווין"
 
 msgid "Asin"
 msgstr "עשיין"
@@ -658,7 +658,7 @@ msgid "Kings"
 msgstr "מְלָכִים"
 
 msgid "Minor Prophets"
-msgstr "תרי עשר"
+msgstr "תְּרֵי עֲשַׂר"
 
 msgid "Ezra and Nehemiah"
 msgstr "עֶזְרָא וְנְחֶמְיָה"
@@ -688,7 +688,7 @@ msgid "Tanakh Yomi"
 msgstr "תנ״ך יוֹמִי"
 
 msgid "Shemirat HaLashon"
-msgstr "שמירת הלשון"
+msgstr "שְׁמִירַת הַלָּשׁוֹן"
 
 msgid "Yerushalmi Yomi"
 msgstr "יְרוּשַׁלְמִי יוֹמִי"
@@ -718,7 +718,7 @@ msgid "Choshen Mishpat"
 msgstr "חושן משפט"
 
 msgid "Daf Yomi"
-msgstr "דַף יוֹמִי"
+msgstr "דַּף יוֹמִי"
 
 msgid "Yerushalmi"
 msgstr "יְרוּשַׁלְמִי"
@@ -729,7 +729,7 @@ msgstr "פִּרְקֵי אָבוֹת"
 # For Nach Yomi and Tanakh Yomi
 
 msgid "Joshua"
-msgstr "יְהוֹשׁוּעַ"
+msgstr "יְהוֹשֻׁעַ"
 
 msgid "Judges"
 msgstr "שׁוֹפְטִים"
