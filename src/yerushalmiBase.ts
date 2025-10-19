@@ -1,4 +1,4 @@
-import {HDate, greg, months} from '@hebcal/core';
+import {HDate, greg, months} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate} from './common';
 
 export type YerushalmiYomiConfig = {

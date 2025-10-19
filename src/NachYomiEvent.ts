@@ -1,4 +1,5 @@
-import {HDate, flags} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
+import {flags} from '@hebcal/core/dist/esm/event';
 import {DailyChapterEvent} from './DailyChapterEvent';
 import {NachYomi} from './nachYomiBase';
 

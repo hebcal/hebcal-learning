@@ -1,4 +1,5 @@
-import {HDate, DailyLearning} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
+import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
 import {osday} from './dafYomiBase';
 import {DafYomiEvent} from './DafYomiEvent';
 

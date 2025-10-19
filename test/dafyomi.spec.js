@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest';
 import {DafYomi} from '../src/dafYomiBase';
 import {DafYomiEvent} from '../src/DafYomiEvent';
-import {HDate, months, greg} from '@hebcal/core';
+import {HDate, greg, months} from '@hebcal/hdate';
 
 test('dafyomi-single', () => {
   const dt = new Date(1995, 11, 17);

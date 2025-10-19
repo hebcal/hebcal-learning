@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 import {perekYomi} from '../src/perekYomiBase';
-import {greg} from '@hebcal/core';
+import {greg} from '@hebcal/hdate';
 
 function abs2iso(abs) {
   return greg.abs2greg(abs).toISOString().substring(0, 10);

@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {HDate} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
 import {seferHaMitzvot} from '../src/seferHaMitzvotBase';
 
 test('simple', () => {

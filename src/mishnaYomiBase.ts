@@ -1,4 +1,4 @@
-import {HDate, greg} from '@hebcal/core';
+import {HDate, greg} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate} from './common';
 import mishnayot from './mishnayot.json';
 

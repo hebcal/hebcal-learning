@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 import {ArukhHaShulchanYomiEvent} from '../src/ArukhHaShulchanYomiEvent';
-import {HDate} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
 import '../src/locale';
 
 test('render', () => {

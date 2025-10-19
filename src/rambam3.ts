@@ -1,4 +1,5 @@
-import {HDate, DailyLearning} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
+import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
 import {rambam1Start} from './rambam1Base';
 import {dailyRambam3} from './rambam3Base';
 import {DailyRambam3Event} from './DailyRambam3Event';

@@ -1,4 +1,4 @@
-import {HDate} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
 
 export type PsalmBeginEnd = [number | string, number | string];
 

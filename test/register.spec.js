@@ -1,6 +1,7 @@
 import {expect, test} from 'vitest';
 import '../src/register';
-import {DailyLearning, HDate} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
+import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
 
 test('lookup', () => {
   const hd = new HDate(17, 'Sivan', 5783);

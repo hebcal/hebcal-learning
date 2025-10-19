@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {HebrewCalendar} from '@hebcal/core';
+import {HebrewCalendar} from '@hebcal/core/dist/esm/hebcal';
 import {arukhHaShulchanYomi} from '../src/arukhHaShulchanYomiBase'
 import '../src/register';
 

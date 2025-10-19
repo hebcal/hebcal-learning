@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 import {dailyRambam1} from '../src/rambam1Base';
-import {greg} from '@hebcal/core';
+import {greg} from '@hebcal/hdate';
 import fullCycle from './rambam1cycle.json';
 
 function abs2iso(abs) {

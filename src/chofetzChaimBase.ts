@@ -1,4 +1,4 @@
-import {HDate, months} from '@hebcal/core';
+import {HDate, months} from '@hebcal/hdate';
 
 const Nisan = months.NISAN;
 const Iyyar = months.IYYAR;

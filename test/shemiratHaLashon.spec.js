@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {HDate, greg} from '@hebcal/core';
+import {HDate, greg} from '@hebcal/hdate';
 import {shemiratHaLashon} from '../src/shemiratHaLashonBase';
 import {ShemiratHaLashonEvent} from '../src/ShemiratHaLashonEvent';
 

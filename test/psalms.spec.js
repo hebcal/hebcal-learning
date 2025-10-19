@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest';
 import {dailyPsalms} from '../src/psalmsBase';
 import {PsalmsEvent} from '../src/PsalmsEvent';
-import {HDate} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
 
 test('dailyPsalms', () => {
   expect(dailyPsalms(new HDate(1, 'Av', 5783))).toEqual([1, 9]);

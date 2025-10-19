@@ -1,4 +1,6 @@
-import {Event, HDate, Locale, gematriya} from '@hebcal/core';
+import {HDate, gematriya} from '@hebcal/hdate';
+import {Locale} from '@hebcal/core/dist/esm/locale';
+import {Event} from '@hebcal/core/dist/esm/event';
 import './locale';
 
 /**

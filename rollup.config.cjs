@@ -5,6 +5,15 @@ const pkg = require('./package.json');
 
 const banner = '/*! ' + pkg.name + ' v' + pkg.version + ' */';
 
+const iifeGlobals = {
+  '@hebcal/hdate': 'hebcal',
+  '@hebcal/core': 'hebcal',
+  '@hebcal/core/dist/esm/locale': 'hebcal',
+  '@hebcal/core/dist/esm/event': 'hebcal',
+  '@hebcal/core/dist/esm/hebcal': 'hebcal',
+  '@hebcal/core/dist/esm/DailyLearning': 'hebcal',
+};
+
 module.exports = [
   {
     input: 'src/index.ts',
@@ -22,7 +31,7 @@ module.exports = [
       json({compact: true, preferConst: true}),
       typescript({outDir: 'dist/esm'}),
     ],
-    external: ['@hebcal/core'],
+    external: [/@hebcal/],
   },
   {
     input: 'src/index.ts',
@@ -31,9 +40,7 @@ module.exports = [
         file: 'dist/bundle.js',
         format: 'iife',
         name: 'hebcal__learning',
-        globals: {
-          '@hebcal/core': 'hebcal',
-        },
+        globals: iifeGlobals,
         indent: false,
         banner,
       },
@@ -41,14 +48,12 @@ module.exports = [
         file: 'dist/bundle.min.js',
         format: 'iife',
         name: 'hebcal__learning',
-        globals: {
-          '@hebcal/core': 'hebcal',
-        },
+        globals: iifeGlobals,
         plugins: [terser()],
         banner,
       },
     ],
     plugins: [json({compact: true, preferConst: true}), typescript()],
-    external: ['@hebcal/core'],
+    external: [/@hebcal/],
   },
 ];

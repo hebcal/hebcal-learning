@@ -1,4 +1,4 @@
-import {HDate} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate} from './common';
 import {
   rambam1cycleLen,

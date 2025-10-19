@@ -1,4 +1,4 @@
-import {HDate, greg, gematriya} from '@hebcal/core';
+import {HDate, greg, gematriya} from '@hebcal/hdate';
 
 /**
  * @private

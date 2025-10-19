@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest';
 import {pirkeiAvot} from '../src/pirkeiAvotBase';
 import {PirkeiAvotSummerEvent} from '../src/PirkeiAvotSummerEvent';
-import {HDate, months} from '@hebcal/core';
+import {HDate, months} from '@hebcal/hdate';
 
 function makeSaturdays(currentYear) {
   const pesach7 = new HDate(21, months.NISAN, currentYear);

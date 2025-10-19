@@ -1,4 +1,6 @@
-import {Event, flags, HDate, Locale} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
+import {Locale} from '@hebcal/core/dist/esm/locale';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {MishnaYomi} from './mishnaYomiBase';
 import './locale';
 

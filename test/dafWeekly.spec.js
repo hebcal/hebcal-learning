@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {HDate} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
 import {dafWeekly} from '../src/dafWeeklyBase';
 import {DafWeeklyEvent} from '../src/DafWeeklyEvent';
 

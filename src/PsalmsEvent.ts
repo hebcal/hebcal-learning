@@ -1,4 +1,6 @@
-import {Event, HDate, flags, Locale, gematriya} from '@hebcal/core';
+import {HDate, gematriya} from '@hebcal/hdate';
+import {Locale} from '@hebcal/core/dist/esm/locale';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {PsalmBeginEnd} from './psalmsBase';
 import './locale';
 

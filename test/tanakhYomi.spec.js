@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest';
 import {tanakhYomi} from '../src/tanakhYomiBase';
 import {TanakhYomiEvent} from '../src/TanakhYomiEvent';
-import {HDate, greg, months} from '@hebcal/core';
+import {HDate, greg, months} from '@hebcal/hdate';
 import '../src/locale';
 
 function abs2iso(abs) {

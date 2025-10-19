@@ -1,4 +1,4 @@
-import {HDate, months} from '@hebcal/core';
+import {HDate, months} from '@hebcal/hdate';
 import kitzurSaJson from './kitzurSa.json';
 
 /**

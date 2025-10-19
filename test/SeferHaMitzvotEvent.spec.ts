@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest';
 import {SeferHaMitzvotEvent} from '../src/SeferHaMitzvotEvent';
 import {SeferHaMitzvotReading} from '../src/seferHaMitzvotBase';
-import {HDate} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
 import '../src/locale';
 
 test('SeferHaMitzvotEvent-url', () => {

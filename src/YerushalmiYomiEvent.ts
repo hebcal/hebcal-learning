@@ -1,4 +1,6 @@
-import {Event, HDate, flags, Locale} from '@hebcal/core';
+import {Locale} from '@hebcal/core/dist/esm/locale';
+import {HDate} from '@hebcal/hdate';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {YerushalmiReading} from './yerushalmiBase';
 import {gematriyaNN} from './common';
 import './locale';

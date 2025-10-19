@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest';
 import {KitzurShulchanAruchEvent} from '../src/KitzurShulchanAruchEvent';
 import {kitzurShulchanAruch} from '../src/kitzurShulchanAruchBase';
-import {HDate, months} from '@hebcal/core';
+import {HDate, months} from '@hebcal/hdate';
 import '../src/locale';
 
 test('year', () => {

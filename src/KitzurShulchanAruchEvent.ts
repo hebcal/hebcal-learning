@@ -1,4 +1,6 @@
-import {Event, HDate, flags, Locale, months} from '@hebcal/core';
+import {HDate, months} from '@hebcal/hdate';
+import {Locale} from '@hebcal/core/dist/esm/locale';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {KitzurShulchanAruchReading} from './kitzurShulchanAruchBase';
 import {gematriyaNN, formatBeginEndRange} from './common';
 import './locale';

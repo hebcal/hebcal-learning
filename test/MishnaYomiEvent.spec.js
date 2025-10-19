@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 import {MishnaYomiEvent} from '../src/MishnaYomiEvent';
-import {HDate} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
 import '../src/locale';
 
 test('MishnaYomiEvent-url', () => {

@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {HebrewCalendar} from '@hebcal/core';
+import {HebrewCalendar} from '@hebcal/core/dist/esm/hebcal';
 import '../src/register';
 
 function hd2iso(hd) {

@@ -1,4 +1,5 @@
-import {Event, HDate, flags} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {SeferHaMitzvotReading} from './seferHaMitzvotBase';
 
 enum ReadingType {

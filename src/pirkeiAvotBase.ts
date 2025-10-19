@@ -1,4 +1,4 @@
-import {HDate, months} from '@hebcal/core';
+import {HDate, months} from '@hebcal/hdate';
 
 /**
  * Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana

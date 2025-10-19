@@ -1,5 +1,6 @@
 import {expect, test} from 'vitest';
-import {HebrewCalendar, flags} from '@hebcal/core';
+import {flags} from '@hebcal/core/dist/esm/event';
+import {HebrewCalendar} from '@hebcal/core/dist/esm/hebcal';
 import '../src/register';
 
 /**

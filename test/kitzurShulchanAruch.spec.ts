@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {HDate, months} from '@hebcal/core';
+import {HDate, months} from '@hebcal/hdate';
 import {kitzurShulchanAruch} from '../src/kitzurShulchanAruchBase';
 
 test('simple', () => {

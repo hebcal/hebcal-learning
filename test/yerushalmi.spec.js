@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest';
 import {yerushalmiYomi, vilna, schottenstein} from '../src/yerushalmiBase';
 import {YerushalmiYomiEvent} from '../src/YerushalmiYomiEvent';
-import {HDate, greg} from '@hebcal/core';
+import {HDate, greg} from '@hebcal/hdate';
 import '../src/locale';
 
 test('yerushalmiYomi-small', () => {

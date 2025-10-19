@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 import {dailyRambam3, canCombineReading, combineReading} from '../src/rambam3Base';
-import {greg} from '@hebcal/core';
+import {greg} from '@hebcal/hdate';
 
 function abs2iso(abs: number): string {
   return greg.abs2greg(abs).toISOString().substring(0, 10);

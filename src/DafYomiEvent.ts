@@ -1,4 +1,6 @@
-import {HDate, flags, Locale} from '@hebcal/core';
+import {Locale} from '@hebcal/core/dist/esm/locale';
+import {HDate} from '@hebcal/hdate';
+import {flags} from '@hebcal/core/dist/esm/event';
 import {DafPageEvent} from './DafPageEvent';
 import {DafYomi} from './dafYomiBase';
 import './locale';

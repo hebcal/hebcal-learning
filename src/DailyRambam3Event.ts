@@ -1,4 +1,5 @@
-import {Event, HDate, flags, Locale, gematriya} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {canCombineReading, combineReading} from './rambam3Base';
 import {RambamReading} from './rambam1Base';
 import {DailyRambamEvent} from './DailyRambamEvent';

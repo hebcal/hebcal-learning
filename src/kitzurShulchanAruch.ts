@@ -1,4 +1,5 @@
-import {HDate, DailyLearning, months} from '@hebcal/core';
+import {HDate, months} from '@hebcal/hdate';
+import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
 import {kitzurShulchanAruch} from './kitzurShulchanAruchBase';
 import {KitzurShulchanAruchEvent} from './KitzurShulchanAruchEvent';
 

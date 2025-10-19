@@ -1,4 +1,5 @@
-import {HDate, flags} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
+import {flags} from '@hebcal/core/dist/esm/event';
 import {DafPage} from './DafPage';
 import {DafPageEvent} from './DafPageEvent';
 

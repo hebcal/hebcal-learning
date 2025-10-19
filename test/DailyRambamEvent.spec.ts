@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 import {DailyRambamEvent} from '../src/DailyRambamEvent';
-import {HDate} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
 import '../src/locale';
 
 test('DailyRambamEvent-url', () => {

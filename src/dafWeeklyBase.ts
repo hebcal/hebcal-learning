@@ -1,4 +1,4 @@
-import {HDate, greg} from '@hebcal/core';
+import {HDate, greg} from '@hebcal/hdate';
 import {DafPage} from './DafPage';
 import {checkTooEarly, getAbsDate} from './common';
 import {findDaf, shas0} from './dafYomiBase';
