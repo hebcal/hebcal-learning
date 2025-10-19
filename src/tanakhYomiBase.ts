@@ -1,7 +1,7 @@
 import {HDate, greg, months} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {HebrewCalendar} from '@hebcal/core/dist/esm/hebcal';
+import {getHolidaysOnDate} from '@hebcal/core/dist/esm/holidays';
 import {DafPage} from './DafPage';
 import {checkTooEarly, gematriyaNN} from './common';
 import masoretic0 from './masoretic.json';
@@ -141,7 +141,7 @@ function skipDay(hd: HDate): boolean {
   if (hd.getDay() === 6) {
     return true;
   }
-  const holidays = HebrewCalendar.getHolidaysOnDate(hd, true);
+  const holidays = getHolidaysOnDate(hd, true);
   if (!holidays) {
     return false;
   }

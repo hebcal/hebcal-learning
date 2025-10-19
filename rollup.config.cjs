@@ -10,7 +10,7 @@ const iifeGlobals = {
   '@hebcal/core': 'hebcal',
   '@hebcal/core/dist/esm/locale': 'hebcal',
   '@hebcal/core/dist/esm/event': 'hebcal',
-  '@hebcal/core/dist/esm/hebcal': 'hebcal',
+  '@hebcal/core/dist/esm/holidays': 'hebcal',
   '@hebcal/core/dist/esm/DailyLearning': 'hebcal',
 };
 
