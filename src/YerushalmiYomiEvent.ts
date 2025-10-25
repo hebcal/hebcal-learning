@@ -32,7 +32,7 @@ export class YerushalmiYomiEvent extends Event {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   renderBrief(locale?: string): string {
-    locale = locale || Locale.getLocaleName();
+    locale = locale || 'en';
     if (typeof locale === 'string') {
       locale = locale.toLowerCase();
     }

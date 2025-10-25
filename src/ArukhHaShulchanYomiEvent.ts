@@ -17,7 +17,7 @@ export class ArukhHaShulchanYomiEvent extends Event {
     this.category = 'Arukh HaShulchan Yomi';
   }
   render(locale?: string): string {
-    locale = locale || Locale.getLocaleName();
+    locale = locale || 'en';
     if (typeof locale === 'string') {
       locale = locale.toLowerCase();
     }
