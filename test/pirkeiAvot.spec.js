@@ -116,6 +116,18 @@ test('pirkeiAvot 5783 israel', () => {
   expect(actual).toEqual(expected);
 });
 
+/*
+  - 21 Nisan is a Wednesday, so the first Saturday for Pirkei Avot is 1 Iyyar (a week later)
+  - 24 Nisan is a Saturday, but it's BEFORE the first Saturday of the season
+  - This causes weekDiff = -1
+  - In JavaScript, (-1 % 6) + 1 = 0, which returns [0] incorrectly
+*/
+test('pirkeiAvot 24 Nisan 3759', () => {
+  const hd = new HDate(24, months.NISAN, 3759);
+  const reading = pirkeiAvot(hd, true);
+  expect(reading).toBeNull();
+});
+
 test('PirkeiAvotSummerEvent', () => {
   const ev2 = new PirkeiAvotSummerEvent(new HDate(9, 'Elul', 5783), [2]);
   const ev34 = new PirkeiAvotSummerEvent(new HDate(16, 'Elul', 5783), [3, 4]);

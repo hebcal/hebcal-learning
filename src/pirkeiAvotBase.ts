@@ -45,7 +45,9 @@ export function pirkeiAvot(dt: Date | HDate, il: boolean): number[] | null {
       weekDiff -= 1; // if dt is past that holiday don't count that week
     }
   }
-  if (weekDiff < 18) {
+  if (weekDiff < 0) {
+    return null;
+  } else if (weekDiff < 18) {
     return [(weekDiff % 6) + 1];
   }
   // fourth round is different
