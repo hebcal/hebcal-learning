@@ -24,7 +24,7 @@ export class SeferHaMitzvotEvent extends Event {
       this.memo = reading.note;
     }
   }
-  render(locale?: string): string {
+  render(_locale?: string): string {
     const r = this.reading;
     const parts = r.reading.split(', ');
     let prev = ReadingType.Other;
@@ -57,7 +57,7 @@ export class SeferHaMitzvotEvent extends Event {
     }
     return `Day ${r.day}: ` + str.substring(2);
   }
-  renderBrief(locale?: string): string {
+  renderBrief(_locale?: string): string {
     return this.getDesc();
   }
   /**

@@ -8,7 +8,9 @@ import masoretic0 from './masoretic.json';
 import './locale';
 
 const masoretic: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   split: Record<string, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   regular: Record<string, any>;
 } = masoretic0;
 

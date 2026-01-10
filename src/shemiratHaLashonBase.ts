@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import {HDate, months} from '@hebcal/hdate';
 
 const Nisan = months.NISAN;

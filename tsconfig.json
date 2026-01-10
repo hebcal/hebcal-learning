@@ -9,11 +9,15 @@
     "outDir": "dist",
     "lib": ["ESNext"],
     "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
+    "composite": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "*": ["./types/*"]
     }
   },
+  "include": ["src/**/*"],
   "exclude": ["dist"]
 }

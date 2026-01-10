@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import {HDate, greg} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate} from './common';
 import mishnehTorahJson from './mishnehTorah.json';

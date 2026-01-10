@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/hebcal/hebcal-learning#readme",
   "dependencies": {
-    "@hebcal/core": "^6.0.0",
-    "@hebcal/hdate": "^0.21.0"
+    "@hebcal/core": "^6.0.8",
+    "@hebcal/hdate": "^0.21.1"
   },
   "files": [
     "dist"
@@ -46,11 +46,11 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.3.0",
-    "gettext-parser": "^8.0.0",
-    "gts": "^5.3.1",
-    "rollup": "^4.52.5",
-    "typedoc": "^0.28.14",
+    "gettext-parser": "^9.0.0",
+    "gts": "^7.0.0",
+    "rollup": "^4.55.1",
+    "typedoc": "^0.28.15",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.3"
+    "vitest": "^4.0.16"
   }
 }

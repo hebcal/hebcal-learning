@@ -13,6 +13,7 @@ import './locale';
  * Event wrapper around a Sefer Shemirat HaLashon instance
  */
 export class ShemiratHaLashonEvent extends Event {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reading: any;
   category: string;
   memo: string;
