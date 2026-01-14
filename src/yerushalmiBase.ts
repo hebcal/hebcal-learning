@@ -7,6 +7,7 @@ export type YerushalmiYomiConfig = {
   startAbs: number;
   skipYK9Av: boolean;
   shas: [string, number][];
+  numDapim: number;
 };
 
 const vilnaStartDate = new Date(1980, 1, 2);
@@ -60,6 +61,7 @@ export const vilna: YerushalmiYomiConfig = {
     ['Horayot', 19],
     ['Niddah', 13],
   ],
+  numDapim: 0,
 } as const;
 
 const schottensteinStartDate = new Date(2022, 10, 14);
@@ -113,6 +115,7 @@ export const schottenstein: YerushalmiYomiConfig = {
     ['Horayot', 18],
     ['Niddah', 11],
   ],
+  numDapim: 0,
 } as const;
 
 const SUN = 0;
@@ -123,6 +126,32 @@ export type YerushalmiReading = {
   blatt: number;
   ed: string;
 };
+
+function countDapim(config: YerushalmiYomiConfig) {
+  if (config.numDapim) {
+    return config.numDapim;
+  }
+  const shas = config.shas;
+  let numDapim = 0;
+  for (const masechet of shas) {
+    numDapim += masechet[1];
+  }
+  config.numDapim = numDapim;
+  return numDapim;
+}
+
+export function cycleStart(config: YerushalmiYomiConfig, cday: number): number {
+  const numDapim = countDapim(config);
+  const startAbs = config.startAbs;
+  let prev = startAbs;
+  let next = startAbs;
+  while (cday >= next) {
+    prev = next;
+    next += numDapim;
+    next += numSpecialDays(config, prev, next);
+  }
+  return prev;
+}
 
 /**
  * Using the Vilna edition, the Yerushalmi Daf Yomi program takes
@@ -159,21 +188,9 @@ export function yerushalmiYomi(
   }
 
   const shas = config.shas;
-  let numDapim = 0;
-  for (let j = 0; j < shas.length; j++) {
-    numDapim += shas[j][1];
-  }
-
-  let prevCycle = startAbs;
-  let nextCycle = startAbs;
-  while (cday >= nextCycle) {
-    prevCycle = nextCycle;
-    nextCycle += numDapim;
-    nextCycle += numSpecialDays(config, prevCycle, nextCycle);
-  }
+  const prevCycle = cycleStart(config, cday);
   let total = cday - prevCycle - numSpecialDays(config, prevCycle, cday);
-  for (let j = 0; j < shas.length; j++) {
-    const masechet = shas[j];
+  for (const masechet of shas) {
     if (total < masechet[1]) {
       return {name: masechet[0], blatt: total + 1, ed: config.ed};
     }
@@ -194,7 +211,7 @@ function skipDay(hd: HDate): boolean {
   return false;
 }
 
-function numSpecialDays(
+export function numSpecialDays(
   config: YerushalmiYomiConfig,
   startAbs: number,
   endAbs: number
