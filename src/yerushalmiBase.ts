@@ -148,7 +148,10 @@ export function cycleStart(config: YerushalmiYomiConfig, cday: number): number {
   while (cday >= next) {
     prev = next;
     next += numDapim;
-    next += numSpecialDays(config, prev, next);
+    const n = numSpecialDays(config, prev, next);
+    // recalculate for any additional special days at the end
+    const n2 = numSpecialDays(config, next, next + n);
+    next += n + n2;
   }
   return prev;
 }

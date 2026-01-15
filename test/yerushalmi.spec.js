@@ -1,5 +1,6 @@
 import {expect, test} from 'vitest';
-import {yerushalmiYomi, vilna, schottenstein} from '../src/yerushalmiBase';
+import {yerushalmiYomi, vilna, schottenstein,
+  cycleStart, numSpecialDays} from '../src/yerushalmiBase';
 import {YerushalmiYomiEvent} from '../src/YerushalmiYomiEvent';
 import {HDate, greg} from '@hebcal/hdate';
 import '../src/locale';
@@ -1704,4 +1705,81 @@ test('YerushalmiYomiEvent.url Peah 10a', () => {
   expect(typeof ev9.url()).toBe('string');
   expect(typeof ev10.url()).toBe('undefined');
   expect(typeof ev11.url()).toBe('string');
+});
+
+test('yerushalmiYomi-cycle-boundary', () => {
+  // Test for bug where Niddah 13 is not correctly chosen for 2082-10-05
+  // The prior day (Sunday Oct 4) should select "Niddah 12"
+  // Monday Oct 5 should select "Niddah 13" but incorrectly selects "Berakhot 1"
+  // Tuesday Oct 6 should select "Berakhot 1" as this is the start of a new cycle
+  const toTest = [
+    [new Date(2082, 9, 4), {name: 'Niddah', blatt: 12, ed: 'vilna'}],  // Oct 4 (Sunday)
+    [new Date(2082, 9, 5), {name: 'Niddah', blatt: 13, ed: 'vilna'}],  // Oct 5 (Monday) - FAILING
+    [new Date(2082, 9, 6), {name: 'Berakhot', blatt: 1, ed: 'vilna'}],  // Oct 6 (Tuesday)
+  ];
+  for (const [dt, expected] of toTest) {
+    const result = yerushalmiYomi(dt, vilna);
+    expect(result).toEqual(expected);
+  }
+});
+
+test('numSpecialDays', () => {
+  expect(numSpecialDays(schottenstein, schottenstein.startAbs, schottenstein.startAbs + 2094)).toBe(0);
+  expect(numSpecialDays(vilna, 724409, 725972)).toBe(9);
+  expect(numSpecialDays(vilna, 725972, 727535)).toBe(9);
+  expect(numSpecialDays(vilna, 727535, 729097)).toBe(8);
+  expect(numSpecialDays(vilna, 729097, 730659)).toBe(8);
+  expect(numSpecialDays(vilna, 730659, 732222)).toBe(9);
+  expect(numSpecialDays(vilna, 755661, 757223)).toBe(8); // 17 Adar 5834
+  expect(numSpecialDays(vilna, 757223, 758785)).toBe(8); // 14 Tamuz 5838
+  // 758785 == 14 Tamuz 5838
+  // 760348 == 12 Tishrei 5843
+  expect(numSpecialDays(vilna, 758785, 760346)).toBe(10); // 10 Tishrei 5843
+  expect(numSpecialDays(vilna, 758785, 760347)).toBe(10); // 11 Tishrei 5843
+  expect(numSpecialDays(vilna, 758785, 760348)).toBe(10); // 12 Tishrei 5843
+  expect(numSpecialDays(vilna, 758785, 760349)).toBe(10); // 13 Tishrei 5843
+  expect(numSpecialDays(vilna, 758785, 760350)).toBe(10); // 14 Tishrei 5843
+  // end date here is YK
+  // this is right (one fewer) because it's one day before YK
+  expect(numSpecialDays(vilna, 758785, 760345)).toBe(9); // 9 Tishrei 5843
+  expect(numSpecialDays(vilna, 760348, 761910)).toBe(8); // 11 Sh'vat 5847
+});
+
+test('cycleStart', () => {
+  const expected = [
+    "15 Sh'vat 5740",
+    "11 Iyyar 5744",
+    "10 Elul 5748",
+    "8 Kislev 5753",
+    "5 Adar II 5757",
+    "2 Tamuz 5761",
+    "29 Elul 5765",
+    "27 Tevet 5770",
+    "24 Nisan 5774",
+    "23 Av 5778",
+    "20 Cheshvan 5783",
+    "16 Adar I 5787",
+    "13 Sivan 5791",
+    "10 Elul 5795",
+    "8 Tevet 5800",
+    "7 Nisan 5804",
+    "4 Av 5808",
+    "2 Cheshvan 5813",
+    "29 Sh'vat 5817",
+    "25 Iyyar 5821",
+    "23 Av 5825",
+    "21 Kislev 5830",
+    "17 Adar 5834",
+    "14 Tamuz 5838",
+    "13 Tishrei 5843",
+    "12 Sh'vat 5847",
+  ];
+  const actual = [];
+  const approxLength = 1564;
+  const endAbs = vilna.startAbs + 26 * approxLength;
+  for (let abs = vilna.startAbs; abs < endAbs; abs += approxLength) {
+    const start = cycleStart(vilna, abs);
+    actual.push(new HDate(start).toString());
+  }
+  expect(actual).toEqual(expected);
 });
