@@ -14,7 +14,6 @@ export class DailyRambamEvent extends Event {
   constructor(date: HDate, reading: RambamReading) {
     super(date, `${reading.name} ${reading.perek}`, flags.DAILY_LEARNING);
     this.reading = reading;
-    // this.memo = this.render('memo');
     this.alarm = false;
     this.category = 'Daily Rambam';
   }
@@ -28,17 +27,15 @@ export class DailyRambamEvent extends Event {
       locale = locale.toLowerCase();
     }
     const reading = this.reading;
-    if (
-      (locale === 'he' || locale === 'he-x-nonikud') &&
-      typeof reading.perek === 'number'
-    ) {
-      return (
-        Locale.gettext(reading.name, locale) +
-        ' פרק ' +
-        gematriyaNN(reading.perek)
-      );
+    const name = Locale.gettext(reading.name, locale);
+    if (locale === 'he' || locale === 'he-x-nonikud') {
+      const perekStr =
+        typeof reading.perek === 'number'
+          ? gematriyaNN(reading.perek)
+          : reading.perek;
+      return name + ' פרק ' + perekStr;
     }
-    return Locale.gettext(reading.name, locale) + ' ' + reading.perek;
+    return name + ' ' + reading.perek;
   }
   /**
    * Returns a link to sefaria.org
@@ -47,7 +44,7 @@ export class DailyRambamEvent extends Event {
     const reading = this.reading;
     const name = 'Mishneh Torah, ' + reading.name + '.' + reading.perek;
     const urlName = encodeURIComponent(
-      name.replace(/ /g, '_').replace(/:/g, '.')
+      name.replaceAll(' ', '_').replaceAll(':', '.')
     );
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }

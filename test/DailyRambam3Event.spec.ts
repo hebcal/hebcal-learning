@@ -23,15 +23,12 @@ test('DailyRambam3Event-url', () => {
   const hd2 = new HDate(new Date(1987, 1, 10));
   const ev2 = new DailyRambam3Event(hd2, r2);
   expect(ev2.url()).toBeUndefined();
-  expect(ev2.getDesc()).toBe('Foundations of the Torah 10, Human Dispositions 1, Human Dispositions 2');
+  expect(ev2.getDesc()).toBe('Foundations of the Torah 10, Human Dispositions 1-2');
   expect(ev2.memo).toBe(`Foundations of the Torah 10
 https://www.sefaria.org/Mishneh_Torah%2C_Foundations_of_the_Torah.10?lang=bi
 
-Human Dispositions 1
-https://www.sefaria.org/Mishneh_Torah%2C_Human_Dispositions.1?lang=bi
-
-Human Dispositions 2
-https://www.sefaria.org/Mishneh_Torah%2C_Human_Dispositions.2?lang=bi`);
+Human Dispositions 1-2
+https://www.sefaria.org/Mishneh_Torah%2C_Human_Dispositions.1-2?lang=bi`);
 });
 
 test('DailyRambam3Event-render', () => {
@@ -42,7 +39,7 @@ test('DailyRambam3Event-render', () => {
   ];
   const hd = new HDate(new Date(1987, 1, 1));
   const ev = new DailyRambam3Event(hd, r1);
-  expect(ev.render('en')).toBe('Foundations of the Torah 10, Human Dispositions 1, Human Dispositions 2');
-  expect(ev.render('ashkenazi')).toBe('Foundations of the Torah 10, Human Dispositions 1, Human Dispositions 2');
-  expect(ev.render('he')).toBe("הלכות יסודי התורה פרק י, הלכות דעות פרק א, הלכות דעות פרק ב");
+  expect(ev.render('en')).toBe('Foundations of the Torah 10, Human Dispositions 1-2');
+  expect(ev.render('ashkenazi')).toBe('Foundations of the Torah 10, Human Dispositions 1-2');
+  expect(ev.render('he')).toBe("הלכות יסודי התורה פרק י, הלכות דעות פרק 1-2");
 });

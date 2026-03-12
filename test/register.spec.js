@@ -69,7 +69,7 @@ test('rambam3', () => {
   const ev = DailyLearning.lookup('rambam3', hd);
   expect(ev).toBeTypeOf('object');
   expect(ev).not.toBeNull();
-  expect(ev.render('en')).toBe('The Order of Prayer 5, Sabbath 1, Sabbath 2');
+  expect(ev.render('en')).toBe('The Order of Prayer 5, Sabbath 1-2');
 });
 
 test('kitzurShulchanAruch', () => {

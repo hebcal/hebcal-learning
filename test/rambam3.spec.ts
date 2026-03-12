@@ -1,36 +1,30 @@
 import {expect, test} from 'vitest';
 import {dailyRambam3} from '../src/rambam3Base';
-import {canCombineReading, combineReading} from '../src/DailyRambam3Event';
+import {collapseAdjacent, makeDesc} from '../src/DailyRambam3Event';
 import {greg} from '@hebcal/hdate';
 
 function abs2iso(abs: number): string {
   return greg.abs2greg(abs).toISOString().substring(0, 10);
 }
-
-test('canCombineReading', () => {
-  expect(canCombineReading([
-    {name: 'Kings and Wars', perek: 10},
-    {name: 'Kings and Wars', perek: 11},
-    {name: 'Kings and Wars', perek: 12},
-  ])).toBe(true);
-  expect(canCombineReading([
-    {name: 'Foundations of the Torah', perek: 10},
-    {name: 'Human Dispositions', perek: 1},
-    {name: 'Human Dispositions', perek: 2},
-  ])).toBe(false);
-});
-
-test('combineReading', () => {
-  expect(combineReading([
+test('collapseAdjacent', () => {
+  expect(collapseAdjacent([
     {name: 'Foobar', perek: 3},
     {name: 'Foobar', perek: 4},
     {name: 'Foobar', perek: 5},
-  ])).toEqual({name: 'Foobar', perek: '3-5'});
-  expect(combineReading([
+  ])).toEqual([{name: 'Foobar', perek: '3-5'}]);
+  expect(collapseAdjacent([
     {name: 'Quux', perek: '4-6'},
     {name: 'Quux', perek: '7-11'},
     {name: 'Quux', perek: '12-15'},
-  ])).toEqual({name: 'Quux', perek: '4-15'});
+  ])).toEqual([{name: 'Quux', perek: '4-15'}]);
+  expect(collapseAdjacent([
+    {name: 'Foundations of the Torah', perek: 10},
+    {name: 'Human Dispositions', perek: 1},
+    {name: 'Human Dispositions', perek: 2},
+  ])).toEqual([
+    {name: 'Foundations of the Torah', perek: 10},
+    {name: 'Human Dispositions', perek: '1-2'},
+  ]);
 });
 
 test('rambam3-single', () => {
@@ -69,25 +63,17 @@ test('rambam3-2020', () => {
   const actual: Record<string, string> = {};
   for (let abs = start; abs <= endAbs; abs++) {
     const reading = dailyRambam3(abs);
-    let strs: string[] = [];
-    if (canCombineReading(reading)) {
-      const combined = combineReading(reading);
-      strs.push(`${combined.name} ${combined.perek}`);
-    } else {
-      for (let i = 0; i < 3; i++) {
-        strs.push(`${reading[i].name} ${reading[i].perek}`);
-      }
-    }
-    actual[abs2iso(abs)] = strs.join(', ');
+    const desc = makeDesc(reading);
+    actual[abs2iso(abs)] = desc;
   }
   const expected = {
   '2020-08-09': 'Blessings 1-3',
   '2020-08-10': 'Blessings 4-6',
   '2020-08-11': 'Blessings 7-9',
-  '2020-08-12': 'Blessings 10, Blessings 11, Circumcision 1',
-  '2020-08-13': 'Circumcision 2, Circumcision 3, The Order of Prayer 1',
+  '2020-08-12': 'Blessings 10-11, Circumcision 1',
+  '2020-08-13': 'Circumcision 2-3, The Order of Prayer 1',
   '2020-08-14': 'The Order of Prayer 2-4',
-  '2020-08-15': 'The Order of Prayer 5, Sabbath 1, Sabbath 2',
+  '2020-08-15': 'The Order of Prayer 5, Sabbath 1-2',
   '2020-08-16': 'Sabbath 3-5',
   '2020-08-17': 'Sabbath 6-8',
   '2020-08-18': 'Sabbath 9-11',
@@ -97,29 +83,29 @@ test('rambam3-2020', () => {
   '2020-08-22': 'Sabbath 21-23',
   '2020-08-23': 'Sabbath 24-26',
   '2020-08-24': 'Sabbath 27-29',
-  '2020-08-25': 'Sabbath 30, Eruvin 1, Eruvin 2',
+  '2020-08-25': 'Sabbath 30, Eruvin 1-2',
   '2020-08-26': 'Eruvin 3-5',
   '2020-08-27': 'Eruvin 6-8',
   '2020-08-28': 'Rest on the Tenth of Tishrei 1-3',
   '2020-08-29': 'Rest on a Holiday 1-3',
   '2020-08-30': 'Rest on a Holiday 4-6',
-  '2020-08-31': 'Rest on a Holiday 7, Rest on a Holiday 8, Leavened and Unleavened Bread 1',
+  '2020-08-31': 'Rest on a Holiday 7-8, Leavened and Unleavened Bread 1',
   '2020-09-01': 'Leavened and Unleavened Bread 2-4',
   '2020-09-02': 'Leavened and Unleavened Bread 5-7',
-  '2020-09-03': 'Leavened and Unleavened Bread 8-9, Shofar, Sukkah and Lulav 1, Shofar, Sukkah and Lulav 2',
+  '2020-09-03': 'Leavened and Unleavened Bread 8-9, Shofar, Sukkah and Lulav 1-2',
   '2020-09-04': 'Shofar, Sukkah and Lulav 3-5',
   '2020-09-05': 'Shofar, Sukkah and Lulav 6-8',
   '2020-09-06': 'Sheqel Dues 1-3',
-  '2020-09-07': 'Sheqel Dues 4, Sanctification of the New Month 1, Sanctification of the New Month 2',
+  '2020-09-07': 'Sheqel Dues 4, Sanctification of the New Month 1-2',
   '2020-09-08': 'Sanctification of the New Month 3-5',
   '2020-09-09': 'Sanctification of the New Month 6-8',
   '2020-09-10': 'Sanctification of the New Month 9-11',
   '2020-09-11': 'Sanctification of the New Month 12-14',
   '2020-09-12': 'Sanctification of the New Month 15-17',
-  '2020-09-13': 'Sanctification of the New Month 18, Sanctification of the New Month 19, Fasts 1',
+  '2020-09-13': 'Sanctification of the New Month 18-19, Fasts 1',
   '2020-09-14': 'Fasts 2-4',
-  '2020-09-15': 'Fasts 5, Scroll of Esther and Hanukkah 1, Scroll of Esther and Hanukkah 2',
-  '2020-09-16': 'Scroll of Esther and Hanukkah 3, Scroll of Esther and Hanukkah 4, Marriage 1',
+  '2020-09-15': 'Fasts 5, Scroll of Esther and Hanukkah 1-2',
+  '2020-09-16': 'Scroll of Esther and Hanukkah 3-4, Marriage 1',
   '2020-09-17': 'Marriage 2-4',
   '2020-09-18': 'Marriage 5-7'
   }
@@ -171,16 +157,8 @@ test('rambam3-1984', () => {
   const actual: Record<string, string> = {};
   for (let abs = start; abs <= endAbs; abs++) {
     const reading = dailyRambam3(abs);
-    let strs: string[] = [];
-    if (canCombineReading(reading)) {
-      const combined = combineReading(reading);
-      strs.push(`${combined.name} ${combined.perek}`);
-    } else {
-      for (let i = 0; i < 3; i++) {
-        strs.push(`${reading[i].name} ${reading[i].perek}`);
-      }
-    }
-    actual[abs2iso(abs)] = strs.join(', ');
+    const desc = makeDesc(reading);
+    actual[abs2iso(abs)] = desc;
   }
   const expected = {
     '1984-04-29': 'Transmission of the Oral Law 1-45',
@@ -190,9 +168,9 @@ test('rambam3-1984', () => {
     '1984-05-03': 'Foundations of the Torah 1-3',
     '1984-05-04': 'Foundations of the Torah 4-6',
     '1984-05-05': 'Foundations of the Torah 7-9',
-    '1984-05-06': 'Foundations of the Torah 10, Human Dispositions 1, Human Dispositions 2',
+    '1984-05-06': 'Foundations of the Torah 10, Human Dispositions 1-2',
     '1984-05-07': 'Human Dispositions 3-5',
-    '1984-05-08': 'Human Dispositions 6, Human Dispositions 7, Torah Study 1',
+    '1984-05-08': 'Human Dispositions 6-7, Torah Study 1',
     '1984-05-09': 'Torah Study 2-4',
     '1984-05-10': 'Torah Study 5-7',
     '1984-05-11': 'Foreign Worship and Customs of the Nations 1-3',
@@ -202,8 +180,8 @@ test('rambam3-1984', () => {
     '1984-05-15': 'Repentance 1-3',
     '1984-05-16': 'Repentance 4-6',
     '1984-05-17': 'Repentance 7-9',
-    '1984-05-18': 'Repentance 10, Reading the Shema 1, Reading the Shema 2',
-    '1984-05-19': 'Reading the Shema 3, Reading the Shema 4, Prayer and the Priestly Blessing 1',
+    '1984-05-18': 'Repentance 10, Reading the Shema 1-2',
+    '1984-05-19': 'Reading the Shema 3-4, Prayer and the Priestly Blessing 1',
     '1984-05-20': 'Prayer and the Priestly Blessing 2-4',
   };
   expect(actual).toEqual(expected);

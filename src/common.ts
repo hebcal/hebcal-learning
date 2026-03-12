@@ -5,14 +5,16 @@ import {HDate, greg, gematriya} from '@hebcal/hdate';
  * @param date - Hebrew or Gregorian date
  */
 export function getAbsDate(date: HDate | Date | number): number {
-  const abs =
-    typeof date === 'number'
-      ? date
-      : greg.isDate(date)
-        ? greg.greg2abs(date as Date)
-        : HDate.isHDate(date)
-          ? (date as HDate).abs()
-          : NaN;
+  let abs: number;
+  if (typeof date === 'number') {
+    abs = date;
+  } else if (greg.isDate(date)) {
+    abs = greg.greg2abs(date as Date);
+  } else if (HDate.isHDate(date)) {
+    abs = (date as HDate).abs();
+  } else {
+    abs = Number.NaN;
+  }
   if (isNaN(abs)) {
     throw new TypeError(`Invalid date: ${date}`);
   }
@@ -49,5 +51,5 @@ export function formatBeginEndRange(begin: string, end: string): string {
  */
 export function gematriyaNN(num: number | string): string {
   const s = gematriya(num);
-  return s.replace(/[׳״]/g, '');
+  return s.replaceAll(/[׳״]/g, '');
 }
