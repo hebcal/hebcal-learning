@@ -1,9 +1,38 @@
 import {HDate} from '@hebcal/hdate';
 import {Event, flags} from '@hebcal/core/dist/esm/event';
-import {canCombineReading, combineReading} from './rambam3Base';
 import {RambamReading} from './rambam1Base';
 import {DailyRambamEvent} from './DailyRambamEvent';
 import './locale';
+
+/**
+ * Returns true if all 3 chapters are from the same section
+ */
+export function canCombineReading(r: RambamReading[]): boolean {
+  return r[0].name === r[1].name && r[1].name === r[2].name;
+}
+
+function combinePair(r1: RambamReading, r2: RambamReading): RambamReading {
+  const name = r1.name;
+  const perek0 = r1.perek;
+  const perek2 = r2.perek as string;
+  let perek;
+  if (typeof perek0 === 'number') {
+    perek = `${perek0}-${perek2}`;
+  } else {
+    const first = perek0.split('-');
+    const last = perek2.split('-');
+    perek = `${first[0]}-${last[1]}`;
+  }
+  return {name, perek};
+}
+
+/**
+ * If all three chapters are from the same section,
+ * we can combine into a single reading with a chapter range
+ */
+export function combineReading(reading: RambamReading[]): RambamReading {
+  return combinePair(reading[0], reading[2]);
+}
 
 /**
  * Event wrapper around a Daily Rambam instance

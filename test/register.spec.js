@@ -64,6 +64,14 @@ test('seferHaMitzvot', () => {
   expect(ev.render('en')).toBe('Day 161: Positive Commandment 89; Negative Commandment 145, 148; Note About Varying Customs');
 });
 
+test('rambam3', () => {
+  const hd = new HDate(22, 'Adar', 5786);
+  const ev = DailyLearning.lookup('rambam3', hd);
+  expect(ev).toBeTypeOf('object');
+  expect(ev).not.toBeNull();
+  expect(ev.render('en')).toBe('The Order of Prayer 5, Sabbath 1, Sabbath 2');
+});
+
 test('kitzurShulchanAruch', () => {
   const hd = new HDate(5, 'Adar II', 5787);
   const ev = DailyLearning.lookup('kitzurShulchanAruch', hd);

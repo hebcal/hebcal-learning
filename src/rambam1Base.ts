@@ -18,7 +18,7 @@ type Daf = {
   ch: number;
 };
 
-const mishnehTorah: Daf[] = mishnehTorahJson.map(m => {
+export const mishnehTorah1: Daf[] = mishnehTorahJson.map(m => {
   return {name: m[0] as string, ch: m[1] as number};
 });
 
@@ -41,10 +41,15 @@ export function dailyRambam1(date: HDate | Date | number): RambamReading {
   const cday = getAbsDate(date);
   checkTooEarly(cday, rambam1Start, 'Daily Rambam 1');
   const dno = (cday - rambam1Start) % rambam1cycleLen;
-  return getChap(dno);
+  const reading = getChap(dno, mishnehTorah1);
+  // https://www.chabad.org/dailystudy/rambam.asp?tdate=8/8/2023
+  if (reading.name === 'The Order of Prayer' && reading.perek === 4) {
+    reading.perek = '4-5';
+  }
+  return reading;
 }
 
-export function getChap(idx: number): RambamReading {
+export function getChap(idx: number, mishnehTorah: Daf[]): RambamReading {
   let total = idx;
   for (let j = 0; j < mishnehTorah.length; j++) {
     if (total < mishnehTorah[j].ch) {
