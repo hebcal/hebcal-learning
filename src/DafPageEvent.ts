@@ -3,7 +3,7 @@ import {Event} from '@hebcal/core/dist/esm/event';
 import {DafPage} from './DafPage';
 import './locale';
 
-const dafYomiSefaria: Record<string, string> = {
+export const dafYomiSefaria: Record<string, string> = {
   Berachot: 'Berakhot',
   'Rosh Hashana': 'Rosh Hashanah',
   Gitin: 'Gittin',
