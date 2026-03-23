@@ -1,21 +1,8 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {DafPageEvent} from './DafPageEvent';
+import {DafPageEvent, dafYomiSefaria} from './DafPageEvent';
 import {DirshuAmudYomi, calculateDirshuAmud} from './dirshuAmudYomiBase';
-import './locale';
-
-const sefariaNames: Record<string, string> = {
-  Berachot: 'Berakhot',
-  'Rosh Hashana': 'Rosh_Hashanah',
-  Gitin: 'Gittin',
-  'Baba Kamma': 'Bava_Kamma',
-  'Baba Metzia': 'Bava_Metzia',
-  'Baba Batra': 'Bava_Batra',
-  Bechorot: 'Bekhorot',
-  Arachin: 'Arakhin',
-  Midot: 'Middot',
-} as const;
 
 /**
  * Event wrapper around a Dirshu Amud HaYomi result
@@ -45,10 +32,11 @@ export class DirshuAmudYomiEvent extends DafPageEvent {
   url(): string {
     const daf = this.daf as DirshuAmudYomi;
     const tractate = daf.getName();
-    const blattNum = daf.blattNum;
-    const side = daf.side;
-    const name0 = sefariaNames[tractate] || tractate.replace(/ /g, '_');
-    return `https://www.sefaria.org/${name0}.${blattNum}${side}?lang=bi`;
+    // dafYomiSefaria maps Shekalim to the Yerushalmi page, but Dirshu uses Bavli
+    const name0 =
+      tractate === 'Shekalim' ? tractate : (dafYomiSefaria[tractate] || tractate);
+    const name = name0.replace(/ /g, '_');
+    return `https://www.sefaria.org/${name}.${daf.blattNum}${daf.side}?lang=bi`;
   }
 
   getCategories(): string[] {
