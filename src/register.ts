@@ -1,4 +1,5 @@
 import './arukhHaShulchanYomi';
+import './dirshuAmudYomi';
 import './chofetzChaim';
 import './dafWeekly';
 import './dafYomi';
