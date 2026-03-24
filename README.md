@@ -15,6 +15,7 @@ used by the [DailyLearning](https://hebcal.github.io/api/core/classes/DailyLearn
 Daily regimen of learning the Babylonian Talmud. This cycle takes approximately 7½ years to complete.
 
 * Daily - `dafYomi`
+* Amud Yomi (Dirshu) - `dirshuAmudYomi`
 * Daf-a-Week, a page of Babylonian Talmud a week - `dafWeekly`
 * Daf-a-Week, only on Sundays - `dafWeeklySunday`
 
