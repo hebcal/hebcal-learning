@@ -11,4 +11,8 @@ function wrapper(hd: HDate): DirshuAmudYomiEvent | null {
   return new DirshuAmudYomiEvent(hd);
 }
 
-DailyLearning.addCalendar('dirshuAmudYomi', wrapper, new HDate(dirshuAmudYomiStart));
+DailyLearning.addCalendar(
+  'dirshuAmudYomi',
+  wrapper,
+  new HDate(dirshuAmudYomiStart)
+);
