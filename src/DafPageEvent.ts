@@ -1,7 +1,10 @@
 import {HDate} from '@hebcal/hdate';
 import {Event} from '@hebcal/core/dist/esm/event';
 import {DafPage} from './DafPage';
+import shekalimDafYomiMap0 from './shekalimDafYomiMap.json';
 import './locale';
+
+export const shekalimDafYomiMap = shekalimDafYomiMap0 as Record<string, string>;
 
 export const dafYomiSefaria: Record<string, string> = {
   Berachot: 'Berakhot',
@@ -49,6 +52,13 @@ export class DafPageEvent extends Event {
     const blatt = daf.getBlatt();
     if (tractate === 'Kinnim' || tractate === 'Midot') {
       return `https://www.dafyomi.org/index.php?masechta=meilah&daf=${blatt}a`;
+    } else if (tractate === 'Shekalim') {
+      const aEntry = shekalimDafYomiMap[`${blatt}a`];
+      const bEntry = shekalimDafYomiMap[`${blatt}b`];
+      const aStart = aEntry.split('-')[0];
+      const bEnd = bEntry.includes('-') ? bEntry.split('-')[1] : bEntry;
+      const ref = `${aStart}-${bEnd}`.replaceAll(':', '.');
+      return `https://www.sefaria.org/Jerusalem_Talmud_Shekalim.${ref}?lang=bi`;
     } else {
       const name0 = dafYomiSefaria[tractate] || tractate;
       const name = name0.replaceAll(' ', '_');

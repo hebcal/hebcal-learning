@@ -38,7 +38,7 @@ test('dafyomi-render', () => {
 test('dafyomi-shekalim', () => {
   const ev = new DafYomiEvent(new HDate(new Date(2021, 2, 23)));
   expect(ev.render('en')).toBe('Daf Yomi: Shekalim 2');
-  expect(ev.url()).toBe('https://www.sefaria.org/Jerusalem_Talmud_Shekalim.2a?lang=bi');
+  expect(ev.url()).toBe('https://www.sefaria.org/Jerusalem_Talmud_Shekalim.1.1.1-10?lang=bi');
 });
 
 test('dafyomi-shekalim-cycles-1-7-8', () => {
