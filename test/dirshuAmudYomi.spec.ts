@@ -122,7 +122,7 @@ test('event-render-hebrew', () => {
 test('event-url-sefaria', () => {
   const hd = new HDate(new Date(2026, 2, 23)); // Shekalim 4b
   const ev = new DirshuAmudYomiEvent(hd);
-  expect(ev.url()).toBe('https://www.sefaria.org/Shekalim.4b?lang=bi');
+  expect(ev.url()).toBe('https://www.sefaria.org/Jerusalem_Talmud_Shekalim.1.4.5-9?lang=bi');
 });
 
 test('event-url-berachot-sefaria', () => {

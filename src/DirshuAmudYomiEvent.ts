@@ -1,7 +1,7 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {DafPageEvent, dafYomiSefaria} from './DafPageEvent';
+import {DafPageEvent, dafYomiSefaria, shekalimDafYomiMap} from './DafPageEvent';
 import {DirshuAmudYomi, calculateDirshuAmud} from './dirshuAmudYomiBase';
 
 /**
@@ -32,9 +32,12 @@ export class DirshuAmudYomiEvent extends DafPageEvent {
   url(): string {
     const daf = this.daf as DirshuAmudYomi;
     const tractate = daf.getName();
-    // dafYomiSefaria maps Shekalim to the Yerushalmi page, but Dirshu uses Bavli
-    const name0 =
-      tractate === 'Shekalim' ? tractate : dafYomiSefaria[tractate] || tractate;
+    if (tractate === 'Shekalim') {
+      const entry = shekalimDafYomiMap[`${daf.blattNum}${daf.side}`];
+      const ref = entry.replaceAll(':', '.');
+      return `https://www.sefaria.org/Jerusalem_Talmud_Shekalim.${ref}?lang=bi`;
+    }
+    const name0 = dafYomiSefaria[tractate] || tractate;
     const name = name0.replaceAll(' ', '_');
     return `https://www.sefaria.org/${name}.${daf.blattNum}${daf.side}?lang=bi`;
   }
