@@ -51,7 +51,7 @@ export class DafPageEvent extends Event {
       return `https://www.dafyomi.org/index.php?masechta=meilah&daf=${blatt}a`;
     } else {
       const name0 = dafYomiSefaria[tractate] || tractate;
-      const name = name0.replace(/ /g, '_');
+      const name = name0.replaceAll(' ', '_');
       return `https://www.sefaria.org/${name}.${blatt}a?lang=bi`;
     }
   }
