@@ -9,7 +9,7 @@ import {DirshuAmudYomi, calculateDirshuAmud} from './dirshuAmudYomiBase';
  */
 export class DirshuAmudYomiEvent extends DafPageEvent {
   constructor(date: HDate) {
-    const daf = calculateDirshuAmud(date.greg());
+    const daf = calculateDirshuAmud(date);
     super(date, daf, flags.DAILY_LEARNING);
     this.category = 'Dirshu Amud HaYomi';
   }
@@ -34,8 +34,8 @@ export class DirshuAmudYomiEvent extends DafPageEvent {
     const tractate = daf.getName();
     // dafYomiSefaria maps Shekalim to the Yerushalmi page, but Dirshu uses Bavli
     const name0 =
-      tractate === 'Shekalim' ? tractate : (dafYomiSefaria[tractate] || tractate);
-    const name = name0.replace(/ /g, '_');
+      tractate === 'Shekalim' ? tractate : dafYomiSefaria[tractate] || tractate;
+    const name = name0.replaceAll(' ', '_');
     return `https://www.sefaria.org/${name}.${daf.blattNum}${daf.side}?lang=bi`;
   }
 
