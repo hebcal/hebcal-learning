@@ -74,7 +74,7 @@ export class ChofetzChaimEvent extends Event {
     if (typeof reading.b !== 'undefined') {
       name += separator + reading.b;
     }
-    const urlName = encodeURIComponent(name.replace(/ /g, '_'));
+    const urlName = encodeURIComponent(name.replaceAll(' ', '_'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }
   getCategories(): string[] {

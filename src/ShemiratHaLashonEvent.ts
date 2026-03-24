@@ -47,7 +47,7 @@ export class ShemiratHaLashonEvent extends Event {
   renderPrefix(locale: string): string {
     const reading = this.reading;
     const book = reading.bk === 1 ? 'Book I' : 'Book II';
-    const section0 = reading.k.replace(/ /g, '_');
+    const section0 = reading.k.replaceAll(' ', '_');
     const section =
       locale === 'memo'
         ? englishNames[section0]
@@ -64,7 +64,7 @@ export class ShemiratHaLashonEvent extends Event {
   url(): string {
     const name =
       'Shemirat HaLashon, ' + this.renderPrefix('memo') + '.' + this.reading.b;
-    const urlName = encodeURIComponent(name.replace(/ /g, '_'));
+    const urlName = encodeURIComponent(name.replaceAll(' ', '_'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }
   getCategories(): string[] {

@@ -46,7 +46,7 @@ export class MishnaYomiEvent extends Event {
     const mishnaYomi = this.mishnaYomi;
     const k1 = mishnaYomi[0].k;
     const mishna = k1 === 'Avot' ? 'Pirkei' : 'Mishnah';
-    const name = k1.replace(/ /g, '_');
+    const name = k1.replaceAll(' ', '_');
     const prefix = `https://www.sefaria.org/${mishna}_${name}`;
     const cv1 = mishnaYomi[0].v;
     if (k1 !== mishnaYomi[1].k) {

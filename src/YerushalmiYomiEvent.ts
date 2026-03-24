@@ -61,8 +61,8 @@ export class YerushalmiYomiEvent extends Event {
       return undefined;
     }
     const name0 = 'Jerusalem Talmud ' + tractate;
-    const name = name0.replace(/ /g, '_');
-    const verses = verses0.replace(/:/g, '.');
+    const name = name0.replaceAll(' ', '_');
+    const verses = verses0.replaceAll(':', '.');
     return `https://www.sefaria.org/${name}.${verses}?lang=bi`;
   }
   getCategories(): string[] {

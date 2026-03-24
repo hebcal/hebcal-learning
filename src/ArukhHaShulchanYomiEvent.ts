@@ -28,7 +28,7 @@ export class ArukhHaShulchanYomiEvent extends Event {
       const beginEnd = parts.map(x => x.split(/\./).map(gematriyaNN).join(':'));
       return name + ' ' + beginEnd.join('-');
     }
-    return name + ' ' + reading.v.replace(/\./g, ':');
+    return name + ' ' + reading.v.replaceAll('.', ':');
   }
   /**
    * Returns a link to sefaria.org
@@ -36,7 +36,7 @@ export class ArukhHaShulchanYomiEvent extends Event {
   url(): string {
     const reading = this.reading;
     const name = 'Arukh HaShulchan, ' + reading.k + '.' + reading.v;
-    const urlName = encodeURIComponent(name.replace(/ /g, '_'));
+    const urlName = encodeURIComponent(name.replaceAll(' ', '_'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }
   getCategories(): string[] {

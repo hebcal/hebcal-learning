@@ -42,7 +42,7 @@ export class DailyChapterEvent extends Event {
    * Returns a link to sefaria.org
    */
   url(): string {
-    const name = this.k.replace(/ /g, '_');
+    const name = this.k.replaceAll(' ', '_');
     const chapter = this.v;
     return `https://www.sefaria.org/${name}.${chapter}?lang=bi`;
   }

@@ -16,7 +16,7 @@ export class PerekYomiEvent extends DailyChapterEvent {
   url(): string {
     const masechta = this.k;
     const prefix = masechta === 'Avot' ? 'Pirkei' : 'Mishnah';
-    const name = masechta.replace(/ /g, '_');
+    const name = masechta.replaceAll(' ', '_');
     const chapter = this.v;
     return `https://www.sefaria.org/${prefix}_${name}.${chapter}?lang=bi`;
   }

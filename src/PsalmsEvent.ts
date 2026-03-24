@@ -40,7 +40,7 @@ export class PsalmsEvent extends Event {
    *  e.g. https://www.sefaria.org/Psalms.1-9?lang=b
    */
   url(): string {
-    const str = this.getDesc().replace(' ', '.').replace(/:/g, '.');
+    const str = this.getDesc().replace(' ', '.').replaceAll(':', '.');
     return `https://www.sefaria.org/${str}?lang=bi`;
   }
   getCategories(): string[] {

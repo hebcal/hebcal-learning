@@ -19,8 +19,8 @@ export class TanakhYomiEvent extends DafPageEvent {
   url(): string {
     const memo: string = this.daf.verses!;
     const space = memo.lastIndexOf(' ');
-    const book = memo.substring(0, space).replace(/ /g, '_');
-    const verses = memo.substring(space + 1).replace(/:/g, '.');
+    const book = memo.substring(0, space).replaceAll(' ', '_');
+    const verses = memo.substring(space + 1).replaceAll(':', '.');
     return `https://www.sefaria.org/${book}.${verses}?lang=bi`;
   }
   getCategories(): string[] {
