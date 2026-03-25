@@ -32,11 +32,8 @@ export class ShemiratHaLashonEvent extends DailyLearningEvent {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
-    const prefix = this.renderPrefix(locale);
+    const loc = (locale || 'en').toLowerCase();
+    const prefix = this.renderPrefix(loc);
     return prefix + formatReadingPages(this.reading);
   }
 

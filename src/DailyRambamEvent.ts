@@ -22,13 +22,10 @@ export class DailyRambamEvent extends DailyLearningEvent {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
+    const loc = (locale || 'en').toLowerCase();
     const reading = this.reading;
-    const name = Locale.gettext(reading.name, locale);
-    if (locale === 'he' || locale === 'he-x-nonikud') {
+    const name = Locale.gettext(reading.name, loc);
+    if (loc === 'he' || loc === 'he-x-nonikud') {
       const perekStr =
         typeof reading.perek === 'number'
           ? gematriyaNN(reading.perek)

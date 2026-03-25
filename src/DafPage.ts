@@ -27,13 +27,10 @@ export class DafPage {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
+    const loc = (locale || 'en').toLowerCase();
+    if (loc === 'he' || loc === 'he-x-nonikud') {
+      return Locale.gettext(this.name, loc) + ' דף ' + gematriya(this.blatt);
     }
-    if (locale === 'he' || locale === 'he-x-nonikud') {
-      return Locale.gettext(this.name, locale) + ' דף ' + gematriya(this.blatt);
-    }
-    return Locale.gettext(this.name, locale) + ' ' + this.blatt;
+    return Locale.gettext(this.name, loc) + ' ' + this.blatt;
   }
 }

@@ -17,13 +17,10 @@ export class ArukhHaShulchanYomiEvent extends DailyLearningEvent {
     this.category = 'Arukh HaShulchan Yomi';
   }
   render(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
+    const loc = (locale || 'en').toLowerCase();
     const reading = this.reading;
-    const name = Locale.gettext(reading.k, locale);
-    if (locale === 'he' || locale === 'he-x-nonikud') {
+    const name = Locale.gettext(reading.k, loc);
+    if (loc === 'he' || loc === 'he-x-nonikud') {
       const parts = reading.v.split('-');
       const beginEnd = parts.map(x => x.split(/\./).map(gematriyaNN).join(':'));
       return name + ' ' + beginEnd.join('-');
