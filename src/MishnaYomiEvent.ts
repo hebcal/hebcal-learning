@@ -1,6 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {MishnaYomi} from './mishnaYomiBase';
 import './locale';
 
@@ -24,7 +25,7 @@ function formatMyomi(mishnaYomi: MishnaYomi[], locale?: string): string {
 /**
  * Event wrapper around a Mishna Yomi instance
  */
-export class MishnaYomiEvent extends Event {
+export class MishnaYomiEvent extends DailyLearningEvent {
   mishnaYomi: MishnaYomi[];
   category: string;
   constructor(date: HDate, mishnaYomi: MishnaYomi[]) {

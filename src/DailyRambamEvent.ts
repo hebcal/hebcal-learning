@@ -1,6 +1,6 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {RambamReading} from './rambam1Base';
 import {gematriyaNN} from './common';
 import './locale';
@@ -8,11 +8,11 @@ import './locale';
 /**
  * Event wrapper around a Daily Rambam instance
  */
-export class DailyRambamEvent extends Event {
+export class DailyRambamEvent extends DailyLearningEvent {
   reading: RambamReading;
   category: string;
   constructor(date: HDate, reading: RambamReading) {
-    super(date, `${reading.name} ${reading.perek}`, flags.DAILY_LEARNING);
+    super(date, `${reading.name} ${reading.perek}`);
     this.reading = reading;
     this.alarm = false;
     this.category = 'Daily Rambam';

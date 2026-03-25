@@ -1,5 +1,6 @@
 import './register';
 export {DafPage} from './DafPage';
+export {DailyLearningEvent} from './DailyLearningEvent';
 export {DafPageEvent} from './DafPageEvent';
 export {MishnaYomiEvent} from './MishnaYomiEvent';
 export {DailyChapterEvent} from './DailyChapterEvent';

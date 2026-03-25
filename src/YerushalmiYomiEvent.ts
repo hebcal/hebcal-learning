@@ -1,6 +1,7 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {YerushalmiReading} from './yerushalmiBase';
 import {gematriyaNN} from './common';
 import './locale';
@@ -11,7 +12,7 @@ const vilnaMap: Record<string, (string | null)[]> = vilnaMap0;
 /**
  * Event wrapper around a Yerushalmi Yomi result
  */
-export class YerushalmiYomiEvent extends Event {
+export class YerushalmiYomiEvent extends DailyLearningEvent {
   daf: YerushalmiReading;
   category: string;
   constructor(date: HDate, daf: YerushalmiReading) {

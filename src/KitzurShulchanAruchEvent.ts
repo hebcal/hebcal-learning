@@ -1,6 +1,6 @@
 import {HDate, months} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {KitzurShulchanAruchReading} from './kitzurShulchanAruchBase';
 import {gematriyaNN, formatBeginEndRange} from './common';
 import './locale';
@@ -53,7 +53,7 @@ function renderReading(
  * Event wrapper for
  * Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana
  */
-export class KitzurShulchanAruchEvent extends Event {
+export class KitzurShulchanAruchEvent extends DailyLearningEvent {
   reading: KitzurShulchanAruchReading;
   optionB?: KitzurShulchanAruchReading;
   leapAdar2: boolean;
@@ -70,7 +70,7 @@ export class KitzurShulchanAruchEvent extends Event {
     if (optionB) {
       desc += ` / ${optionB.b}-${optionB.e}`;
     }
-    super(date, desc, flags.DAILY_LEARNING);
+    super(date, desc);
     this.reading = reading;
     this.optionB = optionB;
     this.leapAdar2 = date.isLeapYear() && date.getMonth() === months.ADAR_II;

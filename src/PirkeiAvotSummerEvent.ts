@@ -1,6 +1,6 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import './locale';
 
 const PIRKEI_AVOT = 'Pirkei Avot';
@@ -9,11 +9,11 @@ const PIRKEI_AVOT = 'Pirkei Avot';
  * Event wrapper for
  * Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana
  */
-export class PirkeiAvotSummerEvent extends Event {
+export class PirkeiAvotSummerEvent extends DailyLearningEvent {
   reading: number[];
   category: string;
   constructor(date: HDate, reading: number[]) {
-    super(date, PIRKEI_AVOT + ' ' + reading.join('-'), flags.DAILY_LEARNING);
+    super(date, PIRKEI_AVOT + ' ' + reading.join('-'));
     this.reading = reading;
     this.alarm = false;
     this.category = PIRKEI_AVOT;

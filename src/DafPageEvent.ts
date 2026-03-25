@@ -1,5 +1,5 @@
 import {HDate} from '@hebcal/hdate';
-import {Event} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {DafPage} from './DafPage';
 import shekalimDafYomiMap0 from './shekalimDafYomiMap.json';
 import './locale';
@@ -22,7 +22,7 @@ export const dafYomiSefaria: Record<string, string> = {
 /**
  * Event wrapper around a DafPage instance
  */
-export class DafPageEvent extends Event {
+export class DafPageEvent extends DailyLearningEvent {
   daf: DafPage;
   category?: string;
   constructor(date: HDate, daf: DafPage, mask: number) {

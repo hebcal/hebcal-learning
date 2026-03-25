@@ -1,6 +1,6 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {
   ChofetzChaimReading,
   formatReadingPages,
@@ -14,12 +14,12 @@ import './locale';
 /**
  * Event wrapper around a Chofetz Chaim instance
  */
-export class ChofetzChaimEvent extends Event {
+export class ChofetzChaimEvent extends DailyLearningEvent {
   reading: ChofetzChaimReading;
   category: string;
   constructor(date: HDate, reading: ChofetzChaimReading) {
     const desc = reading.k + formatReadingPages(reading);
-    super(date, desc, flags.DAILY_LEARNING);
+    super(date, desc);
     this.reading = reading;
     this.memo = this.render('memo');
     this.alarm = false;

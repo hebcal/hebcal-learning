@@ -1,6 +1,6 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {formatReadingPages} from './chofetzChaimBase';
 import {
   ShemiratHaLashonReading,
@@ -12,7 +12,7 @@ import './locale';
 /**
  * Event wrapper around a Sefer Shemirat HaLashon instance
  */
-export class ShemiratHaLashonEvent extends Event {
+export class ShemiratHaLashonEvent extends DailyLearningEvent {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reading: any;
   category: string;
@@ -21,7 +21,7 @@ export class ShemiratHaLashonEvent extends Event {
     const book = reading.bk === 1 ? 'Book I' : 'Book II';
     const section = reading.k === Chapters ? '' : `, ${reading.k}`;
     const desc = book + section + formatReadingPages(reading);
-    super(date, desc, flags.DAILY_LEARNING);
+    super(date, desc);
     this.reading = reading;
     this.memo = this.render('memo');
     this.alarm = false;
