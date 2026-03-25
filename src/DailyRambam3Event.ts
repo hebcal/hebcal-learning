@@ -1,5 +1,5 @@
 import {HDate} from '@hebcal/hdate';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {RambamReading} from './rambam1Base';
 import {DailyRambamEvent} from './DailyRambamEvent';
 import './locale';
@@ -42,14 +42,14 @@ export function makeDesc(readings: RambamReading[]): string {
 /**
  * Event wrapper around a Daily Rambam instance
  */
-export class DailyRambam3Event extends Event {
+export class DailyRambam3Event extends DailyLearningEvent {
   readings: RambamReading[];
   events: DailyRambamEvent[];
   category: string;
   constructor(date: HDate, readings: RambamReading[]) {
     const collapsed = collapseAdjacent(readings);
     const desc = collapsed.map(r => `${r.name} ${r.perek}`).join(', ');
-    super(date, desc, flags.DAILY_LEARNING);
+    super(date, desc);
     this.readings = collapsed;
     this.events = collapsed.map(r => new DailyRambamEvent(date, r));
     this.alarm = false;

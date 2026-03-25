@@ -1,5 +1,5 @@
 import {HDate} from '@hebcal/hdate';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {SeferHaMitzvotReading} from './seferHaMitzvotBase';
 
 enum ReadingType {
@@ -11,12 +11,12 @@ enum ReadingType {
 /**
  * Event wrapper around a Sefer HaMitzvot reading
  */
-export class SeferHaMitzvotEvent extends Event {
+export class SeferHaMitzvotEvent extends DailyLearningEvent {
   reading: SeferHaMitzvotReading;
   category: string;
   constructor(date: HDate, reading: SeferHaMitzvotReading) {
     const desc = `Day ${reading.day}: ${reading.reading}`;
-    super(date, desc, flags.DAILY_LEARNING);
+    super(date, desc);
     this.reading = reading;
     this.alarm = false;
     this.category = 'Sefer Hamitzvot';

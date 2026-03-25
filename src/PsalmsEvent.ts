@@ -1,17 +1,17 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {PsalmBeginEnd} from './psalmsBase';
 import './locale';
 
 /**
  * Event wrapper around a daily Psalms / Tehillim
  */
-export class PsalmsEvent extends Event {
+export class PsalmsEvent extends DailyLearningEvent {
   reading: PsalmBeginEnd;
   category: string;
   constructor(date: HDate, reading: PsalmBeginEnd) {
-    super(date, `Psalms ${reading[0]}-${reading[1]}`, flags.DAILY_LEARNING);
+    super(date, `Psalms ${reading[0]}-${reading[1]}`);
     this.reading = reading;
     this.alarm = false;
     this.category = 'Psalms';

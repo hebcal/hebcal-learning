@@ -1,6 +1,6 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import {AhSYomiReading} from './arukhHaShulchanYomiBase';
 import {gematriyaNN} from './common';
 import './locale';
@@ -8,11 +8,11 @@ import './locale';
 /**
  * Event wrapper around a Arukh HaShulchan Yomi reading
  */
-export class ArukhHaShulchanYomiEvent extends Event {
+export class ArukhHaShulchanYomiEvent extends DailyLearningEvent {
   reading: AhSYomiReading;
   category: string;
   constructor(date: HDate, reading: AhSYomiReading) {
-    super(date, `${reading.k} ${reading.v}`, flags.DAILY_LEARNING);
+    super(date, `${reading.k} ${reading.v}`);
     this.reading = reading;
     this.category = 'Arukh HaShulchan Yomi';
   }

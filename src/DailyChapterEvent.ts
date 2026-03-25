@@ -1,13 +1,13 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {Event} from '@hebcal/core/dist/esm/event';
+import {DailyLearningEvent} from './DailyLearningEvent';
 import './locale';
 
 /**
  * Event wrapper for learning where you read one chapter per day
  * used by Nach Yomi and Perek Yomi
  */
-export class DailyChapterEvent extends Event {
+export class DailyChapterEvent extends DailyLearningEvent {
   k: string;
   v: number;
   category: string;
