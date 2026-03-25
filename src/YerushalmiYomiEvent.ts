@@ -3,7 +3,7 @@ import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DailyLearningEvent} from './DailyLearningEvent';
 import {YerushalmiReading} from './yerushalmiBase';
-import {gematriyaNN} from './common';
+import {gematriyaNN, isHebrewLocale} from './common';
 import './locale';
 import vilnaMap0 from './yerushalmiVilnaMap.json';
 
@@ -35,7 +35,7 @@ export class YerushalmiYomiEvent extends DailyLearningEvent {
   renderBrief(locale?: string): string {
     const loc = (locale || 'en').toLowerCase();
     const name = Locale.gettext(this.daf.name, loc);
-    if (loc === 'he' || loc === 'he-x-nonikud') {
+    if (isHebrewLocale(loc)) {
       return name + ' דף ' + gematriyaNN(this.daf.blatt);
     }
     return name + ' ' + this.daf.blatt;

@@ -1,6 +1,7 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent';
+import {isHebrewLocale} from './common';
 import './locale';
 
 const PIRKEI_AVOT = 'Pirkei Avot';
@@ -26,7 +27,7 @@ export class PirkeiAvotSummerEvent extends DailyLearningEvent {
     const loc = (locale || 'en').toLowerCase();
     const book = Locale.gettext(PIRKEI_AVOT, loc);
     const reading = this.reading;
-    if (loc === 'he' || loc === 'he-x-nonikud') {
+    if (isHebrewLocale(loc)) {
       return book + ' ' + reading.map(gematriya).join('-');
     }
     return book + ' ' + reading.join('-');

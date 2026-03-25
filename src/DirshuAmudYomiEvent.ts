@@ -3,6 +3,7 @@ import {HDate, gematriya} from '@hebcal/hdate';
 import {dafYomiSefaria, shekalimDafYomiMap} from './DafPageEvent';
 import {DailyLearningEvent} from './DailyLearningEvent';
 import {DirshuAmudYomi, calculateDirshuAmud} from './dirshuAmudYomiBase';
+import {isHebrewLocale} from './common';
 import './locale';
 
 /**
@@ -30,7 +31,7 @@ export class DirshuAmudYomiEvent extends DailyLearningEvent {
     const amud = this.amud;
     const name = Locale.gettext(amud.name, loc);
     let amudStr: string;
-    if (loc === 'he' || loc === 'he-x-nonikud') {
+    if (isHebrewLocale(loc)) {
       const sideStr = amud.side === 'a' ? 'ע״א' : 'ע״ב';
       amudStr = name + ' דף ' + gematriya(amud.amud) + ' ' + sideStr;
     } else {
@@ -48,7 +49,7 @@ export class DirshuAmudYomiEvent extends DailyLearningEvent {
     const loc = (locale || 'en').toLowerCase();
     const amud = this.amud;
     const name = Locale.gettext(amud.name, loc);
-    if (loc === 'he' || loc === 'he-x-nonikud') {
+    if (isHebrewLocale(loc)) {
       const sideStr = amud.side === 'a' ? 'א' : 'ב';
       return name + ' ' + gematriya(amud.amud) + ' ' + sideStr;
     }

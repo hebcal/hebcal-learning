@@ -3,7 +3,7 @@ import {Locale} from '@hebcal/core/dist/esm/locale';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {getHolidaysOnDate} from '@hebcal/core/dist/esm/holidays';
 import {DafPage} from './DafPage';
-import {checkTooEarly, gematriyaNN} from './common';
+import {checkTooEarly, gematriyaNN, isHebrewLocale} from './common';
 import masoretic0 from './masoretic.json';
 import './locale';
 
@@ -273,7 +273,7 @@ export class TanakhYomi extends DafPage {
     const loc = (locale || 'en').toLowerCase();
     const name = Locale.gettext(this.name, loc);
     const blatt = this.blatt;
-    if (loc === 'he' || loc === 'he-x-nonikud') {
+    if (isHebrewLocale(loc)) {
       const prefix = name + ' ס׳ ';
       if (typeof blatt === 'string') {
         const major = blatt[0];

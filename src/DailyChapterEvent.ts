@@ -1,6 +1,7 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent';
+import {isHebrewLocale} from './common';
 import './locale';
 
 /**
@@ -30,7 +31,7 @@ export class DailyChapterEvent extends DailyLearningEvent {
   render(locale?: string): string {
     const loc = (locale || 'en').toLowerCase();
     const name = Locale.gettext(this.k, loc);
-    if (loc === 'he' || loc === 'he-x-nonikud') {
+    if (isHebrewLocale(loc)) {
       return name + ' ' + gematriya(this.v);
     }
     return name + ' ' + this.v;

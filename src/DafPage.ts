@@ -1,5 +1,6 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {gematriya} from '@hebcal/hdate';
+import {isHebrewLocale} from './common';
 import './locale';
 
 /**
@@ -28,7 +29,7 @@ export class DafPage {
    */
   render(locale?: string): string {
     const loc = (locale || 'en').toLowerCase();
-    if (loc === 'he' || loc === 'he-x-nonikud') {
+    if (isHebrewLocale(loc)) {
       return Locale.gettext(this.name, loc) + ' דף ' + gematriya(this.blatt);
     }
     return Locale.gettext(this.name, loc) + ' ' + this.blatt;

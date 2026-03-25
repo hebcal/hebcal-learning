@@ -53,3 +53,7 @@ export function gematriyaNN(num: number | string): string {
   const s = gematriya(num);
   return s.replaceAll(/[׳״]/g, '');
 }
+
+export function isHebrewLocale(locale: string): boolean {
+  return locale === 'he' || locale === 'he-x-nonikud';
+}

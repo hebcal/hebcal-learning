@@ -2,7 +2,7 @@ import {HDate, months} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent';
 import {KitzurShulchanAruchReading} from './kitzurShulchanAruchBase';
-import {gematriyaNN, formatBeginEndRange} from './common';
+import {gematriyaNN, formatBeginEndRange, isHebrewLocale} from './common';
 import './locale';
 
 const BOOK_NAME = 'Kitzur Shulchan Arukh';
@@ -16,7 +16,7 @@ function renderReading(
   locale?: string
 ): string {
   const loc = (locale || 'en').toLowerCase();
-  if (loc === 'he' || loc === 'he-x-nonikud') {
+  if (isHebrewLocale(loc)) {
     if (reading.b === 'Klalim') {
       return Locale.gettext(reading.b, loc);
     }
