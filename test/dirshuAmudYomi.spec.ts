@@ -111,12 +111,11 @@ test('event-render-brief', () => {
 });
 
 test('event-render-hebrew', () => {
-  const hd = new HDate(new Date(2026, 2, 23)); // March 23, 2026 = Shekalim 4b
+  // 13 Tevet 5786 = January 2, 2026 = Pesachim 84b
+  const hd = new HDate(new Date(2026, 0, 2));
   const ev = new DirshuAmudYomiEvent(hd);
-  const rendered = ev.render('he');
-  // Should include Hebrew Shekalim and the amud bet notation
-  expect(rendered).toContain('שקלים');
-  expect(rendered).toContain('ע״ב');
+  expect(ev.render('he-x-nonikud')).toBe('Dirshu Amud HaYomi: פסחים דף פ״ד ע״ב');
+  expect(ev.renderBrief('he-x-nonikud')).toBe('פסחים פ״ד ב');
 });
 
 test('event-url-sefaria', () => {

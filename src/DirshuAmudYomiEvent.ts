@@ -21,30 +21,36 @@ export class DirshuAmudYomiEvent extends DailyLearningEvent {
 
   /**
    * Returns the name with "Dirshu Amud HaYomi: " prefix (e.g. "Dirshu Amud HaYomi: Shekalim 4b").
+   * In Hebrew, uses full amud notation with "דף" and "ע״א"/"ע״ב" (e.g. "פסחים דף פ״ד ע״ב").
    * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
-    return (
-      Locale.gettext('Dirshu Amud HaYomi', locale) +
-      ': ' +
-      this.renderBrief(locale)
-    );
+    const prefix = Locale.gettext('Dirshu Amud HaYomi', locale);
+    const loc = (locale || 'en').toLowerCase();
+    const amud = this.amud;
+    const name = Locale.gettext(amud.name, loc);
+    let amudStr: string;
+    if (loc === 'he' || loc === 'he-x-nonikud') {
+      const sideStr = amud.side === 'a' ? 'ע״א' : 'ע״ב';
+      amudStr = name + ' דף ' + gematriya(amud.amud) + ' ' + sideStr;
+    } else {
+      amudStr = name + ' ' + amud.amud + amud.side;
+    }
+    return prefix + ': ' + amudStr;
   }
 
   /**
    * Returns name of tractate and amud (e.g. "Shekalim 4b").
+   * In Hebrew, uses short notation without "דף" and with plain "א"/"ב" (e.g. "פסחים פ״ד ב").
    * @param [locale] Optional locale name (defaults to active locale).
    */
   renderBrief(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
+    const loc = (locale || 'en').toLowerCase();
     const amud = this.amud;
-    const name = Locale.gettext(amud.name, locale);
-    if (locale === 'he' || locale === 'he-x-nonikud') {
-      const sideStr = amud.side === 'a' ? 'ע״א' : 'ע״ב';
-      return name + ' דף ' + gematriya(amud.amud) + ' ' + sideStr;
+    const name = Locale.gettext(amud.name, loc);
+    if (loc === 'he' || loc === 'he-x-nonikud') {
+      const sideStr = amud.side === 'a' ? 'א' : 'ב';
+      return name + ' ' + gematriya(amud.amud) + ' ' + sideStr;
     }
     return name + ' ' + amud.amud + amud.side;
   }
