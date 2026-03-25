@@ -23,13 +23,10 @@ export class PirkeiAvotSummerEvent extends DailyLearningEvent {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
-    const book = Locale.gettext(PIRKEI_AVOT, locale);
+    const loc = (locale || 'en').toLowerCase();
+    const book = Locale.gettext(PIRKEI_AVOT, loc);
     const reading = this.reading;
-    if (locale === 'he' || locale === 'he-x-nonikud') {
+    if (loc === 'he' || loc === 'he-x-nonikud') {
       return book + ' ' + reading.map(gematriya).join('-');
     }
     return book + ' ' + reading.join('-');

@@ -33,12 +33,9 @@ export class YerushalmiYomiEvent extends DailyLearningEvent {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   renderBrief(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
-    const name = Locale.gettext(this.daf.name, locale);
-    if (locale === 'he' || locale === 'he-x-nonikud') {
+    const loc = (locale || 'en').toLowerCase();
+    const name = Locale.gettext(this.daf.name, loc);
+    if (loc === 'he' || loc === 'he-x-nonikud') {
       return name + ' דף ' + gematriyaNN(this.daf.blatt);
     }
     return name + ' ' + this.daf.blatt;

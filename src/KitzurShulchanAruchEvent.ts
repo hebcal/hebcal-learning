@@ -15,13 +15,10 @@ function renderReading(
   reading: KitzurShulchanAruchReading,
   locale?: string
 ): string {
-  locale = locale || 'en';
-  if (typeof locale === 'string') {
-    locale = locale.toLowerCase();
-  }
-  if (locale === 'he' || locale === 'he-x-nonikud') {
+  const loc = (locale || 'en').toLowerCase();
+  if (loc === 'he' || loc === 'he-x-nonikud') {
     if (reading.b === 'Klalim') {
-      return Locale.gettext(reading.b, locale);
+      return Locale.gettext(reading.b, loc);
     }
     const cv1 = reading.b.split(':');
     const begin = cv1

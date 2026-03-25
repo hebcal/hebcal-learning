@@ -21,14 +21,11 @@ export class PsalmsEvent extends DailyLearningEvent {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
-    const book = Locale.gettext('Psalms', locale);
+    const loc = (locale || 'en').toLowerCase();
+    const book = Locale.gettext('Psalms', loc);
     const reading = this.reading;
     if (
-      (locale === 'he' || locale === 'he-x-nonikud') &&
+      (loc === 'he' || loc === 'he-x-nonikud') &&
       typeof reading[0] === 'number'
     ) {
       return book + ' ' + gematriya(reading[0]) + '-' + gematriya(reading[1]);

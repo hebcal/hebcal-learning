@@ -270,13 +270,10 @@ export class TanakhYomi extends DafPage {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
-    const name = Locale.gettext(this.name, locale);
+    const loc = (locale || 'en').toLowerCase();
+    const name = Locale.gettext(this.name, loc);
     const blatt = this.blatt;
-    if (locale === 'he' || locale === 'he-x-nonikud') {
+    if (loc === 'he' || loc === 'he-x-nonikud') {
       const prefix = name + ' ס׳ ';
       if (typeof blatt === 'string') {
         const major = blatt[0];

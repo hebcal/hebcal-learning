@@ -30,15 +30,12 @@ export class ChofetzChaimEvent extends DailyLearningEvent {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   renderBrief(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
+    const loc = (locale || 'en').toLowerCase();
     const reading = this.reading;
     const book = reading.k;
     const book2 = book.replace('Hilchos', 'Hilchos ');
     let name =
-      locale === 'memo' ? englishNames[book] : Locale.gettext(book2, locale);
+      loc === 'memo' ? englishNames[book] : Locale.gettext(book2, loc);
     name += formatReadingPages(reading);
     return name;
   }

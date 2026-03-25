@@ -28,12 +28,9 @@ export class DailyChapterEvent extends DailyLearningEvent {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
-    const name = Locale.gettext(this.k, locale);
-    if (locale === 'he' || locale === 'he-x-nonikud') {
+    const loc = (locale || 'en').toLowerCase();
+    const name = Locale.gettext(this.k, loc);
+    if (loc === 'he' || loc === 'he-x-nonikud') {
       return name + ' ' + gematriya(this.v);
     }
     return name + ' ' + this.v;
