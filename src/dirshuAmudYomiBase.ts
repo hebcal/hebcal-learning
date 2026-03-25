@@ -1,8 +1,5 @@
-import {HDate, greg, gematriya} from '@hebcal/hdate';
-import {Locale} from '@hebcal/core/dist/esm/locale';
-import {DafPage} from './DafPage';
+import {HDate, greg} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate} from './common';
-import './locale';
 
 // Cycle began on 1 Cheshvan 5784 = October 16, 2023
 const startDate = new Date(2023, 9, 16);
@@ -63,33 +60,11 @@ const totalAmudim = shas.reduce((s, a) => s + a.amudim, 0);
 /**
  * Represents an amud (side of a page) in the Dirshu Amud HaYomi program
  */
-export class DirshuAmudYomi extends DafPage {
-  blattNum: number;
+export type DirshuAmudYomi = {
+  name: string;
+  amud: number;
   side: 'a' | 'b';
-
-  constructor(name: string, blattNum: number, side: 'a' | 'b') {
-    super(name, `${blattNum}${side}`);
-    this.blattNum = blattNum;
-    this.side = side;
-  }
-
-  /**
-   * Formats the amud as a string like "Shekalim 4b"
-   * @param [locale] Optional locale name (defaults to active locale).
-   */
-  render(locale?: string): string {
-    locale = locale || 'en';
-    if (typeof locale === 'string') {
-      locale = locale.toLowerCase();
-    }
-    const name = Locale.gettext(this.name, locale);
-    if (locale === 'he' || locale === 'he-x-nonikud') {
-      const sideStr = this.side === 'a' ? 'ע״א' : 'ע״ב';
-      return name + ' דף ' + gematriya(this.blattNum) + ' ' + sideStr;
-    }
-    return name + ' ' + this.blatt;
-  }
-}
+};
 
 /**
  * Calculates the Dirshu Amud HaYomi for a given date
@@ -106,9 +81,9 @@ export function calculateDirshuAmud(
   for (const tractate of shas) {
     if (dno < total + tractate.amudim) {
       const idx = dno - total;
-      const blattNum = 2 + Math.floor(idx / 2);
+      const amud = 2 + Math.floor(idx / 2);
       const side: 'a' | 'b' = idx % 2 === 0 ? 'a' : 'b';
-      return new DirshuAmudYomi(tractate.name, blattNum, side);
+      return {name: tractate.name, amud, side};
     }
     total += tractate.amudim;
   }
