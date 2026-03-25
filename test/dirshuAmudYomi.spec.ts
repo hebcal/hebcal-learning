@@ -12,49 +12,49 @@ test('cycle-start-day1', () => {
   // Cycle began on 1 Cheshvan 5784 = October 16, 2023 = Berachot 2a
   const dt = new Date(2023, 9, 16);
   const amud = calculateDirshuAmud(dt);
-  expect(amud.getName()).toBe('Berachot');
-  expect(amud.blattNum).toBe(2);
+  expect(amud.name).toBe('Berachot');
+  expect(amud.amud).toBe(2);
   expect(amud.side).toBe('a');
-  expect(amud.getBlatt()).toBe('2a');
-  expect(amud.render('en')).toBe('Berachot 2a');
+  expect(`${amud.amud}${amud.side}`).toBe('2a');
+  expect(`${amud.name} ${amud.amud}${amud.side}`).toBe('Berachot 2a');
 });
 
 test('cycle-start-day2', () => {
   // October 17, 2023 = Berachot 2b
   const dt = new Date(2023, 9, 17);
   const amud = calculateDirshuAmud(dt);
-  expect(amud.getName()).toBe('Berachot');
-  expect(amud.blattNum).toBe(2);
+  expect(amud.name).toBe('Berachot');
+  expect(amud.amud).toBe(2);
   expect(amud.side).toBe('b');
-  expect(amud.render('en')).toBe('Berachot 2b');
+  expect(`${amud.name} ${amud.amud}${amud.side}`).toBe('Berachot 2b');
 });
 
 test('today-march-23-2026', () => {
   // March 23, 2026 = 5 Nisan 5786 = Shekalim 4b
   const dt = new Date(2026, 2, 23);
   const amud = calculateDirshuAmud(dt);
-  expect(amud.getName()).toBe('Shekalim');
-  expect(amud.blattNum).toBe(4);
+  expect(amud.name).toBe('Shekalim');
+  expect(amud.amud).toBe(4);
   expect(amud.side).toBe('b');
-  expect(amud.render('en')).toBe('Shekalim 4b');
+  expect(`${amud.name} ${amud.amud}${amud.side}`).toBe('Shekalim 4b');
 });
 
 test('berachot-last-amud', () => {
   // Berachot has 125 amudim, last is index 124 → blatt 64a
   const amud = calculateDirshuAmud(dirshuAmudYomiStart + 124);
-  expect(amud.getName()).toBe('Berachot');
-  expect(amud.blattNum).toBe(64);
+  expect(amud.name).toBe('Berachot');
+  expect(amud.amud).toBe(64);
   expect(amud.side).toBe('a');
-  expect(amud.render('en')).toBe('Berachot 64a');
+  expect(`${amud.name} ${amud.amud}${amud.side}`).toBe('Berachot 64a');
 });
 
 test('shabbat-first-amud', () => {
   // Shabbat starts on day 125 from cycle start
   const amud = calculateDirshuAmud(dirshuAmudYomiStart + 125);
-  expect(amud.getName()).toBe('Shabbat');
-  expect(amud.blattNum).toBe(2);
+  expect(amud.name).toBe('Shabbat');
+  expect(amud.amud).toBe(2);
   expect(amud.side).toBe('a');
-  expect(amud.render('en')).toBe('Shabbat 2a');
+  expect(`${amud.name} ${amud.amud}${amud.side}`).toBe('Shabbat 2a');
 });
 
 test('shabbat-last-amud', () => {
@@ -62,18 +62,18 @@ test('shabbat-last-amud', () => {
   // Day 436 from cycle start
   const startAbs = dirshuAmudYomiStart;
   const amud = calculateDirshuAmud(startAbs + 436);
-  expect(amud.getName()).toBe('Shabbat');
-  expect(amud.blattNum).toBe(157);
+  expect(amud.name).toBe('Shabbat');
+  expect(amud.amud).toBe(157);
   expect(amud.side).toBe('b');
-  expect(amud.render('en')).toBe('Shabbat 157b');
+  expect(`${amud.name} ${amud.amud}${amud.side}`).toBe('Shabbat 157b');
 });
 
 test('cycle-boundary-wraps', () => {
   // After the last amud of the cycle, it should wrap back to Berachot 2a
   const totalAmudim = shas.reduce((s, a) => s + a.amudim, 0);
   const amud = calculateDirshuAmud(dirshuAmudYomiStart + totalAmudim);
-  expect(amud.getName()).toBe('Berachot');
-  expect(amud.blattNum).toBe(2);
+  expect(amud.name).toBe('Berachot');
+  expect(amud.amud).toBe(2);
   expect(amud.side).toBe('a');
 });
 
@@ -82,10 +82,10 @@ test('niddah-last-amud', () => {
   // index 142: blatt = 2 + floor(142/2) = 2 + 71 = 73, side = 142%2 = 0 → 'a'
   const totalAmudim = shas.reduce((s, a) => s + a.amudim, 0);
   const amud = calculateDirshuAmud(dirshuAmudYomiStart + totalAmudim - 1);
-  expect(amud.getName()).toBe('Niddah');
-  expect(amud.blattNum).toBe(73);
+  expect(amud.name).toBe('Niddah');
+  expect(amud.amud).toBe(73);
   expect(amud.side).toBe('a');
-  expect(amud.render('en')).toBe('Niddah 73a');
+  expect(`${amud.name} ${amud.amud}${amud.side}`).toBe('Niddah 73a');
 });
 
 test('too-early-throws', () => {
@@ -157,17 +157,17 @@ test('amud-render-in-middle', () => {
   // index within Eruvin for 54b: (54-2)*2 + 1 = 105
   const eruvinStart = shas.slice(0, 2).reduce((s, a) => s + a.amudim, 0);
   const amud = calculateDirshuAmud(dirshuAmudYomiStart + eruvinStart + 105);
-  expect(amud.getName()).toBe('Eruvin');
-  expect(amud.blattNum).toBe(54);
+  expect(amud.name).toBe('Eruvin');
+  expect(amud.amud).toBe(54);
   expect(amud.side).toBe('b');
-  expect(amud.render('en')).toBe('Eruvin 54b');
+  expect(`${amud.name} ${amud.amud}${amud.side}`).toBe('Eruvin 54b');
 });
 
 test('dirshu-amud-yomi-instance', () => {
-  const amud = new DirshuAmudYomi('Berachot', 2, 'a');
-  expect(amud.getName()).toBe('Berachot');
-  expect(amud.getBlatt()).toBe('2a');
-  expect(amud.blattNum).toBe(2);
+  const amud: DirshuAmudYomi = {name: 'Berachot', amud: 2, side: 'a'};
+  expect(amud.name).toBe('Berachot');
+  expect(`${amud.amud}${amud.side}`).toBe('2a');
+  expect(amud.amud).toBe(2);
   expect(amud.side).toBe('a');
 });
 
