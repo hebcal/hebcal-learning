@@ -2,6 +2,7 @@ import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent';
 import {PsalmBeginEnd} from './psalmsBase';
+import {isHebrewLocale} from './common';
 import './locale';
 
 /**
@@ -25,7 +26,7 @@ export class PsalmsEvent extends DailyLearningEvent {
     const book = Locale.gettext('Psalms', loc);
     const reading = this.reading;
     if (
-      (loc === 'he' || loc === 'he-x-nonikud') &&
+      isHebrewLocale(loc) &&
       typeof reading[0] === 'number'
     ) {
       return book + ' ' + gematriya(reading[0]) + '-' + gematriya(reading[1]);

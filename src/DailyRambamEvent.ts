@@ -2,7 +2,7 @@ import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent';
 import {RambamReading} from './rambam1Base';
-import {gematriyaNN} from './common';
+import {gematriyaNN, isHebrewLocale} from './common';
 import './locale';
 
 /**
@@ -25,7 +25,7 @@ export class DailyRambamEvent extends DailyLearningEvent {
     const loc = (locale || 'en').toLowerCase();
     const reading = this.reading;
     const name = Locale.gettext(reading.name, loc);
-    if (loc === 'he' || loc === 'he-x-nonikud') {
+    if (isHebrewLocale(loc)) {
       const perekStr =
         typeof reading.perek === 'number'
           ? gematriyaNN(reading.perek)
