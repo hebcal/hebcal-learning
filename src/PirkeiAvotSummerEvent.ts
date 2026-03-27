@@ -16,7 +16,6 @@ export class PirkeiAvotSummerEvent extends DailyLearningEvent {
   constructor(date: HDate, reading: number[]) {
     super(date, PIRKEI_AVOT + ' ' + reading.join('-'));
     this.reading = reading;
-    this.alarm = false;
     this.category = PIRKEI_AVOT;
   }
   /**

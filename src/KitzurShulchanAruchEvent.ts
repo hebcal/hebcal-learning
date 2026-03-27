@@ -71,7 +71,6 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
     this.reading = reading;
     this.optionB = optionB;
     this.leapAdar2 = date.isLeapYear() && date.getMonth() === months.ADAR_II;
-    this.alarm = false;
     this.category = BOOK_NAME;
   }
   /**

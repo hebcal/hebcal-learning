@@ -14,7 +14,6 @@ export class DailyRambamEvent extends DailyLearningEvent {
   constructor(date: HDate, reading: RambamReading) {
     super(date, `${reading.name} ${reading.perek}`);
     this.reading = reading;
-    this.alarm = false;
     this.category = 'Daily Rambam';
   }
   /**

@@ -9,7 +9,6 @@ import {TanakhYomi} from './tanakhYomiBase';
 export class TanakhYomiEvent extends DafPageEvent {
   constructor(date: HDate, daf: TanakhYomi) {
     super(date, daf, flags.DAILY_LEARNING);
-    this.alarm = false;
     this.category = 'Tanakh Yomi';
     this.memo = daf.verses;
   }

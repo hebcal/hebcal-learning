@@ -52,7 +52,6 @@ export class DailyRambam3Event extends DailyLearningEvent {
     super(date, desc);
     this.readings = collapsed;
     this.events = collapsed.map(r => new DailyRambamEvent(date, r));
-    this.alarm = false;
     this.category = 'Daily Rambam';
     if (collapsed.length > 1) {
       this.memo = this.events

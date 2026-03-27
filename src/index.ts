@@ -45,3 +45,9 @@ export {
   KitzurShulchanAruchReading,
 } from './kitzurShulchanAruchBase';
 export {KitzurShulchanAruchEvent} from './KitzurShulchanAruchEvent';
+export {
+  DirshuAmudYomi,
+  calculateDirshuAmud,
+  dirshuAmudYomiStart,
+} from './dirshuAmudYomiBase';
+export {DirshuAmudYomiEvent} from './DirshuAmudYomiEvent';
