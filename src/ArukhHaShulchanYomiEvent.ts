@@ -10,11 +10,12 @@ import './locale';
  */
 export class ArukhHaShulchanYomiEvent extends DailyLearningEvent {
   reading: AhSYomiReading;
-  category: string;
+  get category(): string {
+    return 'Arukh HaShulchan Yomi';
+  }
   constructor(date: HDate, reading: AhSYomiReading) {
     super(date, `${reading.k} ${reading.v}`);
     this.reading = reading;
-    this.category = 'Arukh HaShulchan Yomi';
   }
   render(locale?: string): string {
     const loc = (locale || 'en').toLowerCase();

@@ -15,8 +15,10 @@ import './locale';
 export class ShemiratHaLashonEvent extends DailyLearningEvent {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reading: any;
-  category: string;
   memo: string;
+  get category(): string {
+    return 'Shemirat HaLashon';
+  }
   constructor(date: HDate, reading: ShemiratHaLashonReading) {
     const book = reading.bk === 1 ? 'Book I' : 'Book II';
     const section = reading.k === Chapters ? '' : `, ${reading.k}`;
@@ -24,7 +26,6 @@ export class ShemiratHaLashonEvent extends DailyLearningEvent {
     super(date, desc);
     this.reading = reading;
     this.memo = this.render('memo');
-    this.category = 'Shemirat HaLashon';
   }
   /**
    * Returns name of reading

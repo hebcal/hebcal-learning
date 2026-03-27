@@ -13,12 +13,13 @@ enum ReadingType {
  */
 export class SeferHaMitzvotEvent extends DailyLearningEvent {
   reading: SeferHaMitzvotReading;
-  category: string;
+  get category(): string {
+    return 'Sefer Hamitzvot';
+  }
   constructor(date: HDate, reading: SeferHaMitzvotReading) {
     const desc = `Day ${reading.day}: ${reading.reading}`;
     super(date, desc);
     this.reading = reading;
-    this.category = 'Sefer Hamitzvot';
     if (reading.note) {
       this.memo = reading.note;
     }

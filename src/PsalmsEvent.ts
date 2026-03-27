@@ -10,11 +10,12 @@ import './locale';
  */
 export class PsalmsEvent extends DailyLearningEvent {
   reading: PsalmBeginEnd;
-  category: string;
+  get category(): string {
+    return 'Psalms';
+  }
   constructor(date: HDate, reading: PsalmBeginEnd) {
     super(date, `Psalms ${reading[0]}-${reading[1]}`);
     this.reading = reading;
-    this.category = 'Psalms';
   }
   /**
    * Returns name of reading

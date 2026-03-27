@@ -27,11 +27,12 @@ function formatMyomi(mishnaYomi: MishnaYomi[], locale?: string): string {
  */
 export class MishnaYomiEvent extends DailyLearningEvent {
   mishnaYomi: MishnaYomi[];
-  category: string;
+  get category(): string {
+    return 'Mishna Yomi';
+  }
   constructor(date: HDate, mishnaYomi: MishnaYomi[]) {
     super(date, formatMyomi(mishnaYomi), flags.MISHNA_YOMI);
     this.mishnaYomi = mishnaYomi;
-    this.category = 'Mishna Yomi';
   }
   /**
    * Returns Mishna Yomi name (e.g. "Bava Metzia 10:5-6" or "Berakhot 9:5-Peah 1:1").

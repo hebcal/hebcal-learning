@@ -14,11 +14,12 @@ const vilnaMap: Record<string, (string | null)[]> = vilnaMap0;
  */
 export class YerushalmiYomiEvent extends DailyLearningEvent {
   daf: YerushalmiReading;
-  category: string;
+  get category(): string {
+    return 'Yerushalmi Yomi';
+  }
   constructor(date: HDate, daf: YerushalmiReading) {
     super(date, `${daf.name} ${daf.blatt}`, flags.YERUSHALMI_YOMI);
     this.daf = daf;
-    this.category = 'Yerushalmi Yomi';
   }
   /**
    * Returns name of tractate and page (e.g. "Yerushalmi Beitzah 21").

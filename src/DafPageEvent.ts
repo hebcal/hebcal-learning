@@ -24,7 +24,6 @@ export const dafYomiSefaria: Record<string, string> = {
  */
 export class DafPageEvent extends DailyLearningEvent {
   daf: DafPage;
-  category?: string;
   constructor(date: HDate, daf: DafPage, mask: number) {
     super(date, daf.render('en'), mask);
     this.daf = daf;
