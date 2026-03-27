@@ -7,8 +7,11 @@ import {NachYomi} from './nachYomiBase';
  * Event wrapper around a Nach Yomi instance
  */
 export class NachYomiEvent extends DailyChapterEvent {
+  get category(): string {
+    return 'Nach Yomi';
+  }
   constructor(date: HDate, reading: NachYomi) {
-    super(date, reading.k, reading.v, 'Nach Yomi', flags.NACH_YOMI);
+    super(date, reading.k, reading.v, flags.NACH_YOMI);
   }
   getCategories(): string[] {
     return ['nachyomi'];
