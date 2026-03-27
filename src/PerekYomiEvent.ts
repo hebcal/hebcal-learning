@@ -7,8 +7,11 @@ import {PerekYomi} from './perekYomiBase';
  * Event wrapper around a Perek Yomi instance
  */
 export class PerekYomiEvent extends DailyChapterEvent {
+  get category(): string {
+    return 'Perek Yomi';
+  }
   constructor(date: HDate, reading: PerekYomi) {
-    super(date, reading.k, reading.v, 'Perek Yomi', flags.DAILY_LEARNING);
+    super(date, reading.k, reading.v, flags.DAILY_LEARNING);
   }
   /**
    * Returns a link to sefaria.org

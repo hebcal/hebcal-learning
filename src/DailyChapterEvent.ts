@@ -8,24 +8,13 @@ import './locale';
  * Event wrapper for learning where you read one chapter per day
  * used by Nach Yomi and Perek Yomi
  */
-export class DailyChapterEvent extends DailyLearningEvent {
+export abstract class DailyChapterEvent extends DailyLearningEvent {
   k: string;
   v: number;
-  private _category: string;
-  get category(): string {
-    return this._category;
-  }
-  constructor(
-    date: HDate,
-    k: string,
-    v: number,
-    category: string,
-    mask: number
-  ) {
+  constructor(date: HDate, k: string, v: number, mask: number) {
     super(date, `${k} ${v}`, mask);
     this.k = k;
     this.v = v;
-    this._category = category;
   }
   /**
    * Returns name of tractate and page (e.g. "Beitzah 21").
