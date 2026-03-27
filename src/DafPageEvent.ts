@@ -22,7 +22,7 @@ export const dafYomiSefaria: Record<string, string> = {
 /**
  * Event wrapper around a DafPage instance
  */
-export class DafPageEvent extends DailyLearningEvent {
+export abstract class DafPageEvent extends DailyLearningEvent {
   daf: DafPage;
   constructor(date: HDate, daf: DafPage, mask: number) {
     super(date, daf.render('en'), mask);
