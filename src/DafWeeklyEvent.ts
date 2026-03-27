@@ -9,7 +9,6 @@ import {DafPageEvent} from './DafPageEvent';
 export class DafWeeklyEvent extends DafPageEvent {
   constructor(date: HDate, daf: DafPage) {
     super(date, daf, flags.DAILY_LEARNING);
-    this.alarm = false;
     this.category = 'Daf Weekly';
   }
   getCategories(): string[] {

@@ -14,7 +14,6 @@ export class PsalmsEvent extends DailyLearningEvent {
   constructor(date: HDate, reading: PsalmBeginEnd) {
     super(date, `Psalms ${reading[0]}-${reading[1]}`);
     this.reading = reading;
-    this.alarm = false;
     this.category = 'Psalms';
   }
   /**

@@ -18,7 +18,6 @@ export class SeferHaMitzvotEvent extends DailyLearningEvent {
     const desc = `Day ${reading.day}: ${reading.reading}`;
     super(date, desc);
     this.reading = reading;
-    this.alarm = false;
     this.category = 'Sefer Hamitzvot';
     if (reading.note) {
       this.memo = reading.note;

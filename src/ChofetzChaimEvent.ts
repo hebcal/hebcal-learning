@@ -22,7 +22,6 @@ export class ChofetzChaimEvent extends DailyLearningEvent {
     super(date, desc);
     this.reading = reading;
     this.memo = this.render('memo');
-    this.alarm = false;
     this.category = 'Chofetz Chaim';
   }
   /**

@@ -24,7 +24,6 @@ export class ShemiratHaLashonEvent extends DailyLearningEvent {
     super(date, desc);
     this.reading = reading;
     this.memo = this.render('memo');
-    this.alarm = false;
     this.category = 'Shemirat HaLashon';
   }
   /**
