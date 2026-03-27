@@ -7,9 +7,11 @@ import {TanakhYomi} from './tanakhYomiBase';
  * Event wrapper around a tanakhYomi
  */
 export class TanakhYomiEvent extends DafPageEvent {
+  get category(): string {
+    return 'Tanakh Yomi';
+  }
   constructor(date: HDate, daf: TanakhYomi) {
     super(date, daf, flags.DAILY_LEARNING);
-    this.category = 'Tanakh Yomi';
     this.memo = daf.verses;
   }
   /**

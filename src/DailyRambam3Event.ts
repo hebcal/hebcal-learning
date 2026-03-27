@@ -45,14 +45,15 @@ export function makeDesc(readings: RambamReading[]): string {
 export class DailyRambam3Event extends DailyLearningEvent {
   readings: RambamReading[];
   events: DailyRambamEvent[];
-  category: string;
+  get category(): string {
+    return 'Daily Rambam';
+  }
   constructor(date: HDate, readings: RambamReading[]) {
     const collapsed = collapseAdjacent(readings);
     const desc = collapsed.map(r => `${r.name} ${r.perek}`).join(', ');
     super(date, desc);
     this.readings = collapsed;
     this.events = collapsed.map(r => new DailyRambamEvent(date, r));
-    this.category = 'Daily Rambam';
     if (collapsed.length > 1) {
       this.memo = this.events
         .map(ev => {

@@ -16,13 +16,14 @@ import './locale';
  */
 export class ChofetzChaimEvent extends DailyLearningEvent {
   reading: ChofetzChaimReading;
-  category: string;
+  get category(): string {
+    return 'Chofetz Chaim';
+  }
   constructor(date: HDate, reading: ChofetzChaimReading) {
     const desc = reading.k + formatReadingPages(reading);
     super(date, desc);
     this.reading = reading;
     this.memo = this.render('memo');
-    this.category = 'Chofetz Chaim';
   }
   /**
    * Returns name of reading

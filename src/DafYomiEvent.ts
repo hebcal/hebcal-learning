@@ -9,10 +9,12 @@ import './locale';
  * Event wrapper around a DafYomi instance
  */
 export class DafYomiEvent extends DafPageEvent {
+  get category(): string {
+    return 'Daf Yomi';
+  }
   constructor(date: HDate) {
     const daf = new DafYomi(date.greg());
     super(date, daf, flags.DAF_YOMI);
-    this.category = 'Daf Yomi';
   }
   /**
    * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").

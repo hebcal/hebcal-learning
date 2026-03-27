@@ -11,7 +11,10 @@ import './locale';
 export class DailyChapterEvent extends DailyLearningEvent {
   k: string;
   v: number;
-  category: string;
+  private _category: string;
+  get category(): string {
+    return this._category;
+  }
   constructor(
     date: HDate,
     k: string,
@@ -22,7 +25,7 @@ export class DailyChapterEvent extends DailyLearningEvent {
     super(date, `${k} ${v}`, mask);
     this.k = k;
     this.v = v;
-    this.category = category;
+    this._category = category;
   }
   /**
    * Returns name of tractate and page (e.g. "Beitzah 21").

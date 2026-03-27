@@ -54,7 +54,9 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
   reading: KitzurShulchanAruchReading;
   optionB?: KitzurShulchanAruchReading;
   leapAdar2: boolean;
-  category: string;
+  get category(): string {
+    return BOOK_NAME;
+  }
   constructor(
     date: HDate,
     reading: KitzurShulchanAruchReading,
@@ -71,7 +73,6 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
     this.reading = reading;
     this.optionB = optionB;
     this.leapAdar2 = date.isLeapYear() && date.getMonth() === months.ADAR_II;
-    this.category = BOOK_NAME;
   }
   /**
    * Returns name of reading

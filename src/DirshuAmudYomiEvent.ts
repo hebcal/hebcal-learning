@@ -11,13 +11,14 @@ import './locale';
  */
 export class DirshuAmudYomiEvent extends DailyLearningEvent {
   amud: DirshuAmudYomi;
-  category: string;
+  get category(): string {
+    return 'Dirshu Amud HaYomi';
+  }
 
   constructor(date: HDate) {
     const amud = calculateDirshuAmud(date);
     super(date, `${amud.name} ${amud.amud}${amud.side}`);
     this.amud = amud;
-    this.category = 'Dirshu Amud HaYomi';
   }
 
   /**

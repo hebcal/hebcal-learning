@@ -12,11 +12,12 @@ const PIRKEI_AVOT = 'Pirkei Avot';
  */
 export class PirkeiAvotSummerEvent extends DailyLearningEvent {
   reading: number[];
-  category: string;
+  get category(): string {
+    return PIRKEI_AVOT;
+  }
   constructor(date: HDate, reading: number[]) {
     super(date, PIRKEI_AVOT + ' ' + reading.join('-'));
     this.reading = reading;
-    this.category = PIRKEI_AVOT;
   }
   /**
    * Returns name of reading

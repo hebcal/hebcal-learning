@@ -10,11 +10,12 @@ import './locale';
  */
 export class DailyRambamEvent extends DailyLearningEvent {
   reading: RambamReading;
-  category: string;
+  get category(): string {
+    return 'Daily Rambam';
+  }
   constructor(date: HDate, reading: RambamReading) {
     super(date, `${reading.name} ${reading.perek}`);
     this.reading = reading;
-    this.category = 'Daily Rambam';
   }
   /**
    * Returns name of reading

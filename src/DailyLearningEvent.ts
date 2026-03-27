@@ -6,4 +6,10 @@ export class DailyLearningEvent extends Event {
     super(date, desc, mask);
     this.alarm = false;
   }
+  /**
+   * Category name used as the location field in iCalendar event feeds.
+   */
+  get category(): string | undefined {
+    return undefined;
+  }
 }
