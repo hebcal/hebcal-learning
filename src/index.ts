@@ -51,3 +51,5 @@ export {
   dirshuAmudYomiStart,
 } from './dirshuAmudYomiBase';
 export {DirshuAmudYomiEvent} from './DirshuAmudYomiEvent';
+export {_929Reading, _929, _929Start} from './929Base';
+export {_929Event} from './929Event';
