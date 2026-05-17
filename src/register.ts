@@ -15,3 +15,4 @@ import './seferHaMitzvot';
 import './shemiratHaLashon';
 import './tanakhYomi';
 import './yerushalmiYomi';
+import './929';
