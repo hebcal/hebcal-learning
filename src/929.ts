@@ -4,6 +4,10 @@ import {calculate929, nine29Start} from './929Base';
 import {Nine29Event} from './929Event';
 
 function wrapper(hd: HDate): Nine29Event | null {
+  const abs = hd.abs();
+  if (abs < nine29Start) {
+    return null;
+  }
   const reading = calculate929(hd);
   if (reading === null) {
     return null;
