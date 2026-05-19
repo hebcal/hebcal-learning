@@ -38,6 +38,8 @@ learning cycle for completing Tanakh annually. On Shabbat, each Torah portion is
 #### Psalms / Tehillim (30 day cycle) - `psalms`
 Daily study of a few chapters from the 150-chapter book of Psalms (Tehillim). The entire book is completed on the final day of each Hebrew month. On months with 29 days, the 30th portion is combined with the 29th portion
 
+#### 929 - `929`
+The 929 Project (officially called 929: Tanakh B'yachad or "Bible Together") is a synchronized, chapter-a-day reading program. Named after the 929 chapters in the Hebrew Bible (Tanakh), it challenges participants to read one chapter a day, five days a week, covering the entire text in about 3.5 years
 
 ### Halacha
 

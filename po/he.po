@@ -726,7 +726,22 @@ msgstr "יְרוּשַׁלְמִי"
 msgid "Pirkei Avot"
 msgstr "פִּרְקֵי אָבוֹת"
 
-# For Nach Yomi and Tanakh Yomi
+# For Nach Yomi, Tanakh Yomi, and 929
+
+msgid "Genesis"
+msgstr "בְּרֵאשִׁית"
+
+msgid "Exodus"
+msgstr "שְׁמוֹת"
+
+msgid "Leviticus"
+msgstr "וַיִּקְרָא"
+
+msgid "Numbers"
+msgstr "בְּמִדְבַּר"
+
+msgid "Deuteronomy"
+msgstr "דְּבָרִים"
 
 msgid "Joshua"
 msgstr "יְהוֹשֻׁעַ"
