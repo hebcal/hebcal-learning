@@ -47,8 +47,28 @@ function renderReading(
 }
 
 /**
- * Event wrapper for
- * Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana
+ * Event wrapper around a Kitzur Shulchan Aruch Yomi reading — daily
+ * study of Rabbi Shlomo Ganzfried's 1864 summary of the Shulchan
+ * Aruch.
+ *
+ * The schedule is Hebrew-calendar driven and repeats annually, so
+ * there is no fixed cycle start. The lookup returns `null` from
+ * `DailyLearning.lookup('kitzurShulchanAruch', ...)` on the two dates
+ * that have no entry in the table: **30 Cheshvan** and **30 Adar I**.
+ *
+ * During Adar II of a leap year, both replacement tracks
+ * (Hilchot Shmita v'Terumah and Hilchot Brachot v'Tefilah) are
+ * carried on the event — see the `reading` and `optionB` fields.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/kitzurShulchanAruch';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const ev = DailyLearning.lookup('kitzurShulchanAruch', hd);
+ * console.log(ev.render('en'));
+ * // => "Hilchot Shmita v'Terumah 71-75 / Hilchot Brachot v'Tefilah 57:2-E"
  */
 export class KitzurShulchanAruchEvent extends DailyLearningEvent {
   reading: KitzurShulchanAruchReading;

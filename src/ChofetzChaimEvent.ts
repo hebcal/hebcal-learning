@@ -12,7 +12,24 @@ import {
 import './locale';
 
 /**
- * Event wrapper around a Chofetz Chaim instance
+ * Event wrapper around a Sefer Chofetz Chaim reading — daily study
+ * of the Jewish ethics and laws of speech by Rabbi Yisrael Meir
+ * Kagan.
+ *
+ * The schedule is Hebrew-calendar driven and repeats on a 3-year
+ * cycle; the published cycle began on **1 Tishrei 5634**
+ * (~22 September 1873). Looking up a date earlier than that returns
+ * `null` from `DailyLearning.lookup('chofetzChaim', ...)`.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/chofetzChaim';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const ev = DailyLearning.lookup('chofetzChaim', hd);
+ * console.log(ev.render('en'));
+ * // => "Hilchos LH 10.4"
  */
 export class ChofetzChaimEvent extends DailyLearningEvent {
   reading: ChofetzChaimReading;

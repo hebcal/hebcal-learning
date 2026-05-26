@@ -144,12 +144,34 @@ export function findDaf(shas: Daf[], dno: number): DafPage {
 }
 
 /**
- * Returns the Daf Yomi for given date
+ * The Babylonian Talmud page (daf) studied on a given date in the
+ * worldwide Daf Yomi cycle.
+ *
+ * The original ("old") cycle began on **11 September 1923**
+ * (1 Tishrei 5684); the current page numbering ("new" cycle)
+ * starts from 24 June 1975. Each cycle takes approximately 7½ years
+ * to complete the entire Talmud.
+ *
+ * Use this class when you want just the tractate name and page number
+ * (a {@link DafPage} subclass with `name` and `blatt` fields) without
+ * the surrounding {@link DafYomiEvent} wrapper.
+ *
+ * @throws {RangeError} from the constructor if `date` is before
+ *   11 September 1923.
+ * @throws {TypeError} from the constructor if `date` is not an
+ *   `HDate`, `Date`, or finite number.
+ *
+ * @example
+ * import {DafYomi} from '@hebcal/learning/dafYomiBase';
+ *
+ * const daf = new DafYomi(new Date(2024, 3, 8));
+ * console.log(daf.getName(), daf.getBlatt());  // "Baba Metzia" 40
  */
 export class DafYomi extends DafPage {
   /**
-   * Initializes a daf yomi instance
-   * @param date Gregorian or Hebrew date
+   * Computes the Daf Yomi for the given date.
+   * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.)
+   *   day number.
    */
   constructor(date: HDate | Date | number) {
     const d = calculateDaf(date);

@@ -7,7 +7,23 @@ import {isHebrewLocale} from './common';
 import './locale';
 
 /**
- * Event wrapper around a Dirshu Amud HaYomi result
+ * Event wrapper around a Dirshu Amud HaYomi reading — one amud
+ * (half-page) of the Babylonian Talmud per day, roughly twice as slow
+ * as the standard Daf Yomi.
+ *
+ * The cycle began on Monday, **16 October 2023** (1 Cheshvan 5784).
+ * Looking up a date earlier than that returns `null` from
+ * `DailyLearning.lookup('dirshuAmudYomi', ...)`.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/dirshuAmudYomi';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const ev = DailyLearning.lookup('dirshuAmudYomi', hd);
+ * console.log(ev.render('en'));
+ * // => "Dirshu Amud HaYomi: Shabbat 27a"
  */
 export class DirshuAmudYomiEvent extends DailyLearningEvent {
   amud: DirshuAmudYomi;

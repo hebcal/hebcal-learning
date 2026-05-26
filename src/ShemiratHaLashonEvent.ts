@@ -10,7 +10,24 @@ import {
 import './locale';
 
 /**
- * Event wrapper around a Sefer Shemirat HaLashon instance
+ * Event wrapper around a Sefer Shemirat HaLashon reading — daily
+ * study of the laws of guarded speech by Rabbi Yisrael Meir Kagan
+ * (a companion to the Chofetz Chaim).
+ *
+ * The schedule is Hebrew-calendar driven and repeats annually; the
+ * published cycle began on **21 Sh'vat 5636** (~16 February 1876).
+ * Looking up a date earlier than that returns `null` from
+ * `DailyLearning.lookup('shemiratHaLashon', ...)`.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/shemiratHaLashon';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const ev = DailyLearning.lookup('shemiratHaLashon', hd);
+ * console.log(ev.render('en'));
+ * // => "Book I, Shar Hatorah 7.7-7.8"
  */
 export class ShemiratHaLashonEvent extends DailyLearningEvent {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

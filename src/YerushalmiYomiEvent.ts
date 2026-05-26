@@ -10,7 +10,32 @@ import vilnaMap0 from './yerushalmiVilnaMap.json';
 const vilnaMap: Record<string, (string | null)[]> = vilnaMap0;
 
 /**
- * Event wrapper around a Yerushalmi Yomi result
+ * Event wrapper around a Yerushalmi (Jerusalem Talmud) Daf Yomi
+ * reading. Used by both the `yerushalmi-vilna` and
+ * `yerushalmi-schottenstein` calendars; the `daf.ed` field
+ * distinguishes them.
+ *
+ * Cycle start dates:
+ *  - **Vilna**: Shabbat, **2 February 1980** (15 Sh'vat 5740). Skips
+ *    Yom Kippur and Tish'a B'Av, so `lookup` returns `null` on those
+ *    days.
+ *  - **Schottenstein**: Monday, **14 November 2022** (20 Cheshvan
+ *    5783). Does not skip fast days.
+ *
+ * Looking up a date earlier than the relevant start date returns
+ * `null`.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/yerushalmiYomi';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const vilna = DailyLearning.lookup('yerushalmi-vilna', hd);
+ * console.log(vilna.render('en'));  // => "Yerushalmi Eruvin 25"
+ *
+ * const schott = DailyLearning.lookup('yerushalmi-schottenstein', hd);
+ * console.log(schott.render('en'));  // => "Yerushalmi Terumot 97"
  */
 export class YerushalmiYomiEvent extends DailyLearningEvent {
   daf: YerushalmiReading;

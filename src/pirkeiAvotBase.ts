@@ -1,19 +1,31 @@
 import {HDate, months} from '@hebcal/hdate';
 
 /**
- * Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana
+ * Returns the Pirkei Avot chapter(s) studied on the given Shabbat,
+ * or `null` if the date is not a Pirkei Avot Shabbat.
  *
- * "From at least the time of Saadia Gaon (10th century),
- * it has been customary to study one chapter a week on each Shabbat
- * between Passover and Shavuot; today, the tractate is generally studied
- * on each Shabbat of the summer, from Passover to Rosh Hashanah,
- * the entire cycle repeating a few times with doubling of chapters
- * at the end if there are not a perfect multiple of six weeks"
- * https://en.wikipedia.org/wiki/Pirkei_Avot#Study_of_the_work
+ * "From at least the time of Saadia Gaon (10th century), it has been
+ * customary to study one chapter a week on each Shabbat between
+ * Passover and Shavuot; today, the tractate is generally studied on
+ * each Shabbat of the summer, from Passover to Rosh Hashanah, the
+ * entire cycle repeating a few times with doubling of chapters at
+ * the end if there are not a perfect multiple of six weeks"
+ * (https://en.wikipedia.org/wiki/Pirkei_Avot#Study_of_the_work).
  *
- * returns array (since it can return 2 chapters) or undefined if there is no Pirkei Avot on that day
- * optimized for diaspora and il
- * feel free to modify whatever you want, i am sure this task can be done in different ways and orders
+ * Unlike most other calendars in this package, this one is purely
+ * computed from the Hebrew calendar — there is no fixed start date,
+ * just a recurring seasonal window. It never throws on a
+ * pre-cycle-start date; it returns `null` for any date outside the
+ * window described below.
+ *
+ * @param dt - Hebrew or Gregorian date to look up.
+ * @param il - `true` for the Israel schedule (no 8th day Pesach,
+ *   no 2nd day Shavuot); `false` for the Diaspora schedule.
+ * @returns An array of one or two chapter numbers (1-6), or `null`
+ *   if `dt` is **not** a Shabbat, is before Pesach, is after Rosh
+ *   Hashana, or coincides with a holiday on which Pirkei Avot is
+ *   skipped (8th day Pesach / 2nd day Shavuot in the Diaspora; Erev
+ *   Tish'a B'Av or Tish'a B'Av).
  */
 export function pirkeiAvot(dt: Date | HDate, il: boolean): number[] | null {
   const hd = new HDate(dt);

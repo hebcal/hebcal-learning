@@ -23,7 +23,22 @@ function formatMyomi(mishnaYomi: MishnaYomi[], locale?: string): string {
 }
 
 /**
- * Event wrapper around a Mishna Yomi instance
+ * Event wrapper around a Mishna Yomi reading — the two consecutive
+ * mishnayot studied each day.
+ *
+ * The cycle began on **20 May 1947** (1 Sivan 5707).
+ * Looking up a date earlier than that returns `null` from
+ * `DailyLearning.lookup('mishnaYomi', ...)`.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/mishnaYomi';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const ev = DailyLearning.lookup('mishnaYomi', hd);
+ * console.log(ev.render('en'));
+ * // => "Nazir 1:6-7"
  */
 export class MishnaYomiEvent extends DailyLearningEvent {
   mishnaYomi: MishnaYomi[];

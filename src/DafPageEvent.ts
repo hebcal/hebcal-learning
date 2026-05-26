@@ -20,7 +20,15 @@ export const dafYomiSefaria: Record<string, string> = {
 } as const;
 
 /**
- * Event wrapper around a DafPage instance
+ * Abstract event wrapper around any kind of Talmud page ({@link DafPage}),
+ * shared by {@link DafYomiEvent}, {@link DafWeeklyEvent}, and
+ * {@link TanakhYomiEvent}. Holds the `daf` (tractate name + page number)
+ * and provides default `render`, `renderBrief`, and `url` implementations
+ * that produce sefaria.org or dafyomi.org links.
+ *
+ * Subclasses override `category`, `getCategories()`, and—where the
+ * display format differs—`render`/`url`. Not instantiated directly;
+ * use {@link DafYomiEvent}, {@link DafWeeklyEvent}, etc.
  */
 export abstract class DafPageEvent extends DailyLearningEvent {
   daf: DafPage;

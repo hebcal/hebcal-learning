@@ -21,13 +21,28 @@ export type NachYomi = {
 };
 
 /**
- * A daily regimen of learning the books of Nevi'im (Prophets)
- * and Ketuvim (Writings).
+ * A daily regimen of learning the books of Nevi'im (Prophets) and
+ * Ketuvim (Writings), one chapter per day.
+ *
+ * The current cycle began on **1 November 2007** (20 Cheshvan 5768)
+ * and completes Nach in 742 days (~2 years), then repeats
+ * indefinitely.
+ *
+ * Construct the index once and call {@link NachYomiIndex.lookup
+ * .lookup(date)} for each day you need.
+ *
+ * @example
+ * import {NachYomiIndex} from '@hebcal/learning/nachYomiBase';
+ *
+ * const index = new NachYomiIndex();
+ * console.log(index.lookup(new Date(2024, 3, 8)));
+ * // {k: 'I Samuel', v: 23}
  */
 export class NachYomiIndex {
   private days: NachYomi[];
   /**
-   * Initializes a Nach Yomi instance
+   * Builds the in-memory index of all 742 chapters in the cycle.
+   * Reuse the same instance across many lookups.
    */
   constructor() {
     const days = Array<NachYomi>(numChapters);
@@ -43,7 +58,15 @@ export class NachYomiIndex {
   }
 
   /**
-   * Looks up a Nach Yomi
+   * Returns the chapter of Nach to study on the given date.
+   *
+   * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.)
+   *   day number.
+   * @returns A {@link NachYomi} `{k, v}` — book name and chapter
+   *   number. Never `null`; the cycle has no skip days.
+   * @throws {RangeError} if `date` is before 1 November 2007.
+   * @throws {TypeError} if `date` is not an `HDate`, `Date`, or
+   *   finite number.
    */
   lookup(date: HDate | Date | number): NachYomi {
     const abs = getAbsDate(date);

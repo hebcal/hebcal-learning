@@ -64,8 +64,27 @@ const toSkip = new Set([
 ]);
 
 /**
- * Calculates Tanakh Yomi.
- * @param date - Hebrew or Gregorian date
+ * Calculates the Tanakh Yomi reading for the given date.
+ *
+ * Tanakh Yomi is a learning cycle for completing Tanakh annually
+ * according to the ancient Masoretic division of sedarim. The cycle
+ * began on **26 October 1948** (23 Tishrei 5709) and repeats each
+ * Hebrew year, starting on 23 Tishrei (the day after Shmini Atzeret
+ * in Israel).
+ *
+ * The schedule skips Shabbat and the major festivals (Pesach 1/7,
+ * Shavuot, Rosh Hashana, Yom Kippur, Sukkot 1, Shmini Atzeret,
+ * Purim, Yom HaAtzma'ut, Tish'a B'Av).
+ *
+ * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.) day
+ *   number.
+ * @returns A {@link TanakhYomi} (a {@link DafPage} subclass) for the
+ *   reading day, or `null` on Shabbat and on any of the skipped
+ *   holidays listed above. The `verses` property holds the Masoretic
+ *   verse range.
+ * @throws {RangeError} if `date` is before 26 October 1948.
+ * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
+ *   number.
  */
 export function tanakhYomi(date: HDate | Date | number): TanakhYomi | null {
   const hd: HDate = HDate.isHDate(date) ? (date as HDate) : new HDate(date);
@@ -242,13 +261,20 @@ function makeReadingTable(year: number): ReadingsForYear {
 }
 
 /**
- * Returns the Daf Yomi for given date
+ * One day's reading in the Tanakh Yomi cycle — a single Masoretic
+ * seder (verse range) within one of the books of Tanakh.
+ *
+ * Inherits {@link DafPage}'s `name` (book) and `blatt` (seder
+ * number); the `verses` property is set to the verse range string
+ * (e.g. `"Joshua 1:1-9"`) consumed by the wrapper event's URL
+ * builder.
  */
 export class TanakhYomi extends DafPage {
   /**
-   * Initializes a daf yomi instance
-   * @param name
-   * @param blatt
+   * Builds a TanakhYomi for the given book and seder number.
+   * Throws if `(name, blatt)` is not a valid seder in the Masoretic
+   * table — call {@link tanakhYomi} to compute the right values from
+   * a date instead of constructing directly.
    */
   constructor(name: string, blatt: number | string) {
     super(name, blatt);

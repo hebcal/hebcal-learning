@@ -3,11 +3,25 @@ import {checkTooEarly, getAbsDate} from './common';
 import seferHaMitzvotJson from './seferHaMitzvot.json';
 
 /**
- * Describes a daily reading of the Sefer Hamitzvos
+ * One day's reading in the Sefer Hamitzvos (Daily Mitzvah) calendar.
  */
 export type SeferHaMitzvotReading = {
+  /** 1-based day number within the 339-day cycle. */
   day: number;
+  /**
+   * The day's mitzvah list, encoded as a single comma-separated
+   * string of Maimonides' mitzvah references (e.g. `"P186, N10, N47"`
+   * — `P` = Positive Commandment, `N` = Negative Commandment). The
+   * {@link SeferHaMitzvotEvent} `render()` method expands this for
+   * display.
+   */
   reading: string;
+  /**
+   * Optional explanatory note. Present only on the handful of days
+   * (140, 161, 258, 259) where editions of the Sefer Hamitzvot
+   * Schedule disagree about which mitzvah is studied; the note
+   * describes the alternative.
+   */
   note?: string;
 };
 
@@ -33,7 +47,22 @@ function getNote(day: number): string | undefined {
 }
 
 /**
- * Calculates Daily Mitzvah (Rambam) from Sefer Hamitzvos
+ * Returns the Sefer Hamitzvos (Daily Mitzvah) reading for the given
+ * date.
+ *
+ * Daily study of one of Maimonides' 613 mitzvot, grouped into a
+ * 339-day cycle that completes the entire Sefer Hamitzvos. The cycle
+ * began on Sunday, **29 April 1984** (27 Nisan 5744) and repeats
+ * indefinitely.
+ *
+ * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.) day
+ *   number.
+ * @returns A {@link SeferHaMitzvotReading} `{day, reading, note?}`.
+ *   Always returns a reading once the cycle has begun; there are no
+ *   skip days.
+ * @throws {RangeError} if `date` is before 29 April 1984.
+ * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
+ *   number.
  */
 export function seferHaMitzvot(
   date: HDate | Date | number

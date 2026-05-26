@@ -40,7 +40,24 @@ export function makeDesc(readings: RambamReading[]): string {
 }
 
 /**
- * Event wrapper around a Daily Rambam instance
+ * Event wrapper for the Mishneh Torah's **3-chapters-a-day** cycle.
+ * Each event groups the three chapters studied that day, collapsing
+ * adjacent chapters in the same section into a single range
+ * (e.g. "Human Dispositions 1-2") for display.
+ *
+ * The cycle began on Sunday, **29 April 1984** (27 Nisan 5744) and
+ * repeats every 339 days. Looking up a date earlier than that returns
+ * `null` from `DailyLearning.lookup('rambam3', ...)`.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/rambam3';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const ev = DailyLearning.lookup('rambam3', hd);
+ * console.log(ev.render('en'));
+ * // => "Foreign Worship and Customs of the Nations 1-3"
  */
 export class DailyRambam3Event extends DailyLearningEvent {
   readings: RambamReading[];

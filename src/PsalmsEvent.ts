@@ -6,7 +6,22 @@ import {isHebrewLocale} from './common';
 import './locale';
 
 /**
- * Event wrapper around a daily Psalms / Tehillim
+ * Event wrapper around the daily Psalms / Tehillim portion in the
+ * traditional 30-day cycle. The cycle is indexed by Hebrew day of
+ * the month and repeats every Hebrew month, so any Hebrew date
+ * returns a reading and `DailyLearning.lookup('psalms', hd)` never
+ * returns `null`.
+ *
+ * On 29-day months, the 30th portion is combined with the 29th.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/psalms';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const ev = DailyLearning.lookup('psalms', hd);
+ * console.log(ev.render('en'));  // => "Psalms 140-150"
  */
 export class PsalmsEvent extends DailyLearningEvent {
   reading: PsalmBeginEnd;

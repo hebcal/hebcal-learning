@@ -365,11 +365,40 @@ const leap = [
   [[10, Shvat, 19, Iyyar, 29, Elul], Tziyurim, 10, 11],
 ];
 
+/**
+ * Describes one day's reading in the Sefer Chofetz Chaim calendar.
+ */
 export type ChofetzChaimReading = {
+  /**
+   * Book/section code. One of `"Hakdamah"` (Preface), `"Psichah"`
+   * (Opening Comments), `"Lavin"` (Negative Commandments), `"Asin"`
+   * (Positive Commandments), `"Arurin"` (Curses), `"HilchosLH"`
+   * (Part One — Lashon Hara), `"HilchosRechilus"` (Part Two —
+   * Rechilut), or `"Tziyurim"` (Illustrations). Translate via the
+   * `englishNames` map exported from this module.
+   */
   k: string;
+  /**
+   * Beginning of the day's reading. A halacha/principle number for
+   * the introductory sections (e.g. `1` for Hakdamah halacha 1), or
+   * a `principle.halacha` style number for HilchosLH/Rechilus
+   * (e.g. `1.1`).
+   */
   b: string | number;
+  /**
+   * End of the day's reading. Same format as `b`. May be an array
+   * (a few entries in the Hakdamah section study several distinct
+   * halachas), or may equal `b` when only one halacha is studied.
+   */
   e: string | number | number[];
+  /**
+   * Optional Hebrew incipit ("opening words") of the day's text,
+   * used by some calendar consumers as a study aid.
+   */
   textBegin?: string;
+  /**
+   * Optional Hebrew explicit ("closing words") of the day's text.
+   */
   textEnd?: string;
 };
 
@@ -383,7 +412,26 @@ type Entry = [
 ];
 
 /**
- * Looks up Chofetz Chaim Calendar for date
+ * Returns the Sefer Chofetz Chaim reading scheduled for the given
+ * Hebrew date.
+ *
+ * Sefer Chofetz Chaim (Rabbi Yisrael Meir Kagan, published 1873)
+ * covers the Jewish ethics and laws of speech. The schedule is
+ * Hebrew-calendar driven: the same Hebrew date in different years
+ * receives the same reading, in a 3-year mini-cycle that repeats. The
+ * implementation handles short Cheshvan and short Kislev by folding
+ * the missing 30th day's reading into the 29th.
+ *
+ * Unlike most other calendars in this package, this function only
+ * accepts an `HDate` (not a Gregorian `Date` or absolute day number).
+ *
+ * @param hdate - Hebrew date to look up.
+ * @returns A {@link ChofetzChaimReading} for the given date. Always
+ *   returns a reading once the cycle has begun; there are no skip
+ *   days.
+ * @throws {RangeError} if `hdate` is before 1 Tishrei 5634
+ *   (~22 September 1873).
+ * @throws {TypeError} if `hdate` is not an `HDate`.
  */
 export function chofetzChaim(hdate: HDate): ChofetzChaimReading {
   if (!HDate.isHDate(hdate)) {

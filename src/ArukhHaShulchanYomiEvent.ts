@@ -6,7 +6,23 @@ import {gematriyaNN, isHebrewLocale} from './common';
 import './locale';
 
 /**
- * Event wrapper around a Arukh HaShulchan Yomi reading
+ * Event wrapper around an {@link AhSYomiReading Arukh HaShulchan Yomi
+ * reading}.
+ *
+ * The cycle began on Friday, **29 May 2020** (6 Sivan 5780) and
+ * completes the entire Arukh HaShulchan in 1,719 days. Looking up a
+ * date earlier than that returns `null` from
+ * `DailyLearning.lookup('arukhHaShulchanYomi', ...)`.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/arukhHaShulchanYomi';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const ev = DailyLearning.lookup('arukhHaShulchanYomi', hd);
+ * console.log(ev.render('en'));
+ * // => "Yoreh De'ah 263:4-10"
  */
 export class ArukhHaShulchanYomiEvent extends DailyLearningEvent {
   reading: AhSYomiReading;

@@ -6,9 +6,25 @@ import {isHebrewLocale} from './common';
 import './locale';
 
 /**
- * Event wrapper for a daily 929 Tanach chapter reading.
- * Each event corresponds to one Bible chapter in the 929 program
- * (https://www.929.org.il).
+ * Event wrapper for a daily 929 Tanakh chapter reading
+ * (https://www.929.org.il). The 929 Project reads one chapter of the
+ * Hebrew Bible Sun-Thu (skipping Fri/Sat), covering all 929 chapters
+ * in about 3.5 years.
+ *
+ * The first cycle began on Sunday, **21 December 2014**
+ * (29 Kislev 5775). `DailyLearning.lookup('929', hd)` returns `null`
+ * on Fridays and Saturdays (skip days), on the wind-down days
+ * between the end of one cycle and the start of the next, and on any
+ * date before 21 December 2014.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/929';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784 (Mon)
+ * const ev = DailyLearning.lookup('929', hd);
+ * console.log(ev.render('en'));  // => "Malachi 3 (567)"
  */
 export class Nine29Event extends DailyLearningEvent {
   reading: Nine29Reading;
