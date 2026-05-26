@@ -23,7 +23,28 @@ mishnehTorah3[15].ch = 5;
 mishnehTorah3[20].ch = 8;
 
 /**
- * Calculates Daily Rambam (Mishneh Torah) for 3 chapters a day cycle.
+ * Calculates the Daily Rambam (Mishneh Torah) reading for the
+ * **3 chapters a day** cycle.
+ *
+ * The cycle shares its 29 April 1984 start date with the
+ * {@link dailyRambam1 1-chapter cycle} but completes the entire
+ * Mishneh Torah in 339 days (~11 months) — about three times faster.
+ * The cycle differs from the 1-chapter schedule in two places to keep
+ * the three daily chapters logically grouped: "The Order of Prayer"
+ * has an extra day, and the final two chapters of "Leavened and
+ * Unleavened Bread" are combined into a single day.
+ *
+ * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.) day
+ *   number.
+ * @returns An array of exactly three {@link RambamReading} objects, in
+ *   the order they are studied during the day. Adjacent readings may
+ *   share a `name` when all three chapters fall within the same
+ *   section of the Mishneh Torah; the {@link DailyRambam3Event}
+ *   wrapper collapses these for display.
+ * @throws {RangeError} if `date` is before 29 April 1984 (the start of
+ *   the cycle).
+ * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
+ *   number.
  */
 export function dailyRambam3(date: HDate | Date | number): RambamReading[] {
   const cday = getAbsDate(date);

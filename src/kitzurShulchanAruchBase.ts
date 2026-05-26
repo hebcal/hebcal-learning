@@ -2,12 +2,21 @@ import {HDate, months} from '@hebcal/hdate';
 import kitzurSaJson from './kitzurSa.json';
 
 /**
- * Describes a daily reading of the Kitzur Shulchan Aruch
+ * Describes one day's reading in the Kitzur Shulchan Aruch calendar.
  */
 export type KitzurShulchanAruchReading = {
-  /** begin */
+  /**
+   * Beginning of the day's reading. A `siman:seif` reference like
+   * `"5:1"` (chapter 5, paragraph 1). On Klalim/leap-option days the
+   * value may be a non-numeric token (e.g. `"Klalim"`, `"Shmita"`).
+   */
   b: string;
-  /** end */
+  /**
+   * End of the day's reading in the same `siman:seif` format, or
+   * `undefined` if the day covers only a single paragraph. May end in
+   * `:E` ("end of siman") to indicate the reading runs to the last
+   * paragraph of the begin-siman.
+   */
   e: string | undefined;
 };
 
@@ -45,9 +54,28 @@ function getMonthName(hd: HDate, leapOption: 'A' | 'B'): IdxName {
 }
 
 /**
- * Calculates Kitzur Shulchan Aruch Yomi.
- * Kitzur Shulchan Aruch is a summary of the Shulchan Aruch of Rabbi Yosef Karo.
- * It was authored by Rabbi Shlomo Ganzfried in 1864.
+ * Returns the Kitzur Shulchan Aruch Yomi reading for the given date.
+ *
+ * The Kitzur Shulchan Aruch is a summary of the Shulchan Aruch of
+ * Rabbi Yosef Karo, authored by Rabbi Shlomo Ganzfried in 1864. The
+ * schedule is Hebrew-calendar driven and repeats each year, so there
+ * is no fixed cycle start; any Hebrew date returns a reading (with
+ * the exceptions noted below).
+ *
+ * During Adar II of a leap year there is no part of the regular
+ * cycle to study, so two replacement tracks are offered: `'A'` —
+ * Hilchot Shmita v'Terumah (the default), or `'B'` — Hilchot Brachot
+ * v'Tefilah.
+ *
+ * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.) day
+ *   number.
+ * @param leapOption - Which Adar II track to follow when `date` falls
+ *   in Adar II of a leap year. Ignored on all other dates.
+ * @returns A {@link KitzurShulchanAruchReading} `{b, e}`, or
+ *   `undefined` for the two dates that have no entry in the table:
+ *   **30 Cheshvan** and **30 Adar I**.
+ * @throws {TypeError} (indirectly, via the `HDate` constructor) if
+ *   `date` is not an `HDate`, `Date`, or finite number.
  */
 export function kitzurShulchanAruch(
   date: HDate | Date | number,

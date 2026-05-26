@@ -19,13 +19,28 @@ export type MishnaYomi = {
 };
 
 /**
- * A program of daily learning in which participants study two Mishnahs
- * each day in order to finish the entire Mishnah in ~6 years.
+ * A program of daily learning in which participants study two
+ * mishnayot each day in order to finish the entire Mishna in ~6 years.
+ *
+ * The cycle began on **20 May 1947** (1 Sivan 5707).
+ *
+ * Construct the index once and call {@link MishnaYomiIndex.lookup
+ * .lookup(date)} for each day you need.
+ *
+ * @example
+ * import {MishnaYomiIndex} from '@hebcal/learning/mishnaYomiBase';
+ *
+ * const index = new MishnaYomiIndex();
+ * const reading = index.lookup(new Date(2024, 3, 8));
+ * // [{k: 'Nazir', v: '1:6'}, {k: 'Nazir', v: '1:7'}]
  */
 export class MishnaYomiIndex {
   private days: MishnaYomi[][];
   /**
-   * Initializes a Mishna Yomi instance
+   * Builds the in-memory index of all 2,096 days in the cycle.
+   * Construction walks every mishna in the Shisha Sidrei; reuse the
+   * same instance across many lookups instead of constructing on each
+   * call.
    */
   constructor() {
     const tmp = Array<MishnaYomi>(numMishnayot);
@@ -49,7 +64,17 @@ export class MishnaYomiIndex {
   }
 
   /**
-   * Looks up a Mishna Yomi
+   * Returns the two mishnayot to study on the given date.
+   *
+   * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.)
+   *   day number.
+   * @returns An array of exactly two {@link MishnaYomi} entries. The
+   *   two mishnayot are usually consecutive within the same tractate
+   *   but can straddle a tractate boundary on the last day of a
+   *   tractate.
+   * @throws {RangeError} if `date` is before 20 May 1947.
+   * @throws {TypeError} if `date` is not an `HDate`, `Date`, or
+   *   finite number.
    */
   lookup(date: HDate | Date | number): MishnaYomi[] {
     const abs = getAbsDate(date);

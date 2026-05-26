@@ -29,13 +29,46 @@ const first4verses = [
   ['1:1-4:8', '5:1-9:9', '10:1-14:10'], // Overview of Mishneh Torah Contents
 ];
 
+/**
+ * One section/chapter of the Mishneh Torah, as scheduled by the Daily
+ * Rambam cycle.
+ */
 export type RambamReading = {
+  /**
+   * English transliteration of the section name (Halacha) within the
+   * Mishneh Torah, e.g. `"Foundations of the Torah"`, `"Sabbath"`,
+   * `"Kings and Wars"`. The first four entries (`"Transmission of the
+   * Oral Law"`, `"Positive Mitzvot"`, `"Negative Mitzvot"`, `"Overview
+   * of Mishneh Torah Contents"`) refer to the Book of Mitzvot rather
+   * than a numbered chapter.
+   */
   name: string;
+  /**
+   * Chapter number (perek). Usually a `number`, but can be a string
+   * range like `"4-5"` when adjacent chapters are combined into one
+   * day, or a verse range like `"1:1-4:8"` for the introductory
+   * sections of the Mishneh Torah where the schedule covers a span
+   * of mitzvot rather than chapters.
+   */
   perek: number | string;
 };
 
 /**
- * Calculates Daily Rambam (Mishneh Torah) for 1 chapter a day cycle.
+ * Calculates the Daily Rambam (Mishneh Torah) reading for the
+ * **1 chapter a day** cycle.
+ *
+ * The cycle began on Sunday, 27 Nisan 5744 (29 April 1984) and
+ * completes one pass through the Mishneh Torah every 1,017 days
+ * (~2 years 9 months). The cycle then repeats indefinitely.
+ *
+ * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.) day
+ *   number.
+ * @returns The {@link RambamReading} for the given date — a single
+ *   `{name, perek}` object.
+ * @throws {RangeError} if `date` is before 29 April 1984 (the start of
+ *   the cycle).
+ * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
+ *   number.
  */
 export function dailyRambam1(date: HDate | Date | number): RambamReading {
   const cday = getAbsDate(date);

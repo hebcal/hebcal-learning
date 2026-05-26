@@ -1,12 +1,34 @@
 import {HDate, greg, months} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate} from './common';
 
+/**
+ * Description of one Yerushalmi (Jerusalem Talmud) Daf Yomi
+ * configuration — currently the {@link vilna Vilna} and
+ * {@link schottenstein Schottenstein} editions.
+ *
+ * Pass an instance of this to {@link yerushalmiYomi} to compute the
+ * page for a given date. Each edition has its own page numbering and
+ * its own historical start date, so the two cycles do not line up.
+ */
 export type YerushalmiYomiConfig = {
+  /** Edition identifier — `"vilna"` or `"schottenstein"`. Surfaces
+   *  on {@link YerushalmiReading.ed}. */
   ed: string;
+  /** First day of the cycle as a JavaScript `Date`. */
   startDate: Date;
+  /** First day of the cycle as an absolute (R.D.) day number — the
+   *  Gregorian start date converted via `greg.greg2abs()`. */
   startAbs: number;
+  /** Whether to skip Yom Kippur and Tish'a B'Av (true for Vilna,
+   *  false for Schottenstein, per each edition's published custom). */
   skipYK9Av: boolean;
+  /** Ordered list of tractates in the cycle, each as
+   *  `[name, numDapim]`. */
   shas: [string, number][];
+  /** Total number of dapim in the cycle. Computed and cached on
+   *  first call to {@link yerushalmiYomi}; the literal `0` in the
+   *  exported {@link vilna}/{@link schottenstein} constants is a
+   *  placeholder. */
   numDapim: number;
 };
 
@@ -121,9 +143,18 @@ export const schottenstein: YerushalmiYomiConfig = {
 const SUN = 0;
 const SAT = 6;
 
+/**
+ * One day's Daf Yomi Yerushalmi reading.
+ */
 export type YerushalmiReading = {
+  /** Tractate name in Sephardic transliteration (e.g. `"Berakhot"`,
+   *  `"Peah"`, `"Yevamot"`). */
   name: string;
+  /** Page number (daf) within the tractate, 1-based. */
   blatt: number;
+  /** Edition identifier — `"vilna"` or `"schottenstein"`. Copied from
+   *  the {@link YerushalmiYomiConfig.ed config.ed} used in the
+   *  lookup. */
   ed: string;
 };
 
@@ -157,22 +188,28 @@ export function cycleStart(config: YerushalmiYomiConfig, cday: number): number {
 }
 
 /**
- * Using the Vilna edition, the Yerushalmi Daf Yomi program takes
- * ~4.25 years or 51 months.
- * Unlike the Daf Yomi Bavli cycle, this Yerushalmi cycle skips both
- * Yom Kippur and Tisha B'Av (returning `null`).
- * The page numbers are according to the Vilna
- * Edition which is used since 1900.
+ * Calculates the Daf Yomi Yerushalmi (Jerusalem Talmud) reading for
+ * the given date.
  *
- * The Schottenstein edition uses different page numbers and takes
- * ~6 years to complete.
+ * Using the {@link vilna Vilna} edition the cycle takes ~4.25 years
+ * (51 months) and skips both Yom Kippur and Tish'a B'Av. The
+ * {@link schottenstein Schottenstein} edition uses different page
+ * numbers, takes ~6 years to complete, and **does not** skip those
+ * fast days.
  *
- * Throws an exception if the date is before Daf Yomi Yerushalmi
- * cycle began (2 February 1980 for Vilna,
- * 14 November 2022 for Schottenstein).
- *
- * @param date - Hebrew or Gregorian date
- * @param config - either vilna or schottenstein
+ * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.) day
+ *   number.
+ * @param config - Either {@link vilna} or {@link schottenstein} (or
+ *   any other config matching the {@link YerushalmiYomiConfig}
+ *   shape).
+ * @returns A {@link YerushalmiReading} `{name, blatt, ed}`, or
+ *   `null` on Yom Kippur and Tish'a B'Av when using the Vilna config
+ *   (`skipYK9Av === true`).
+ * @throws {Error} if `config` is missing or has no `shas` array.
+ * @throws {RangeError} if `date` is before the cycle's start
+ *   (2 February 1980 for Vilna; 14 November 2022 for Schottenstein).
+ * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
+ *   number.
  */
 export function yerushalmiYomi(
   date: HDate | Date | number,

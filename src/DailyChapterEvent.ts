@@ -5,8 +5,15 @@ import {isHebrewLocale} from './common';
 import './locale';
 
 /**
- * Event wrapper for learning where you read one chapter per day
- * used by Nach Yomi and Perek Yomi
+ * Abstract base class for daily learning where each day's reading is
+ * a single "book + chapter" reference — used by {@link NachYomiEvent}
+ * (chapters of Nevi'im and Ketuvim) and {@link PerekYomiEvent}
+ * (chapters of the Mishna).
+ *
+ * Stores the book/tractate name as `k` and the chapter number as `v`,
+ * and produces a Sefaria URL of the form
+ * `https://www.sefaria.org/{book}.{chapter}?lang=bi`. Not instantiated
+ * directly.
  */
 export abstract class DailyChapterEvent extends DailyLearningEvent {
   k: string;

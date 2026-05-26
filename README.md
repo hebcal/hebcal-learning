@@ -85,4 +85,59 @@ const ev = DailyLearning.lookup('dafYomi', hd);
 console.log(dt.toLocaleDateString(), hd.toString(), ev.render('en'));
 ```
 
+## Selective imports (smaller bundles)
+
+The top-level `import '@hebcal/learning'` registers *all* of the calendars
+listed above with `DailyLearning`, which pulls every cycle's lookup tables
+into your bundle. If you only need a few calendars, import them
+individually instead. Each module registers exactly one calendar (or two,
+in the case of Daf-a-Week) with `DailyLearning` as a side-effect of being
+imported, and you call them through the same `DailyLearning.lookup` API:
+
+```javascript
+import {HDate} from '@hebcal/hdate';
+import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+import '@hebcal/learning/rambam3';
+import '@hebcal/learning/dafYomi';
+
+const hd = new HDate(new Date(2024, 3, 8));
+console.log(DailyLearning.lookup('rambam3', hd).render('en'));
+console.log(DailyLearning.lookup('dafYomi', hd).render('en'));
+```
+
+The module names match the source files in `src/` (for example
+`@hebcal/learning/dafYomi`, `@hebcal/learning/rambam1`,
+`@hebcal/learning/yerushalmiYomi`, `@hebcal/learning/929`).
+Tree-shaking bundlers will then drop the unused calendars.
+
+## Low-level APIs (skip the Event wrappers)
+
+If you don't need a hebcal `Event` (with `render()`, `url()`, `memo`,
+iCalendar categories, etc.), you can call the underlying calculation
+functions directly. They accept an `HDate`, a JavaScript `Date`, or an
+absolute (R.D.) day number, and return a plain data object you can
+interpret yourself:
+
+```javascript
+import {dailyRambam3} from '@hebcal/learning/rambam3Base';
+
+// Returns an array of 3 RambamReading objects: {name, perek}
+const readings = dailyRambam3(new Date(2024, 3, 8));
+// [
+//   {name: 'Foreign Worship and Customs of the Nations', perek: 1},
+//   {name: 'Foreign Worship and Customs of the Nations', perek: 2},
+//   {name: 'Foreign Worship and Customs of the Nations', perek: 3},
+// ]
+```
+
+Each calendar's lookup function lives in its `*Base` module — for
+example `dailyRambam1`, `dailyRambam3`, `dafWeekly`, `calculate929`,
+`calculateDirshuAmud`, `arukhHaShulchanYomi`, `yerushalmiYomi`,
+`kitzurShulchanAruch`, `seferHaMitzvot`, `chofetzChaim`,
+`shemiratHaLashon`, `dailyPsalms`, `perekYomi`, `pirkeiAvot`,
+`tanakhYomi`, plus the `DafYomi`, `MishnaYomiIndex` and `NachYomiIndex`
+classes. See the per-function JSDoc for the exact return shape and the
+conditions under which a function throws (date before the cycle began,
+invalid date type) or returns `null` (no reading on this date).
+
 ## [API Documentation](https://hebcal.github.io/api/learning/index.html)

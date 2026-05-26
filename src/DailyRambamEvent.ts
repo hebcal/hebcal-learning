@@ -6,7 +6,25 @@ import {gematriyaNN, isHebrewLocale} from './common';
 import './locale';
 
 /**
- * Event wrapper around a Daily Rambam instance
+ * Event wrapper around a single chapter from the Mishneh Torah, as
+ * scheduled by Maimonides' Daily Rambam **1-chapter-a-day** cycle.
+ *
+ * The cycle began on Sunday, **29 April 1984** (27 Nisan 5744) and
+ * repeats every 1,017 days. Looking up a date earlier than that
+ * returns `null` from `DailyLearning.lookup('rambam1', ...)`.
+ *
+ * The companion {@link DailyRambam3Event} covers the 3-chapter-a-day
+ * variant of the same cycle.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/rambam1';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const ev = DailyLearning.lookup('rambam1', hd);
+ * console.log(ev.render('en'));
+ * // => "Appraisals and Devoted Property 5"
  */
 export class DailyRambamEvent extends DailyLearningEvent {
   reading: RambamReading;

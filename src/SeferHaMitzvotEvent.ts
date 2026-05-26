@@ -9,7 +9,23 @@ enum ReadingType {
 }
 
 /**
- * Event wrapper around a Sefer HaMitzvot reading
+ * Event wrapper around a Sefer Hamitzvos (Daily Mitzvah by Rambam)
+ * reading.
+ *
+ * The cycle began on Sunday, **29 April 1984** (27 Nisan 5744) and
+ * repeats every 339 days. Looking up a date earlier than that returns
+ * `null` from `DailyLearning.lookup('seferHaMitzvot', ...)`.
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/seferHaMitzvot';
+ *
+ * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784
+ * const ev = DailyLearning.lookup('seferHaMitzvot', hd);
+ * console.log(ev.render('en'));
+ * // => "Day 13: Negative Commandment 10, 47, 60, 6, 5, 2, 3, 4, 15;
+ * //    Positive Commandment 186; Negative Commandment 23, 24"
  */
 export class SeferHaMitzvotEvent extends DailyLearningEvent {
   reading: SeferHaMitzvotReading;

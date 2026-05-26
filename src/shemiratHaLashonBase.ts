@@ -437,15 +437,56 @@ const schedule: Entry[] = [
   [[29, Elul], [29, Elul], Book2, Epilogue, 4.1, 4.2],
 ];
 
+/**
+ * Describes one day's reading in the Sefer Shemirat HaLashon calendar.
+ */
 export type ShemiratHaLashonReading = {
+  /**
+   * Book number — `1` for Book I (Sha'ar HaZechira / HaTvuna /
+   * HaTorah / Epilogue) or `2` for Book II (numbered chapters).
+   */
   bk: number;
+  /**
+   * Section name. For Book I one of `"Hakdamah"`, `"Shar Hazechira"`,
+   * `"Shar Hatvuna"`, `"Shar Hatorah"`, or `"Chasimas Hasefer"`
+   * (Epilogue). For Book II this is always `"x"` (a sentinel meaning
+   * "no sub-section"). Translate via the `englishNames` map exported
+   * from this module.
+   */
   k: string;
+  /**
+   * Beginning of the day's reading — usually a `chapter.halacha`
+   * number (e.g. `1.1`) but occasionally a plain integer for sections
+   * that aren't subdivided into halachot.
+   */
   b: number | string;
+  /**
+   * End of the day's reading. Same format as `b`. Equals `b` when
+   * only one halacha is studied.
+   */
   e: number | string;
 };
 
 /**
- * Looks up Sefer Shemirat HaLashon Calendar for date
+ * Returns the Sefer Shemirat HaLashon reading scheduled for the
+ * given Hebrew date.
+ *
+ * Sefer Shemirat HaLashon (Rabbi Yisrael Meir Kagan, completed 1876)
+ * is a companion volume to the Chofetz Chaim. Like its companion the
+ * schedule is Hebrew-calendar driven: the same Hebrew date in
+ * different years receives the same reading, with separate tracks
+ * for common and leap years. Short Cheshvan and short Kislev fold
+ * the missing 30th day's reading into the 29th.
+ *
+ * Unlike most other calendars in this package, this function only
+ * accepts an `HDate` (not a Gregorian `Date` or absolute day number).
+ *
+ * @param hdate - Hebrew date to look up.
+ * @returns A {@link ShemiratHaLashonReading} for the given date.
+ *   Always returns a reading once the cycle has begun.
+ * @throws {RangeError} if `hdate` is before 21 Sh'vat 5636
+ *   (~16 February 1876).
+ * @throws {TypeError} if `hdate` is not an `HDate`.
  */
 export function shemiratHaLashon(hdate: HDate): ShemiratHaLashonReading {
   if (!HDate.isHDate(hdate)) {

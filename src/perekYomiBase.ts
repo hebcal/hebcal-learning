@@ -11,17 +11,31 @@ const startDate = new Date(2002, 1, 9);
 export const perekYomiStart = greg.greg2abs(startDate);
 
 /**
- * Describes a chapter to be read
+ * One chapter of the Mishna as scheduled by the Perek Yomi cycle.
  */
 export type PerekYomi = {
-  /** book name in English transliteration (e.g. "Joshua", "Song of Songs") */
+  /** Mishna tractate name in Sephardic transliteration
+   *  (e.g. "Berakhot", "Sotah", "Avot") */
   k: string;
-  /** chapter number (e.g. 2) */
+  /** 1-based chapter number within the tractate */
   v: number;
 };
 
 /**
- * Calculates Perek Yomi (Mishnah, one chapter per day)
+ * Calculates the Perek Yomi (Mishna, **one chapter per day**)
+ * reading for the given date.
+ *
+ * The cycle began on Shabbat, **9 February 2002** (27 Sh'vat 5762)
+ * and completes the entire Mishna in 525 days (~17 months), then
+ * repeats indefinitely.
+ *
+ * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.) day
+ *   number.
+ * @returns A {@link PerekYomi} `{k, v}` — tractate name and chapter
+ *   number. Never `null`; the cycle has no skip days.
+ * @throws {RangeError} if `date` is before 9 February 2002.
+ * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
+ *   number.
  */
 export function perekYomi(date: HDate | Date | number): PerekYomi {
   const cday = getAbsDate(date);

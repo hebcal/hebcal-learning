@@ -58,17 +58,36 @@ export const shas: AmudEntry[] = (
 const totalAmudim = shas.reduce((s, a) => s + a.amudim, 0);
 
 /**
- * Represents an amud (side of a page) in the Dirshu Amud HaYomi program
+ * One amud (side of a page) of the Babylonian Talmud as scheduled by
+ * the Dirshu Amud HaYomi program.
  */
 export type DirshuAmudYomi = {
+  /** Tractate name in Sephardic transliteration (e.g. `"Berachot"`,
+   *  `"Baba Metzia"`). */
   name: string;
+  /** Page number (daf), starting from `2` for the first amud of each
+   *  tractate (the convention used for Talmud Bavli citations). */
   amud: number;
+  /** Side of the page: `"a"` (recto) or `"b"` (verso). */
   side: 'a' | 'b';
 };
 
 /**
- * Calculates the Dirshu Amud HaYomi for a given date
- * @param date - Hebrew or Gregorian date
+ * Calculates the Dirshu Amud HaYomi for a given date — one amud
+ * (half-page) of the Babylonian Talmud per day, taking roughly twice
+ * as long as the standard Daf Yomi cycle.
+ *
+ * The cycle began on Monday, **16 October 2023** (1 Cheshvan 5784)
+ * and continues indefinitely, restarting from Berachot 2a after the
+ * final amud of Niddah.
+ *
+ * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.) day
+ *   number.
+ * @returns A {@link DirshuAmudYomi} `{name, amud, side}`. Never
+ *   `null`; the cycle has no skip days.
+ * @throws {RangeError} if `date` is before 16 October 2023.
+ * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
+ *   number.
  */
 export function calculateDirshuAmud(
   date: HDate | Date | number

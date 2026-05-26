@@ -7,8 +7,22 @@ import './locale';
 const PIRKEI_AVOT = 'Pirkei Avot';
 
 /**
- * Event wrapper for
- * Pirkei Avot being studied on Shabbat between Pesach and Rosh Hashana
+ * Event wrapper for Pirkei Avot ("Ethics of the Fathers"), studied
+ * one chapter on each Shabbat of the summer between Passover and
+ * Rosh Hashana.
+ *
+ * The schedule is computed from the Hebrew calendar each year, with
+ * no fixed start date. `DailyLearning.lookup('pirkeiAvotSummer', hd)`
+ * returns `null` outside that window (and on every non-Shabbat).
+ *
+ * @example
+ * import {HDate} from '@hebcal/hdate';
+ * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import '@hebcal/learning/pirkeiAvotSummer';
+ *
+ * const hd = new HDate(new Date(2024, 6, 6));  // 30 Sivan 5784 (Sat)
+ * const ev = DailyLearning.lookup('pirkeiAvotSummer', hd);
+ * console.log(ev.render('en'));  // => "Pirkei Avot 4"
  */
 export class PirkeiAvotSummerEvent extends DailyLearningEvent {
   reading: number[];
