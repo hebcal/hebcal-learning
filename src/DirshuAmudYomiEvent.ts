@@ -3,7 +3,7 @@ import {HDate, gematriya} from '@hebcal/hdate';
 import {dafYomiSefaria, shekalimDafYomiMap} from './DafPageEvent';
 import {DailyLearningEvent} from './DailyLearningEvent';
 import {DirshuAmudYomi, calculateDirshuAmud} from './dirshuAmudYomiBase';
-import {isHebrewLocale} from './common';
+import {isHebrewLocale, sefariaUrl} from './common';
 import './locale';
 
 /**
@@ -82,11 +82,10 @@ export class DirshuAmudYomiEvent extends DailyLearningEvent {
     if (tractate === 'Shekalim') {
       const entry = shekalimDafYomiMap[`${amud.amud}${amud.side}`];
       const ref = entry.replaceAll(':', '.');
-      return `https://www.sefaria.org/Jerusalem_Talmud_Shekalim.${ref}?lang=bi`;
+      return sefariaUrl('Jerusalem Talmud Shekalim', ref);
     }
     const name0 = dafYomiSefaria[tractate] || tractate;
-    const name = name0.replaceAll(' ', '_');
-    return `https://www.sefaria.org/${name}.${amud.amud}${amud.side}?lang=bi`;
+    return sefariaUrl(name0, `${amud.amud}${amud.side}`);
   }
 
   getCategories(): string[] {

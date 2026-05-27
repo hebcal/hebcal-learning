@@ -2,7 +2,7 @@ import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {Nine29Reading} from './929Base';
 import {DailyLearningEvent} from './DailyLearningEvent';
-import {isHebrewLocale} from './common';
+import {isHebrewLocale, sefariaUrl} from './common';
 import './locale';
 
 /**
@@ -65,8 +65,7 @@ export class Nine29Event extends DailyLearningEvent {
    * e.g. https://www.sefaria.org/Deuteronomy.34?lang=bi
    */
   url(): string {
-    const bookSlug = this.reading.book.replaceAll(' ', '_');
-    return `https://www.sefaria.org/${bookSlug}.${this.reading.bookChap}?lang=bi`;
+    return sefariaUrl(this.reading.book, this.reading.bookChap);
   }
 
   getCategories(): string[] {

@@ -2,6 +2,7 @@ import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DafPageEvent} from './DafPageEvent';
 import {TanakhYomi} from './tanakhYomiBase';
+import {sefariaUrl} from './common';
 
 /**
  * Event wrapper around a Tanakh Yomi seder reading.
@@ -34,9 +35,9 @@ export class TanakhYomiEvent extends DafPageEvent {
   url(): string {
     const memo: string = this.daf.verses!;
     const space = memo.lastIndexOf(' ');
-    const book = memo.substring(0, space).replaceAll(' ', '_');
+    const book = memo.substring(0, space);
     const verses = memo.substring(space + 1).replaceAll(':', '.');
-    return `https://www.sefaria.org/${book}.${verses}?lang=bi`;
+    return sefariaUrl(book, verses);
   }
   getCategories(): string[] {
     return ['tanakhYomi'];

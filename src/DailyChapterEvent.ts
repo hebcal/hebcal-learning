@@ -1,7 +1,7 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent';
-import {isHebrewLocale} from './common';
+import {isHebrewLocale, sefariaUrl} from './common';
 import './locale';
 
 /**
@@ -39,9 +39,7 @@ export abstract class DailyChapterEvent extends DailyLearningEvent {
    * Returns a link to sefaria.org
    */
   url(): string {
-    const name = this.k.replaceAll(' ', '_');
-    const chapter = this.v;
-    return `https://www.sefaria.org/${name}.${chapter}?lang=bi`;
+    return sefariaUrl(this.k, this.v);
   }
   getCategories(): string[] {
     return ['unknown'];
