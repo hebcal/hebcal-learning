@@ -2,6 +2,7 @@ import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DailyChapterEvent} from './DailyChapterEvent';
 import {PerekYomi} from './perekYomiBase';
+import {sefariaUrl} from './common';
 
 /**
  * Event wrapper around a Perek Yomi reading — one chapter of the
@@ -35,8 +36,7 @@ export class PerekYomiEvent extends DailyChapterEvent {
     const masechta = this.k;
     const prefix = masechta === 'Avot' ? 'Pirkei' : 'Mishnah';
     const name = masechta.replaceAll(' ', '_');
-    const chapter = this.v;
-    return `https://www.sefaria.org/${prefix}_${name}.${chapter}?lang=bi`;
+    return sefariaUrl(`${prefix} ${name}`, this.v);
   }
   getCategories(): string[] {
     return ['perekYomi'];

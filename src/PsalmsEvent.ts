@@ -2,7 +2,7 @@ import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent';
 import {PsalmBeginEnd} from './psalmsBase';
-import {isHebrewLocale} from './common';
+import {isHebrewLocale, sefariaUrl} from './common';
 import './locale';
 
 /**
@@ -40,10 +40,7 @@ export class PsalmsEvent extends DailyLearningEvent {
     const loc = (locale || 'en').toLowerCase();
     const book = Locale.gettext('Psalms', loc);
     const reading = this.reading;
-    if (
-      isHebrewLocale(loc) &&
-      typeof reading[0] === 'number'
-    ) {
+    if (isHebrewLocale(loc) && typeof reading[0] === 'number') {
       return book + ' ' + gematriya(reading[0]) + '-' + gematriya(reading[1]);
     }
     return book + ' ' + reading[0] + '-' + reading[1];
@@ -53,8 +50,9 @@ export class PsalmsEvent extends DailyLearningEvent {
    *  e.g. https://www.sefaria.org/Psalms.1-9?lang=b
    */
   url(): string {
-    const str = this.getDesc().replace(' ', '.').replaceAll(':', '.');
-    return `https://www.sefaria.org/${str}?lang=bi`;
+    const r = this.reading;
+    const chapter = `${r[0]}-${r[1]}`.replaceAll(':', '.');
+    return sefariaUrl('Psalms', chapter);
   }
   getCategories(): string[] {
     return ['dailyPsalms'];

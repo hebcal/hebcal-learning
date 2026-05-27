@@ -1,7 +1,7 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent';
-import {isHebrewLocale} from './common';
+import {isHebrewLocale, sefariaUrl} from './common';
 import './locale';
 
 const PIRKEI_AVOT = 'Pirkei Avot';
@@ -51,7 +51,7 @@ export class PirkeiAvotSummerEvent extends DailyLearningEvent {
    */
   url(): string {
     const chaps = this.reading.join('-');
-    return `https://www.sefaria.org/Pirkei_Avot.${chaps}?lang=bi`;
+    return sefariaUrl('Pirkei Avot', chaps);
   }
   getCategories(): string[] {
     return ['pirkeiAvotSummer'];
