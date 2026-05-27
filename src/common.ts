@@ -57,3 +57,13 @@ export function gematriyaNN(num: number | string): string {
 export function isHebrewLocale(locale: string): boolean {
   return locale === 'he' || locale === 'he-x-nonikud';
 }
+
+/**
+ * Builds a Sefaria URL of the form
+ * `https://www.sefaria.org/{book}.{chapter}?lang=bi`.
+ * Spaces in `book` are converted to underscores automatically.
+ */
+export function sefariaUrl(book: string, chapter: number | string): string {
+  const slug = book.replaceAll(' ', '_');
+  return `https://www.sefaria.org/${slug}.${chapter}?lang=bi`;
+}

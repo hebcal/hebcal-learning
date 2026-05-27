@@ -3,7 +3,7 @@ import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DailyLearningEvent} from './DailyLearningEvent';
 import {YerushalmiReading} from './yerushalmiBase';
-import {gematriyaNN, isHebrewLocale} from './common';
+import {gematriyaNN, isHebrewLocale, sefariaUrl} from './common';
 import './locale';
 import vilnaMap0 from './yerushalmiVilnaMap.json';
 
@@ -85,9 +85,8 @@ export class YerushalmiYomiEvent extends DailyLearningEvent {
       return undefined;
     }
     const name0 = 'Jerusalem Talmud ' + tractate;
-    const name = name0.replaceAll(' ', '_');
     const verses = verses0.replaceAll(':', '.');
-    return `https://www.sefaria.org/${name}.${verses}?lang=bi`;
+    return sefariaUrl(name0, verses);
   }
   getCategories(): string[] {
     return ['yerushalmi', this.daf.ed];

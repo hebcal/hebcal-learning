@@ -1,6 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent';
 import {DafPage} from './DafPage';
+import {sefariaUrl} from './common';
 import shekalimDafYomiMap0 from './shekalimDafYomiMap.json';
 import './locale';
 
@@ -65,11 +66,10 @@ export abstract class DafPageEvent extends DailyLearningEvent {
       const aStart = aEntry.split('-')[0];
       const bEnd = bEntry.includes('-') ? bEntry.split('-')[1] : bEntry;
       const ref = `${aStart}-${bEnd}`.replaceAll(':', '.');
-      return `https://www.sefaria.org/Jerusalem_Talmud_Shekalim.${ref}?lang=bi`;
+      return sefariaUrl('Jerusalem Talmud Shekalim', ref);
     } else {
       const name0 = dafYomiSefaria[tractate] || tractate;
-      const name = name0.replaceAll(' ', '_');
-      return `https://www.sefaria.org/${name}.${blatt}a?lang=bi`;
+      return sefariaUrl(name0, `${blatt}a`);
     }
   }
 }
