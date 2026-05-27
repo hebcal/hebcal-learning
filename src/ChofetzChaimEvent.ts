@@ -85,7 +85,7 @@ export class ChofetzChaimEvent extends DailyLearningEvent {
       name += ', Illustration';
       separator = '_';
     }
-    if (typeof reading.b !== 'undefined') {
+    if (reading.b !== undefined) {
       name += separator + reading.b;
     }
     const urlName = encodeURIComponent(name.replaceAll(' ', '_'));

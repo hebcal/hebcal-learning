@@ -509,11 +509,11 @@ function lookupReading(
 
 export function formatReadingPages(reading: ChofetzChaimReading): string {
   let str = '';
-  if (typeof reading.b !== 'undefined') {
+  if (reading.b !== undefined) {
     str += ' ' + reading.b;
     if (Array.isArray(reading.e)) {
       str += ', ' + reading.e.join(', ');
-    } else if (typeof reading.e !== 'undefined' && reading.e !== reading.b) {
+    } else if (reading.e !== undefined && reading.e !== reading.b) {
       str += '-' + reading.e;
     }
   }
