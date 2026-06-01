@@ -18,9 +18,9 @@ type Daf = {
   ch: number;
 };
 
-export const mishnehTorah1: Daf[] = Object.entries(mishnehTorahJson).map(m => {
-  return {name: m[0], ch: m[1] as number};
-});
+export const mishnehTorah1: Daf[] = Object.entries(mishnehTorahJson).map(
+  ([name, ch]) => ({name, ch})
+);
 
 const first4verses = [
   ['1-21', '22-33', '34-45'], // Transmission of the Oral Law
