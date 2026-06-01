@@ -4,7 +4,9 @@
  */
 import {HDate, greg} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate} from './common';
-import mishnayot from './mishnayot.json';
+import mishnayotJson from './mishnayot.json';
+
+const mishnayot = Object.entries(mishnayotJson).map(([k, v]) => ({k, v}));
 
 const cycleLen = 525;
 const startDate = new Date(2002, 1, 9);
