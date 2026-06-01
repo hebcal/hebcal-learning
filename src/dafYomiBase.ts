@@ -21,6 +21,7 @@
 import {HDate, greg} from '@hebcal/hdate';
 import {DafPage} from './DafPage';
 import {checkTooEarly, getAbsDate} from './common';
+import bavliJson from './bavli.json';
 
 const osdate = new Date(1923, 8, 11);
 export const osday = greg.greg2abs(osdate);
@@ -31,50 +32,9 @@ type Daf = {
   blatt: number;
 };
 
-export const shas0: Daf[] = [
-  ['Berachot', 64],
-  ['Shabbat', 157],
-  ['Eruvin', 105],
-  ['Pesachim', 121],
-  ['Shekalim', 22],
-  ['Yoma', 88],
-  ['Sukkah', 56],
-  ['Beitzah', 40],
-  ['Rosh Hashana', 35],
-  ['Taanit', 31],
-  ['Megillah', 32],
-  ['Moed Katan', 29],
-  ['Chagigah', 27],
-  ['Yevamot', 122],
-  ['Ketubot', 112],
-  ['Nedarim', 91],
-  ['Nazir', 66],
-  ['Sotah', 49],
-  ['Gitin', 90],
-  ['Kiddushin', 82],
-  ['Baba Kamma', 119],
-  ['Baba Metzia', 119],
-  ['Baba Batra', 176],
-  ['Sanhedrin', 113],
-  ['Makkot', 24],
-  ['Shevuot', 49],
-  ['Avodah Zarah', 76],
-  ['Horayot', 14],
-  ['Zevachim', 120],
-  ['Menachot', 110],
-  ['Chullin', 142],
-  ['Bechorot', 61],
-  ['Arachin', 34],
-  ['Temurah', 34],
-  ['Keritot', 28],
-  ['Meilah', 22],
-  ['Kinnim', 4],
-  ['Tamid', 9],
-  ['Midot', 5],
-  ['Niddah', 73],
-].map(m => {
-  return {name: m[0] as string, blatt: m[1] as number};
-});
+export const shas0: Daf[] = Object.entries<number>(bavliJson).map(
+  ([name, blatt]) => ({name, blatt})
+);
 
 /**
  * @private
