@@ -18,7 +18,7 @@ type Daf = {
   ch: number;
 };
 
-export const mishnehTorah1: Daf[] = mishnehTorahJson.map(m => {
+export const mishnehTorah1: Daf[] = Object.entries(mishnehTorahJson).map(m => {
   return {name: m[0] as string, ch: m[1] as number};
 });
 
