@@ -8,10 +8,8 @@ import masoretic0 from './masoretic.json';
 import './locale';
 
 const masoretic: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  split: Record<string, any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  regular: Record<string, any>;
+  split: Record<string, Record<string, string>>;
+  regular: Record<string, string[]>;
 } = masoretic0;
 
 // Cycle starts 23 Tishrei (day after Shmini Atzeret in Israel)
@@ -286,7 +284,7 @@ export class TanakhYomi extends DafPage {
     }
     const firstChar = verses.codePointAt(0);
     this.verses =
-      firstChar >= 48 && firstChar <= 57 ? `${name} ${verses}` : verses;
+      firstChar !== undefined && firstChar >= 48 && firstChar <= 57 ? `${name} ${verses}` : verses;
   }
 
   /**
