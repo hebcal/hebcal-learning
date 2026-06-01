@@ -1,5 +1,6 @@
 import {HDate, greg} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate} from './common';
+import amudJson from './amudim.json';
 
 // Cycle began on 1 Cheshvan 5784 = October 16, 2023
 const startDate = new Date(2023, 9, 16);
@@ -10,51 +11,9 @@ type AmudEntry = {
   amudim: number;
 };
 
-export const shas: AmudEntry[] = (
-  [
-    ['Berachot', 125],
-    ['Shabbat', 312],
-    ['Eruvin', 207],
-    ['Pesachim', 240],
-    ['Shekalim', 42], // Bavli edition
-    ['Yoma', 173],
-    ['Sukkah', 110],
-    ['Beitzah', 78],
-    ['Rosh Hashana', 68],
-    ['Taanit', 59],
-    ['Megillah', 61],
-    ['Moed Katan', 55],
-    ['Chagigah', 51],
-    ['Yevamot', 242],
-    ['Ketubot', 222],
-    ['Nedarim', 180],
-    ['Nazir', 130],
-    ['Sotah', 96],
-    ['Gitin', 178],
-    ['Kiddushin', 162],
-    ['Baba Kamma', 236],
-    ['Baba Metzia', 235],
-    ['Baba Batra', 350],
-    ['Sanhedrin', 224],
-    ['Makkot', 46],
-    ['Shevuot', 96],
-    ['Avodah Zarah', 150],
-    ['Horayot', 25],
-    ['Zevachim', 238],
-    ['Menachot', 217],
-    ['Chullin', 281],
-    ['Bechorot', 119],
-    ['Arachin', 65],
-    ['Temurah', 65],
-    ['Keritot', 54],
-    ['Meilah', 41],
-    ['Kinnim', 6],
-    ['Tamid', 17],
-    ['Midot', 8],
-    ['Niddah', 143],
-  ] as [string, number][]
-).map(m => ({name: m[0], amudim: m[1]}));
-
+export const shas: AmudEntry[] = Object.entries(amudJson).map(
+  ([name, amudim]) => ({name, amudim})
+);
 const totalAmudim = shas.reduce((s, a) => s + a.amudim, 0);
 
 /**
