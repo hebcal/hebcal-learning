@@ -32,21 +32,21 @@ export function pirkeiAvot(dt: Date | HDate, il: boolean): number[] | null {
   if (hd.getDay() !== 6) {
     return null;
   }
-  const shvi = new HDate(21, months.NISAN, hd.getFullYear());
-  if (hd.abs() <= shvi.abs()) {
+  const hyear = hd.getFullYear();
+  const pesach7 = new HDate(21, months.NISAN, hyear);
+  if (hd.abs() <= pesach7.abs()) {
     return null; // before Pesach
   }
-  const first = shvi.after(6);
+  const first = pesach7.after(6);
   let weekDiff = Math.ceil(hd.deltaDays(first) / 7);
   // when a Holiday falls on Saturday, Pirkei avot is not studied, same is for erev Tisha B'av
   const holidays: HDate[] = [];
   if (!il) {
-    holidays.push(shvi.next()); // 8th day Pesach
-    holidays.push(new HDate(7, months.SIVAN, hd.getFullYear())); // 2nd day Shavuot
+    // 8th day Pesach and 2nd day Shavuot are only observed in the Diaspora
+    holidays.push(pesach7.next(), new HDate(7, months.SIVAN, hyear));
   }
-  const erev9av = new HDate(8, months.AV, hd.getFullYear());
-  holidays.push(erev9av); // Erev Tish'a B'Av
-  holidays.push(erev9av.next()); // Tish'a B'Av
+  const av8 = new HDate(8, months.AV, hyear);
+  holidays.push(av8, av8.next()); // both Erev 9av and Tish'a B'Av
   for (const day of holidays) {
     if (day.isSameDate(hd)) {
       // if dt is one of the holidays return nothing (undefined)
@@ -62,7 +62,7 @@ export function pirkeiAvot(dt: Date | HDate, il: boolean): number[] | null {
     return [(weekDiff % 6) + 1];
   }
   // fourth round is different
-  const rh = new HDate(1, months.TISHREI, hd.getFullYear() + 1);
+  const rh = new HDate(1, months.TISHREI, hyear + 1);
   const last = rh.before(6);
   const weeksRemain = Math.ceil(last.deltaDays(hd) / 7);
   switch (weeksRemain) {
