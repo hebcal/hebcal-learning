@@ -19,7 +19,7 @@ type Daf = {
 };
 
 export const mishnehTorah1: Daf[] = Object.entries(mishnehTorahJson).map(m => {
-  return {name: m[0] as string, ch: m[1] as number};
+  return {name: m[0], ch: m[1] as number};
 });
 
 const first4verses = [

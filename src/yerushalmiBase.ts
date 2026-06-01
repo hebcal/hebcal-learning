@@ -216,7 +216,7 @@ export function yerushalmiYomi(
   config: YerushalmiYomiConfig
 ): YerushalmiReading | null {
   if (typeof config !== 'object' || !Array.isArray(config.shas)) {
-    throw new Error('invalid yerushalmi config');
+    throw new RangeError('invalid yerushalmi config');
   }
   const cday = getAbsDate(date);
   const startAbs = config.startAbs;

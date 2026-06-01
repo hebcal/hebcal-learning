@@ -37,7 +37,7 @@ export type MishnaYomi = {
  * // [{k: 'Nazir', v: '1:6'}, {k: 'Nazir', v: '1:7'}]
  */
 export class MishnaYomiIndex {
-  private days: MishnaYomi[][];
+  private readonly days: MishnaYomi[][];
   /**
    * Builds the in-memory index of all 2,096 days in the cycle.
    * Construction walks every mishna in the Shisha Sidrei; reuse the
@@ -45,10 +45,9 @@ export class MishnaYomiIndex {
    * call.
    */
   constructor() {
-    const tmp = Array<MishnaYomi>(numMishnayot);
+    const tmp = new Array<MishnaYomi>(numMishnayot);
     let i = 0;
-    for (const element of mishnayot) {
-      const tractate = element;
+    for (const tractate of mishnayot) {
       const v = tractate.v;
       for (let chap = 1; chap <= v.length; chap++) {
         const numv = v[chap - 1];
@@ -57,7 +56,7 @@ export class MishnaYomiIndex {
         }
       }
     }
-    const days = Array<MishnaYomi[]>(numDays);
+    const days = new Array<MishnaYomi[]>(numDays);
     for (let j = 0; j < numDays; j++) {
       const k = j * 2;
       days[j] = [tmp[k], tmp[k + 1]];

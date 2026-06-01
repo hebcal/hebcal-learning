@@ -30,7 +30,6 @@ import {HDate, months} from '@hebcal/hdate';
 export function pirkeiAvot(dt: Date | HDate, il: boolean): number[] | null {
   const hd = new HDate(dt);
   if (hd.getDay() !== 6) {
-    // throw new RangeError('Date must be Saturday');
     return null;
   }
   const shvi = new HDate(21, months.NISAN, hd.getFullYear());

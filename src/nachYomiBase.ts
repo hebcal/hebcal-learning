@@ -39,13 +39,13 @@ export type NachYomi = {
  * // {k: 'I Samuel', v: 23}
  */
 export class NachYomiIndex {
-  private days: NachYomi[];
+  private readonly days: NachYomi[];
   /**
    * Builds the in-memory index of all 742 chapters in the cycle.
    * Reuse the same instance across many lookups.
    */
   constructor() {
-    const days = Array<NachYomi>(numChapters);
+    const days = new Array<NachYomi>(numChapters);
     let i = 0;
     for (const element of nach) {
       const book = element[0];

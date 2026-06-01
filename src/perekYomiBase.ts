@@ -44,10 +44,10 @@ export function perekYomi(date: HDate | Date | number): PerekYomi {
   checkTooEarly(cday, perekYomiStart, 'Perek Yomi');
   const dno = (cday - perekYomiStart) % cycleLen;
   let total = dno;
-  for (let j = 0; j < mishnayot.length; j++) {
-    const numChaps = mishnayot[j].v.length;
+  for (const tractate of mishnayot) {
+    const numChaps = tractate.v.length;
     if (total < numChaps) {
-      return {k: mishnayot[j].k, v: total + 1};
+      return {k: tractate.k, v: total + 1};
     }
     total -= numChaps;
   }

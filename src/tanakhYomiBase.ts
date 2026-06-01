@@ -167,9 +167,7 @@ function skipDay(hd: HDate): boolean {
     return false;
   }
   for (const ev of holidays) {
-    if (ev.getFlags() & flags.CHAG) {
-      return true;
-    } else if (toSkip.has(ev.getDesc())) {
+    if (ev.getFlags() & flags.CHAG || toSkip.has(ev.getDesc())) {
       return true;
     }
   }
@@ -286,7 +284,7 @@ export class TanakhYomi extends DafPage {
     if (!verses) {
       throw new Error(`${name} ${blatt}`);
     }
-    const firstChar = verses.charCodeAt(0);
+    const firstChar = verses.codePointAt(0);
     this.verses =
       firstChar >= 48 && firstChar <= 57 ? `${name} ${verses}` : verses;
   }

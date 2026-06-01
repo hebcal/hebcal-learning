@@ -4,7 +4,10 @@ import tanakhNumChap from './tanakhNumChap.json';
 
 const tanakhBooks = Object.entries(tanakhNumChap) as Array<[string, number]>;
 
-function chapterToBookAndVerse(chapter: number): {book: string; bookChap: number} {
+function chapterToBookAndVerse(chapter: number): {
+  book: string;
+  bookChap: number;
+} {
   let remaining = chapter;
   for (const [book, numChapters] of tanakhBooks) {
     if (remaining <= numChapters) {
@@ -12,7 +15,7 @@ function chapterToBookAndVerse(chapter: number): {book: string; bookChap: number
     }
     remaining -= numChapters;
   }
-  throw new Error(`Chapter ${chapter} out of range (max ${TOTAL_929_CHAPTERS})`);
+  throw new Error(`Chap ${chapter} out of range (max ${TOTAL_929_CHAPTERS})`);
 }
 
 // 929 started on Sunday, 21 December 2014
@@ -95,7 +98,9 @@ export type Nine29Reading = {
  *
  * @param date - Hebrew or Gregorian date, or absolute day number
  */
-export function calculate929(date: HDate | Date | number): Nine29Reading | null {
+export function calculate929(
+  date: HDate | Date | number
+): Nine29Reading | null {
   const hd: HDate = HDate.isHDate(date) ? (date as HDate) : new HDate(date);
   const abs = hd.abs();
   checkTooEarly(abs, nine29Start, '929');
@@ -112,7 +117,8 @@ export function calculate929(date: HDate | Date | number): Nine29Reading | null 
   while (true) {
     const cycleEnd = findCycleEnd(cycleStart);
     // Cycle 1→2 has a unique 3-month gap; all later transitions are +4 days.
-    const nextStart = cycleNumber === 1 ? nine29StartCycle2 : nextCycleStart(cycleEnd);
+    const nextStart =
+      cycleNumber === 1 ? nine29StartCycle2 : nextCycleStart(cycleEnd);
 
     if (abs < nextStart) {
       // This date is within the current cycle (either an active reading day

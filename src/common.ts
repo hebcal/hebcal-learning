@@ -15,7 +15,7 @@ export function getAbsDate(date: HDate | Date | number): number {
   } else {
     abs = Number.NaN;
   }
-  if (isNaN(abs)) {
+  if (Number.isNaN(abs)) {
     throw new TypeError(`Invalid date: ${date}`);
   }
   return abs;
