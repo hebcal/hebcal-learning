@@ -44,7 +44,9 @@ export class Nine29Event extends DailyLearningEvent {
     const loc = (locale || 'en').toLowerCase();
     const {book, bookChap, cycleChap} = this.reading;
     const bookName = Locale.gettext(book, loc);
-    const chapStr = isHebrewLocale(loc) ? gematriya(bookChap) : String(bookChap);
+    const chapStr = isHebrewLocale(loc)
+      ? gematriya(bookChap)
+      : String(bookChap);
     return `${bookName} ${chapStr} (${cycleChap})`;
   }
 
@@ -56,7 +58,9 @@ export class Nine29Event extends DailyLearningEvent {
     const loc = (locale || 'en').toLowerCase();
     const {book, bookChap} = this.reading;
     const bookName = Locale.gettext(book, loc);
-    const chapStr = isHebrewLocale(loc) ? gematriya(bookChap) : String(bookChap);
+    const chapStr = isHebrewLocale(loc)
+      ? gematriya(bookChap)
+      : String(bookChap);
     return `${bookName} ${chapStr}`;
   }
 

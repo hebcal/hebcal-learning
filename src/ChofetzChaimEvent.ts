@@ -51,8 +51,7 @@ export class ChofetzChaimEvent extends DailyLearningEvent {
     const reading = this.reading;
     const book = reading.k;
     const book2 = book.replace('Hilchos', 'Hilchos ');
-    let name =
-      loc === 'memo' ? englishNames[book] : Locale.gettext(book2, loc);
+    let name = loc === 'memo' ? englishNames[book] : Locale.gettext(book2, loc);
     name += formatReadingPages(reading);
     return name;
   }

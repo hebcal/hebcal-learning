@@ -3,7 +3,9 @@ import {checkTooEarly, getAbsDate} from './common';
 import tanakhNumChap from './tanakhNumChap.json';
 
 // Nach Yomi covers Nevi'im and Ketuvim — all books after the 5 Torah books.
-const nach = (Object.entries(tanakhNumChap) as Array<[string, number]>).slice(5);
+const nach = (Object.entries(tanakhNumChap) as Array<[string, number]>).slice(
+  5
+);
 
 const cycleStartDate = new Date(2007, 10, 1);
 export const nachYomiStart = greg.greg2abs(cycleStartDate);

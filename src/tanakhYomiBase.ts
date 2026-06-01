@@ -284,7 +284,9 @@ export class TanakhYomi extends DafPage {
     }
     const firstChar = verses.codePointAt(0);
     this.verses =
-      firstChar !== undefined && firstChar >= 48 && firstChar <= 57 ? `${name} ${verses}` : verses;
+      firstChar !== undefined && firstChar >= 48 && firstChar <= 57
+        ? `${name} ${verses}`
+        : verses;
   }
 
   /**
