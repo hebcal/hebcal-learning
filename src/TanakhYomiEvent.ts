@@ -33,7 +33,7 @@ export class TanakhYomiEvent extends DafPageEvent {
    * Returns a link to sefaria.org
    */
   url(): string {
-    const memo: string = this.daf.verses!;
+    const memo: string = this.memo!;
     const space = memo.lastIndexOf(' ');
     const book = memo.substring(0, space);
     const verses = memo.substring(space + 1).replaceAll(':', '.');

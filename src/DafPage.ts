@@ -9,7 +9,6 @@ import './locale';
 export class DafPage {
   readonly name: string;
   readonly blatt: string | number;
-  verses?: string;
   /**
    * Initializes a daf yomi instance
    */

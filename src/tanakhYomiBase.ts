@@ -256,6 +256,13 @@ function makeReadingTable(year: number): ReadingsForYear {
   return result;
 }
 
+function masoreticVerses(name: string, blatt: number | string): string {
+  if (typeof blatt === 'number') {
+    return masoretic.regular[name][blatt - 1];
+  }
+  return masoretic.split[name][blatt];
+}
+
 /**
  * One day's reading in the Tanakh Yomi cycle — a single Masoretic
  * seder (verse range) within one of the books of Tanakh.
@@ -266,6 +273,7 @@ function makeReadingTable(year: number): ReadingsForYear {
  * builder.
  */
 export class TanakhYomi extends DafPage {
+  readonly verses: string;
   /**
    * Builds a TanakhYomi for the given book and seder number.
    * Throws if `(name, blatt)` is not a valid seder in the Masoretic
@@ -274,19 +282,12 @@ export class TanakhYomi extends DafPage {
    */
   constructor(name: string, blatt: number | string) {
     super(name, blatt);
-    const seders = masoretic.regular[name];
-    const verses =
-      typeof blatt === 'number'
-        ? seders[blatt - 1]
-        : masoretic.split[name][blatt];
+    const verses = masoreticVerses(name, blatt);
     if (!verses) {
       throw new Error(`${name} ${blatt}`);
     }
-    const firstChar = verses.codePointAt(0);
-    this.verses =
-      firstChar !== undefined && firstChar >= 48 && firstChar <= 57
-        ? `${name} ${verses}`
-        : verses;
+    const ch = verses.codePointAt(0)!;
+    this.verses = ch >= 48 && ch <= 57 ? `${name} ${verses}` : verses;
   }
 
   /**
