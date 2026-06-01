@@ -41,7 +41,7 @@ function formatMyomi(mishnaYomi: MishnaYomi[], locale?: string): string {
  * // => "Nazir 1:6-7"
  */
 export class MishnaYomiEvent extends DailyLearningEvent {
-  mishnaYomi: MishnaYomi[];
+  readonly mishnaYomi: MishnaYomi[];
   get category(): string {
     return 'Mishna Yomi';
   }

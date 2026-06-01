@@ -27,7 +27,7 @@ import './locale';
  * // => "Appraisals and Devoted Property 5"
  */
 export class DailyRambamEvent extends DailyLearningEvent {
-  reading: RambamReading;
+  readonly reading: RambamReading;
   get category(): string {
     return 'Daily Rambam';
   }

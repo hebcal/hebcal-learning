@@ -24,7 +24,7 @@ import './locale';
  * console.log(ev.render('en'));  // => "Psalms 140-150"
  */
 export class PsalmsEvent extends DailyLearningEvent {
-  reading: PsalmBeginEnd;
+  readonly reading: PsalmBeginEnd;
   get category(): string {
     return 'Psalms';
   }

@@ -60,8 +60,8 @@ export function makeDesc(readings: RambamReading[]): string {
  * // => "Foreign Worship and Customs of the Nations 1-3"
  */
 export class DailyRambam3Event extends DailyLearningEvent {
-  readings: RambamReading[];
-  events: DailyRambamEvent[];
+  readonly readings: RambamReading[];
+  readonly events: DailyRambamEvent[];
   get category(): string {
     return 'Daily Rambam';
   }

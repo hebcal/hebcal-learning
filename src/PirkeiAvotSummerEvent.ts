@@ -25,7 +25,7 @@ const PIRKEI_AVOT = 'Pirkei Avot';
  * console.log(ev.render('en'));  // => "Pirkei Avot 4"
  */
 export class PirkeiAvotSummerEvent extends DailyLearningEvent {
-  reading: number[];
+  readonly reading: number[];
   get category(): string {
     return PIRKEI_AVOT;
   }

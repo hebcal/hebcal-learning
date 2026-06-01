@@ -27,7 +27,7 @@ import './locale';
  * console.log(ev.render('en'));  // => "Malachi 3 (567)"
  */
 export class Nine29Event extends DailyLearningEvent {
-  reading: Nine29Reading;
+  readonly reading: Nine29Reading;
 
   constructor(date: HDate, reading: Nine29Reading) {
     super(date, `${reading.book} ${reading.bookChap} (${reading.cycleChap})`);

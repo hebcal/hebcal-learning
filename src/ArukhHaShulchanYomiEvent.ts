@@ -25,7 +25,7 @@ import './locale';
  * // => "Yoreh De'ah 263:4-10"
  */
 export class ArukhHaShulchanYomiEvent extends DailyLearningEvent {
-  reading: AhSYomiReading;
+  readonly reading: AhSYomiReading;
   get category(): string {
     return 'Arukh HaShulchan Yomi';
   }

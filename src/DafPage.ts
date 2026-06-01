@@ -7,8 +7,8 @@ import './locale';
  * Represents a tractate and page number
  */
 export class DafPage {
-  name: string;
-  blatt: string | number;
+  readonly name: string;
+  readonly blatt: string | number;
   verses?: string;
   /**
    * Initializes a daf yomi instance

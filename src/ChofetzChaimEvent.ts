@@ -32,7 +32,7 @@ import './locale';
  * // => "Hilchos LH 10.4"
  */
 export class ChofetzChaimEvent extends DailyLearningEvent {
-  reading: ChofetzChaimReading;
+  readonly reading: ChofetzChaimReading;
   get category(): string {
     return 'Chofetz Chaim';
   }

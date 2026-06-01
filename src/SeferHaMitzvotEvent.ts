@@ -28,7 +28,7 @@ enum ReadingType {
  * //    Positive Commandment 186; Negative Commandment 23, 24"
  */
 export class SeferHaMitzvotEvent extends DailyLearningEvent {
-  reading: SeferHaMitzvotReading;
+  readonly reading: SeferHaMitzvotReading;
   get category(): string {
     return 'Sefer Hamitzvot';
   }

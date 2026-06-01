@@ -71,9 +71,9 @@ function renderReading(
  * // => "Hilchot Shmita v'Terumah 71-75 / Hilchot Brachot v'Tefilah 57:2-E"
  */
 export class KitzurShulchanAruchEvent extends DailyLearningEvent {
-  reading: KitzurShulchanAruchReading;
-  optionB?: KitzurShulchanAruchReading;
-  leapAdar2: boolean;
+  readonly reading: KitzurShulchanAruchReading;
+  readonly optionB?: KitzurShulchanAruchReading;
+  readonly leapAdar2: boolean;
   get category(): string {
     return BOOK_NAME;
   }

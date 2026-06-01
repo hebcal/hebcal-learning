@@ -26,7 +26,7 @@ import './locale';
  * // => "Dirshu Amud HaYomi: Shabbat 27a"
  */
 export class DirshuAmudYomiEvent extends DailyLearningEvent {
-  amud: DirshuAmudYomi;
+  readonly amud: DirshuAmudYomi;
   get category(): string {
     return 'Dirshu Amud HaYomi';
   }

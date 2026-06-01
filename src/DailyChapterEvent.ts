@@ -16,8 +16,8 @@ import './locale';
  * directly.
  */
 export abstract class DailyChapterEvent extends DailyLearningEvent {
-  k: string;
-  v: number;
+  readonly k: string;
+  readonly v: number;
   constructor(date: HDate, k: string, v: number, mask: number) {
     super(date, `${k} ${v}`, mask);
     this.k = k;

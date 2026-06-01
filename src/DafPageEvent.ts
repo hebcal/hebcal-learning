@@ -32,7 +32,7 @@ export const dafYomiSefaria: Record<string, string> = {
  * use {@link DafYomiEvent}, {@link DafWeeklyEvent}, etc.
  */
 export abstract class DafPageEvent extends DailyLearningEvent {
-  daf: DafPage;
+  readonly daf: DafPage;
   constructor(date: HDate, daf: DafPage, mask: number) {
     super(date, daf.render('en'), mask);
     this.daf = daf;

@@ -30,8 +30,8 @@ import './locale';
  * // => "Book I, Shar Hatorah 7.7-7.8"
  */
 export class ShemiratHaLashonEvent extends DailyLearningEvent {
-  reading: ShemiratHaLashonReading;
-  memo: string;
+  readonly reading: ShemiratHaLashonReading;
+  readonly memo: string;
   get category(): string {
     return 'Shemirat HaLashon';
   }

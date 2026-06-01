@@ -38,7 +38,7 @@ const vilnaMap: Record<string, (string | null)[]> = vilnaMap0;
  * console.log(schott.render('en'));  // => "Yerushalmi Terumot 97"
  */
 export class YerushalmiYomiEvent extends DailyLearningEvent {
-  daf: YerushalmiReading;
+  readonly daf: YerushalmiReading;
   get category(): string {
     return 'Yerushalmi Yomi';
   }
