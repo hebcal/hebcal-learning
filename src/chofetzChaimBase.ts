@@ -39,7 +39,7 @@ export const englishNames: Record<string, string> = {
   HilchosLH: 'Part One, The Prohibition Against Lashon Hara',
   HilchosRechilus: 'Part Two, The Prohibition Against Rechilut',
   Tziyurim: 'Illustrations',
-};
+} as const;
 
 const simple = [
   [

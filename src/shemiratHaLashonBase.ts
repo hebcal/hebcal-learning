@@ -36,7 +36,7 @@ export const englishNames: Record<string, string | null> = {
   Shar_Hatorah: 'The Gate of Torah',
   Chasimas_Hasefer: 'Epilogue',
   x: null,
-};
+} as const;
 
 type Entry = [
   [number, number], // normal

@@ -49,9 +49,7 @@ const books: Daf[] = [
   ['Ezra and Nehemiah', 10],
   ['Chronicles', 25],
   ['Chronicles', 25],
-].map(m => {
-  return {name: m[0] as string, blatt: m[1] as number};
-});
+].map(([n, b]) => ({name: n as string, blatt: b as number}));
 
 // Also Pesach 1 and 7, Shavuot, RH 1 and 2, YK, Sukkot 1, Shmini Atz,
 const toSkip = new Set([
