@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {chofetzChaim, chofetzChaimStart} from './chofetzChaimBase';
-import {ChofetzChaimEvent} from './ChofetzChaimEvent';
+import {chofetzChaim, chofetzChaimStart} from './chofetzChaimBase.js';
+import {ChofetzChaimEvent} from './ChofetzChaimEvent.js';
 
 function wrapper(hd: HDate): ChofetzChaimEvent | null {
   if (hd.abs() < chofetzChaimStart) {

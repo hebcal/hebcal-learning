@@ -1,10 +1,10 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate, gematriya} from '@hebcal/hdate';
-import {dafYomiSefaria, shekalimDafYomiMap} from './DafPageEvent';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {DirshuAmudYomi, calculateDirshuAmud} from './dirshuAmudYomiBase';
-import {isHebrewLocale, sefariaUrl} from './common';
-import './locale';
+import {dafYomiSefaria, shekalimDafYomiMap} from './DafPageEvent.js';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {DirshuAmudYomi, calculateDirshuAmud} from './dirshuAmudYomiBase.js';
+import {isHebrewLocale, sefariaUrl} from './common.js';
+import './locale.js';
 
 /**
  * Event wrapper around a Dirshu Amud HaYomi reading — one amud

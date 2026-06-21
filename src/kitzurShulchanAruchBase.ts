@@ -1,5 +1,5 @@
 import {HDate, months} from '@hebcal/hdate';
-import kitzurSaJson from './kitzurSa.json';
+import kitzurSaJson from './kitzurSa.json.js';
 
 /**
  * Describes one day's reading in the Kitzur Shulchan Aruch calendar.

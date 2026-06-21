@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {tanakhYomi, tanakhYomiStart} from './tanakhYomiBase';
-import {TanakhYomiEvent} from './TanakhYomiEvent';
+import {tanakhYomi, tanakhYomiStart} from './tanakhYomiBase.js';
+import {TanakhYomiEvent} from './TanakhYomiEvent.js';
 
 function wrapper(hd: HDate): TanakhYomiEvent | null {
   const abs = hd.abs();

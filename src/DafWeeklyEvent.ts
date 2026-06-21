@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {DafPage} from './DafPage';
-import {DafPageEvent} from './DafPageEvent';
+import {DafPage} from './DafPage.js';
+import {DafPageEvent} from './DafPageEvent.js';
 
 /**
  * Event wrapper around the **Daf-a-Week** Talmud page — the same

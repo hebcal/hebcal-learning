@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {dafWeekly, dafWeeklyStart} from './dafWeeklyBase';
-import {DafWeeklyEvent} from './DafWeeklyEvent';
+import {dafWeekly, dafWeeklyStart} from './dafWeeklyBase.js';
+import {DafWeeklyEvent} from './DafWeeklyEvent.js';
 
 const startDate = new HDate(dafWeeklyStart);
 

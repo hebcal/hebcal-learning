@@ -1,9 +1,9 @@
 import {HDate} from '@hebcal/hdate';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {DafPage} from './DafPage';
-import {sefariaUrl} from './common';
-import shekalimDafYomiMap0 from './shekalimDafYomiMap.json';
-import './locale';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {DafPage} from './DafPage.js';
+import {sefariaUrl} from './common.js';
+import shekalimDafYomiMap0 from './shekalimDafYomiMap.json.js';
+import './locale.js';
 
 export const shekalimDafYomiMap = shekalimDafYomiMap0 as Record<string, string>;
 

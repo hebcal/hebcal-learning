@@ -1,7 +1,7 @@
 import {HDate, greg} from '@hebcal/hdate';
-import {DafPage} from './DafPage';
-import {checkTooEarly, getAbsDate} from './common';
-import {findDaf, shas0} from './dafYomiBase';
+import {DafPage} from './DafPage.js';
+import {checkTooEarly, getAbsDate} from './common.js';
+import {findDaf, shas0} from './dafYomiBase.js';
 
 const startDate = new Date(2005, 2, 6);
 export const dafWeeklyStart = greg.greg2abs(startDate);

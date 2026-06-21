@@ -1,8 +1,8 @@
 import {HDate} from '@hebcal/hdate';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {RambamReading} from './rambam1Base';
-import {DailyRambamEvent} from './DailyRambamEvent';
-import './locale';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {RambamReading} from './rambam1Base.js';
+import {DailyRambamEvent} from './DailyRambamEvent.js';
+import './locale.js';
 
 function combinePair(r1: RambamReading, r2: RambamReading): RambamReading {
   const name = r1.name;

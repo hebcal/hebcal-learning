@@ -1,9 +1,9 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {Nine29Reading} from './929Base';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {isHebrewLocale, sefariaUrl} from './common';
-import './locale';
+import {Nine29Reading} from './929Base.js';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {isHebrewLocale, sefariaUrl} from './common.js';
+import './locale.js';
 
 /**
  * Event wrapper for a daily 929 Tanakh chapter reading

@@ -1,9 +1,9 @@
 import {HDate, months} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {KitzurShulchanAruchReading} from './kitzurShulchanAruchBase';
-import {gematriyaNN, formatBeginEndRange, isHebrewLocale} from './common';
-import './locale';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {KitzurShulchanAruchReading} from './kitzurShulchanAruchBase.js';
+import {gematriyaNN, formatBeginEndRange, isHebrewLocale} from './common.js';
+import './locale.js';
 
 const BOOK_NAME = 'Kitzur Shulchan Arukh';
 

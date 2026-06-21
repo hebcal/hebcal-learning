@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {schottenstein, vilna, yerushalmiYomi} from './yerushalmiBase';
-import {YerushalmiYomiEvent} from './YerushalmiYomiEvent';
+import {schottenstein, vilna, yerushalmiYomi} from './yerushalmiBase.js';
+import {YerushalmiYomiEvent} from './YerushalmiYomiEvent.js';
 
 function wrapperVilna(hd: HDate): YerushalmiYomiEvent | null {
   const abs = hd.abs();

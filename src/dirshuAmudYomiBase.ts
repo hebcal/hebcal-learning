@@ -1,6 +1,6 @@
 import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common';
-import amudJson from './amudim.json';
+import {checkTooEarly, getAbsDate} from './common.js';
+import amudJson from './amudim.json.js';
 
 // Cycle began on 1 Cheshvan 5784 = October 16, 2023
 const startDate = new Date(2023, 9, 16);

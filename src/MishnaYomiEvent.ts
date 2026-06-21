@@ -1,9 +1,9 @@
 import {HDate} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {MishnaYomi} from './mishnaYomiBase';
-import './locale';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {MishnaYomi} from './mishnaYomiBase.js';
+import './locale.js';
 
 function formatMyomi(mishnaYomi: MishnaYomi[], locale?: string): string {
   const k1 = mishnaYomi[0].k;

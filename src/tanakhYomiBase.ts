@@ -2,10 +2,10 @@ import {HDate, greg, months} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {getHolidaysOnDate} from '@hebcal/core/dist/esm/holidays';
-import {DafPage} from './DafPage';
-import {checkTooEarly, gematriyaNN, isHebrewLocale} from './common';
-import masoretic0 from './masoretic.json';
-import './locale';
+import {DafPage} from './DafPage.js';
+import {checkTooEarly, gematriyaNN, isHebrewLocale} from './common.js';
+import masoretic0 from './masoretic.json.js';
+import './locale.js';
 
 const masoretic: {
   split: Record<string, Record<string, string>>;

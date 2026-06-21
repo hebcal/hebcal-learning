@@ -1,11 +1,11 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {YerushalmiReading} from './yerushalmiBase';
-import {gematriyaNN, isHebrewLocale, sefariaUrl} from './common';
-import './locale';
-import vilnaMap0 from './yerushalmiVilnaMap.json';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {YerushalmiReading} from './yerushalmiBase.js';
+import {gematriyaNN, isHebrewLocale, sefariaUrl} from './common.js';
+import './locale.js';
+import vilnaMap0 from './yerushalmiVilnaMap.json.js';
 
 const vilnaMap: Record<string, (string | null)[]> = vilnaMap0;
 

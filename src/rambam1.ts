@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {dailyRambam1, rambam1Start} from './rambam1Base';
-import {DailyRambamEvent} from './DailyRambamEvent';
+import {dailyRambam1, rambam1Start} from './rambam1Base.js';
+import {DailyRambamEvent} from './DailyRambamEvent.js';
 
 function wrapper(hd: HDate): DailyRambamEvent | null {
   if (hd.abs() < rambam1Start) {

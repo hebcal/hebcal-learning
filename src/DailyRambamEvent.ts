@@ -1,9 +1,9 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {RambamReading} from './rambam1Base';
-import {gematriyaNN, isHebrewLocale} from './common';
-import './locale';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {RambamReading} from './rambam1Base.js';
+import {gematriyaNN, isHebrewLocale} from './common.js';
+import './locale.js';
 
 /**
  * Event wrapper around a single chapter from the Mishneh Torah, as

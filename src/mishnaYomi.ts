@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomiBase';
-import {MishnaYomiEvent} from './MishnaYomiEvent';
+import {MishnaYomiIndex, mishnaYomiStart} from './mishnaYomiBase.js';
+import {MishnaYomiEvent} from './MishnaYomiEvent.js';
 
 const mishnaYomiIndex = new MishnaYomiIndex();
 

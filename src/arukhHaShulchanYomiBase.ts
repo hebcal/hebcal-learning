@@ -1,6 +1,6 @@
 import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common';
-import ahsyJson from './arukhHaShulchanYomi.json';
+import {checkTooEarly, getAbsDate} from './common.js';
+import ahsyJson from './arukhHaShulchanYomi.json.js';
 
 /**
  * Describes a daily reading of the Arukh HaShulchan

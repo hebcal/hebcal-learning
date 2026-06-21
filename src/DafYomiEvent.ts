@@ -1,9 +1,9 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {DafPageEvent} from './DafPageEvent';
-import {DafYomi} from './dafYomiBase';
-import './locale';
+import {DafPageEvent} from './DafPageEvent.js';
+import {DafYomi} from './dafYomiBase.js';
+import './locale.js';
 
 /**
  * Event wrapper around a {@link DafYomi} instance — one daily page of

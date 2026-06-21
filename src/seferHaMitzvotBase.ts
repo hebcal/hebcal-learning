@@ -1,6 +1,6 @@
 import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common';
-import seferHaMitzvotJson from './seferHaMitzvot.json';
+import {checkTooEarly, getAbsDate} from './common.js';
+import seferHaMitzvotJson from './seferHaMitzvot.json.js';
 
 /**
  * One day's reading in the Sefer Hamitzvos (Daily Mitzvah) calendar.

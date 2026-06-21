@@ -3,8 +3,8 @@
  * One chapter per day
  */
 import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common';
-import mishnayotJson from './mishnayot.json';
+import {checkTooEarly, getAbsDate} from './common.js';
+import mishnayotJson from './mishnayot.json.js';
 
 const mishnayot = Object.entries(mishnayotJson).map(([k, v]) => ({k, v}));
 

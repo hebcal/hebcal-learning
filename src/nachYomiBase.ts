@@ -1,6 +1,6 @@
 import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common';
-import tanakhNumChap from './tanakhNumChap.json';
+import {checkTooEarly, getAbsDate} from './common.js';
+import tanakhNumChap from './tanakhNumChap.json.js';
 
 // Nach Yomi covers Nevi'im and Ketuvim — all books after the 5 Torah books.
 const nach = (Object.entries(tanakhNumChap) as Array<[string, number]>).slice(

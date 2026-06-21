@@ -1,9 +1,9 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {PsalmBeginEnd} from './psalmsBase';
-import {isHebrewLocale, sefariaUrl} from './common';
-import './locale';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {PsalmBeginEnd} from './psalmsBase.js';
+import {isHebrewLocale, sefariaUrl} from './common.js';
+import './locale.js';
 
 /**
  * Event wrapper around the daily Psalms / Tehillim portion in the

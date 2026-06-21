@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {pirkeiAvot} from './pirkeiAvotBase';
-import {PirkeiAvotSummerEvent} from './PirkeiAvotSummerEvent';
+import {pirkeiAvot} from './pirkeiAvotBase.js';
+import {PirkeiAvotSummerEvent} from './PirkeiAvotSummerEvent.js';
 
 DailyLearning.addCalendar('pirkeiAvotSummer', (hd: HDate, il: boolean) => {
   const reading = pirkeiAvot(hd, il);

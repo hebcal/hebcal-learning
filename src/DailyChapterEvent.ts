@@ -1,8 +1,8 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {isHebrewLocale, sefariaUrl} from './common';
-import './locale';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {isHebrewLocale, sefariaUrl} from './common.js';
+import './locale.js';
 
 /**
  * Abstract base class for daily learning where each day's reading is

@@ -1,8 +1,8 @@
 import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {DafPageEvent} from './DafPageEvent';
-import {TanakhYomi} from './tanakhYomiBase';
-import {sefariaUrl} from './common';
+import {DafPageEvent} from './DafPageEvent.js';
+import {TanakhYomi} from './tanakhYomiBase.js';
+import {sefariaUrl} from './common.js';
 
 /**
  * Event wrapper around a Tanakh Yomi seder reading.

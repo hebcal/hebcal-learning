@@ -1,6 +1,6 @@
 import {HDate} from '@hebcal/hdate';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {SeferHaMitzvotReading} from './seferHaMitzvotBase';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {SeferHaMitzvotReading} from './seferHaMitzvotBase.js';
 
 enum ReadingType {
   Other,

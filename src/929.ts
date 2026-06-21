@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {calculate929, nine29Start} from './929Base';
-import {Nine29Event} from './929Event';
+import {calculate929, nine29Start} from './929Base.js';
+import {Nine29Event} from './929Event.js';
 
 function wrapper(hd: HDate): Nine29Event | null {
   const abs = hd.abs();

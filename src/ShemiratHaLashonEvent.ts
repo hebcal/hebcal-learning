@@ -1,13 +1,13 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
-import {DailyLearningEvent} from './DailyLearningEvent';
-import {formatReadingPages} from './chofetzChaimBase';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
+import {formatReadingPages} from './chofetzChaimBase.js';
 import {
   ShemiratHaLashonReading,
   Chapters,
   englishNames,
-} from './shemiratHaLashonBase';
-import './locale';
+} from './shemiratHaLashonBase.js';
+import './locale.js';
 
 /**
  * Event wrapper around a Sefer Shemirat HaLashon reading — daily

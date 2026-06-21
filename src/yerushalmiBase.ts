@@ -1,5 +1,5 @@
 import {HDate, greg, months} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common';
+import {checkTooEarly, getAbsDate} from './common.js';
 
 /**
  * Description of one Yerushalmi (Jerusalem Talmud) Daf Yomi

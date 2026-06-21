@@ -1,12 +1,12 @@
 import {HDate} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common';
+import {checkTooEarly, getAbsDate} from './common.js';
 import {
   rambam1cycleLen,
   rambam1Start,
   getChap,
   RambamReading,
   mishnehTorah1,
-} from './rambam1Base';
+} from './rambam1Base.js';
 
 const rambam3cycleLen = rambam1cycleLen / 3;
 

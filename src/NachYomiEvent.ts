@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {DailyChapterEvent} from './DailyChapterEvent';
-import {NachYomi} from './nachYomiBase';
+import {DailyChapterEvent} from './DailyChapterEvent.js';
+import {NachYomi} from './nachYomiBase.js';
 
 /**
  * Event wrapper around a Nach Yomi reading — one chapter from

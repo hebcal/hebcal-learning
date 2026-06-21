@@ -1,6 +1,6 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
-import {DailyLearningEvent} from './DailyLearningEvent';
+import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {
   ChofetzChaimReading,
   formatReadingPages,
@@ -8,8 +8,8 @@ import {
   HilchosLH,
   HilchosRechilus,
   Tziyurim,
-} from './chofetzChaimBase';
-import './locale';
+} from './chofetzChaimBase.js';
+import './locale.js';
 
 /**
  * Event wrapper around a Sefer Chofetz Chaim reading — daily study

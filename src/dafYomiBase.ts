@@ -19,9 +19,9 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import {HDate, greg} from '@hebcal/hdate';
-import {DafPage} from './DafPage';
-import {checkTooEarly, getAbsDate} from './common';
-import bavliJson from './bavli.json';
+import {DafPage} from './DafPage.js';
+import {checkTooEarly, getAbsDate} from './common.js';
+import bavliJson from './bavli.json.js';
 
 const osdate = new Date(1923, 8, 11);
 export const osday = greg.greg2abs(osdate);

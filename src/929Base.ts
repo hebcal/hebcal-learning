@@ -1,6 +1,6 @@
 import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly} from './common';
-import tanakhNumChap from './tanakhNumChap.json';
+import {checkTooEarly} from './common.js';
+import tanakhNumChap from './tanakhNumChap.json.js';
 
 const tanakhBooks = Object.entries(tanakhNumChap) as Array<[string, number]>;
 

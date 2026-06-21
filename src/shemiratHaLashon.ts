@@ -1,7 +1,10 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {shemiratHaLashon, shemiratHaLashonStart} from './shemiratHaLashonBase';
-import {ShemiratHaLashonEvent} from './ShemiratHaLashonEvent';
+import {
+  shemiratHaLashon,
+  shemiratHaLashonStart,
+} from './shemiratHaLashonBase.js';
+import {ShemiratHaLashonEvent} from './ShemiratHaLashonEvent.js';
 
 function wrapper(hd: HDate): ShemiratHaLashonEvent | null {
   if (hd.abs() < shemiratHaLashonStart) {

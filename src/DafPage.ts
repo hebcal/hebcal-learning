@@ -1,7 +1,7 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {gematriya} from '@hebcal/hdate';
-import {isHebrewLocale} from './common';
-import './locale';
+import {isHebrewLocale} from './common.js';
+import './locale.js';
 
 /**
  * Represents a tractate and page number

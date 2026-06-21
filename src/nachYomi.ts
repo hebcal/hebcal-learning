@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {NachYomiEvent} from './NachYomiEvent';
-import {NachYomiIndex, nachYomiStart} from './nachYomiBase';
+import {NachYomiEvent} from './NachYomiEvent.js';
+import {NachYomiIndex, nachYomiStart} from './nachYomiBase.js';
 
 const nachYomiIndex = new NachYomiIndex();
 

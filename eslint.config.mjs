@@ -16,14 +16,9 @@ export default [
   {
     files: ['**/*.js'],
     languageOptions: {
-      sourceType: 'module',
       globals: {
         ...globals.node,
       },
-    },
-    rules: {
-      'n/no-missing-import': 'off',
-      'n/no-unpublished-require': 'off',
     },
   },
   {

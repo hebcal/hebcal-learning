@@ -1,7 +1,7 @@
 import {HDate, months} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {kitzurShulchanAruch} from './kitzurShulchanAruchBase';
-import {KitzurShulchanAruchEvent} from './KitzurShulchanAruchEvent';
+import {kitzurShulchanAruch} from './kitzurShulchanAruchBase.js';
+import {KitzurShulchanAruchEvent} from './KitzurShulchanAruchEvent.js';
 
 DailyLearning.addCalendar('kitzurShulchanAruch', (hd: HDate) => {
   const reading = kitzurShulchanAruch(hd, 'A');

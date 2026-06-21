@@ -1,8 +1,8 @@
 import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {DailyChapterEvent} from './DailyChapterEvent';
-import {PerekYomi} from './perekYomiBase';
-import {sefariaUrl} from './common';
+import {DailyChapterEvent} from './DailyChapterEvent.js';
+import {PerekYomi} from './perekYomiBase.js';
+import {sefariaUrl} from './common.js';
 
 /**
  * Event wrapper around a Perek Yomi reading — one chapter of the

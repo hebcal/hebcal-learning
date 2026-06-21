@@ -1,7 +1,7 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {dirshuAmudYomiStart} from './dirshuAmudYomiBase';
-import {DirshuAmudYomiEvent} from './DirshuAmudYomiEvent';
+import {dirshuAmudYomiStart} from './dirshuAmudYomiBase.js';
+import {DirshuAmudYomiEvent} from './DirshuAmudYomiEvent.js';
 
 function wrapper(hd: HDate): DirshuAmudYomiEvent | null {
   const abs = hd.abs();

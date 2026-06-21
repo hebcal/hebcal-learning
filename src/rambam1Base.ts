@@ -1,6 +1,6 @@
 import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common';
-import mishnehTorahJson from './mishnehTorah.json';
+import {checkTooEarly, getAbsDate} from './common.js';
+import mishnehTorahJson from './mishnehTorah.json.js';
 
 // On 9 July 2020 all three tracks completed the Rambam learning cycle.
 // The 3 chapter daily track completed its 39th cycle while the one chapter
