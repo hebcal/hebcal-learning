@@ -243,8 +243,7 @@ function skipDay(hd: HDate): boolean {
   if (
     (hd.getMonth() === months.TISHREI && hd.getDate() === 10) ||
     (hd.getMonth() === months.AV &&
-      ((hd.getDate() === 9 && hd.getDay() !== SAT) ||
-        (hd.getDate() === 10 && hd.getDay() === SUN)))
+      ((hd.getDate() === 9 && hd.getDay() !== SAT) || (hd.getDate() === 10 && hd.getDay() === SUN)))
   ) {
     return true;
   }

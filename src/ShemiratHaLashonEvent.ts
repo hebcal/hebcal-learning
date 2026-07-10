@@ -2,11 +2,7 @@ import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {formatReadingPages} from './chofetzChaimBase.js';
-import {
-  ShemiratHaLashonReading,
-  Chapters,
-  englishNames,
-} from './shemiratHaLashonBase.js';
+import {ShemiratHaLashonReading, Chapters, englishNames} from './shemiratHaLashonBase.js';
 import './locale.js';
 
 /**
@@ -75,8 +71,7 @@ export class ShemiratHaLashonEvent extends DailyLearningEvent {
    *  e.g. https://www.sefaria.org/Shemirat_HaLashon%2C_Book_I%2C_The_Gate_of_Torah.4.2?lang=b
    */
   url(): string {
-    const name =
-      'Shemirat HaLashon, ' + this.renderPrefix('memo') + '.' + this.reading.b;
+    const name = 'Shemirat HaLashon, ' + this.renderPrefix('memo') + '.' + this.reading.b;
     const urlName = encodeURIComponent(name.replaceAll(' ', '_'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }

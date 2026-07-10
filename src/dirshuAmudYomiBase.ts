@@ -11,9 +11,7 @@ type AmudEntry = {
   amudim: number;
 };
 
-export const shas: AmudEntry[] = Object.entries(amudJson).map(
-  ([name, amudim]) => ({name, amudim})
-);
+export const shas: AmudEntry[] = Object.entries(amudJson).map(([name, amudim]) => ({name, amudim}));
 const totalAmudim = shas.reduce((s, a) => s + a.amudim, 0);
 
 /**
@@ -48,9 +46,7 @@ export type DirshuAmudYomi = {
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function calculateDirshuAmud(
-  date: HDate | Date | number
-): DirshuAmudYomi {
+export function calculateDirshuAmud(date: HDate | Date | number): DirshuAmudYomi {
   const cday = getAbsDate(date);
   checkTooEarly(cday, dirshuAmudYomiStart, 'Dirshu Amud HaYomi');
   const dno = (cday - dirshuAmudYomiStart) % totalAmudim;

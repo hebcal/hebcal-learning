@@ -64,9 +64,7 @@ function getNote(day: number): string | undefined {
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function seferHaMitzvot(
-  date: HDate | Date | number
-): SeferHaMitzvotReading {
+export function seferHaMitzvot(date: HDate | Date | number): SeferHaMitzvotReading {
   const cday = getAbsDate(date);
   checkTooEarly(cday, seferHaMitzvotStart, 'Sefer Hamitzvot');
   const day0 = (cday - seferHaMitzvotStart) % cycleLen;

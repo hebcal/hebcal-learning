@@ -52,12 +52,7 @@ const books: Daf[] = [
 ].map(([n, b]) => ({name: n as string, blatt: b as number}));
 
 // Also Pesach 1 and 7, Shavuot, RH 1 and 2, YK, Sukkot 1, Shmini Atz,
-const toSkip = new Set([
-  'Purim',
-  "Yom HaAtzma'ut",
-  "Tish'a B'Av",
-  "Tish'a B'Av (observed)",
-]);
+const toSkip = new Set(['Purim', "Yom HaAtzma'ut", "Tish'a B'Av", "Tish'a B'Av (observed)"]);
 
 /**
  * Calculates the Tanakh Yomi reading for the given date.

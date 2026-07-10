@@ -1,9 +1,6 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {
-  seferHaMitzvot,
-  seferHaMitzvotStart as startAbs,
-} from './seferHaMitzvotBase.js';
+import {seferHaMitzvot, seferHaMitzvotStart as startAbs} from './seferHaMitzvotBase.js';
 import {SeferHaMitzvotEvent} from './SeferHaMitzvotEvent.js';
 
 function wrapper(hd: HDate) {

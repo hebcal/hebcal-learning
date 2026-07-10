@@ -45,9 +45,7 @@ export class DailyRambamEvent extends DailyLearningEvent {
     const name = Locale.gettext(reading.name, loc);
     if (isHebrewLocale(loc)) {
       const perekStr =
-        typeof reading.perek === 'number'
-          ? gematriyaNN(reading.perek)
-          : reading.perek;
+        typeof reading.perek === 'number' ? gematriyaNN(reading.perek) : reading.perek;
       return name + ' פרק ' + perekStr;
     }
     return name + ' ' + reading.perek;
@@ -58,9 +56,7 @@ export class DailyRambamEvent extends DailyLearningEvent {
   url(): string {
     const reading = this.reading;
     const name = 'Mishneh Torah, ' + reading.name + '.' + reading.perek;
-    const urlName = encodeURIComponent(
-      name.replaceAll(' ', '_').replaceAll(':', '.')
-    );
+    const urlName = encodeURIComponent(name.replaceAll(' ', '_').replaceAll(':', '.'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }
   getCategories(): string[] {

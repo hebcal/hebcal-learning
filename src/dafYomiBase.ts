@@ -32,9 +32,10 @@ type Daf = {
   blatt: number;
 };
 
-export const shas0: Daf[] = Object.entries<number>(bavliJson).map(
-  ([name, blatt]) => ({name, blatt})
-);
+export const shas0: Daf[] = Object.entries<number>(bavliJson).map(([name, blatt]) => ({
+  name,
+  blatt,
+}));
 
 /**
  * @private

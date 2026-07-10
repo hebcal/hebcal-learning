@@ -11,10 +11,7 @@ function gematriyaOrSof(s: string): string {
   return s === 'E' ? 'סוף' : gematriyaNN(s);
 }
 
-function renderReading(
-  reading: KitzurShulchanAruchReading,
-  locale?: string
-): string {
+function renderReading(reading: KitzurShulchanAruchReading, locale?: string): string {
   const loc = (locale || 'en').toLowerCase();
   if (isHebrewLocale(loc)) {
     if (reading.b === 'Klalim') {
@@ -99,9 +96,7 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
    * @param [locale] Optional locale name (defaults to active locale).
    */
   render(locale?: string): string {
-    const prefix = this.leapAdar2
-      ? ''
-      : Locale.gettext(BOOK_NAME, locale) + ' ';
+    const prefix = this.leapAdar2 ? '' : Locale.gettext(BOOK_NAME, locale) + ' ';
     return prefix + this.renderBrief(locale);
   }
   /**

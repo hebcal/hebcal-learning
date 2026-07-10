@@ -15,11 +15,7 @@ function wrapperVilna(hd: HDate): YerushalmiYomiEvent | null {
   return new YerushalmiYomiEvent(hd, daf);
 }
 
-DailyLearning.addCalendar(
-  'yerushalmi-vilna',
-  wrapperVilna,
-  new HDate(vilna.startAbs)
-);
+DailyLearning.addCalendar('yerushalmi-vilna', wrapperVilna, new HDate(vilna.startAbs));
 
 function wrapperSchottenstein(hd: HDate): YerushalmiYomiEvent | null {
   const abs = hd.abs();

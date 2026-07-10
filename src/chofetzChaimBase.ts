@@ -28,8 +28,7 @@ export const HilchosLH = 'HilchosLH';
 export const HilchosRechilus = 'HilchosRechilus';
 export const Tziyurim = 'Tziyurim';
 
-const intro =
-  'Introduction to the Laws of the Prohibition of Lashon Hara and Rechilut';
+const intro = 'Introduction to the Laws of the Prohibition of Lashon Hara and Rechilut';
 export const englishNames: Record<string, string> = {
   Hakdamah: 'Preface',
   Psichah: `${intro}, Opening Comments`,
@@ -42,40 +41,12 @@ export const englishNames: Record<string, string> = {
 } as const;
 
 const simple = [
-  [
-    [1, Tishrei, 1, Shvat, 1, Sivan],
-    Hakdamah,
-    1,
-    4,
-    'ברוך ד׳',
-    'שכינתו בתוכנו',
-  ],
-  [
-    [2, Tishrei, 2, Shvat, 2, Sivan],
-    Hakdamah,
-    5,
-    10,
-    'וכאשר נחפשה',
-    'מגדל העון',
-  ],
-  [
-    [3, Tishrei, 3, Shvat, 3, Sivan],
-    Hakdamah,
-    11,
-    16,
-    'ונראה פשוט',
-    'לאין שעור',
-  ],
+  [[1, Tishrei, 1, Shvat, 1, Sivan], Hakdamah, 1, 4, 'ברוך ד׳', 'שכינתו בתוכנו'],
+  [[2, Tishrei, 2, Shvat, 2, Sivan], Hakdamah, 5, 10, 'וכאשר נחפשה', 'מגדל העון'],
+  [[3, Tishrei, 3, Shvat, 3, Sivan], Hakdamah, 11, 16, 'ונראה פשוט', 'לאין שעור'],
   [[4, Tishrei, 4, Shvat, 4, Sivan], Hakdamah, 17, 22, 'ואחשבה', 'בפנים הספר'],
   [[5, Tishrei, 5, Shvat, 5, Sivan], Hakdamah, 23, 27, 'על כן', 'צד הדי'],
-  [
-    [6, Tishrei, 6, Shvat, 6, Sivan],
-    Hakdamah,
-    28,
-    [33, 34],
-    'ואחלה להקורא',
-    'במהרה בימינו אמן',
-  ],
+  [[6, Tishrei, 6, Shvat, 6, Sivan], Hakdamah, 28, [33, 34], 'ואחלה להקורא', 'במהרה בימינו אמן'],
   [[7, Tishrei, 6, Shvat, 6, Sivan], Hakdamah, 29, 32, 'ואל יפלא', 'לעון כלל'],
   [[8, Tishrei, 7, Shvat, 7, Sivan], Psichah, 1, 4],
   [[9, Tishrei, 8, Shvat, 8, Sivan], Psichah, 5, 11],
@@ -192,55 +163,13 @@ const simple = [
 ];
 
 const leap = [
-  [
-    [1, Tishrei, 11, Shvat, 20, Iyyar],
-    Hakdamah,
-    1,
-    4,
-    'ברוך ד׳',
-    'שכינתו בתוכנו',
-  ],
-  [
-    [2, Tishrei, 12, Shvat, 21, Iyyar],
-    Hakdamah,
-    5,
-    10,
-    'וכאשר נחפשה',
-    'מגדל העון',
-  ],
-  [
-    [3, Tishrei, 13, Shvat, 22, Iyyar],
-    Hakdamah,
-    11,
-    16,
-    'ונראה פשוט',
-    'לאין שעור',
-  ],
-  [
-    [4, Tishrei, 14, Shvat, 23, Iyyar],
-    Hakdamah,
-    17,
-    22,
-    'ואחשבה',
-    'בפנים הספר',
-  ],
+  [[1, Tishrei, 11, Shvat, 20, Iyyar], Hakdamah, 1, 4, 'ברוך ד׳', 'שכינתו בתוכנו'],
+  [[2, Tishrei, 12, Shvat, 21, Iyyar], Hakdamah, 5, 10, 'וכאשר נחפשה', 'מגדל העון'],
+  [[3, Tishrei, 13, Shvat, 22, Iyyar], Hakdamah, 11, 16, 'ונראה פשוט', 'לאין שעור'],
+  [[4, Tishrei, 14, Shvat, 23, Iyyar], Hakdamah, 17, 22, 'ואחשבה', 'בפנים הספר'],
   [[5, Tishrei, 15, Shvat, 24, Iyyar], Hakdamah, 23, 27, 'על כן', 'צד הדי'],
-  [
-    [6, Tishrei, 16, Shvat, 25, Iyyar],
-    Hakdamah,
-    28,
-    [33, 34],
-    'ואחלה להקורא',
-    'במהרה בימינו אמן',
-  ],
-  [
-    [7, Tishrei, 16, Shvat, 25, Iyyar],
-    Hakdamah,
-    29,
-    32,
-    'ואל יפלא',
-    'לעון כלל',
-  ],
+  [[6, Tishrei, 16, Shvat, 25, Iyyar], Hakdamah, 28, [33, 34], 'ואחלה להקורא', 'במהרה בימינו אמן'],
+  [[7, Tishrei, 16, Shvat, 25, Iyyar], Hakdamah, 29, 32, 'ואל יפלא', 'לעון כלל'],
   [[8, Tishrei, 17, Shvat, 26, Iyyar], Psichah, 1, 4],
   [[9, Tishrei, 18, Shvat, 27, Iyyar], Psichah, 5, 11],
   [[10, Tishrei, 19, Shvat, 28, Iyyar], Lavin, 1, 2],
@@ -462,11 +391,7 @@ export function chofetzChaim(hdate: HDate): ChofetzChaimReading {
   return result;
 }
 
-function lookupReading(
-  readings: Entry[],
-  day: number,
-  month: number
-): ChofetzChaimReading {
+function lookupReading(readings: Entry[], day: number, month: number): ChofetzChaimReading {
   let k = '';
   let b: string | number = 0;
   let e: string | number | number[] = 0;

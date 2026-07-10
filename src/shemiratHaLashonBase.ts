@@ -517,11 +517,7 @@ export function shemiratHaLashon(hdate: HDate): ShemiratHaLashonReading {
   return result;
 }
 
-function lookupReading(
-  day: number,
-  month: number,
-  isLeapYear: boolean
-): ShemiratHaLashonReading {
+function lookupReading(day: number, month: number, isLeapYear: boolean): ShemiratHaLashonReading {
   let bk = 0;
   let k = '';
   let b: number | string = 0;

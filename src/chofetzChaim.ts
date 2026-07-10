@@ -11,8 +11,4 @@ function wrapper(hd: HDate): ChofetzChaimEvent | null {
   return new ChofetzChaimEvent(hd, reading);
 }
 
-DailyLearning.addCalendar(
-  'chofetzChaim',
-  wrapper,
-  new HDate(chofetzChaimStart)
-);
+DailyLearning.addCalendar('chofetzChaim', wrapper, new HDate(chofetzChaimStart));

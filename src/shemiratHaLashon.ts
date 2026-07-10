@@ -1,9 +1,6 @@
 import {HDate} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {
-  shemiratHaLashon,
-  shemiratHaLashonStart,
-} from './shemiratHaLashonBase.js';
+import {shemiratHaLashon, shemiratHaLashonStart} from './shemiratHaLashonBase.js';
 import {ShemiratHaLashonEvent} from './ShemiratHaLashonEvent.js';
 
 function wrapper(hd: HDate): ShemiratHaLashonEvent | null {
@@ -14,8 +11,4 @@ function wrapper(hd: HDate): ShemiratHaLashonEvent | null {
   return new ShemiratHaLashonEvent(hd, reading);
 }
 
-DailyLearning.addCalendar(
-  'shemiratHaLashon',
-  wrapper,
-  new HDate(shemiratHaLashonStart)
-);
+DailyLearning.addCalendar('shemiratHaLashon', wrapper, new HDate(shemiratHaLashonStart));

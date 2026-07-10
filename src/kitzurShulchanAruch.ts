@@ -9,8 +9,6 @@ DailyLearning.addCalendar('kitzurShulchanAruch', (hd: HDate) => {
     return null;
   }
   const optionB =
-    hd.isLeapYear() && hd.getMonth() === months.ADAR_II
-      ? kitzurShulchanAruch(hd, 'B')
-      : undefined;
+    hd.isLeapYear() && hd.getMonth() === months.ADAR_II ? kitzurShulchanAruch(hd, 'B') : undefined;
   return new KitzurShulchanAruchEvent(hd, reading, optionB);
 });

@@ -17,8 +17,7 @@ function assertHeader(name, value) {
 function writePoFile(inpath, outpath) {
   const input = fs.readFileSync(inpath).toString().normalize();
   const poData = po.parse(input);
-  const pluralHeader =
-    poData.headers['plural-forms'] || poData.headers['Plural-Forms'];
+  const pluralHeader = poData.headers['plural-forms'] || poData.headers['Plural-Forms'];
   const language = poData.headers.language || poData.headers.Language;
   assertHeader('Plural-Forms', pluralHeader);
   assertHeader('Language', language);

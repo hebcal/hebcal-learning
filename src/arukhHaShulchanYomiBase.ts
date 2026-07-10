@@ -20,13 +20,7 @@ const cycleLen = ahsyJson.length; // 1719
 const cycleStartDate = new Date(2020, 4, 29);
 export const ahsyStart = greg.greg2abs(cycleStartDate);
 
-const sections = [
-  '',
-  'Orach Chaim',
-  "Yoreh De'ah",
-  'Even HaEzer',
-  'Choshen Mishpat',
-];
+const sections = ['', 'Orach Chaim', "Yoreh De'ah", 'Even HaEzer', 'Choshen Mishpat'];
 
 /**
  * Calculates the Arukh HaShulchan Yomi reading for the given date.
@@ -47,9 +41,7 @@ const sections = [
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function arukhHaShulchanYomi(
-  date: HDate | Date | number
-): AhSYomiReading {
+export function arukhHaShulchanYomi(date: HDate | Date | number): AhSYomiReading {
   const cday = getAbsDate(date);
   checkTooEarly(cday, ahsyStart, 'Arukh HaShulchan Yomi');
   const dayNum = (cday - ahsyStart) % cycleLen;
