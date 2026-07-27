@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/hebcal/hebcal-learning#readme",
   "dependencies": {
-    "@hebcal/core": "^6.6.0",
+    "@hebcal/core": "^6.8.2",
     "@hebcal/hdate": "^0.22.5"
   },
   "files": [
@@ -34,7 +34,7 @@
     "build:json2js": "for f in src/*.json; do echo 'export default' > $f.ts && cat $f >> $f.ts; done",
     "po2json": "node ./po2json.js po/*.po",
     "build": "npm run po2json && npm run build:json2js && tsc",
-    "docs": "typedoc",
+    "docs": "npx -y typedoc",
     "clean": "rm -rf dist coverage .nyc_output src/*.json.ts src/*.po.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -47,10 +47,9 @@
   "devDependencies": {
     "@types/node": "^26.1.1",
     "gettext-parser": "^9.1.1",
-    "oxlint": "^1.73.0",
-    "prettier": "^3.9.5",
-    "typedoc": "^0.28.20",
-    "typescript": "^6.0.3",
+    "oxlint": "^1.76.0",
+    "prettier": "^3.9.6",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.10"
   }
 }
