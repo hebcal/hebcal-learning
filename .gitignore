@@ -1,5 +1,6 @@
 src/*.po.ts
 src/*.json.ts
+docs
 
 # Logs
 logs
