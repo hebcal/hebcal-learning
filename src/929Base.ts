@@ -44,33 +44,35 @@ function skipDay(abs: number): boolean {
 }
 
 /**
- * Given an absolute day number that is the first day of a cycle (always a
- * Sunday), returns the absolute day on which chapter 929 will be read.
+ * Day offset from the start of a cycle (always a Sunday) to the day chapter
+ * 929 is read.
+ *
+ * Reading 5 chapters a week, 929 chapters is 185 full weeks (925 chapters)
+ * plus 4 more: the 185 weeks span days 0..1294, so chapters 926-929 fall on
+ * the Sun/Mon/Tue/Wed of the following week, i.e. offsets 1295..1298. That
+ * makes the last chapter land on offset 1298, always a Wednesday.
  * @private
  */
-function findCycleEnd(cycleStart: number): number {
-  let chaptersRead = 0;
-  let abs = cycleStart;
-  while (true) {
-    if (!skipDay(abs)) {
-      chaptersRead++;
-      if (chaptersRead === TOTAL_929_CHAPTERS) {
-        return abs;
-      }
-    }
-    abs++;
-  }
-}
+const LAST_CHAPTER_OFFSET = 1298;
 
 /**
- * Given an absolute day number for the last chapter (always a Wednesday),
- * returns the absolute day of the Sunday that begins the next cycle.
+ * Number of days from the start of one cycle to the start of the next.
+ * The last chapter is a Wednesday, and the next cycle begins the following
+ * Sunday (+4 days), so cycles repeat on a fixed 1302-day period.
  * @private
  */
-function nextCycleStart(lastChapterAbs: number): number {
-  // lastChapterAbs is a Wednesday (getDay() === 3).
-  // Skip Thu–Sat (rest of week), next Sunday = lastChapterAbs + 4.
-  return lastChapterAbs + 4;
+const CYCLE_DAYS = LAST_CHAPTER_OFFSET + 4;
+
+/**
+ * Number of chapters read in the `days` days starting at a cycle start
+ * (always a Sunday) and ending just before `cycleStart + days`.
+ *
+ * Whole weeks contribute 5 chapters each; the partial week contributes one
+ * per day from Sunday through Thursday, capped at 5 since Fri/Sat are skipped.
+ * @private
+ */
+function chaptersInDays(days: number): number {
+  return Math.floor(days / 7) * 5 + Math.min(days % 7, 5);
 }
 
 export type Nine29Reading = {
@@ -107,49 +109,36 @@ export function calculate929(date: HDate | Date | number): Nine29Reading | null 
     return null;
   }
 
-  // Walk through completed cycles to find which cycle this date falls in
-  // and what chapter offset it has within that cycle.
-  let cycleStart = nine29Start;
-  let cycleNumber = 1;
-
-  while (true) {
-    const cycleEnd = findCycleEnd(cycleStart);
-    // Cycle 1→2 has a unique 3-month gap; all later transitions are +4 days.
-    const nextStart = cycleNumber === 1 ? nine29StartCycle2 : nextCycleStart(cycleEnd);
-
-    if (abs < nextStart) {
-      // This date is within the current cycle (either an active reading day
-      // or a skip day / wind-down day after chapter 929).
-      if (skipDay(abs)) {
-        return null;
-      }
-      // Cycle 1 used a modified schedule (holiday skips); cap it at the
-      // historical end date rather than the formula-computed cycleEnd.
-      const effectiveCycleEnd = cycleNumber === 1 ? nine29EndCycle1 : cycleEnd;
-      if (abs > effectiveCycleEnd) {
-        // Wind-down / historical gap: no reading.
-        return null;
-      }
-      // Count how many reading days occurred from cycleStart up to (not
-      // including) abs, to determine the chapter number for today.
-      let chaptersBeforeToday = 0;
-      for (let i = cycleStart; i < abs; i++) {
-        if (!skipDay(i)) {
-          chaptersBeforeToday++;
-        }
-      }
-      const chapterNum = chaptersBeforeToday + 1;
-      const {book, bookChap} = chapterToBookAndVerse(chapterNum);
-      return {
-        cycleChap: chapterNum,
-        cycleNum: cycleNumber,
-        book,
-        bookChap,
-      };
-    }
-
-    // Move to the next cycle
-    cycleStart = nextStart;
-    cycleNumber++;
+  // Locate the cycle containing this date directly. Cycle 1→2 has a unique
+  // ~3-month gap, so cycle 1 is special-cased; from cycle 2 onward the cycles
+  // repeat on a fixed CYCLE_DAYS period.
+  let cycleNumber: number;
+  let cycleStart: number;
+  if (abs < nine29StartCycle2) {
+    cycleNumber = 1;
+    cycleStart = nine29Start;
+  } else {
+    const elapsed = Math.floor((abs - nine29StartCycle2) / CYCLE_DAYS);
+    cycleNumber = 2 + elapsed;
+    cycleStart = nine29StartCycle2 + elapsed * CYCLE_DAYS;
   }
+
+  if (skipDay(abs)) {
+    return null;
+  }
+  // Cycle 1 used a modified schedule (holiday skips); cap it at the
+  // historical end date rather than the formula-computed cycle end.
+  const effectiveCycleEnd = cycleNumber === 1 ? nine29EndCycle1 : cycleStart + LAST_CHAPTER_OFFSET;
+  if (abs > effectiveCycleEnd) {
+    // Wind-down / historical gap: no reading.
+    return null;
+  }
+  const chapterNum = chaptersInDays(abs - cycleStart) + 1;
+  const {book, bookChap} = chapterToBookAndVerse(chapterNum);
+  return {
+    cycleChap: chapterNum,
+    cycleNum: cycleNumber,
+    book,
+    bookChap,
+  };
 }

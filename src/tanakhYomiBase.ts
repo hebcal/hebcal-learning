@@ -90,24 +90,13 @@ export function tanakhYomi(date: HDate | Date | number): TanakhYomi | null {
   if (cday < startAbs) {
     const rhDow = rh % 7;
     let blatt = rhDow === 4 ? 11 : rhDow === 6 ? 10 : 12;
-    for (let i = rh + 2; i < cday; i++) {
-      const hdate = new HDate(i);
-      if (!skipDay(hdate)) {
-        blatt++;
-      }
-    }
+    blatt += countReadingDays(rh + 2, cday);
     if (blatt === 26) {
       throw new Error(`${hd.toString()} Chronicles ${blatt}`);
     }
     return new TanakhYomi('Chronicles', blatt);
   }
-  let total = 0;
-  for (let i = startAbs; i < cday; i++) {
-    const hdate = new HDate(i);
-    if (!skipDay(hdate)) {
-      total++;
-    }
-  }
+  let total = countReadingDays(startAbs, cday);
   const readingTable = makeReadingTable(hyear);
   const table = readingTable.table;
 
@@ -165,20 +154,80 @@ function skipDay(hd: HDate): boolean {
   return false;
 }
 
+type YearReadingDays = {
+  /** Absolute day number of 1 Tishrei */
+  rh: number;
+  /** Length of the Hebrew year in days */
+  len: number;
+  /** `prefix[i]` is the number of reading days in `[rh, rh + i)` */
+  prefix: Int32Array;
+};
+
+/**
+ * Determining whether a day is skipped requires a holiday lookup, which is by
+ * far the most expensive part of this calendar. Counting reading days one at a
+ * time therefore costs hundreds of holiday lookups per query. Instead, resolve
+ * a whole Hebrew year at once and cache the prefix sums, so that repeated
+ * queries -- overwhelmingly for dates in the same year or two -- reduce to
+ * array subtraction.
+ * @private
+ */
+const yearCache = new Map<number, YearReadingDays>();
+
+/** Keeps the cache bounded when callers sweep across many years. @private */
+const MAX_CACHED_YEARS = 64;
+
+/**
+ * @private
+ */
+function getYearReadingDays(year: number): YearReadingDays {
+  const cached = yearCache.get(year);
+  if (cached) {
+    return cached;
+  }
+  const rh = HDate.hebrew2abs(year, months.TISHREI, 1);
+  const len = HDate.hebrew2abs(year + 1, months.TISHREI, 1) - rh;
+  const prefix = new Int32Array(len + 1);
+  let count = 0;
+  for (let i = 0; i < len; i++) {
+    prefix[i] = count;
+    if (!skipDay(new HDate(rh + i))) {
+      count++;
+    }
+  }
+  prefix[len] = count;
+  const info: YearReadingDays = {rh, len, prefix};
+  if (yearCache.size >= MAX_CACHED_YEARS) {
+    yearCache.clear();
+  }
+  yearCache.set(year, info);
+  return info;
+}
+
+/**
+ * Number of reading days (days that are not skipped) in the half-open
+ * range `[startAbs, endAbs)`.
+ * @private
+ */
+function countReadingDays(startAbs: number, endAbs: number): number {
+  let count = 0;
+  let abs = startAbs;
+  while (abs < endAbs) {
+    const info = getYearReadingDays(new HDate(abs).getFullYear());
+    const stop = Math.min(endAbs, info.rh + info.len);
+    count += info.prefix[stop - info.rh] - info.prefix[abs - info.rh];
+    abs = stop;
+  }
+  return count;
+}
+
 /**
  * @private
  */
 function calculateNumDaysToRead(year: number): number {
   const startAbs = HDate.hebrew2abs(year, months.TISHREI, 23);
   const endAbs = HDate.hebrew2abs(year + 1, months.TISHREI, 22);
-  let included = 0;
-  for (let abs = startAbs; abs <= endAbs; abs++) {
-    const hdate = new HDate(abs);
-    if (!skipDay(hdate)) {
-      included++;
-    }
-  }
-  return included;
+  return countReadingDays(startAbs, endAbs + 1);
 }
 
 type ReadingsForYear = {
@@ -207,7 +256,25 @@ type ReadingsForYear = {
  *
  * @private
  */
+const readingTableCache = new Map<number, ReadingsForYear>();
+
 function makeReadingTable(year: number): ReadingsForYear {
+  const cached = readingTableCache.get(year);
+  if (cached) {
+    return cached;
+  }
+  const result = buildReadingTable(year);
+  if (readingTableCache.size >= MAX_CACHED_YEARS) {
+    readingTableCache.clear();
+  }
+  readingTableCache.set(year, result);
+  return result;
+}
+
+/**
+ * @private
+ */
+function buildReadingTable(year: number): ReadingsForYear {
   const numDays = calculateNumDaysToRead(year);
   const count = HDate.isLeapYear(year) ? numDays - 25 : numDays;
   const extra = count - 293;

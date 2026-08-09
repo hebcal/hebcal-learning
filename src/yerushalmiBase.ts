@@ -171,20 +171,80 @@ function countDapim(config: YerushalmiYomiConfig) {
   return numDapim;
 }
 
+function yomKippurAbs(year: number): number {
+  return HDate.hebrew2abs(year, months.TISHREI, 10);
+}
+
+function tishaBavObservedAbs(year: number): number {
+  let av9dt = new HDate(9, months.AV, year);
+  if (av9dt.getDay() === SAT) {
+    av9dt = av9dt.next();
+  }
+  return av9dt.abs();
+}
+
+/**
+ * Number of skipped days (Yom Kippur and the observed Tish'a B'Av) falling
+ * strictly before `abs`, counted from an arbitrary fixed origin.
+ *
+ * Every Hebrew year contains exactly one of each, with Yom Kippur (10 Tishrei)
+ * near the start of the year and Tish'a B'Av (9 Av, deferred to the 10th when
+ * the 9th is Shabbat) near the end. So every skipped day of every preceding
+ * year is before `abs`, and only the current year needs to be examined. The
+ * arbitrary origin cancels whenever two of these counts are subtracted.
+ * @private
+ */
+function skippedDaysBefore(abs: number): number {
+  const year = new HDate(abs).getFullYear();
+  let n = 2 * year;
+  if (yomKippurAbs(year) < abs) {
+    n++;
+  }
+  if (tishaBavObservedAbs(year) < abs) {
+    n++;
+  }
+  return n;
+}
+
+/**
+ * Number of reading days in the half-open range `[config.startAbs, cday)`,
+ * i.e. how many dapim have been studied before `cday`.
+ * @private
+ */
+function readingsBefore(config: YerushalmiYomiConfig, cday: number): number {
+  const elapsed = cday - config.startAbs;
+  if (!config.skipYK9Av) {
+    return elapsed;
+  }
+  return elapsed - (skippedDaysBefore(cday) - skippedDaysBefore(config.startAbs));
+}
+
+/**
+ * Absolute day number on which the cycle containing `cday` began.
+ */
 export function cycleStart(config: YerushalmiYomiConfig, cday: number): number {
   const numDapim = countDapim(config);
   const startAbs = config.startAbs;
-  let prev = startAbs;
-  let next = startAbs;
-  while (cday >= next) {
-    prev = next;
-    next += numDapim;
-    const n = numSpecialDays(config, prev, next);
-    // recalculate for any additional special days at the end
-    const n2 = numSpecialDays(config, next, next + n);
-    next += n + n2;
+  const target = Math.floor(readingsBefore(config, cday) / numDapim) * numDapim;
+  if (!config.skipYK9Av) {
+    return startAbs + target;
   }
-  return prev;
+  // Invert readingsBefore(): begin at the lower bound that assumes no skipped
+  // days, then add back however many were found, repeating until the count
+  // settles. Skipped days are sparse (two per Hebrew year), so adding them can
+  // only uncover a handful more and this converges after a couple of passes.
+  let abs = startAbs + target;
+  let deficit = target - readingsBefore(config, abs);
+  while (deficit > 0) {
+    abs += deficit;
+    deficit = target - readingsBefore(config, abs);
+  }
+  // A cycle boundary can land on a skipped day; advance to the first day that
+  // actually has a reading.
+  while (skipDay(new HDate(abs))) {
+    abs++;
+  }
+  return abs;
 }
 
 /**
@@ -221,15 +281,16 @@ export function yerushalmiYomi(
   const cday = getAbsDate(date);
   const startAbs = config.startAbs;
   checkTooEarly(cday, startAbs, 'Yerushalmi Yomi');
-  const hd = new HDate(cday);
   // No Daf for Yom Kippur and Tisha B'Av
-  if (config.skipYK9Av && skipDay(hd)) {
+  if (config.skipYK9Av && skipDay(new HDate(cday))) {
     return null;
   }
 
   const shas = config.shas;
-  const prevCycle = cycleStart(config, cday);
-  let total = cday - prevCycle - numSpecialDays(config, prevCycle, cday);
+  // Each cycle consumes exactly numDapim reading days, so the position within
+  // the current cycle is just the running reading count modulo the cycle
+  // length -- no need to walk cycle by cycle from the start of the epoch.
+  let total = readingsBefore(config, cday) % countDapim(config);
   for (const masechet of shas) {
     if (total < masechet[1]) {
       return {name: masechet[0], blatt: total + 1, ed: config.ed};
@@ -258,22 +319,7 @@ export function numSpecialDays(
   if (!config.skipYK9Av) {
     return 0;
   }
-  const startYear = new HDate(startAbs).getFullYear();
-  const endYear = new HDate(endAbs).getFullYear();
-  let specialDays = 0;
-  for (let year = startYear; year <= endYear; year++) {
-    const ykAbs = new HDate(10, months.TISHREI, year).abs();
-    if (ykAbs >= startAbs && ykAbs <= endAbs) {
-      specialDays++;
-    }
-    let av9dt = new HDate(9, months.AV, year);
-    if (av9dt.getDay() === SAT) {
-      av9dt = av9dt.next();
-    }
-    const av9abs = av9dt.abs();
-    if (av9abs >= startAbs && av9abs <= endAbs) {
-      specialDays++;
-    }
-  }
-  return specialDays;
+  // Both bounds are inclusive, so count everything before endAbs + 1 and
+  // discount everything before startAbs.
+  return skippedDaysBefore(endAbs + 1) - skippedDaysBefore(startAbs);
 }
