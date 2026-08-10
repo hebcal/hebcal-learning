@@ -117,15 +117,17 @@ test('pirkeiAvot 5783 israel', () => {
 });
 
 /*
-  - 21 Nisan is a Wednesday, so the first Saturday for Pirkei Avot is 1 Iyyar (a week later)
-  - 24 Nisan is a Saturday, but it's BEFORE the first Saturday of the season
-  - This causes weekDiff = -1
-  - In JavaScript, (-1 % 6) + 1 = 0, which returns [0] incorrectly
+  In Hebrew year 3759 (~2000 BCE, a negative R.D. number), 21 Nisan (7th
+  day Pesach) is a Wednesday, so 24 Nisan is the first Shabbat after Pesach
+  and gets chapter 1. This exercises HDate.dayOnOrBefore across the common
+  era boundary: it must use a floored modulo, since JavaScript's truncating
+  `%` would push the season's first Shabbat a week late (to 1 Iyyar) and
+  wrongly return null here. Requires @hebcal/hdate with that fix.
 */
 test('pirkeiAvot 24 Nisan 3759', () => {
   const hd = new HDate(24, months.NISAN, 3759);
   const reading = pirkeiAvot(hd, true);
-  expect(reading).toBeNull();
+  expect(reading).toEqual([1]);
 });
 
 test('PirkeiAvotSummerEvent', () => {

@@ -24,7 +24,7 @@
   "homepage": "https://github.com/hebcal/hebcal-learning#readme",
   "dependencies": {
     "@hebcal/core": "^6.9.2",
-    "@hebcal/hdate": "^0.22.7"
+    "@hebcal/hdate": "^0.22.8"
   },
   "files": [
     "dist",
@@ -48,7 +48,7 @@
   "devDependencies": {
     "@types/node": "^26.2.0",
     "gettext-parser": "^9.1.1",
-    "oxlint": "^1.77.0",
+    "oxlint": "^1.78.0",
     "prettier": "^3.9.6",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"
