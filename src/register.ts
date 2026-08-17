@@ -1,5 +1,6 @@
 import './arukhHaShulchanYomi.js';
 import './dirshuAmudYomi.js';
+import './dirshuDafHalacha.js';
 import './chofetzChaim.js';
 import './dafWeekly.js';
 import './dafYomi.js';
