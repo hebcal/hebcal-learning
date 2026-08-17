@@ -159,21 +159,54 @@ booklet and re-derive the window before trusting output.
 
 ## 6. Source availability — what is and isn't reachable
 
-- **dafhalacha.com is fully captcha-walled** (SiteGround `sgcaptcha`, HTTP 202 +
-  JS redirect) on *every* path tried: `/`, `/wp-json/wp/v2/media`,
-  `/wp-sitemap.xml`, `/sitemap.xml`, `/feed/`, `/wp-content/uploads/**.pdf`,
-  and `/mishnahberurah/…`. WebFetch returns an empty page. **Don't burn time
-  re-probing it** — ask the maintainer to fetch through their browser.
+> **Network reachability is session-dependent — re-test, don't trust this list
+> blindly.** The captcha wall described below was *fully down* in the
+> 2026-08-16 re-probe: `curl` pulled the 2024 booklet PDF straight off
+> dafhalacha.com (HTTP 200, `application/pdf`, 17.9 MB) and its WP REST API
+> answered WebFetch with no `sgcaptcha`. An earlier session saw the opposite.
+> Spend two `curl` calls confirming the current state before concluding
+> anything is blocked — but expect the *coverage* conclusion (below) to hold
+> regardless of which wall is up, because the old booklets simply aren't hosted.
+
+- **dafhalacha.com** has been seen both captcha-walled (SiteGround `sgcaptcha`,
+  HTTP 202 + JS redirect on every path) *and* wide open (2026-08-16). When open,
+  both `curl` and WebFetch reach `/wp-json/wp/v2/media` and the PDF uploads
+  directly. **But its media library only goes back to 2024-06-10** — the
+  authoritative check is
+  `…/wp-json/wp/v2/media?per_page=100&mime_type=application/pdf&orderby=date&order=asc`,
+  whose *first* row is the 2024 booklet. There are **no pre-2024 booklets on the
+  live site**, wall up or down. The only Luach PDFs present are four: the two
+  you already have plus a `2024-10/2024-Luach-Booklet-6-19-24-NO-Bleed.pdf` and a
+  `2025-11/2025-2026-Luach-Booklet-Email-Version-single-pages.pdf` (variants of
+  the same two — diff them against the JSON if ever curious, but they add no
+  coverage).
+- **All web archives are blocked here — confirmed 2026-08-16, all three routes:**
+  `web.archive.org` returns nginx **502/503 on every endpoint** (CDX,
+  `/wayback/available`, and the `/web/<ts>/` and `…id_/` snapshot paths alike —
+  it is the egress proxy intercepting, not the real IA);
+  `timetravel.mementoweb.org` **fails DNS resolution**; `archive.today`
+  (`archive.ph`) is reachable but sits behind an **unsolvable Cloudflare
+  CAPTCHA** (HTTP 429 → recaptcha challenge page). So the Wayback snapshot of the
+  old `https://dafhalacha.com/limud-schedule/` page (see §7) **cannot be fetched
+  from this environment** — it needs a real browser outside the sandbox.
 - **Chromium is not a workaround in this environment.** It cannot reach *any*
   host through the agent proxy — `ERR_CONNECTION_RESET` even for example.com.
-- **web.archive.org is blocked by egress policy** ("Blocked by egress policy").
-- **dirshu.co.il is completely open** — no captcha, WP REST API works.
+- **dirshu.co.il is completely open** — no captcha, WP REST API works, and
+  `curl` pulls its PDFs (`luach_5786.pdf`, 1.7 MB, HTTP 200).
   `https://www.dirshu.co.il/wp-content/uploads/2026/02/luach_5786.pdf` is the
-  current Hebrew luach (linked from the `לוח הלימוד השנתי` page via a
-  pdf-viewer shortcode iframe). It carries the same columns and **matches the
-  English booklets exactly** (spot-checked 17–28 Kislev 5786). It is Hebrew-date
-  only and they keep just the current year — `luach_5785`/`5784`/`5783` are not
-  in the media library under any slug tried.
+  current Hebrew luach (linked from the `לוח הלימוד השנתי` page —
+  `…/2161-2/לוח-הלימוד-השנתי/` — via a pdf-viewer shortcode iframe). It carries
+  the same columns and **matches the English booklets exactly** (spot-checked
+  17–28 Kislev 5786). It is Hebrew-date only and they keep **just the current
+  year**: the media API returns only `luach_5786`, and brute-forcing
+  `luach_5785`/`5784` across likely `/YYYY/MM/` upload paths returned **no hits**
+  (2026-08-16).
+- **`files.dirshu.co.il`** is a plain (non-WordPress) file server that responds,
+  but directory listing is **403** and individual files need an exact guessed
+  path — not a practical way to discover old luachs. Reachable sibling sites
+  (`dirshu.co.uk/downloads-info`, `dirshu.co.za`) link only to the current
+  dirshu.co.il luach page, sample tests, and marei-mekomos — no schedule
+  archive.
 
 That Hebrew luach also settled an ambiguity: its page header marks
 `* תחילת חלק ד׳` ("start of chelek 4") against 17 Kislev while the amud
@@ -198,17 +231,43 @@ The real gap is **coverage**:
   no other schedule in this package has.
 
 **To close it, obtain the pre-June-2024 booklets** (likely `2022-Luach-Booklet-*`
-and `2023-Luach-Booklet-*`), plus later ones for the tail. The maintainer was
-given these URLs to try in a browser:
+and `2023-Luach-Booklet-*`), plus later ones for the tail.
+
+The live-site media queries below are now **exhausted from the agent** — the
+2026-08-16 re-probe ran them and the library only goes back to 2024-06-10 (§6),
+so they will not surface older booklets no matter how many times they are tried:
 
 ```
 https://dafhalacha.com/wp-json/wp/v2/media?per_page=100&search=luach
 https://dafhalacha.com/wp-json/wp/v2/media?per_page=100&mime_type=application/pdf&orderby=date&order=asc
-https://dafhalacha.com/wp-sitemap.xml
-https://web.archive.org/cdx/search/cdx?url=dafhalacha.com*&fl=original&collapse=urlkey&filter=original:.*[Ll]uach.*\.pdf&limit=500
-https://web.archive.org/web/*/dafhalacha.com/wp-content/uploads/*Luach*
-https://web.archive.org/cdx/search/cdx?url=dirshu.co.il*&fl=original,timestamp&collapse=urlkey&filter=original:.*luach.*
 ```
+
+The remaining leads all require **a browser outside this sandbox** (every web
+archive is blocked here — §6):
+
+- **The old `https://dafhalacha.com/limud-schedule/` page** is the strongest
+  lead. The maintainer's Hebcal feature-request thread
+  (`hebcal.userecho.com/communities/1/topics/1099-dirshu-calendar`, "Dirshu
+  calendar", opened by Shalom H, **2022-09-12**) points there as *the* source of
+  the Mishnah Berurah Yomi schedule. That page **404s on the live site today**,
+  but a Sept-2022 Wayback snapshot would fall early in the cycle — squarely in
+  the **missing simanim 1–241** range. Fetch it through a browser:
+  ```
+  https://web.archive.org/web/2022*/https://dafhalacha.com/limud-schedule/
+  https://web.archive.org/web/20220912000000/https://dafhalacha.com/limud-schedule/
+  https://web.archive.org/cdx/search/cdx?url=dafhalacha.com/limud-schedule*&output=text&fl=timestamp,original,statuscode&collapse=digest
+  ```
+  Note it may be a JS-rendered schedule, not a static table — capture the
+  rendered DOM / any XHR JSON it loads, not just the HTML source.
+- **Old booklet PDFs via Wayback** (same archive-only constraint):
+  ```
+  https://web.archive.org/cdx/search/cdx?url=dafhalacha.com*&fl=original&collapse=urlkey&filter=original:.*[Ll]uach.*\.pdf&limit=500
+  https://web.archive.org/web/*/dafhalacha.com/wp-content/uploads/*Luach*
+  https://web.archive.org/cdx/search/cdx?url=dirshu.co.il*&fl=original,timestamp&collapse=urlkey&filter=original:.*luach.*
+  ```
+- **Ask Dirshu directly** for the back-catalogue booklets: `888-5-Dirshu` /
+  `daf-hayomi-behalacha@DirshuNJ.org` (surfaced from the dafhalacha.com schedule
+  page).
 
 Even with a complete cycle-3 table, whether a modulo is *correct* still depends
 on cycles running back-to-back with no restart offset — which these two files
