@@ -41,5 +41,12 @@ export {kitzurShulchanAruch, KitzurShulchanAruchReading} from './kitzurShulchanA
 export {KitzurShulchanAruchEvent} from './KitzurShulchanAruchEvent.js';
 export {DirshuAmudYomi, calculateDirshuAmud, dirshuAmudYomiStart} from './dirshuAmudYomiBase.js';
 export {DirshuAmudYomiEvent} from './DirshuAmudYomiEvent.js';
+export {
+  DirshuDafHalacha,
+  dirshuDafHalacha,
+  dirshuDafHalachaEnd,
+  dirshuDafHalachaStart,
+} from './dirshuDafHalachaBase.js';
+export {DirshuDafHalachaEvent} from './DirshuDafHalachaEvent.js';
 export {Nine29Reading, calculate929, nine29Start} from './929Base.js';
 export {Nine29Event} from './929Event.js';

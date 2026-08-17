@@ -58,6 +58,14 @@ Daily study of the Arukh HaShulchan Yomi, a work of halacha written by Yechiel M
 Summary of the Shulchan Aruch of Rabbi Yosef Karo,
 authored by Rabbi Shlomo Ganzfried in 1864.
 
+#### Daf HaYomi B'Halacha (Dirshu) - `dirshuDafHalacha`
+Dirshu's daily Mishnah Berurah program. One amud of the Dirshu edition is
+covered on each of Sunday through Thursday (Yom Tov included — the schedule
+never skips a weekday), and Friday and Shabbat review (chazarah) that week's
+five days. Readings are given as Shulchan Arukh, Orach Chayim `siman:seif`
+references, transcribed from Dirshu's published luach booklets, and currently
+run from 11 June 2024 through 29 August 2026
+
 ### Ethics
 
 #### Sefer Chofetz Chaim - `chofetzChaim`
