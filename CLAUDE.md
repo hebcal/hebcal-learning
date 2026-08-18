@@ -30,6 +30,7 @@ What is still missing is coverage: learning-day indices 156–601 (§7).
 | `src/dirshuDafHalacha.ts` | `DailyLearning.addCalendar('dirshuDafHalacha', …)` |
 | `test/dirshuDafHalacha.spec.ts` | 16 tests |
 | `tools/dirshu-luach/extract_luach.py` | the PDF → JSON pipeline (see §5) |
+| `tools/dirshu-luach/transcriptions/` | Markdown transcription of every source, one table per PDF page — the audit trail behind the JSON |
 | `src/index.ts`, `src/register.ts`, `po/*.po`, `README.md` | wiring |
 
 Full suite green: 30 files / 183 tests. `npm run lint` and
@@ -39,7 +40,9 @@ Full suite green: 30 files / 183 tests. `npm run lint` and
 
 The maintainer uploaded these into the session (originals are behind a captcha,
 see §6). **They are not in the repo** — re-request them if you need to re-run
-the extractor.
+the extractor. What each one *says* is captured in
+`tools/dirshu-luach/transcriptions/`, one Markdown table per PDF page, so the
+readings can be reviewed and disputed without the PDFs in hand.
 
 | Source | Origin | Covers | Cycle |
 |---|---|---|---|

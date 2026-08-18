@@ -48,23 +48,29 @@ for (const [src, list] of Object.entries(bySrc)) {
   }
   const [y0, ord0] = start;
   for (const r of list) {
-    const m = MONTHS[r.month];
+    const m = MONTHS[r.anchorMonth];
     if (!m) {
-      console.error('unknown month', r.month);
+      console.error('unknown month', r.anchorMonth);
       continue;
     }
     const [mon, ord] = m;
-    let hd;
+    let anchor;
     try {
-      hd = new HDate(r.day, mon, ord >= ord0 ? y0 : y0 + 1);
+      anchor = new HDate(r.anchorDay, mon, ord >= ord0 ? y0 : y0 + 1);
     } catch {
       continue;
     }
+    // panels run over consecutive days, so the anchor plus the row's slot gives
+    // the date even where the booklet's date cell was lost in extraction
+    const abs = anchor.abs() + r.slot;
+    const hd = new HDate(abs);
     dated.push({
       ...r,
-      abs: hd.abs(),
+      abs,
       greg: hd.greg().toISOString().slice(0, 10),
-      dow: hd.abs() % 7,
+      dow: abs % 7,
+      hebrew: r.printed || hd.renderGematriya(true),
+      computedDate: !r.printed,
     });
   }
 }
