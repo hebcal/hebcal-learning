@@ -64,24 +64,55 @@ def extract(path):
                 panels.append([x])
         for panel in panels:
             lo, hi = min(panel) - 3, max(panel) + 3
-            rows = sorted([d for d in dates if lo <= d[1] <= hi], key=lambda d: -d[0])
-            if len(rows) < 5:
+            found = sorted([d for d in dates if lo <= d[1] <= hi], key=lambda d: -d[0])
+            if len(found) < 3:
                 continue
             dx = sum(panel) / len(panel)
-            cells = [(y, x, t) for y, x, _s, t in items
-                     if dx - 130 <= x <= dx - 35 and (HALACHA_HINT.search(t) or t.strip().startswith('חזרה'))]
-            pitch = None
-            if len(rows) > 2:
-                gaps = [rows[i][0] - rows[i + 1][0] for i in range(len(rows) - 1)]
-                gaps = [g for g in gaps if 5 < g < 20]
-                if gaps:
-                    pitch = sorted(gaps)[len(gaps) // 2]
-            for y, _x, t, (day, month) in rows:
-                near = [c for c in cells if abs(c[0] - y) <= (pitch or 11) * 0.45]
-                near.sort(key=lambda c: abs(c[0] - y))
-                out.append({'page': pno, 'panelX': round(dx, 1), 'y': round(y, 1),
-                            'day': day, 'month': month,
-                            'text': ' '.join(c[2] for c in near) or None})
+
+            # Derive a row grid from the date cells rather than matching each
+            # halacha cell to the nearest date. Some booklets (tashpa) place a
+            # date run at a wildly wrong y, which loses whole rows -- including
+            # the last day of cycle 2. Panels are runs of consecutive days, so
+            # anchoring on the topmost date and stepping by the row pitch is
+            # both more robust and self-checking.
+            gaps = sorted(g for g in (found[i][0] - found[i + 1][0]
+                                      for i in range(len(found) - 1)) if 7 < g < 16)
+            if not gaps:
+                continue
+            pitch = gaps[len(gaps) // 2]
+            y0, _x0, _t0, (a_day, a_month) = found[0]
+
+            def slot_of(y):
+                raw = (y0 - y) / pitch
+                return raw, round(raw), abs(raw - round(raw))
+
+            printed = {}
+            for y, _x, t, _d in found:
+                _raw, n, err = slot_of(y)
+                if err < 0.25 and n >= 0 and n not in printed:
+                    printed[n] = t.strip()
+
+            cells = [(y, t) for y, x, _s, t in items
+                     if dx - 130 <= x <= dx - 35
+                     and (HALACHA_HINT.search(t) or t.strip().startswith('חזרה'))]
+            texts = {}
+            for y, t in cells:
+                raw, n, err = slot_of(y)
+                if err >= 0.35:
+                    # a chazarah cell is merged across the Friday and Shabbat
+                    # rows, so it sits half a row low; it belongs to the Friday
+                    if err > 0.7:
+                        continue
+                    n = int(raw // 1)
+                if n >= 0:
+                    texts.setdefault(n, []).append(t)
+
+            last = max([*printed, *texts], default=-1)
+            for n in range(last + 1):
+                out.append({'page': pno, 'panelX': round(dx, 1), 'slot': n,
+                            'anchorDay': a_day, 'anchorMonth': a_month,
+                            'printed': printed.get(n),
+                            'text': ' '.join(texts.get(n, [])) or None})
     return out
 
 
