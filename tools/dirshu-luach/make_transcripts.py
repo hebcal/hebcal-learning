@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Render the source luachs as Markdown transcriptions, one file per source.
 
+    node hebrew_dates.mjs 2020-06-01 2026-10-01 hebrew_dates.json
     python3 make_transcripts.py --out transcriptions \
         --english 2024-booklet.pdf 2025-booklet.pdf \
-        --hebrew-dated heb_dated.json \
+        --hebrew-dated heb_dated.json --hebrew-dates hebrew_dates.json \
         --xlsx spreadsheet.xlsx
 
 These files are a human-reviewable record of exactly what was read off each
@@ -23,14 +24,60 @@ import os
 import re
 import sys
 
-from extract_luach import (DATE_RE, HEB, KNOWN_PROBLEMS, group_rows, numerals,
-                           page_items, parse_range, rtl, split_amud)
+from extract_luach import (DATE_RE, HEB, KNOWN_PROBLEMS, gematria, group_rows,
+                           numerals, page_items, parse_range, rtl, split_amud)
 
 DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
 
 def dow(d):
     return DOW[d.weekday()]
+
+
+HEB_MONTHS = {
+    'תשרי': 'Tishrei', 'חשון': 'Cheshvan', 'מרחשון': 'Cheshvan', 'כסלו': 'Kislev',
+    'טבת': 'Tevet', 'שבט': "Sh'vat", 'אדר': 'Adar', 'אדר א': 'Adar I', 'אדר ב': 'Adar II',
+    'ניסן': 'Nisan', 'אייר': 'Iyyar', 'סיון': 'Sivan', 'סיוון': 'Sivan', 'תמוז': 'Tamuz',
+    'אב': 'Av', 'אלול': 'Elul',
+}
+
+
+def printed_date_agrees(printed, computed):
+    """Does a printed Hebrew date decode to the date we computed for its row?
+
+    The tashpa booklet places some date runs at a stray y, so a printed date can
+    be attributed to the wrong row. Where the two disagree the printed value is
+    the unreliable one -- the computed date is anchored on the panel's first
+    date and stepped by consecutive days, and is what the Sunday-Thursday rule
+    check validates. Returning False makes the caller fall back to the computed
+    date and flag it, rather than print a value we know is misplaced.
+    """
+    if not printed or not computed:
+        return False
+    m = re.match(rf'^([{HEB}\'"”׳״]+)\s+(.+?)\'?$', printed.strip())
+    if not m:
+        return False
+    day = gematria(m.group(1))
+    month = HEB_MONTHS.get(m.group(2).replace("'", '').replace('׳', '').strip())
+    if day is None or month is None:
+        return False
+    return day == computed['d'] and computed['m'].startswith(month.split()[0])
+
+
+def hebdate(dates, date):
+    """Decoded Hebrew date for a Gregorian date, e.g. "18 Kislev 5786"."""
+    h = dates.get(str(date))
+    return f'{h["d"]} {h["m"]} {h["y"]}' if h else '—'
+
+
+def simanim_in(text):
+    """Decode every siman the prose names, for eyeballing against the Hebrew."""
+    out = []
+    for m in re.finditer(rf'סימן\s+([{HEB}\'"”׳״]+)', text or ''):
+        v = gematria(m.group(1))
+        if v and 1 <= v <= 697 and v not in out:
+            out.append(v)
+    return ', '.join(str(v) for v in out) if out else '—'
 
 
 def cell(text):
@@ -60,9 +107,17 @@ def read_english_pages(path, xmin=224.0, xmax=282.0):
             halacha = rtl([c for c in cells
                            if xmin <= c[0] < xmax and not DATE_RE.fullmatch(c[2])])
             daf, side, printed_page, rest = split_amud(halacha)
+            # The verso amud reaches us as separate runs ("קצו" "( :" "392" ")")
+            # whose order is an artifact of the text layer; the page itself reads
+            # "קצו: (392)". Rebuild that from the parts rather than joining runs.
+            amud_printed = ''
+            if daf is not None:
+                head = halacha[0].strip()
+                amud_printed = head if side == 'a' else (
+                    f'{head}:' + (f' ({printed_page})' if printed_page else ''))
             amud = ''
             if daf is not None:
-                amud = f'{daf}{side}' + (f' ({printed_page})' if printed_page else '')
+                amud = f'{daf}{side}' + (f' (p. {printed_page})' if printed_page else '')
             ref = ' '.join(rest)
             b = e = None
             # "חזרה" is a word, not a numeral -- never feed it to the gematria
@@ -73,13 +128,14 @@ def read_english_pages(path, xmin=224.0, xmax=282.0):
                 except AssertionError:
                     pass
             rows.append({'date': date, 'hebrew': hebrew, 'amud': amud,
-                         'ref': ref, 'b': b, 'e': e, 'learn': daf is not None})
+                         'amud_printed': amud_printed, 'ref': ref, 'b': b, 'e': e,
+                         'learn': daf is not None})
         if rows:
             pages[pno] = rows
     return pages
 
 
-def english_md(path, title, note, pages):
+def english_md(path, title, note, pages, hebrew_dates):
     out = [f'# {title}', '', note, '',
            f'Source file: `{os.path.basename(path)}`  ',
            f'Pages transcribed: {min(pages)}–{max(pages)}  ',
@@ -100,8 +156,9 @@ def english_md(path, title, note, pages):
     for pno in sorted(pages):
         rows = pages[pno]
         out += [f'## Page {pno} — {rows[0]["date"]} → {rows[-1]["date"]}', '',
-                '| Date | Day | Hebrew date | Amud | Siman/Se\'if (as printed) | Parsed |',
-                '|---|---|---|---|---|---|']
+                '| Date | Day | Hebrew date (printed) | Hebrew date | '
+                'Amud (printed) | Amud | Reading (printed) | Reading |',
+                '|---|---|---|---|---|---|---|---|']
         for r in rows:
             if r['learn']:
                 parsed = r['b'] + (f'-{r["e"]}' if r['e'] else '')
@@ -114,12 +171,13 @@ def english_md(path, title, note, pages):
             if str(r['date']) in KNOWN_PROBLEMS:
                 parsed += ' [^known]'
             out.append(f'| {r["date"]} | {dow(r["date"])} | {cell(r["hebrew"])} | '
+                       f'{hebdate(hebrew_dates, r["date"])} | {cell(r["amud_printed"])} | '
                        f'{r["amud"] or "—"} | {cell(r["ref"])} | {parsed} |')
         out.append('')
     return '\n'.join(out)
 
 
-def hebrew_md(src, title, note, rows):
+def hebrew_md(src, title, note, rows, hebrew_dates):
     """rows: records from date_hebrew_luach.mjs for one booklet."""
     out = [f'# {title}', '', note, '',
            f'Source file: `{src}`  ',
@@ -136,7 +194,9 @@ def hebrew_md(src, title, note, rows):
            'reconstructed that way because the booklet\'s own date cell did not',
            'survive text extraction; every other Hebrew date is as printed. A row',
            'showing — for the reading is an extraction gap, not a blank row in',
-           'print.', '']
+           'print.', '',
+           'The **Simanim** column decodes every `סימן` the prose names, as a',
+           'reading aid; it is not the normalised range (see `CLAUDE.md` §7).', '']
     groups = {}
     for r in rows:
         groups.setdefault((r['page'], r['panelX']), []).append(r)
@@ -147,17 +207,22 @@ def hebrew_md(src, title, note, rows):
         side = ('right' if px == panels_on_page[0] else 'left') if len(panels_on_page) > 1 else 'single'
         label = f'## Page {pno}, {side} panel' if side != 'single' else f'## Page {pno}'
         out += [f'{label} — {g[0]["greg"]} → {g[-1]["greg"]}', '',
-                '| Hebrew date | Gregorian | Day | Daf HaYomi B\'Halacha (as printed) |',
-                '|---|---|---|---|']
+                '| Hebrew date (printed) | Hebrew date | Gregorian | Day | '
+                'Reading (printed) | Simanim |',
+                '|---|---|---|---|---|---|']
         for r in g:
-            heb = cell(r['hebrew']) + ('&nbsp;†' if r.get('computedDate') else '')
-            out.append(f'| {heb} | {r["greg"]} | {dow(datetime.date.fromisoformat(r["greg"]))} '
-                       f'| {cell(r.get("text"))} |')
+            date = datetime.date.fromisoformat(r['greg'])
+            computed = hebrew_dates.get(r['greg'])
+            trusted = not r.get('computedDate') and printed_date_agrees(r['hebrew'], computed)
+            heb = (cell(r['hebrew']) if trusted
+                   else cell(computed['gematriya'] if computed else None) + '&nbsp;†')
+            out.append(f'| {heb} | {hebdate(hebrew_dates, date)} | {r["greg"]} | {dow(date)} '
+                       f'| {cell(r.get("text"))} | {simanim_in(r.get("text"))} |')
         out.append('')
     return '\n'.join(out)
 
 
-def xlsx_md(path, title, note):
+def xlsx_md(path, title, note, hebrew_dates):
     import openpyxl
     ws = openpyxl.load_workbook(path, data_only=True).worksheets[0]
     rows = []
@@ -166,14 +231,24 @@ def xlsx_md(path, title, note):
             continue
         amud = (row[6] or '').strip()
         ref = (row[7] or '').strip()
+        daf = side = page = None
+        m = re.match(rf'^([{HEB}]+)\s*([.:])', amud)
+        if m:
+            daf, side = gematria(m.group(1)), ('a' if m.group(2) == '.' else 'b')
+        pg = re.search(r'\((\d+)\)', amud)
+        if pg:
+            page = int(pg.group(1))
         b = e = None
         if ref:
             try:
                 b, e = parse_range(numerals([ref]))
             except AssertionError:
                 pass
+        decoded = ''
+        if daf is not None:
+            decoded = f'{daf}{side}' + (f' (p. {page})' if page else '')
         rows.append({'date': row[3].date(), 'hebrew': (row[2] or '').strip(),
-                     'amud': amud, 'ref': ref, 'b': b, 'e': e})
+                     'amud': amud, 'amud_decoded': decoded, 'ref': ref, 'b': b, 'e': e})
     out = [f'# {title}', '', note, '',
            f'Source file: `{os.path.basename(path)}`  ',
            f'Rows: {len(rows)}  ',
@@ -187,12 +262,14 @@ def xlsx_md(path, title, note):
     for key in sorted(by_month):
         g = by_month[key]
         out += [f'## {key[0]}-{key[1]:02d} — {g[0]["date"]} → {g[-1]["date"]}', '',
-                '| Date | Day | Hebrew date | Amud (as printed) | Siman/Se\'if (as printed) | Parsed |',
-                '|---|---|---|---|---|---|']
+                '| Date | Day | Hebrew date (printed) | Hebrew date | '
+                'Amud (printed) | Amud | Reading (printed) | Reading |',
+                '|---|---|---|---|---|---|---|---|']
         for r in g:
             parsed = (r['b'] + (f'-{r["e"]}' if r['e'] else '')) if r['b'] else '—'
             out.append(f'| {r["date"]} | {dow(r["date"])} | {cell(r["hebrew"])} | '
-                       f'{cell(r["amud"])} | {cell(r["ref"])} | {parsed} |')
+                       f'{hebdate(hebrew_dates, r["date"])} | {cell(r["amud"])} | '
+                       f'{r["amud_decoded"] or "—"} | {cell(r["ref"])} | {parsed} |')
         out.append('')
     return '\n'.join(out)
 
@@ -203,8 +280,11 @@ def main():
     ap.add_argument('--english', nargs=2, required=True, metavar=('2024', '2025'))
     ap.add_argument('--hebrew-dated', required=True)
     ap.add_argument('--xlsx', required=True)
+    ap.add_argument('--hebrew-dates', required=True,
+                    help='Gregorian -> Hebrew map from hebrew_dates.mjs')
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
+    hebrew_dates = json.load(open(a.hebrew_dates))
 
     written = []
     eng = [
@@ -219,7 +299,7 @@ def main():
     ]
     for path, title, note, name in eng:
         pages = read_english_pages(path)
-        open(os.path.join(a.out, name), 'w').write(english_md(path, title, note, pages))
+        open(os.path.join(a.out, name), 'w').write(english_md(path, title, note, pages, hebrew_dates))
         written.append((name, sum(len(r) for r in pages.values())))
 
     dated = json.load(open(a.hebrew_dated))
@@ -244,13 +324,14 @@ def main():
         if not rows:
             print(f'no rows for {src}', file=sys.stderr)
             continue
-        open(os.path.join(a.out, name), 'w').write(hebrew_md(src, title, note, rows))
+        open(os.path.join(a.out, name), 'w').write(hebrew_md(src, title, note, rows, hebrew_dates))
         written.append((name, len(rows)))
 
     name = '2025-2026-spreadsheet.md'
     open(os.path.join(a.out, name), 'w').write(xlsx_md(
         a.xlsx, 'Spreadsheet transcription, Elul 5785 – Elul 5786',
-        'Emailed to the maintainer by a reader; covers 2025-08-25 → 2026-09-11.'))
+        'Emailed to the maintainer by a reader; covers 2025-08-25 → 2026-09-11.',
+        hebrew_dates))
     written.append((name, None))
 
     for n, c in written:
