@@ -12,6 +12,12 @@ part of one cycle. See "The open question" below. Do not open a PR or merge
 without the maintainer explicitly deciding to accept a partial-coverage
 schedule.
 
+**2026-08-18 update — the cross-cycle question is settled (§2a).** Cycle 3
+began Sunday **2022-02-20** at siman 1, immediately after cycle 2's last
+learning day (Thu 2022-02-17). Cycles run strictly back-to-back with no gap and
+no restart offset, so `% cycleLen` will be valid *once the table is complete*.
+What is still missing is coverage: learning-day indices 156–601 (§7).
+
 ---
 
 ## 1. What was delivered
@@ -35,10 +41,20 @@ The maintainer uploaded these into the session (originals are behind a captcha,
 see §6). **They are not in the repo** — re-request them if you need to re-run
 the extractor.
 
-| Booklet | Original URL | Covers |
-|---|---|---|
-| 2024 | `dafhalacha.com/wp-content/uploads/2024/06/2024-Luach-Booklet-5-22-24-DIGITAL-Single-Pages.pdf` | 2024-06-11 → 2025-12-06 |
-| 2025 | `dafhalacha.com/wp-content/uploads/2025/12/2025-Luach-Booklet-11-20-25-SINGLE-Pages-NO-bleed.pdf` | 2025-12-07 → 2026-08-29 |
+| Source | Origin | Covers | Cycle |
+|---|---|---|---|
+| 2024 booklet (English) | `dafhalacha.com/wp-content/uploads/2024/06/2024-Luach-Booklet-5-22-24-DIGITAL-Single-Pages.pdf` | 2024-06-11 → 2025-12-06 | 3 |
+| 2025 booklet (English) | `dafhalacha.com/wp-content/uploads/2025/12/2025-Luach-Booklet-11-20-25-SINGLE-Pages-NO-bleed.pdf` | 2025-12-07 → 2026-08-29 | 3 |
+| spreadsheet (`303460cb-*.xlsx`) | emailed to the maintainer by a reader | 2025-08-25 → 2026-09-11 | 3 |
+| `bb66b78a-57805781.pdf` (Hebrew) | emailed (`avrumiesti@gmail.com`, 2026-08-18) | 2020-06-23 → 2021-04-12, simanim ~490–581 | **2** |
+| `1f7b0998-luach_tashpa1.pdf` (Hebrew) | same | 2021-04-13 → 2022-02-19, simanim ~579–**end of MB** | **2** |
+| `e139a915-luach57821.pdf` (Hebrew) | same | 2022-02-20 → 2022-09-24, simanim **1–53** | **3** |
+
+The spreadsheet is an independent third-party transcription with Gregorian
+dates, the amud *and* the siman/seif. It **agreed with the two English booklets
+on all 264 overlapping learning days** — reference, daf, side and printed page —
+and extended the horizon by 10 learning days. It is merged in via `--xlsx`
+(§5).
 
 **They are NOT two cycles**, despite how they were described when handed over.
 They are consecutive annual booklets from the *middle of the third cycle*, and
@@ -53,6 +69,36 @@ days, no gap, no overlap). Both booklets say so in their own introductions:
 This matters: **there is zero cross-cycle evidence in these files.** Any claim
 about whether cycle 4 repeats cycle 3 day-for-day is unverified.
 
+## 2a. Cycle 3's anchor, and cycles run back-to-back
+
+The three Hebrew luachs settled the question §7 used to flag as unanswerable.
+`luach57821`'s own introduction says it straddles the changeover — *"finishing
+the second cycle … with the beginning of the third cycle of learning … to begin
+and complete all six chalakim of the Mishnah Berurah"* — and the schedule pages
+show it directly:
+
+| Date | | Reading |
+|---|---|---|
+| Thu **2022-02-17** (16 Adar I 5782) | cycle 2, last learning day | `מסימן תרצ''ו סעיף ח' עד סוף המשנה ברורה - סיום כל חלקי משנה ברורה` (696:8 → end of MB) |
+| Fri–Sat 2022-02-18/19 | | the week's chazarah |
+| Sun **2022-02-20** (19 Adar I 5782) | **cycle 3, day 0** | `מתחילת סימן א' עד אמצע סעיף א' ''ולא יתבייש''` (start of siman 1) |
+
+No gap, no restart offset: in cycle 3's own Sunday-Thursday counting, cycle 2's
+final learning day sits at index **−1**. So a future `% cycleLen` is sound.
+
+Indices below are learning days counted from cycle 3 day 0 = 2022-02-20:
+
+| Range | Source | Simanim |
+|---|---|---|
+| 0 – 155 | `luach57821` (extracted, **not yet in the JSON** — §7) | 1 – 53 |
+| 156 – 601 | **MISSING** — the 5783 and 5784 luachs | ~53 – 242 |
+| 602 – 1189 | shipped `src/dirshuDafHalacha.json` | 242 – 434 |
+| 1190 – end | **MISSING** | 434 – 697 |
+
+`src/dirshuDafHalacha.json` is still indexed from its own start (2024-06-11 =
+cycle-3 index 602); it does not know about cycle 3's real day 0 yet. Rebase it
+only when the 156–601 hole is filled, so the array stays dense.
+
 ## 3. The schedule rule (validated over all 810 consecutive days)
 
 This half *is* a clean reproducible pattern, with no exceptions anywhere in the
@@ -66,6 +112,10 @@ data:
 - **Yom Tov never interrupts it.** Verified on Tisha B'Av 5784/5785, Rosh
   Hashanah 5785, Yom Kippur 5786, Pesach 5785/5786 — all ordinary learning days
   with ordinary readings.
+- **The rule is identical in cycle 2.** `date_hebrew_luach.mjs` replays it over
+  the Hebrew luachs: **0 mismatches across the 290 days** of `bb66b78a`
+  (cycle 2, 2020-06-23 → 2021-04-12) and 2 across `luach57821` (cycle 3 start).
+  So the *timing* half of the pattern is confirmed across two cycles.
 - Printed page number is always `daf × 2` on the b-side (`daf × 2 − 1` on the
   a-side, where it is not printed).
 - Amud numbering **restarts at 2a with each volume** of the edition. Page 1 is
@@ -102,14 +152,32 @@ links to the start of the reading rather than emitting an ambiguous range.
 ## 5. Re-running the extractor when new booklets arrive
 
 ```bash
-pip install pypdf cffi          # cffi is needed or pypdf's crypto import dies
+pip install pypdf cffi openpyxl   # cffi or pypdf's crypto import dies
 python3 tools/dirshu-luach/extract_luach.py \
-    --check-sefaria --out src/dirshuDafHalacha.json \
-    <booklets…in chronological order>
+    --check-sefaria --xlsx <spreadsheet.xlsx> \
+    --out src/dirshuDafHalacha.json \
+    <English booklets…in chronological order>
 npm test
 ```
 
-It reproduces the committed JSON **byte-identically** from the two PDFs above,
+`--xlsx` merges a spreadsheet transcription: new days are appended, and days
+that overlap the PDFs are **cross-checked** rather than trusted (it reports any
+disagreement as a problem). The 2026-08-18 run reported 0 disagreements over
+264 overlapping learning days.
+
+For the **Hebrew** luachs (dirshu.co.il pocket booklets) use the separate pair —
+they are a different artifact with a different layout, and they emit raw prose
+rather than `siman:seif`:
+
+```bash
+python3 tools/dirshu-luach/extract_hebrew_luach.py <hebrew booklets…> rows.json
+node tools/dirshu-luach/date_hebrew_luach.mjs rows.json dated.json
+```
+
+`date_hebrew_luach.mjs` needs each booklet's Hebrew year in its `START` map
+(the Hebrew luachs print no year), and it validates the Sun-Thu/chazarah rule.
+
+The English pipeline reproduces the committed JSON **byte-identically** from the sources above,
 exits 0, and reports two known/benign diagnostics (allowlisted in
 `KNOWN_PROBLEMS`):
 
@@ -208,6 +276,12 @@ booklet and re-derive the window before trusting output.
   dirshu.co.il luach page, sample tests, and marei-mekomos — no schedule
   archive.
 
+**`tashpa` extracts badly — 97 of its 312 days come out blank** (its text layer
+drops cells that the other two booklets carry). `bb66b78a` extracts cleanly (0
+mismatches) and `luach57821` nearly so (2). Since `tashpa` is cycle-2 data whose
+value is conditional anyway, it was not chased further; fix it only if the
+cycle-2 tail is ever actually needed.
+
 That Hebrew luach also settled an ambiguity: its page header marks
 `* תחילת חלק ד׳` ("start of chelek 4") against 17 Kislev while the amud
 continues at 196 rather than resetting. So the `עמוד` column is per **Dirshu
@@ -221,17 +295,40 @@ the page breaks land in a physical printed edition. It can only ever be a
 table. That alone is fine — `arukhHaShulchanYomi.json` is a 1719-entry table,
 and `bavli.json`, `mishnayot.json`, `kitzurSa.json` are all tables too.
 
-The real gap is **coverage**:
+The real gap is **coverage**. As of 2026-08-18 (see §2a for the index map):
 
 - Those other tables cover a **complete** cycle, so `% cycleLen` repeats forever.
-- This one covers **simanim 242–429 only** — 578 learning days, MB chalakim 3–4.
-- Missing: **simanim 1–241** (chalakim 1–2, before 2024-06-11) and **430–697**
-  (chalakim 5–6, after 2026-08-29).
-- So the calendar goes silent after 2026-08-29 and can never wrap — behaviour
+- Shipped: **588 learning days**, cycle-3 indices 602–1189, simanim 242–434.
+- Extracted but **not yet normalised or shipped**: indices 0–155, simanim 1–53,
+  from `luach57821`. Its readings are prose (`מסימן ב' סעיף ו' עד תחילת סימן ג'`)
+  and sometimes descend below se'if level to lettered sub-items
+  (`מ-אות ה' עד אות ט'`, siman 32:3), so normalising them into the
+  `siman:seif` model is still to do.
+- **Still missing: indices 156–601** (~446 learning days, simanim ~53–242) —
+  this is the 5783 and 5784 luachs. Until they arrive the schedule would have a
+  *hole*, which is worse than a late start, so do **not** splice the 0–155
+  segment into the dense array yet.
+- Also missing: indices 1190 onward (simanim ~434–697).
+- So the calendar goes silent after 2026-09-12 and can never wrap — behaviour
   no other schedule in this package has.
 
-**To close it, obtain the pre-June-2024 booklets** (likely `2022-Luach-Booklet-*`
-and `2023-Luach-Booklet-*`), plus later ones for the tail.
+**The cycle-2 booklets are a conditional source for the tail.** `bb66b78a` +
+`tashpa` cover simanim ~490–697 of cycle 2. If the content table repeats across
+cycles those readings *are* cycle 3's for the same simanim. Back-to-back
+continuity is now proven (§2a), which makes that plausible — but it is **not
+verified**, because the cycle-2 data (490–697) and all cycle-3 data (1–53,
+242–434) are **disjoint in siman range**, so there is no overlap to compare.
+Do not assume it without a booklet that overlaps.
+
+Rough scale: cycle 2 spent **433 learning days on simanim ~490–697**, and its
+final monthly test was #84, suggesting a cycle near 7 years / ~1700 learning
+days. Against that, ~734 of cycle 3 are now in hand.
+
+**To close it, obtain the 5783 and 5784 luachs** — Hebrew (`luach_5783.pdf`,
+`luach_5784.pdf`) or the English `2022-Luach-Booklet-*` / `2023-Luach-Booklet-*`,
+either will do. The reader who supplied the three Hebrew luachs said on
+2026-08-18 he was still working on 2023. Those fill indices 156–601 and make
+indices 0–1189 contiguous; later booklets are then needed for the tail.
 
 The live-site media queries below are now **exhausted from the agent** — the
 2026-08-16 re-probe ran them and the library only goes back to 2024-06-10 (§6),

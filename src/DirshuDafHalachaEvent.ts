@@ -37,7 +37,7 @@ function renderRange(reading: DirshuDafHalacha, hebrew: boolean): string {
  * Friday and Shabbat.
  *
  * Readings are transcribed from Dirshu's published luach booklets and run
- * from **11 June 2024** through **29 August 2026**; outside that window
+ * from **11 June 2024** through **12 September 2026**; outside that window
  * `DailyLearning.lookup('dirshuDafHalacha', ...)` returns `null`.
  *
  * @example

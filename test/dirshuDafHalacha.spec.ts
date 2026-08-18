@@ -112,10 +112,18 @@ test('daf-numbering-restarts-with-each-volume', () => {
 });
 
 test('end-of-published-schedule', () => {
-  expect(dirshuDafHalachaEnd).toBe(greg.greg2abs(new Date(2026, 7, 29)));
+  expect(dirshuDafHalachaEnd).toBe(greg.greg2abs(new Date(2026, 8, 12)));
   expect(dirshuDafHalacha(dirshuDafHalachaEnd)).not.toBeNull();
   expect(dirshuDafHalacha(dirshuDafHalachaEnd + 1)).toBeNull();
   expect(dirshuDafHalacha(new Date(2027, 0, 1))).toBeNull();
+});
+
+test('days-transcribed-from-the-spreadsheet', () => {
+  // 2026-08-30 onward come from a third-party spreadsheet transcription that
+  // continues past the last luach booklet
+  expect(reading(2026, 8, 30)).toEqual({b: '429:2', e: undefined, review: false, daf: 2, side: 'b'});
+  expect(reading(2026, 8, 31)).toEqual({b: '430', e: '431:1', review: false, daf: 3, side: 'a'});
+  expect(reading(2026, 9, 10)).toEqual({b: '434:4', e: undefined, review: false, daf: 7, side: 'a'});
 });
 
 test('render', () => {

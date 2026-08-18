@@ -105,8 +105,8 @@ function amudFor(idx: number): {daf: number; side: 'a' | 'b'} {
  *
  * The readings are transcribed from Dirshu's published luach booklets and
  * run from Tuesday, **11 June 2024** (5 Sivan 5784, the opening of Hilchot
- * Shabbat) through **29 August 2026**. Dates after the last published
- * booklet return `null` until a newer luach is transcribed.
+ * Shabbat) through **12 September 2026**. Dates after the last
+ * transcribed source return `null` until a newer luach is transcribed.
  *
  * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.) day
  *   number.

@@ -218,6 +218,55 @@ def parse_rows(rows):
     return recs
 
 
+def read_xlsx(path):
+    """Read a spreadsheet transcription of the luach.
+
+    Same schedule, independently transcribed by a third party: column D holds
+    the Gregorian date, G the amud ("קנט." / "קנט: (318)") and H the
+    siman/seif reference ("שכ\"ה ט' - י'"). Rows without an amud are the
+    Friday/Shabbat review days.
+    """
+    import datetime
+    import openpyxl
+
+    ws = openpyxl.load_workbook(path, data_only=True).worksheets[0]
+    recs = []
+    for row in ws.iter_rows(values_only=True):
+        if len(row) < 8 or not isinstance(row[3], datetime.datetime):
+            continue
+        date = row[3].date()
+        amud = (row[6] or '').strip()
+        ref = (row[7] or '').strip()
+        m = re.match(rf'^([{HEB}]+)\s*([.:])', amud)
+        if not (m and ref):
+            recs.append({'date': date, 'tokens': [amud, ref], 'kind': 'none'})
+            continue
+        page = re.search(r'\((\d+)\)', amud)
+        b, e = parse_range(numerals([ref]))
+        recs.append({'date': date, 'tokens': [amud, ref], 'kind': 'learn',
+                     'daf': gematria(m.group(1)), 'side': 'a' if m.group(2) == '.' else 'b',
+                     'page': int(page.group(1)) if page else None, 'b': b, 'e': e})
+    return recs
+
+
+def merge(primary, secondary):
+    """Merge a secondary source into the primary, cross-checking the overlap."""
+    by_date = {r['date']: r for r in primary}
+    problems, added = [], 0
+    for r in secondary:
+        have = by_date.get(r['date'])
+        if have is None:
+            by_date[r['date']] = r
+            added += 1
+        elif have['kind'] == 'learn' and r['kind'] == 'learn':
+            mine = (have['b'], have['e'], have['daf'], have['side'])
+            theirs = (r['b'], r['e'], r['daf'], r['side'])
+            if mine != theirs:
+                problems.append(f'{r["date"]}: sources disagree, {mine} vs {theirs}')
+    merged = sorted(by_date.values(), key=lambda r: r['date'])
+    return merged, added, problems
+
+
 def validate(recs, check_sefaria=False):
     """Returns (learning_records, problems). Every invariant here held across
     the 2024 + 2025 booklets, so a new failure means a layout or parse change."""
@@ -338,6 +387,8 @@ def main():
                     help='print page N with coordinates and exit')
     ap.add_argument('--halacha-x', default='224,282', metavar='MIN,MAX',
                     help='x range of the Daf HaYomi B\'Halacha columns (default 224,282)')
+    ap.add_argument('--xlsx', action='append', default=[], metavar='FILE',
+                    help='spreadsheet transcription to merge in and cross-check')
     ap.add_argument('--check-sefaria', action='store_true',
                     help='validate every seif against Sefaria (requires network)')
     args = ap.parse_args()
@@ -355,7 +406,15 @@ def main():
         rows.extend(booklet)
 
     recs = parse_rows(rows)
+    merge_problems = []
+    for xp in args.xlsx:
+        extra = read_xlsx(xp)
+        recs, added, probs = merge(recs, extra)
+        merge_problems += probs
+        print(f'{xp}: {len(extra)} rows, {added} new days, '
+              f'{len(probs)} disagreement(s) on the overlap', file=sys.stderr)
     learn, volumes, problems = validate(recs, args.check_sefaria)
+    problems += merge_problems
 
     print(f'\n{len(recs)} rows, {len(learn)} learning days, '
           f'{learn[0]["date"]} .. {learn[-1]["date"]}', file=sys.stderr)
