@@ -402,6 +402,13 @@ def main():
                  'from Sun 2022-02-20.'),
         '5784': ('Dirshu Learning Calendar 5784 — Daf HaYomi B\'Halacha',
                  'Third cycle, simanim ~155–250. Fills part of what used to be the gap.'),
+        '5783': ('Dirshu Learning Calendar 5783 — Daf HaYomi B\'Halacha',
+                 'Third cycle, simanim ~42–162. The only source for cycle-3 learning days '
+                 '~155–390. This calendar transposes the table -- each day is a column, and '
+                 'the reading wraps down it -- so it is read by `extract_grid_calendar.py`. '
+                 'Note the quoted citation phrases inside a reading can come out with their '
+                 'words reversed ("התנה ואם" for "ואם התנה"); the siman and se\'if numbers, '
+                 'which are what the calendar is built from, are unaffected.'),
         '5787': ('Dirshu Full Size Calendar 5787 — Daf HaYomi B\'Halacha',
                  'Third cycle. Its 20 learning days overlapping the shipped schedule match '
                  'it exactly on siman/se\'if, daf, side and printed page; it carries 273 '

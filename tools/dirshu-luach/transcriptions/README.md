@@ -29,6 +29,7 @@ same library the calendar uses, rather than from a second implementation.
 | [5781-hebrew-luach.md](5781-hebrew-luach.md) | `1f7b0998-luach_tashpa1.pdf` | 2021-04-13 → 2022-02-19 | **2** |
 | [5782-hebrew-luach.md](5782-hebrew-luach.md) | `e139a915-luach57821.pdf` | 2022-02-20 → 2022-09-24 | **3** |
 | [5782-calendar.md](5782-calendar.md) | `Track 1 & 2 Learning calendar 5782 email.pdf` | 2021-08-09 → 2022-09-25 | 2 → **3** |
+| [5783-calendar.md](5783-calendar.md) | `Track 1 & 2 Learning calendar 5783 Email.pdf` | 2022-08-28 → 2023-09-15 | 3 |
 | [5784-calendar.md](5784-calendar.md) | `Dirshu Learning Calendar 5784 Email Version.pdf` | 2023-08-18 → 2024-10-02 | 3 |
 | [5787-calendar.md](5787-calendar.md) | `Full Size Calendar 5787.pdf` | 2026-08-14 → 2027-10-01 | 3 |
 
@@ -72,11 +73,11 @@ The three Hebrew luachs are the evidence behind two claims in `CLAUDE.md`:
 
 ## Not yet transcribed
 
-Three of the supplied calendars transpose the table so that each day is a
-*column* rather than a row, which `extract_calendar.py` does not handle:
-**5783** (all 13 schedule pages), and the grid halves of **5780** and **5781**
-(6 of 9 pages each). 5783 is the only source for cycle-3 learning days ~155–390,
-so it still needs a parser.
+The grid halves of the **5780** and **5781** calendars (6 of 9 schedule pages
+each) transpose the table so that each day is a column rather than a row.
+`extract_grid_calendar.py` handles that layout — it is how 5783 is read — but
+those two files mix both layouts on different pages and have not been run
+through it. Both are cycle-2 material, so neither is on the critical path.
 
 ## Regenerating
 
