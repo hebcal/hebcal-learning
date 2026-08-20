@@ -41,17 +41,35 @@ from extract_luach import HEB, gematria
 # A Hebrew numeral is a few letters with at most one gershayim before the last
 # of them. It must NOT be allowed to run on, or a citation right after the
 # numeral gets swallowed: "סעיף א\'"ואם היתה"" would read as one number.
-NUM = rf'[{HEB}]{{1,3}}\s*["”“״]\s*[{HEB}]{{1,2}}|[{HEB}]{{1,4}}'
+# The gershayim inside a numeral is written "  in some sources and as two
+# apostrophes in others -- י''א is siman 11, and reading it as י loses the 11.
+GERSHAYIM = r'["”“״]|\'\''
+# Wrapped in a non-capturing group: it is an alternation, and interpolating it
+# bare lets its branches escape whatever group it is placed in -- which made the
+# se'if-katan pattern match any one to four Hebrew letters anywhere.
+NUM = (rf'(?:[{HEB}]{{1,3}}\s*(?:{GERSHAYIM})\s*[{HEB}]{{1,2}}'
+       # the same numeral with a stray space dropped into it by extraction,
+       # as "ת מ\"ז" for תמ"ז (447) in the 5787 calendar
+       rf'|[{HEB}]{{1,2}}\s+[{HEB}]{{1,2}}\s*(?:{GERSHAYIM})\s*[{HEB}]{{1,2}}'
+       rf'|[{HEB}]{{1,4}})')
 TOKEN = re.compile(
     rf'(?P<startsiman>מתחילת\s+סימן\s+(?P<ss>{NUM}))'
     rf'|(?P<siman>סימן\s+(?P<sm>{NUM}))'
     rf'|(?P<begin>תחילת)'
     rf'|(?P<sof>סוף)'
     rf'|(?P<mid>אמצע)'
+    # se'if KATAN is the Mishnah Berurah's own numbering, so it marks a position
+    # inside the current se'if rather than naming one -- consume its numeral
+    rf'|(?P<katan>סעיף\s+קטן\s+{NUM})'
     rf'|(?P<seif>סעיף\s+(?P<sf>{NUM}))'
     rf'|(?P<hasseif>הסעיף)'
     rf'|(?P<os>אות)'
     rf'|(?P<ad>עד)'
+    # A bare numeral standing where a siman belongs: "עד ק\"א סעיף ג'". Anchored
+    # between "עד " and "סעיף", and listed last so every keyword matches first --
+    # ordinary Hebrew words are themselves valid gematria, so unanchored this
+    # reads עד as siman 74, the מ of מסעיף as 40 and אמצע as 201.
+    rf'|(?P<bare>(?<=עד )(?P<bs2>{NUM})\s*(?=סעיף))'
 )
 
 
@@ -72,8 +90,8 @@ def parse(text, carry_siman, carry_seif, seifim):
             cur = [gematria(m.group('ss')), 1]
             pt[side] = [cur[0], 1, True]
             pending_begin = False
-        elif m.group('siman'):
-            value = gematria(m.group('sm'))
+        elif m.group('siman') or m.group('bare'):
+            value = gematria(m.group('sm') if m.group('siman') else m.group('bs2'))
             cur[0] = value
             if pending_begin:
                 pt[side] = [value, 1, True]
@@ -82,11 +100,19 @@ def parse(text, carry_siman, carry_seif, seifim):
                 pt[side] = [value, seifim(value), False]
                 pending_sof = False
             else:
-                pt[side] = [value, cur[1], False]
+                # a siman with no se'if after it names the siman itself, which as
+                # an endpoint means its start -- "עד סימן קט\"ז"
+                cur[1] = 1
+                pt[side] = [value, 1, False, 'siman-only']
         elif m.group('seif'):
             value = gematria(m.group('sf'))
             cur[1] = value
-            pt[side] = [cur[0], value, False]
+            pt[side] = [cur[0], value, False]     # an explicit se'if clears siman-only
+            if pending_mid:
+                pt[side].append('mid')
+                pending_mid = False
+        elif m.group('katan'):
+            pt[side] = [cur[0], cur[1], False]
             if pending_mid:
                 pt[side].append('mid')
                 pending_mid = False
@@ -108,10 +134,13 @@ def parse(text, carry_siman, carry_seif, seifim):
     e = pt[1]
     e_siman, e_seif = e[0], e[1]
     inside = len(e) > 3 and e[3] == 'mid'
+    siman_only = len(e) > 3 and e[3] == 'siman-only'
     e_at_siman_end = False
-    if e[2]:                       # "until the beginning of siman Y"
+    if e[2] or (siman_only and e[0] != b_siman):   # "until the start of siman Y"
         if e_siman != b_siman:
-            e_siman, e_seif = b_siman, seifim(b_siman)
+            # the reading stops where siman Y opens, so it runs to the end of
+            # Y-1 -- which is not always the siman it started in
+            e_siman, e_seif = e_siman - 1, seifim(e_siman - 1)
             e_at_siman_end = True
         else:
             e_seif = 1

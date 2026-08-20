@@ -63,8 +63,9 @@ Dirshu's daily Mishnah Berurah program. One amud of the Dirshu edition is
 covered on each of Sunday through Thursday (Yom Tov included — the schedule
 never skips a weekday), and Friday and Shabbat review (chazarah) that week's
 five days. Readings are given as Shulchan Arukh, Orach Chayim `siman:seif`
-references, transcribed from Dirshu's published luach booklets, and currently
-run from 11 June 2024 through 12 September 2026
+references, transcribed from Dirshu's luach booklets, Hebrew pocket luachs and
+wall calendars. They run from the third cycle's first day, 20 February 2022,
+through 31 August 2027
 
 ### Ethics
 

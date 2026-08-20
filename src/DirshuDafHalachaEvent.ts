@@ -36,8 +36,9 @@ function renderRange(reading: DirshuDafHalacha, hebrew: boolean): string {
  * through Thursday and a review (chazarah) of the week's five days on
  * Friday and Shabbat.
  *
- * Readings are transcribed from Dirshu's published luach booklets and run
- * from **11 June 2024** through **12 September 2026**; outside that window
+ * Readings are transcribed from Dirshu's luach booklets, Hebrew pocket luachs
+ * and wall calendars, and run from the third cycle's first day — **20 February
+ * 2022** — through **31 August 2027**; outside that window
  * `DailyLearning.lookup('dirshuDafHalacha', ...)` returns `null`.
  *
  * @example

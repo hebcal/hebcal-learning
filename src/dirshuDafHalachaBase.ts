@@ -3,12 +3,12 @@ import {checkTooEarly, getAbsDate} from './common.js';
 import dafHalachaJson from './dirshuDafHalacha.json.js';
 
 /*
- * The schedule began on Tuesday, 11 June 2024 = 5 Sivan 5784, on the first
- * amud of the volume that opens Hilchot Shabbat (Orach Chayim 242). This
- * date belongs to `readings[0]`, so the two must be updated together when
- * newer luach booklets are transcribed.
+ * The third cycle began on Sunday, 20 February 2022 = 19 Adar I 5782, at the
+ * start of siman 1, immediately after the second cycle's last learning day
+ * (Thursday 17 February 2022, which ended "at the end of the Mishnah Berurah").
+ * This date belongs to `readings[0]`, so the two must be updated together.
  */
-const startDate = new Date(2024, 5, 11);
+const startDate = new Date(2022, 1, 20);
 export const dirshuDafHalachaStart = greg.greg2abs(startDate);
 
 /**
@@ -19,17 +19,27 @@ export const dirshuDafHalachaStart = greg.greg2abs(startDate);
 const readings: string[] = dafHalachaJson.readings;
 
 /**
- * Indices into `readings` at which the Dirshu Mishnah Berurah starts a new
- * volume, and its page numbering restarts at daf 2a.
+ * Where the amud is known, and how to count it.
+ *
+ * Only some of the sources print the page of the Dirshu Mishnah Berurah, so it
+ * can be given from `from` onward and not before. `volumes` are the indices at
+ * which the edition starts a new volume and its numbering restarts at daf 2a.
+ * `extra` records the one day that covers more than a single amud — the day
+ * printed "ל. לא." — after which every amud shifts by a full daf.
  */
-const volumes: number[] = dafHalachaJson.volumes;
+const amudFrom: number = dafHalachaJson.amud.from;
+const amudVolumes: number[] = dafHalachaJson.amud.volumes;
+const amudExtra: [number, number][] = Object.entries(dafHalachaJson.amud.extra).map(([idx, n]) => [
+  Number(idx),
+  n as number,
+]);
 
 /** Sunday on or before `dirshuDafHalachaStart` (R.D. `n % 7 === 0` is a Sunday) */
 const week0 = dirshuDafHalachaStart - (dirshuDafHalachaStart % 7);
 
 /**
- * How many learning days of that first (partial) week precede the start.
- * The schedule opened on a Tuesday, so this is 2.
+ * How many learning days of that first week precede the start. The cycle opened
+ * on a Sunday, so this is 0.
  */
 const startOrdinal = dirshuDafHalachaStart - week0;
 
@@ -49,10 +59,11 @@ function learningDayAbs(n: number): number {
 }
 
 /**
- * R.D. of the last date covered by the published luach booklets — the Shabbat
- * that closes the week of the final transcribed learning day.
+ * R.D. of the last date covered by the transcribed sources. The final week is
+ * partial, so this is the last learning day rather than the Shabbat after it:
+ * a review needs all five of its week's days to exist.
  */
-export const dirshuDafHalachaEnd = learningDayAbs(readings.length - 1 + startOrdinal) + 2;
+export const dirshuDafHalachaEnd = learningDayAbs(readings.length - 1 + startOrdinal);
 
 /**
  * One day of the Dirshu Daf HaYomi B'Halacha schedule.
@@ -72,11 +83,13 @@ export type DirshuDafHalacha = {
    */
   review: boolean;
   /**
-   * Page (daf) of the Dirshu Mishnah Berurah, or `undefined` on review days.
+   * Page (daf) of the Dirshu Mishnah Berurah. `undefined` on review days, and
+   * on learning days before 11 June 2024 — the earlier sources are Hebrew
+   * luachs and wall calendars, which print the reading but not the page.
    * Numbering restarts at 2 with each volume of the edition.
    */
   daf?: number;
-  /** Side of the daf, `"a"` or `"b"`; `undefined` on review days. */
+  /** Side of the daf, `"a"` or `"b"`; `undefined` whenever `daf` is. */
   side?: 'a' | 'b';
 };
 
@@ -85,13 +98,19 @@ function splitReading(str: string): [string, string | undefined] {
   return idx === -1 ? [str, undefined] : [str.substring(0, idx), str.substring(idx + 1)];
 }
 
-function amudFor(idx: number): {daf: number; side: 'a' | 'b'} {
-  let volStart = volumes[0];
-  for (const v of volumes) {
+function amudFor(idx: number): {daf: number; side: 'a' | 'b'} | Record<string, never> {
+  if (idx < amudFrom) {
+    return {};
+  }
+  let volStart = amudVolumes[0];
+  for (const v of amudVolumes) {
     if (v > idx) break;
     volStart = v;
   }
-  const n = idx - volStart;
+  let n = idx - volStart;
+  for (const [at, count] of amudExtra) {
+    if (at >= volStart && at < idx) n += count;
+  }
   return {daf: 2 + Math.floor(n / 2), side: n % 2 === 0 ? 'a' : 'b'};
 }
 
@@ -103,17 +122,16 @@ function amudFor(idx: number): {daf: number; side: 'a' | 'b'} {
  * Thursday (Yom Tov included — the schedule never skips a weekday) and
  * reviewing that week's five days on Friday and Shabbat.
  *
- * The readings are transcribed from Dirshu's published luach booklets and
- * run from Tuesday, **11 June 2024** (5 Sivan 5784, the opening of Hilchot
- * Shabbat) through **12 September 2026**. Dates after the last
- * transcribed source return `null` until a newer luach is transcribed.
+ * The readings are transcribed from Dirshu's luach booklets, Hebrew pocket
+ * luachs and wall calendars, and run from the third cycle's first day —
+ * Sunday, **20 February 2022** (19 Adar I 5782) — through **31 August 2027**.
+ * Dates after the last transcribed source return `null`.
  *
  * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.) day
  *   number.
  * @returns A {@link DirshuDafHalacha}, or `null` for a date beyond the
- *   published schedule (and for the Friday and Shabbat of the opening
- *   partial week, which the luach leaves blank).
- * @throws {RangeError} if `date` is before 11 June 2024.
+ *   transcribed schedule.
+ * @throws {RangeError} if `date` is before 20 February 2022.
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */

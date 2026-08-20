@@ -21,17 +21,35 @@ function ev(y: number, m: number, d: number): DirshuDafHalachaEvent {
   return new DirshuDafHalachaEvent(hd, reading(y, m, d));
 }
 
-test('schedule-start', () => {
-  // Tuesday 11 June 2024 = 5 Sivan 5784, first amud of Hilchot Shabbat
-  expect(dirshuDafHalachaStart).toBe(greg.greg2abs(new Date(2024, 5, 11)));
+test('cycle-starts-at-siman-1', () => {
+  // Sunday 20 February 2022 = 19 Adar I 5782, the third cycle's first day. The
+  // second cycle's last learning day was the Thursday before.
+  expect(dirshuDafHalachaStart).toBe(greg.greg2abs(new Date(2022, 1, 20)));
+  expect(reading(2022, 2, 20)).toEqual({b: '1:1', e: undefined, review: false});
+  expect(reading(2022, 2, 21)).toEqual({b: '1:1', e: '1:2', review: false});
+  expect(reading(2022, 2, 24)).toEqual({b: '2:1', e: '2:5', review: false});
+});
+
+test('amud is only given where a source printed it', () => {
+  // the early years come from Hebrew luachs and wall calendars, which print the
+  // reading but not the page of the Dirshu edition
+  expect(reading(2022, 2, 20).daf).toBeUndefined();
+  expect(reading(2024, 6, 10).daf).toBeUndefined();
   expect(reading(2024, 6, 11)).toEqual({b: '242:1', e: undefined, review: false, daf: 2, side: 'a'});
   // siman 242 has a single se'if, so it spans both sides of daf 2
   expect(reading(2024, 6, 12)).toEqual({b: '242:1', e: undefined, review: false, daf: 2, side: 'b'});
   expect(reading(2024, 6, 13)).toEqual({b: '243:1', e: undefined, review: false, daf: 3, side: 'a'});
 });
 
+test('a day that covers more than one amud shifts the ones after it', () => {
+  // 15 November 2026 prints two amudim ("ל. לא."), so from the next day on the
+  // page is a full daf ahead of a plain one-amud-per-day count
+  expect(reading(2026, 11, 15)).toMatchObject({daf: 30, side: 'a'});
+  expect(reading(2026, 11, 16)).toMatchObject({daf: 31, side: 'b'});
+});
+
 test('too-early', () => {
-  expect(() => dirshuDafHalacha(new Date(2024, 5, 10))).toThrow(RangeError);
+  expect(() => dirshuDafHalacha(new Date(2022, 1, 19))).toThrow(RangeError);
 });
 
 test('one-amud-per-weekday', () => {
@@ -78,18 +96,13 @@ test('friday-and-shabbat-are-chazarah', () => {
   });
 });
 
-test('opening-partial-week-has-no-chazarah', () => {
-  // the schedule opened on a Tuesday; the luach leaves that week's review blank
-  expect(dirshuDafHalacha(new Date(2024, 5, 14))).toBeNull();
-  expect(dirshuDafHalacha(new Date(2024, 5, 15))).toBeNull();
-  // the first full week is reviewed as usual
-  expect(reading(2024, 6, 21)).toEqual({
-    b: '243:1',
-    e: '244:5',
-    review: true,
-    daf: undefined,
-    side: undefined,
-  });
+test('opening-week-is-reviewed', () => {
+  // the cycle opened on a Sunday, so its very first week is a full one. The
+  // luach prints this review as "עד סימן ב' סעיף ו'" -- up to the start of 2:6,
+  // so it touches through 2:5.
+  const expected = {b: '1:1', e: '2:5', review: true, daf: undefined, side: undefined};
+  expect(reading(2022, 2, 25)).toEqual(expected); // Friday
+  expect(reading(2022, 2, 26)).toEqual(expected); // Shabbat
 });
 
 test('yom-tov-does-not-interrupt-the-schedule', () => {
@@ -111,11 +124,11 @@ test('daf-numbering-restarts-with-each-volume', () => {
   expect(reading(2026, 8, 27)).toEqual({b: '429:1', e: undefined, review: false, daf: 2, side: 'a'});
 });
 
-test('end-of-published-schedule', () => {
-  expect(dirshuDafHalachaEnd).toBe(greg.greg2abs(new Date(2026, 8, 12)));
+test('end-of-transcribed-schedule', () => {
+  expect(dirshuDafHalachaEnd).toBe(greg.greg2abs(new Date(2027, 7, 31)));
   expect(dirshuDafHalacha(dirshuDafHalachaEnd)).not.toBeNull();
   expect(dirshuDafHalacha(dirshuDafHalachaEnd + 1)).toBeNull();
-  expect(dirshuDafHalacha(new Date(2027, 0, 1))).toBeNull();
+  expect(dirshuDafHalacha(new Date(2028, 0, 1))).toBeNull();
 });
 
 test('days-transcribed-from-the-spreadsheet', () => {
@@ -179,6 +192,6 @@ test('DailyLearning-registration', () => {
   const hd = new HDate(new Date(2025, 11, 7));
   const event = DailyLearning.lookup('dirshuDafHalacha', hd, false);
   expect(event?.render('en')).toBe("Daf HaYomi B'Halacha: Mishnah Berurah 345:1-3");
-  expect(DailyLearning.lookup('dirshuDafHalacha', new HDate(new Date(2024, 0, 1)), false)).toBeNull();
+  expect(DailyLearning.lookup('dirshuDafHalacha', new HDate(new Date(2021, 0, 1)), false)).toBeNull();
   expect(DailyLearning.lookup('dirshuDafHalacha', new HDate(new Date(2030, 0, 1)), false)).toBeNull();
 });
