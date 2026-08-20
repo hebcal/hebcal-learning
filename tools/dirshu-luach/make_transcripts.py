@@ -222,6 +222,73 @@ def hebrew_md(src, title, note, rows, hebrew_dates):
     return '\n'.join(out)
 
 
+AMUD_RE = re.compile(rf'^([{HEB}]+)\s*([.:])\s*(?:\((\d+)\))?')
+# Prose spells the reading out; the tabular form is bare numerals. Every Hebrew
+# letter run looks like a numeral to the gematria, so prose must be recognised
+# before parsing or "מסימן" decodes as a number.
+PROSE_WORDS = ('סימן', 'סעיף', 'אמצע', 'תחילת', 'הגה', 'אות', 'הקדמה', 'עד ', 'סוף')
+
+
+def decode_calendar_row(text):
+    """Split a calendar cell into (amud printed, amud decoded, reading, decoded).
+
+    Most years print the reading as prose, where the best we can decode without
+    normalising is the simanim it names. The 5787 calendar instead prints the
+    tabular amud + siman/seif of the English booklets, which parses fully.
+    """
+    if not text:
+        return '', '', '', '—'
+    if 'חזרה' in text:
+        return '', '', text, 'chazarah'
+    m = AMUD_RE.match(text)
+    amud_printed = amud = ''
+    rest = text
+    if m:
+        amud_printed = m.group(0).strip()
+        daf = gematria(m.group(1))
+        side = 'a' if m.group(2) == '.' else 'b'
+        amud = f'{daf}{side}' + (f' (p. {m.group(3)})' if m.group(3) else '')
+        rest = text[m.end():].strip()
+    if not any(w in rest for w in PROSE_WORDS):
+        try:
+            b, e = parse_range(numerals([rest]))
+            if b:
+                return amud_printed, amud, rest, b + (f'-{e}' if e else '')
+        except AssertionError:
+            pass
+    return amud_printed, amud, rest, simanim_in(rest)
+
+
+def calendar_md(label, title, note, rows, hebrew_dates):
+    dated = [r for r in rows if r.get('date')]
+    out = [f'# {title}', '', note, '',
+           f'Rows: {len(dated)}  ',
+           f'Span: {dated[0]["date"]} → {dated[-1]["date"]}', '',
+           'One row per day, with the Gregorian date printed in the row. Most',
+           'years give the reading as prose rather than the tabular siman/se\'if',
+           'of the English booklets, in which case the **Decoded** column lists',
+           'only the simanim the prose names — it is a reading aid, not the',
+           'normalised range (see `CLAUDE.md` §7). Where the calendar does print',
+           'an amud and a range, both are decoded in full.', '']
+    by_page = {}
+    for r in dated:
+        by_page.setdefault(r['page'], []).append(r)
+    for pno in sorted(by_page):
+        g = by_page[pno]
+        out += [f'## Page {pno} — {g[0]["date"]} → {g[-1]["date"]}', '',
+                '| Date | Day | Hebrew date (printed) | Hebrew date | '
+                'Amud (printed) | Amud | Reading (printed) | Decoded |',
+                '|---|---|---|---|---|---|---|---|']
+        for r in g:
+            date = datetime.date.fromisoformat(r['date'])
+            ap, ad, reading, decoded = decode_calendar_row(r.get('text'))
+            out.append(f'| {r["date"]} | {dow(date)} | {cell(r.get("hebrew"))} | '
+                       f'{hebdate(hebrew_dates, date)} | {cell(ap)} | {ad or "—"} | '
+                       f'{cell(reading)} | {decoded} |')
+        out.append('')
+    return '\n'.join(out)
+
+
 def xlsx_md(path, title, note, hebrew_dates):
     import openpyxl
     ws = openpyxl.load_workbook(path, data_only=True).worksheets[0]
@@ -280,6 +347,8 @@ def main():
     ap.add_argument('--english', nargs=2, required=True, metavar=('2024', '2025'))
     ap.add_argument('--hebrew-dated', required=True)
     ap.add_argument('--xlsx', required=True)
+    ap.add_argument('--calendar', action='append', default=[], metavar='JSON:NAME',
+                    help='extract_calendar.py output plus the output filename')
     ap.add_argument('--hebrew-dates', required=True,
                     help='Gregorian -> Hebrew map from hebrew_dates.mjs')
     a = ap.parse_args()
@@ -325,6 +394,26 @@ def main():
             print(f'no rows for {src}', file=sys.stderr)
             continue
         open(os.path.join(a.out, name), 'w').write(hebrew_md(src, title, note, rows, hebrew_dates))
+        written.append((name, len(rows)))
+
+    CAL_META = {
+        '5782': ('Dirshu Learning Calendar 5782 — Daf HaYomi B\'Halacha',
+                 'Spans the changeover: second cycle through Thu 2022-02-17, third cycle '
+                 'from Sun 2022-02-20.'),
+        '5784': ('Dirshu Learning Calendar 5784 — Daf HaYomi B\'Halacha',
+                 'Third cycle, simanim ~155–250. Fills part of what used to be the gap.'),
+        '5787': ('Dirshu Full Size Calendar 5787 — Daf HaYomi B\'Halacha',
+                 'Third cycle. Its 20 learning days overlapping the shipped schedule match '
+                 'it exactly on siman/se\'if, daf, side and printed page; it carries 273 '
+                 'further learning days beyond that horizon.'),
+    }
+    for spec in a.calendar:
+        path, _, name = spec.partition(':')
+        rows = json.load(open(path))
+        label = name.split('-')[0]
+        title, note = CAL_META.get(label, (f'Dirshu Learning Calendar {label}', ''))
+        open(os.path.join(a.out, name), 'w').write(
+            calendar_md(label, title, note, rows, hebrew_dates))
         written.append((name, len(rows)))
 
     name = '2025-2026-spreadsheet.md'
