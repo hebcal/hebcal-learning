@@ -69,6 +69,24 @@ def join_runs(runs):
     return re.sub(r'\s+', ' ', out).strip()
 
 
+QUOTES = '\'"”“’‘׳״'
+
+
+def unreverse(text):
+    """Repair a cell whose quote-delimited segments were stored in reverse.
+
+    Some years emit the whole reading as one run in visual rather than logical
+    order, so "מתחילת סימן תרל\"א עד סעיף ה'" arrives as
+    "'א עד סעיף ה\"מתחילת סימן תרל" -- the same segments, back to front.
+    A reading always opens with a Hebrew word (מסימן, מסעיף, עד, חזרה) and
+    never with a quote mark, so a leading quote is a reliable signal.
+    """
+    if not text or text[0] not in QUOTES:
+        return text
+    segments = re.findall(rf'[{QUOTES}]+|[^{QUOTES}]+', text)
+    return re.sub(r'\s+', ' ', ''.join(reversed(segments))).strip()
+
+
 def read_calendar(path, xmin, xmax):
     from pypdf import PdfReader
     rows = []
@@ -83,10 +101,16 @@ def read_calendar(path, xmin, xmax):
             if len({str(d) for d in dates}) > 1:
                 # a transposed page: many dates share one y
                 continue
+            # the printed Hebrew date sits just right of the Gregorian one
+            date_x = max(c[0] for c in cells if parse_date(c[2]))
+            hebrew = join_runs(rtl([c for c in cells
+                                    if date_x < c[0] <= date_x + 90
+                                    and not parse_date(c[2])]))
             halacha = rtl([c for c in cells
                            if xmin <= c[0] < xmax and not parse_date(c[2])])
-            text = join_runs(halacha)
+            text = unreverse(join_runs(halacha))
             rows.append({'page': pno, 'date': str(dates[0]),
+                         'hebrew': hebrew if re.search(rf'[{HEB}]', hebrew) else None,
                          'text': text if re.search(rf'[{HEB}]', text) else None})
     # a reading can wrap to a second physical line; keep the row that has text
     best = {}

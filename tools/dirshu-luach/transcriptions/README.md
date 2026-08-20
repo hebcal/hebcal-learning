@@ -28,6 +28,15 @@ same library the calendar uses, rather than from a second implementation.
 | [5780-5781-hebrew-luach.md](5780-5781-hebrew-luach.md) | `bb66b78a-57805781.pdf` (dirshu.co.il pocket luach) | 2020-06-23 → 2021-04-12 | **2** |
 | [5781-hebrew-luach.md](5781-hebrew-luach.md) | `1f7b0998-luach_tashpa1.pdf` | 2021-04-13 → 2022-02-19 | **2** |
 | [5782-hebrew-luach.md](5782-hebrew-luach.md) | `e139a915-luach57821.pdf` | 2022-02-20 → 2022-09-24 | **3** |
+| [5782-calendar.md](5782-calendar.md) | `Track 1 & 2 Learning calendar 5782 email.pdf` | 2021-08-09 → 2022-09-25 | 2 → **3** |
+| [5784-calendar.md](5784-calendar.md) | `Dirshu Learning Calendar 5784 Email Version.pdf` | 2023-08-18 → 2024-10-02 | 3 |
+| [5787-calendar.md](5787-calendar.md) | `Full Size Calendar 5787.pdf` | 2026-08-14 → 2027-10-01 | 3 |
+
+The `*-calendar.md` files are a third artifact: Dirshu's English-dated wall
+calendars, one row per day, read by `extract_calendar.py`. The 5787 calendar's
+20 learning days that overlap the shipped schedule match it exactly on
+siman/se'if, daf, side and printed page, and it carries 273 further days beyond
+that horizon.
 
 Only the two English booklets and the spreadsheet feed the shipped calendar.
 The three Hebrew luachs are the evidence behind two claims in `CLAUDE.md`:
@@ -61,6 +70,14 @@ The three Hebrew luachs are the evidence behind two claims in `CLAUDE.md`:
   `5782-hebrew-luach.md` (6 †) are essentially clean, and the three
   cycle-3 sources are complete.
 
+## Not yet transcribed
+
+Three of the supplied calendars transpose the table so that each day is a
+*column* rather than a row, which `extract_calendar.py` does not handle:
+**5783** (all 13 schedule pages), and the grid halves of **5780** and **5781**
+(6 of 9 pages each). 5783 is the only source for cycle-3 learning days ~155–390,
+so it still needs a parser.
+
 ## Regenerating
 
 ```bash
@@ -69,11 +86,17 @@ cd tools/dirshu-luach
 python3 extract_hebrew_luach.py <hebrew booklets…> rows.json
 node date_hebrew_luach.mjs rows.json dated.json      # dates + rule check
 node hebrew_dates.mjs 2020-06-01 2026-10-01 hebrew_dates.json
+python3 extract_calendar.py --halacha-x 410,605 --label 5784 <5784.pdf> cal5784.json
 python3 make_transcripts.py --out transcriptions \
     --english <2024 booklet> <2025 booklet> \
     --hebrew-dated dated.json --hebrew-dates hebrew_dates.json \
-    --xlsx <spreadsheet.xlsx>
+    --xlsx <spreadsheet.xlsx> \
+    --calendar cal5784.json:5784-calendar.md
 ```
+
+`--halacha-x` differs per calendar year: 5782 `500,620`, 5784 `410,605`,
+5787 `400,500`. Re-derive it with `extract_luach.py --dump-page` for any new
+file.
 
 The source files are not in the repo — see `CLAUDE.md` §2 for where they came
 from.
