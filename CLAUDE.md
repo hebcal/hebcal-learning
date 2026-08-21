@@ -316,6 +316,19 @@ we have: `readings` holds cycle-3 indices 0–1442 with no hole. What remains:
   cycle length is not yet known, and the calendar goes silent after 2027-08-31.
   Closing this needs the 5788 calendar and its successors, or the cycle-2
   material below.
+- **The cycles are NOT identical — a modulo would drift (tested 2026-08-20).**
+  Aligning the normalised cycle-2 readings against cycle 3 finds a single sharp
+  signal at a cycle length of ~1804 learning days: 23 consecutive days match
+  *exactly*, including compound ranges like `497:8-497:11`, against ~0% at every
+  other offset. So the two cycles are unmistakably the same schedule. But the
+  match then breaks: from cycle-3 index 1409 on, cycle 2's readings line up with
+  cycle 3 shifted by **one day**. Cycle 3 spends two days (`503:1-504:1`,
+  `504:1-504:2`) where cycle 2 spent one (`503:1-504:2`), so cycle 3 contains at
+  least one learning day that cycle 2 did not — consistent with Dirshu
+  re-typesetting a volume between cycles, which moves the amud breaks.
+  The overlap is only 72 days, so there may be more such adjustments elsewhere.
+  **Do not add `% cycleLen`.** It would be right for a while and then silently
+  drift by a day.
 - **The cycle-2 sources are still only a conditional shortcut.** `bb66b78a`,
   `tashpa` and the 5780/5781 wall calendars cover cycle 2 from 2019-09-01 to its
   end. If the content table repeats across cycles, those readings are cycle 3's
