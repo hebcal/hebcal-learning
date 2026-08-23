@@ -43,6 +43,10 @@ def parse_date(text):
         return None
 
 
+# The rightmost column is the day of the week: alef through vav are Sunday
+# through Friday and shin is Shabbat. Values are Python weekday() numbers.
+DOW_LETTERS = {'א': 6, 'ב': 0, 'ג': 1, 'ד': 2, 'ה': 3, 'ו': 4, 'ש': 5}
+
 PUNCT_ONLY = re.compile(r"^[\'\"”“’‘׳״.:()\-\s]+$")
 # a gershayim sits INSIDE a numeral (קנ"ט is 159); a geresh closes one (ב' is 2)
 GERSHAYIM = '"”“״('
@@ -101,15 +105,24 @@ def read_calendar(path, xmin, xmax):
             if len({str(d) for d in dates}) > 1:
                 # a transposed page: many dates share one y
                 continue
-            # the printed Hebrew date sits just right of the Gregorian one
+            # Right of the Gregorian date sit the printed Hebrew date and,
+            # further right still, a one-letter day-of-week column. Split the
+            # two rather than relying on a fixed window: the gap between them
+            # differs by year, so a single cutoff picks up the day letter in
+            # some calendars and not others.
             date_x = max(c[0] for c in cells if parse_date(c[2]))
-            hebrew = join_runs(rtl([c for c in cells
-                                    if date_x < c[0] <= date_x + 90
-                                    and not parse_date(c[2])]))
+            right = sorted([c for c in cells
+                            if date_x < c[0] <= date_x + 120 and not parse_date(c[2])],
+                           key=lambda c: -c[0])
+            dow = None
+            if right and right[0][2].strip() in DOW_LETTERS:
+                dow = right[0][2].strip()
+                right = right[1:]
+            hebrew = join_runs(rtl(right))
             halacha = rtl([c for c in cells
                            if xmin <= c[0] < xmax and not parse_date(c[2])])
             text = unreverse(join_runs(halacha))
-            rows.append({'page': pno, 'date': str(dates[0]),
+            rows.append({'page': pno, 'date': str(dates[0]), 'dow': dow,
                          'hebrew': hebrew if re.search(rf'[{HEB}]', hebrew) else None,
                          'text': text if re.search(rf'[{HEB}]', text) else None})
     # a reading can wrap to a second physical line; keep the row that has text

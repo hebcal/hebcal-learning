@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render the source luachs as Markdown transcriptions, one file per source.
 
-    node hebrew_dates.mjs 2020-06-01 2026-10-01 hebrew_dates.json
+    node hebrew_dates.mjs 2019-08-01 2027-12-31 hebrew_dates.json
     python3 make_transcripts.py --out transcriptions \
         --english 2024-booklet.pdf 2025-booklet.pdf \
         --hebrew-dated heb_dated.json --hebrew-dates hebrew_dates.json \
@@ -29,9 +29,27 @@ from extract_luach import (DATE_RE, HEB, KNOWN_PROBLEMS, gematria, group_rows,
 
 DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
+# The wall calendars print the day of the week as a single letter: alef through
+# vav are Sunday through Friday, and shin is Shabbat.
+DOW_LETTERS = {'א': 6, 'ב': 0, 'ג': 1, 'ד': 2, 'ה': 3, 'ו': 4, 'ש': 5}
+
 
 def dow(d):
     return DOW[d.weekday()]
+
+
+def dow_printed(row, date):
+    """The row's weekday, decoded from the printed letter where there is one.
+
+    The letter is its own column in the calendar, so decoding it turns the
+    Gregorian date we read off the same row into something checkable: the two
+    must name the same weekday. A row whose letter disagrees is flagged rather
+    than silently trusted.
+    """
+    printed = DOW_LETTERS.get((row.get('dow') or '').strip())
+    if printed is None:
+        return DOW[date.weekday()] + ' †'
+    return DOW[printed] + ('' if printed == date.weekday() else ' ‡')
 
 
 HEB_MONTHS = {
@@ -270,19 +288,33 @@ def calendar_md(label, title, note, rows, hebrew_dates):
            'only the simanim the prose names — it is a reading aid, not the',
            'normalised range (see `CLAUDE.md` §7). Where the calendar does print',
            'an amud and a range, both are decoded in full.', '']
+    # the transposed calendars lose the day-of-week column along with the
+    # printed Hebrew date, so only show it where a source actually prints one
+    has_dow = any(r.get('dow') for r in dated)
+    if has_dow:
+        out += ['The calendar prints its own day-of-week letter — alef through',
+                'vav for Sunday through Friday, shin for Shabbat. It is shown',
+                'decoded beside the weekday computed from the Gregorian date, so',
+                'a row attributed to the wrong day would show as a mismatch',
+                '(flagged ‡), and a row whose letter did not survive extraction',
+                'as †.', '']
     by_page = {}
     for r in dated:
         by_page.setdefault(r['page'], []).append(r)
     for pno in sorted(by_page):
         g = by_page[pno]
         out += [f'## Page {pno} — {g[0]["date"]} → {g[-1]["date"]}', '',
-                '| Date | Day | Hebrew date (printed) | Hebrew date | '
-                'Amud (printed) | Amud | Reading (printed) | Decoded |',
-                '|---|---|---|---|---|---|---|---|']
+                '| Date |' + (' Day (printed) |' if has_dow else '') +
+                ' Day | Hebrew date (printed) | Hebrew date | Amud (printed) |'
+                ' Amud | Reading (printed) | Decoded |',
+                '|---|---|---|---|---|---|---|' + ('---|---|' if has_dow else '---|')]
         for r in g:
             date = datetime.date.fromisoformat(r['date'])
             ap, ad, reading, decoded = decode_calendar_row(r.get('text'))
-            out.append(f'| {r["date"]} | {dow(date)} | {cell(r.get("hebrew"))} | '
+            printed = f' {cell(r.get("dow"))} |' if has_dow else ''
+            day = dow_printed(r, date) if has_dow else dow(date)
+            out.append(f'| {r["date"]} |{printed} {day} | '
+                       f'{cell(r.get("hebrew"))} | '
                        f'{hebdate(hebrew_dates, date)} | {cell(ap)} | {ad or "—"} | '
                        f'{cell(reading)} | {decoded} |')
         out.append('')

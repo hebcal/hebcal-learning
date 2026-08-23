@@ -10,10 +10,10 @@ panels on that page) in the original PDF, so it can be compared side by side
 with the source.
 
 **Every Hebrew value is followed by its decoded value in the next column** — the
-Hebrew date beside `18 Kislev 5786`, the amud `קצו:` beside `196b (p. 392)`, the
-reading `שמ״ה ד׳ - ו׳` beside `345:4-345:6` — so a misread gematriya shows up as
-a mismatch between two adjacent cells rather than needing a diff against the
-JSON. Hebrew is stored in logical order (siman first, then se'if), which is how
+day letter `א` beside `Sun`, the Hebrew date beside `18 Kislev 5786`, the amud
+`קצו:` beside `196b (p. 392)`, the reading `שמ״ה ד׳ - ו׳` beside `345:4-345:6` —
+so a misread gematriya shows up as a mismatch between two adjacent cells rather
+than needing a diff against the JSON. Hebrew is stored in logical order (siman first, then se'if), which is how
 it renders right-to-left, and is wrapped in backticks so the exact characters
 survive and the cell boundaries stay clear.
 
@@ -57,6 +57,13 @@ The three Hebrew luachs are the evidence behind two claims in `CLAUDE.md`:
   `siman:se'if` of the English booklets, and are reproduced verbatim here. That
   prose is **not yet normalised** into the calendar's reference model — see
   `CLAUDE.md` §7.
+- The wall calendars print a one-letter day of the week: alef through vav for
+  Sunday through Friday, and shin for Shabbat. It is decoded beside the weekday
+  computed from the row's own Gregorian date, so the two are a cross-check on
+  each other. All 1,237 printed letters agree; a disagreement would be flagged
+  ‡, and the two rows whose letter did not survive extraction are flagged †.
+  The 5782 calendar prints **no** Hebrew date — that column is its day letter,
+  and its Hebrew-date column is empty throughout.
 - A Hebrew date marked † was reconstructed rather than read: either its cell did
   not survive text extraction, or the cell that was extracted decoded to a
   different day than the row it landed on, which happens where a booklet places
@@ -86,7 +93,7 @@ pip install pypdf cffi openpyxl
 cd tools/dirshu-luach
 python3 extract_hebrew_luach.py <hebrew booklets…> rows.json
 node date_hebrew_luach.mjs rows.json dated.json      # dates + rule check
-node hebrew_dates.mjs 2020-06-01 2026-10-01 hebrew_dates.json
+node hebrew_dates.mjs 2019-08-01 2027-12-31 hebrew_dates.json
 python3 extract_calendar.py --halacha-x 410,605 --label 5784 <5784.pdf> cal5784.json
 python3 make_transcripts.py --out transcriptions \
     --english <2024 booklet> <2025 booklet> \
