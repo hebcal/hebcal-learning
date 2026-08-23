@@ -22,7 +22,7 @@ import './locale.js';
  *
  * @example
  * import {HDate} from '@hebcal/hdate';
- * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import {DailyLearning} from '@hebcal/core';
  * import '@hebcal/learning/chofetzChaim';
  *
  * const hd = new HDate(new Date(2024, 3, 8));  // 29 Adar II 5784

@@ -85,7 +85,7 @@ $ npm install @hebcal/learning
 ## Synopsis
 ```javascript
 import {HDate} from '@hebcal/hdate';
-import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+import {DailyLearning} from '@hebcal/core';
 import '@hebcal/learning';
 
 const dt = new Date();
@@ -105,7 +105,7 @@ imported, and you call them through the same `DailyLearning.lookup` API:
 
 ```javascript
 import {HDate} from '@hebcal/hdate';
-import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+import {DailyLearning} from '@hebcal/core';
 import '@hebcal/learning/rambam3';
 import '@hebcal/learning/dafYomi';
 

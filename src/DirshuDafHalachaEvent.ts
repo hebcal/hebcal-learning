@@ -42,7 +42,7 @@ function renderRange(reading: DirshuDafHalacha, hebrew: boolean): string {
  *
  * @example
  * import {HDate} from '@hebcal/hdate';
- * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import {DailyLearning} from '@hebcal/core';
  * import '@hebcal/learning/dirshuDafHalacha';
  *
  * const hd = new HDate(new Date(2025, 11, 7));  // 17 Kislev 5786

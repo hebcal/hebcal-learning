@@ -16,7 +16,7 @@ const PIRKEI_AVOT = 'Pirkei Avot';
  *
  * @example
  * import {HDate} from '@hebcal/hdate';
- * import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+ * import {DailyLearning} from '@hebcal/core';
  * import '@hebcal/learning/pirkeiAvotSummer';
  *
  * const hd = new HDate(new Date(2024, 6, 6));  // 30 Sivan 5784 (Sat)
