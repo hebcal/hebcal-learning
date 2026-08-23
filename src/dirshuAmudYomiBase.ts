@@ -1,4 +1,4 @@
-import {HDate, greg2abs} from '@hebcal/hdate';
+import {greg2abs} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import amudJson from './amudim.json.js';
 

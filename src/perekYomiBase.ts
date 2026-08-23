@@ -2,7 +2,7 @@
  * Mishnah Perek (chapter) Yomi
  * One chapter per day
  */
-import {HDate, greg2abs} from '@hebcal/hdate';
+import {greg2abs} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import mishnayotJson from './mishnayot.json.js';
 

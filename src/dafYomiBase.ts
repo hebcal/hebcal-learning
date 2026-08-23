@@ -140,10 +140,4 @@ export class DafYomi extends DafPage {
 }
 
 // for Daf Weekly, which is a separate schedule
-export {
-  DAF_OFFSETS,
-  NEW_CYCLE_LENGTH,
-  TRACTATE_COUNT,
-  TRACTATE_LAST_DAF,
-  TRACTATE_NAMES,
-};
+export {DAF_OFFSETS, NEW_CYCLE_LENGTH, TRACTATE_COUNT, TRACTATE_LAST_DAF, TRACTATE_NAMES};

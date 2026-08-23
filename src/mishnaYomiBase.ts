@@ -1,4 +1,4 @@
-import {HDate, greg2abs} from '@hebcal/hdate';
+import {greg2abs} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import mishnayotJson from './mishnayot.json.js';
 
@@ -45,7 +45,7 @@ export class MishnaYomiIndex {
    * call.
    */
   constructor() {
-    const tmp = new Array<MishnaYomi>(numMishnayot);
+    const tmp = Array.from<MishnaYomi>({length: numMishnayot});
     let i = 0;
     for (const tractate of mishnayot) {
       const v = tractate.v;
@@ -56,7 +56,7 @@ export class MishnaYomiIndex {
         }
       }
     }
-    const days = new Array<MishnaYomi[]>(numDays);
+    const days = Array.from<MishnaYomi[]>({length: numDays});
     for (let j = 0; j < numDays; j++) {
       const k = j * 2;
       days[j] = [tmp[k], tmp[k + 1]];

@@ -1,4 +1,3 @@
-import {HDate} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import {
   rambam1cycleLen,

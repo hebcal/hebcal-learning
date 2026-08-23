@@ -1,4 +1,4 @@
-import {HDate, greg2abs} from '@hebcal/hdate';
+import {greg2abs} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import tanakhNumChap from './tanakhNumChap.json.js';
 
@@ -45,7 +45,7 @@ export class NachYomiIndex {
    * Reuse the same instance across many lookups.
    */
   constructor() {
-    const days = new Array<NachYomi>(numChapters);
+    const days = Array.from<NachYomi>({length: numChapters});
     let i = 0;
     for (const element of nach) {
       const book = element[0];
