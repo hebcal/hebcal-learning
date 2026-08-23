@@ -22,16 +22,6 @@ import {DafPage} from './DafPage.js';
 import {LearningDate, checkTooEarly, getAbsDate} from './common.js';
 import bavliJson from './bavli.json.js';
 
-type Daf = {
-  name: string;
-  blatt: number;
-};
-
-const shas: Daf[] = Object.entries<number>(bavliJson).map(([name, blatt]) => ({
-  name,
-  blatt,
-}));
-
 /** Masechtos in Daf Yomi order. */
 const TRACTATE_NAMES: readonly string[] = Object.keys(bavliJson);
 
@@ -41,7 +31,7 @@ const TRACTATE_NAMES: readonly string[] = Object.keys(bavliJson);
  */
 const TRACTATE_LAST_DAF: readonly number[] = Object.values<number>(bavliJson);
 
-const TRACTATE_COUNT = shas.length;
+const TRACTATE_COUNT = TRACTATE_LAST_DAF.length;
 
 /** Index of Shekalim, whose length differs between the old and new cycles. */
 const SHEKALIM_INDEX = 4;
@@ -110,7 +100,7 @@ function calculateDaf(date: LearningDate): DafPage {
   }
 
   // Unreachable: the masechta lengths sum to exactly the cycle length.
-  throw new Error("Daf Yomi calculation fell through; masechta table is inconsistent.");
+  throw new Error('Daf Yomi calculation fell through; masechta table is inconsistent.');
 }
 
 /**
@@ -150,4 +140,10 @@ export class DafYomi extends DafPage {
 }
 
 // for Daf Weekly, which is a separate schedule
-export {TRACTATE_NAMES, TRACTATE_LAST_DAF, TRACTATE_COUNT, DAF_OFFSETS};
+export {
+  DAF_OFFSETS,
+  NEW_CYCLE_LENGTH,
+  TRACTATE_COUNT,
+  TRACTATE_LAST_DAF,
+  TRACTATE_NAMES,
+};

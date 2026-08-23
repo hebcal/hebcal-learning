@@ -1,12 +1,18 @@
 import {greg2abs} from '@hebcal/hdate';
 import {DafPage} from './DafPage.js';
 import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
-import {DAF_OFFSETS, TRACTATE_COUNT, TRACTATE_LAST_DAF, TRACTATE_NAMES} from './dafYomiBase.js';
+import {
+  DAF_OFFSETS,
+  NEW_CYCLE_LENGTH,
+  TRACTATE_COUNT,
+  TRACTATE_LAST_DAF,
+  TRACTATE_NAMES,
+} from './dafYomiBase.js';
 
 const startDate = new Date(2005, 2, 6);
 export const dafWeeklyStart = greg2abs(startDate);
 
-const numDays = 2711 * 7;
+const numDays = NEW_CYCLE_LENGTH * 7;
 
 /**
  * Calculates the **Daf-a-Week** Talmud page for the given date.
@@ -44,5 +50,5 @@ export function dafWeekly(date: LearningDate): DafPage {
   }
 
   // Unreachable: the masechta lengths sum to exactly the cycle length.
-  throw new Error("findDaf calculation fell through; masechta table is inconsistent.");
+  throw new Error('dafWeekly calculation fell through; masechta table is inconsistent.');
 }
