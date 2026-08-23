@@ -1,3 +1,47 @@
+/**
+ * @file Dirshu's Daf HaYomi B'Halacha — the daily Mishnah Berurah program.
+ *
+ * **This is not a perpetual calendar.** Unlike the cycles elsewhere in this
+ * package, it cannot be computed from a start date and a modulo. It is a
+ * finite table transcribed from Dirshu's printed schedules, and it runs out:
+ * `dirshuDafHalacha()` returns `null` for any date after
+ * {@link dirshuDafHalachaEnd} (31 August 2027 as shipped). Extending the
+ * calendar means transcribing the next luach — see `dirshuDafHalacha.md` and
+ * `tools/dirshu-luach/`.
+ *
+ * Two separate things stand in the way of a formula, and only the first of
+ * them is fixable:
+ *
+ * **1. The content mapping is not a rule.** *When* the program learns is
+ * mechanical — one amud on each of Sunday through Thursday, chazarah on Friday
+ * and Shabbat, and Yom Tov never interrupts it (see {@link dirshuDafHalacha}).
+ * But *what* falls on a given amud is determined by where the page breaks land
+ * in a physical printed edition, so the siman:se'if for a day can only ever be
+ * looked up, never derived. That much is unremarkable — `bavli.json`,
+ * `mishnayot.json` and `arukhHaShulchanYomi.json` are lookup tables too.
+ *
+ * **2. The cycles are not identical, so `% cycleLen` would silently drift.**
+ * The cycle boundary itself is clean: cycle 3 opened on Sunday 20 February
+ * 2022 at siman 1, the very next learning day after cycle 2's last (Thursday
+ * 17 February 2022, which ended at the end of the Mishnah Berurah). No gap, no
+ * restart offset. But the readings themselves do not repeat exactly. Aligning
+ * the surviving cycle-2 schedule against cycle 3 finds one sharp signal, at a
+ * cycle length of about 1804 learning days — 23 consecutive days match
+ * exactly, compound ranges included, against essentially nothing at every
+ * other offset — so the two really are the same program. The match then
+ * breaks: from cycle-3 index 1409 onward, cycle 2 lines up with cycle 3
+ * shifted by one day, because
+ *
+ *     cycle 3:  ... 503:1-504:1 , 504:1-504:2 ...   (two learning days)
+ *     cycle 2:  ... 503:1-504:2               ...   (one learning day)
+ *
+ * Cycle 3 therefore contains at least one learning day that cycle 2 did not,
+ * which is what re-typesetting a volume between cycles does to the amud
+ * breaks. The tested overlap is only 72 days, so there may be more such
+ * adjustments elsewhere. A modulo would be right for years and then quietly go
+ * a day wrong, which is worse than returning `null`. Do not add one.
+ */
+
 import {greg2abs} from '@hebcal/hdate';
 import {LearningDate, checkTooEarly, getAbsDate} from './common.js';
 import dafHalachaJson from './dirshuDafHalacha.json.js';
