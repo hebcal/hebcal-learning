@@ -1,5 +1,4 @@
-import {Locale} from '@hebcal/core/dist/esm/locale';
-import {gematriya} from '@hebcal/hdate';
+import {Locale, gematriya} from '@hebcal/hdate';
 import './locale.js';
 
 /**

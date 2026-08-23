@@ -1,5 +1,4 @@
-import {Locale} from '@hebcal/core/dist/esm/locale';
-import {HDate} from '@hebcal/hdate';
+import {Locale, HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {AhSYomiReading} from './arukhHaShulchanYomiBase.js';
 import {gematriyaNN} from './common.js';

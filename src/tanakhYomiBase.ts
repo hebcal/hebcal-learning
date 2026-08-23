@@ -1,5 +1,4 @@
-import {HDate, greg2abs, months} from '@hebcal/hdate';
-import {Locale} from '@hebcal/core/dist/esm/locale';
+import {HDate, greg2abs, months, Locale} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {getHolidaysOnDate} from '@hebcal/core/dist/esm/holidays';
 import {DafPage} from './DafPage.js';

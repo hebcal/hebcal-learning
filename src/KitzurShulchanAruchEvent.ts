@@ -1,5 +1,4 @@
-import {HDate, months} from '@hebcal/hdate';
-import {Locale} from '@hebcal/core/dist/esm/locale';
+import {HDate, months, Locale} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {KitzurShulchanAruchReading} from './kitzurShulchanAruchBase.js';
 import {gematriyaNN, formatBeginEndRange} from './common.js';

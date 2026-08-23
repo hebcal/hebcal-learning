@@ -1,4 +1,4 @@
-import {Locale} from '@hebcal/core/dist/esm/locale';
+import {Locale} from '@hebcal/hdate';
 import poAshkenazi from './ashkenazi.po.js';
 import poHe from './he.po.js';
 

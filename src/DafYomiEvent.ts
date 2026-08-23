@@ -1,5 +1,4 @@
-import {Locale} from '@hebcal/core/dist/esm/locale';
-import {HDate} from '@hebcal/hdate';
+import {Locale, HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DafPageEvent} from './DafPageEvent.js';
 import {DafYomi} from './dafYomiBase.js';

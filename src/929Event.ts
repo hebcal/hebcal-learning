@@ -1,5 +1,4 @@
-import {HDate, gematriya} from '@hebcal/hdate';
-import {Locale} from '@hebcal/core/dist/esm/locale';
+import {HDate, gematriya, Locale} from '@hebcal/hdate';
 import {Nine29Reading} from './929Base.js';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {sefariaUrl} from './common.js';
