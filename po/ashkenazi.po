@@ -85,3 +85,9 @@ msgstr "Tahoros"
 # Mishna Mikvaot
 msgid "Mikvaot"
 msgstr "Mikvaos"
+
+msgid "Mishnah Berurah"
+msgstr "Mishnah Berurah"
+
+msgid "Chazarah"
+msgstr "Chazarah"

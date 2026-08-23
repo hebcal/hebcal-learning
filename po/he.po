@@ -806,3 +806,14 @@ msgstr "דִברֵי הַיָמִים א׳"
 
 msgid "II Chronicles"
 msgstr "דִברֵי הַיָמִים ב׳"
+
+# Dirshu Daf HaYomi B'Halacha
+
+msgid "Daf HaYomi B'Halacha"
+msgstr "דַף הַיוֹמִי בַּהֲלָכָה"
+
+msgid "Mishnah Berurah"
+msgstr "מִשְׁנָה בְּרוּרָה"
+
+msgid "Chazarah"
+msgstr "חֲזָרָה"
