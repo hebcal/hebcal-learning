@@ -1,107 +1,116 @@
-/*
-    Hebcal - A Jewish Calendar Generator
-    Copyright (c) 1994-2020 Danny Sadinoff
-    Portions copyright Eyal Schachter and Michael J. Radwin
-
-    https://github.com/hebcal/hebcal-es6
-
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program. If not, see <http://www.gnu.org/licenses/>.
+/**
+ * Daf Yomi calculator.
+ *
+ * A TypeScript port of `daf.el` by Bob Newell (first written Bismarck, North
+ * Dakota, April 24 1998; last revised Honolulu, Hawai'i, December 14 2012),
+ * which was released by its author into the public domain. This port is
+ * likewise public domain.
+ *
+ * The algorithm walks the fixed sequence of masechtos, using the absolute
+ * ("Rata Die") day number of the requested date to find the offset into the
+ * current cycle. Cycles 1-7 ran 2702 days (Shekalim was learned as 13 blatt);
+ * from cycle 8 onward they run 2711 days (Shekalim expanded to 22 blatt).
+ *
+ * One deviation from the original: `daf.el` gave Tamid nine dafim (26-34) and
+ * Midos three (35-37). The accepted division is Tamid 26-33 and Midos 34-37, so
+ * the original named the wrong masechta on one day of every cycle. The cycle
+ * length is unchanged, so no other day is affected.
  */
-import {HDate, greg} from '@hebcal/hdate';
-import {DafPage} from './DafPage.js';
-import {checkTooEarly, getAbsDate} from './common.js';
-import bavliJson from './bavli.json.js';
 
-const osdate = new Date(1923, 8, 11);
-export const osday = greg.greg2abs(osdate);
-const nsday = greg.greg2abs(new Date(1975, 5, 24));
+import {greg2abs} from '@hebcal/hdate';
+import {DafPage} from './DafPage.js';
+import {LearningDate, checkTooEarly, getAbsDate} from './common.js';
+import bavliJson from './bavli.json.js';
 
 type Daf = {
   name: string;
   blatt: number;
 };
 
-export const shas0: Daf[] = Object.entries<number>(bavliJson).map(([name, blatt]) => ({
+const shas: Daf[] = Object.entries<number>(bavliJson).map(([name, blatt]) => ({
   name,
   blatt,
 }));
 
+/** Masechtos in Daf Yomi order. */
+const TRACTATE_NAMES: readonly string[] = Object.keys(bavliJson);
+
 /**
- * @private
+ * Last daf of each masechta. A masechta of N blatt occupies N-1 days, since
+ * pagination starts at daf 2.
  */
-function calculateDaf(date: HDate | Date | number): DafPage {
-  const cday = getAbsDate(date);
-  checkTooEarly(cday, osday, 'Daf Yomi');
-  let cno;
-  let dno;
-  if (cday >= nsday) {
-    // "new" cycle
-    cno = 8 + Math.floor((cday - nsday) / 2711);
-    dno = (cday - nsday) % 2711;
-  } else {
-    // old cycle
-    cno = 1 + Math.floor((cday - osday) / 2702);
-    dno = (cday - osday) % 2702;
-  }
+const TRACTATE_LAST_DAF: readonly number[] = Object.values<number>(bavliJson);
 
-  // Find the daf taking note that the cycle changed slightly after cycle 7.
-  // Fix Shekalim for old cycles
-  const shortShekalim = cno <= 7;
-  const shas = shortShekalim ? shas0.slice() : shas0;
-  if (shortShekalim) {
-    shas[4] = {name: 'Shekalim', blatt: 13};
-  }
+const TRACTATE_COUNT = shas.length;
 
-  return findDaf(shas, dno);
+/** Index of Shekalim, whose length differs between the old and new cycles. */
+const SHEKALIM_INDEX = 4;
+const SHEKALIM_OLD_LAST_DAF = 13;
+
+const LAST_DAF_OLD = [...TRACTATE_LAST_DAF];
+LAST_DAF_OLD[SHEKALIM_INDEX] = SHEKALIM_OLD_LAST_DAF;
+
+/**
+ * Kinnim, Tamid and Midos are printed as continuations of the preceding
+ * masechta rather than starting at daf 2, so their numbering is offset.
+ */
+const DAF_OFFSETS: Readonly<Record<number, number>> = {
+  36: 21, // Kinnim starts at 23
+  37: 24, // Tamid starts at 26
+  38: 32, // Midos starts at 34
+};
+
+/** Start of cycle 1 (11 September 1923) and of cycle 8 (24 June 1975). */
+export const oldStart = greg2abs(new Date(1923, 8, 11));
+const newStart = greg2abs(new Date(1975, 5, 24));
+
+const OLD_CYCLE_LENGTH = 2702;
+const NEW_CYCLE_LENGTH = 2711;
+const FIRST_NEW_CYCLE = 8;
+
+export interface DafYomiResult {
+  /** Cycle number, counting the cycle that began 11 September 1923 as 1. */
+  cycle: number;
+  /** Masechta name, e.g. "Chullin". */
+  tractate: string;
+  /** Daf (folio) number within the masechta. */
+  daf: number;
 }
 
 /**
- * @private
+ * Calculate the Daf Yomi for a Gregorian date.
  */
-export function findDaf(shas: Daf[], dno: number): DafPage {
-  let total = 0;
-  let blatt = 0;
-  let count = -1;
+function calculateDaf(date: LearningDate): DafPage {
+  const absolute = getAbsDate(date);
+  checkTooEarly(absolute, oldStart, 'Daf Yomi');
 
-  // Find the daf
-  let j = 0;
-  const dafcnt = 40;
-  while (j < dafcnt) {
-    count++;
-    total = total + shas[j].blatt - 1;
-    if (dno < total) {
-      blatt = shas[j].blatt + 1 - (total - dno);
-      // fiddle with the weird ones near the end
-      switch (count) {
-        case 36:
-          blatt = blatt + 21;
-          break;
-        case 37:
-          blatt = blatt + 24;
-          break;
-        case 38:
-          blatt = blatt + 32;
-          break;
-        default:
-          break;
-      }
-      // Bailout
-      j = 1 + dafcnt;
-    }
-    j++;
+  let cycle: number;
+  let dayInCycle: number;
+  if (absolute >= newStart) {
+    const elapsed = absolute - newStart;
+    cycle = FIRST_NEW_CYCLE + Math.floor(elapsed / NEW_CYCLE_LENGTH);
+    dayInCycle = elapsed % NEW_CYCLE_LENGTH;
+  } else {
+    const elapsed = absolute - oldStart;
+    cycle = 1 + Math.floor(elapsed / OLD_CYCLE_LENGTH);
+    dayInCycle = elapsed % OLD_CYCLE_LENGTH;
   }
-  return new DafPage(shas[count].name, blatt);
+
+  const lastDaf = cycle < FIRST_NEW_CYCLE ? LAST_DAF_OLD : TRACTATE_LAST_DAF;
+
+  // Walk the masechtos, accumulating days, until the cycle offset falls inside one.
+  let daysSoFar = 0;
+  for (let index = 0; index < TRACTATE_COUNT; index++) {
+    daysSoFar += lastDaf[index] - 1;
+    if (dayInCycle < daysSoFar) {
+      const daf = lastDaf[index] + 1 - (daysSoFar - dayInCycle) + (DAF_OFFSETS[index] ?? 0);
+      const tractate = TRACTATE_NAMES[index];
+      return new DafPage(tractate, daf, cycle);
+    }
+  }
+
+  // Unreachable: the masechta lengths sum to exactly the cycle length.
+  throw new Error("Daf Yomi calculation fell through; masechta table is inconsistent.");
 }
 
 /**
@@ -134,8 +143,11 @@ export class DafYomi extends DafPage {
    * @param date - Hebrew date, Gregorian `Date`, or absolute (R.D.)
    *   day number.
    */
-  constructor(date: HDate | Date | number) {
+  constructor(date: LearningDate) {
     const d = calculateDaf(date);
-    super(d.name, d.blatt);
+    super(d.name, d.blatt, d.cycle);
   }
 }
+
+// for Daf Weekly, which is a separate schedule
+export {TRACTATE_NAMES, TRACTATE_LAST_DAF, TRACTATE_COUNT, DAF_OFFSETS};

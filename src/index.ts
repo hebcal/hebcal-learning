@@ -1,3 +1,4 @@
+export type {LearningDate} from './common.js';
 import './register.js';
 export {DafPage} from './DafPage.js';
 export {DailyLearningEvent} from './DailyLearningEvent.js';

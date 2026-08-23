@@ -1,10 +1,10 @@
-import {HDate, greg} from '@hebcal/hdate';
+import {greg2abs} from '@hebcal/hdate';
 import {DafPage} from './DafPage.js';
-import {checkTooEarly, getAbsDate} from './common.js';
-import {findDaf, shas0} from './dafYomiBase.js';
+import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
+import {DAF_OFFSETS, TRACTATE_COUNT, TRACTATE_LAST_DAF, TRACTATE_NAMES} from './dafYomiBase.js';
 
 const startDate = new Date(2005, 2, 6);
-export const dafWeeklyStart = greg.greg2abs(startDate);
+export const dafWeeklyStart = greg2abs(startDate);
 
 const numDays = 2711 * 7;
 
@@ -25,12 +25,24 @@ const numDays = 2711 * 7;
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function dafWeekly(date: HDate | Date | number): DafPage {
+export function dafWeekly(date: LearningDate): DafPage {
   const abs = getAbsDate(date);
   checkTooEarly(abs, dafWeeklyStart, 'Daf-a-Week');
 
   const dayNum = (abs - dafWeeklyStart) % numDays;
   const weekNum = Math.trunc(dayNum / 7);
 
-  return findDaf(shas0, weekNum);
+  // Walk the masechtos, accumulating days, until the cycle offset falls inside one.
+  let weeksSoFar = 0;
+  for (let index = 0; index < TRACTATE_COUNT; index++) {
+    weeksSoFar += TRACTATE_LAST_DAF[index] - 1;
+    if (weekNum < weeksSoFar) {
+      const daf = TRACTATE_LAST_DAF[index] + 1 - (weeksSoFar - weekNum) + (DAF_OFFSETS[index] ?? 0);
+      const tractate = TRACTATE_NAMES[index];
+      return new DafPage(tractate, daf);
+    }
+  }
+
+  // Unreachable: the masechta lengths sum to exactly the cycle length.
+  throw new Error("findDaf calculation fell through; masechta table is inconsistent.");
 }

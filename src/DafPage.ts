@@ -1,6 +1,5 @@
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {gematriya} from '@hebcal/hdate';
-import {isHebrewLocale} from './common.js';
 import './locale.js';
 
 /**
@@ -9,12 +8,14 @@ import './locale.js';
 export class DafPage {
   readonly name: string;
   readonly blatt: string | number;
+  readonly cycle?: number;
   /**
    * Initializes a daf yomi instance
    */
-  constructor(name: string, blatt: number | string) {
+  constructor(name: string, blatt: number | string, cycle?: number) {
     this.name = name;
     this.blatt = blatt;
+    this.cycle = cycle;
   }
   getBlatt(): number | string {
     return this.blatt;
@@ -24,13 +25,13 @@ export class DafPage {
   }
   /**
    * Formats (with translation) the dafyomi result as a string like "Pesachim 34"
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
-    if (isHebrewLocale(loc)) {
-      return Locale.gettext(this.name, loc) + ' דף ' + gematriya(this.blatt);
+    const {name, blatt} = this;
+    if (Locale.isHebrewLocale(locale)) {
+      return Locale.gettext(name, locale) + ' דף ' + gematriya(blatt);
     }
-    return Locale.gettext(this.name, loc) + ' ' + this.blatt;
+    return Locale.gettext(name, locale) + ' ' + blatt;
   }
 }
