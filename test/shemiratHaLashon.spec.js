@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {HDate, greg} from '@hebcal/hdate';
+import {HDate, greg2abs} from '@hebcal/hdate';
 import {shemiratHaLashon} from '../src/shemiratHaLashonBase';
 import {ShemiratHaLashonEvent} from '../src/ShemiratHaLashonEvent';
 
@@ -17,8 +17,8 @@ test('shemiratHaLashon-3-Av', () => {
 });
 
 test('shemiratHaLashon-2023-10', () => {
-  const startAbs = greg.greg2abs(new Date(2023, 4, 12));
-  const endAbs = greg.greg2abs(new Date(2023, 5, 2));
+  const startAbs = greg2abs(new Date(2023, 4, 12));
+  const endAbs = greg2abs(new Date(2023, 5, 2));
   const actual = [];
   for (let abs = startAbs; abs <= endAbs; abs++) {
     const hd = new HDate(abs);

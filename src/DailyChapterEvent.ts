@@ -1,7 +1,7 @@
 import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {isHebrewLocale, sefariaUrl} from './common.js';
+import {sefariaUrl} from './common.js';
 import './locale.js';
 
 /**
@@ -25,12 +25,11 @@ export abstract class DailyChapterEvent extends DailyLearningEvent {
   }
   /**
    * Returns name of tractate and page (e.g. "Beitzah 21").
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
-    const name = Locale.gettext(this.k, loc);
-    if (isHebrewLocale(loc)) {
+    const name = Locale.gettext(this.k, locale);
+    if (Locale.isHebrewLocale(locale)) {
       return name + ' ' + gematriya(this.v);
     }
     return name + ' ' + this.v;

@@ -2,7 +2,7 @@ import {expect, test} from 'vitest';
 import {yerushalmiYomi, vilna, schottenstein,
   cycleStart, numSpecialDays} from '../src/yerushalmiBase';
 import {YerushalmiYomiEvent} from '../src/YerushalmiYomiEvent';
-import {HDate, greg} from '@hebcal/hdate';
+import {HDate, greg2abs} from '@hebcal/hdate';
 import '../src/locale';
 
 test('yerushalmiYomi-small', () => {
@@ -29,8 +29,8 @@ function hd2iso(hd) {
 }
 
 test('yerushalmiYomi-big', () => {
-  const start = greg.greg2abs(new Date(1997, 2, 14));
-  const endAbs = greg.greg2abs(new Date(2001, 5, 22));
+  const start = greg2abs(new Date(1997, 2, 14));
+  const endAbs = greg2abs(new Date(2001, 5, 22));
   const actual = [];
   for (let abs = start; abs <= endAbs; abs++) {
     const daf = yerushalmiYomi(abs, vilna);
@@ -1605,8 +1605,8 @@ test('yerushalmiYomi-big', () => {
 });
 
 test('schottenstein', () => {
-  const start = greg.greg2abs(new Date(2022, 10, 14));
-  const endAbs = greg.greg2abs(new Date(2028, 7, 7));
+  const start = greg2abs(new Date(2022, 10, 14));
+  const endAbs = greg2abs(new Date(2028, 7, 7));
   const actual = [];
   for (let abs = start; abs <= endAbs; abs++) {
     const daf = yerushalmiYomi(abs, schottenstein);

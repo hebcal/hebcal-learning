@@ -2,7 +2,7 @@ import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {Nine29Reading} from './929Base.js';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {isHebrewLocale, sefariaUrl} from './common.js';
+import {sefariaUrl} from './common.js';
 import './locale.js';
 
 /**
@@ -38,13 +38,12 @@ export class Nine29Event extends DailyLearningEvent {
   /**
    * Returns the name of the reading, e.g. "Deuteronomy 34 (187)".
    * In Hebrew the chapter is rendered with gematriya: "דברים ל״ד (187)".
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
     const {book, bookChap, cycleChap} = this.reading;
-    const bookName = Locale.gettext(book, loc);
-    const chapStr = isHebrewLocale(loc) ? gematriya(bookChap) : String(bookChap);
+    const bookName = Locale.gettext(book, locale);
+    const chapStr = Locale.isHebrewLocale(locale) ? gematriya(bookChap) : String(bookChap);
     return `${bookName} ${chapStr} (${cycleChap})`;
   }
 
@@ -53,10 +52,9 @@ export class Nine29Event extends DailyLearningEvent {
    * e.g. "Deuteronomy 34".
    */
   renderBrief(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
     const {book, bookChap} = this.reading;
-    const bookName = Locale.gettext(book, loc);
-    const chapStr = isHebrewLocale(loc) ? gematriya(bookChap) : String(bookChap);
+    const bookName = Locale.gettext(book, locale);
+    const chapStr = Locale.isHebrewLocale(locale) ? gematriya(bookChap) : String(bookChap);
     return `${bookName} ${chapStr}`;
   }
 

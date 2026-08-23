@@ -3,7 +3,7 @@ import {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {YerushalmiReading} from './yerushalmiBase.js';
-import {gematriyaNN, isHebrewLocale, sefariaUrl} from './common.js';
+import {gematriyaNN, sefariaUrl} from './common.js';
 import './locale.js';
 import vilnaMap0 from './yerushalmiVilnaMap.json.js';
 
@@ -48,7 +48,7 @@ export class YerushalmiYomiEvent extends DailyLearningEvent {
   }
   /**
    * Returns name of tractate and page (e.g. "Yerushalmi Beitzah 21").
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
     const prefix = Locale.gettext('Yerushalmi', locale);
@@ -56,12 +56,11 @@ export class YerushalmiYomiEvent extends DailyLearningEvent {
   }
   /**
    * Returns name of tractate and page (e.g. "Beitzah 21").
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   renderBrief(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
-    const name = Locale.gettext(this.daf.name, loc);
-    if (isHebrewLocale(loc)) {
+    const name = Locale.gettext(this.daf.name, locale);
+    if (Locale.isHebrewLocale(locale)) {
       return name + ' דף ' + gematriyaNN(this.daf.blatt);
     }
     return name + ' ' + this.daf.blatt;

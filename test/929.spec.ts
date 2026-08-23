@@ -1,11 +1,11 @@
 import {describe, expect, it} from 'vitest';
-import {HDate, greg} from '@hebcal/hdate';
+import {HDate, greg2abs} from '@hebcal/hdate';
 import {calculate929, nine29Start, nine29EndCycle1, nine29StartCycle2, TOTAL_929_CHAPTERS, Nine29Reading} from '../src/929Base';
 import {Nine29Event} from '../src/929Event';
 import '../src/locale';
 
 function abs(d: Date): number {
-  return greg.greg2abs(d);
+  return greg2abs(d);
 }
 
 function hdate(d: Date): HDate {
@@ -16,65 +16,33 @@ describe('929Start', () => {
   it('starts on Sunday 21 Dec 2014', () => {
     const startHd = new HDate(nine29Start);
     expect(startHd.getDay()).toBe(0); // 0 = Sunday
-    const greg = startHd.greg();
-    expect(greg.getFullYear()).toBe(2014);
-    expect(greg.getMonth()).toBe(11); // 0-indexed: December
-    expect(greg.getDate()).toBe(21);
+    const dt = startHd.greg();
+    expect(dt.getFullYear()).toBe(2014);
+    expect(dt.getMonth()).toBe(11); // 0-indexed: December
+    expect(dt.getDate()).toBe(21);
   });
 });
 
 describe('929 basic reading', () => {
-  it('returns chapter 1 on the first day (Sun 21 Dec 2014)', () => {
-    const result = calculate929(new Date(2014, 11, 21));
-    expect(result).not.toBeNull();
-    expect(result!.cycleChap).toBe(1);
-    expect(result!.cycleNum).toBe(1);
-    expect(result!.book).toBe('Genesis');
-    expect(result!.bookChap).toBe(1);
-  });
-
-  it('returns chapter 2 on Mon 22 Dec 2014', () => {
-    const result = calculate929(new Date(2014, 11, 22));
-    expect(result).not.toBeNull();
-    expect(result!.cycleChap).toBe(2);
-    expect(result!.cycleNum).toBe(1);
-    expect(result!.book).toBe('Genesis');
-    expect(result!.bookChap).toBe(2);
-  });
-
-  it('returns chapter 5 on Thu 25 Dec 2014', () => {
-    const result = calculate929(new Date(2014, 11, 25));
-    expect(result).not.toBeNull();
-    expect(result!.cycleChap).toBe(5);
-    expect(result!.cycleNum).toBe(1);
-    expect(result!.book).toBe('Genesis');
-    expect(result!.bookChap).toBe(5);
-  });
-
-  it('returns null on Fri 26 Dec 2014', () => {
-    expect(calculate929(new Date(2014, 11, 26))).toBeNull();
-  });
-
-  it('returns null on Sat 27 Dec 2014', () => {
-    expect(calculate929(new Date(2014, 11, 27))).toBeNull();
-  });
-
-  it('returns chapter 6 on Sun 28 Dec 2014 (resumes after Fri+Sat skip)', () => {
-    const result = calculate929(new Date(2014, 11, 28));
-    expect(result).not.toBeNull();
-    expect(result!.cycleChap).toBe(6);
-    expect(result!.cycleNum).toBe(1);
-    expect(result!.book).toBe('Genesis');
-    expect(result!.bookChap).toBe(6);
-  });
-
-  it('returns chapter 7 on Mon 29 Dec 2014', () => {
-    const result = calculate929(new Date(2014, 11, 29));
-    expect(result).not.toBeNull();
-    expect(result!.cycleChap).toBe(7);
-    expect(result!.cycleNum).toBe(1);
-    expect(result!.book).toBe('Genesis');
-    expect(result!.bookChap).toBe(7);
+  it.each([
+    [new Date(2014, 11, 21), 1, 1, 'Genesis', 1, true, '1st day (Sun 21 Dec 2014)'],
+    [new Date(2014, 11, 22), 2, 1, 'Genesis', 2, true, 'Mon 22 Dec 2014'],
+    [new Date(2014, 11, 25), 5, 1, 'Genesis', 5, true, 'Thu 25 Dec 2014'],
+    [new Date(2014, 11, 26), null, null, null, null, false, 'Fri 26 Dec 2014'],
+    [new Date(2014, 11, 27), null, null, null, null, false, 'Sat 27 Dec 2014'],
+    [new Date(2014, 11, 28), 6, 1, 'Genesis', 6, true, 'Sun 28 Dec 2014 (resumes after Fri+Sat skip)'],
+    [new Date(2014, 11, 29), 7, 1, 'Genesis', 7, true, 'Mon 29 Dec 2014'],
+  ])('returns expected result for $desc', (date, cycleChap, cycleNum, book, bookChap, shouldExist, _desc) => {
+    const result = calculate929(date);
+    if (shouldExist) {
+      expect(result).not.toBeNull();
+      expect(result!.cycleChap).toBe(cycleChap);
+      expect(result!.cycleNum).toBe(cycleNum);
+      expect(result!.book).toBe(book);
+      expect(result!.bookChap).toBe(bookChap);
+    } else {
+      expect(result).toBeNull();
+    }
   });
 
   it('throws for dates before the program started', () => {

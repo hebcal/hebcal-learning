@@ -51,7 +51,7 @@ export class MishnaYomiEvent extends DailyLearningEvent {
   }
   /**
    * Returns Mishna Yomi name (e.g. "Bava Metzia 10:5-6" or "Berakhot 9:5-Peah 1:1").
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
     return formatMyomi(this.mishnaYomi, locale);

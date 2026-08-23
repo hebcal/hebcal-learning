@@ -1,5 +1,5 @@
-import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common.js';
+import {HDate, greg2abs} from '@hebcal/hdate';
+import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import seferHaMitzvotJson from './seferHaMitzvot.json.js';
 
 /**
@@ -28,7 +28,7 @@ export type SeferHaMitzvotReading = {
 const cycleLen = seferHaMitzvotJson.length; // 339
 
 const cycleStartDate = new Date(1984, 3, 29);
-export const seferHaMitzvotStart = greg.greg2abs(cycleStartDate);
+export const seferHaMitzvotStart = greg2abs(cycleStartDate);
 
 const notes: Record<number, number[]> = {
   '140': [148, 149, 161],
@@ -64,7 +64,7 @@ function getNote(day: number): string | undefined {
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function seferHaMitzvot(date: HDate | Date | number): SeferHaMitzvotReading {
+export function seferHaMitzvot(date: LearningDate): SeferHaMitzvotReading {
   const cday = getAbsDate(date);
   checkTooEarly(cday, seferHaMitzvotStart, 'Sefer Hamitzvot');
   const day0 = (cday - seferHaMitzvotStart) % cycleLen;

@@ -81,7 +81,7 @@ export class DailyRambam3Event extends DailyLearningEvent {
   }
   /**
    * Returns name of reading
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
     return this.events.map(ev => ev.render(locale)).join(', ');

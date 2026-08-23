@@ -2,7 +2,7 @@ import {HDate, months} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {KitzurShulchanAruchReading} from './kitzurShulchanAruchBase.js';
-import {gematriyaNN, formatBeginEndRange, isHebrewLocale} from './common.js';
+import {gematriyaNN, formatBeginEndRange} from './common.js';
 import './locale.js';
 
 const BOOK_NAME = 'Kitzur Shulchan Arukh';
@@ -12,10 +12,9 @@ function gematriyaOrSof(s: string): string {
 }
 
 function renderReading(reading: KitzurShulchanAruchReading, locale?: string): string {
-  const loc = (locale || 'en').toLowerCase();
-  if (isHebrewLocale(loc)) {
+  if (Locale.isHebrewLocale(locale)) {
     if (reading.b === 'Klalim') {
-      return Locale.gettext(reading.b, loc);
+      return Locale.gettext(reading.b, locale);
     }
     const cv1 = reading.b.split(':');
     const begin = cv1
@@ -93,7 +92,7 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
   }
   /**
    * Returns name of reading
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
     const prefix = this.leapAdar2 ? '' : Locale.gettext(BOOK_NAME, locale) + ' ';
@@ -101,7 +100,7 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
   }
   /**
    * Returns a brief (translated) description of this event.
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   renderBrief(locale?: string): string {
     let str = '';

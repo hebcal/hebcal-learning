@@ -2,15 +2,15 @@
  * Mishnah Perek (chapter) Yomi
  * One chapter per day
  */
-import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common.js';
+import {HDate, greg2abs} from '@hebcal/hdate';
+import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import mishnayotJson from './mishnayot.json.js';
 
 const mishnayot = Object.entries(mishnayotJson).map(([k, v]) => ({k, v}));
 
 const cycleLen = 525;
 const startDate = new Date(2002, 1, 9);
-export const perekYomiStart = greg.greg2abs(startDate);
+export const perekYomiStart = greg2abs(startDate);
 
 /**
  * One chapter of the Mishna as scheduled by the Perek Yomi cycle.
@@ -39,7 +39,7 @@ export type PerekYomi = {
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function perekYomi(date: HDate | Date | number): PerekYomi {
+export function perekYomi(date: LearningDate): PerekYomi {
   const cday = getAbsDate(date);
   checkTooEarly(cday, perekYomiStart, 'Perek Yomi');
   const dno = (cday - perekYomiStart) % cycleLen;

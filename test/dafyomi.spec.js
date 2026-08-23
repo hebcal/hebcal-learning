@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest';
 import {DafYomi} from '../src/dafYomiBase';
 import {DafYomiEvent} from '../src/DafYomiEvent';
-import {HDate, greg, months} from '@hebcal/hdate';
+import {HDate, abs2greg, months} from '@hebcal/hdate';
 
 test('dafyomi-single', () => {
   const dt = new Date(1995, 11, 17);
@@ -17,7 +17,7 @@ test('dafyomi-multi', () => {
   const endAbs = HDate.hebrew2abs(5781, months.TISHREI, 1) - 1;
   let i = 0;
   for (let abs = startAbs; abs <= endAbs; abs++) {
-    const dt = greg.abs2greg(abs);
+    const dt = abs2greg(abs);
     const dy = new DafYomi(dt);
     const dateStr = dt.toLocaleDateString('en-US');
     const str = dateStr + ' Daf Yomi: ' + dy.render('en');

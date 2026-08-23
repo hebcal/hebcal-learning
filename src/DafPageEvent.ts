@@ -39,14 +39,14 @@ export abstract class DafPageEvent extends DailyLearningEvent {
   }
   /**
    * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
     return this.daf.render(locale);
   }
   /**
    * Returns Daf Yomi name without the 'Daf Yomi: ' prefix (e.g. "Pesachim 107").
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   renderBrief(locale?: string): string {
     return this.daf.render(locale);

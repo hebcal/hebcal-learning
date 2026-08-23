@@ -33,7 +33,7 @@ export class DafYomiEvent extends DafPageEvent {
   }
   /**
    * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
     return Locale.gettext('Daf Yomi', locale) + ': ' + this.daf.render(locale);

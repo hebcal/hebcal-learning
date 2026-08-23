@@ -44,20 +44,19 @@ export class ChofetzChaimEvent extends DailyLearningEvent {
   }
   /**
    * Returns name of reading
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   renderBrief(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
     const reading = this.reading;
     const book = reading.k;
     const book2 = book.replace('Hilchos', 'Hilchos ');
-    let name = loc === 'memo' ? englishNames[book] : Locale.gettext(book2, loc);
+    let name = locale === 'memo' ? englishNames[book] : Locale.gettext(book2, locale);
     name += formatReadingPages(reading);
     return name;
   }
   /**
    * Returns name of reading
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
     const str = this.renderBrief(locale);

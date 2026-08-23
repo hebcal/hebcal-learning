@@ -41,11 +41,10 @@ export class ShemiratHaLashonEvent extends DailyLearningEvent {
   }
   /**
    * Returns name of reading
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
-    const prefix = this.renderPrefix(loc);
+    const prefix = this.renderPrefix(locale);
     return prefix + formatReadingPages(this.reading);
   }
 
@@ -53,7 +52,7 @@ export class ShemiratHaLashonEvent extends DailyLearningEvent {
    * @private
    * @param locale
    */
-  renderPrefix(locale: string): string {
+  renderPrefix(locale?: string): string {
     const reading = this.reading;
     const book = reading.bk === 1 ? 'Book I' : 'Book II';
     const section0 = reading.k.replaceAll(' ', '_');

@@ -1,5 +1,5 @@
-import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common.js';
+import {HDate, greg2abs} from '@hebcal/hdate';
+import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import ahsyJson from './arukhHaShulchanYomi.json.js';
 
 /**
@@ -18,7 +18,7 @@ export type AhSYomiReading = {
 const cycleLen = ahsyJson.length; // 1719
 
 const cycleStartDate = new Date(2020, 4, 29);
-export const ahsyStart = greg.greg2abs(cycleStartDate);
+export const ahsyStart = greg2abs(cycleStartDate);
 
 const sections = ['', 'Orach Chaim', "Yoreh De'ah", 'Even HaEzer', 'Choshen Mishpat'];
 
@@ -41,7 +41,7 @@ const sections = ['', 'Orach Chaim', "Yoreh De'ah", 'Even HaEzer', 'Choshen Mish
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function arukhHaShulchanYomi(date: HDate | Date | number): AhSYomiReading {
+export function arukhHaShulchanYomi(date: LearningDate): AhSYomiReading {
   const cday = getAbsDate(date);
   checkTooEarly(cday, ahsyStart, 'Arukh HaShulchan Yomi');
   const dayNum = (cday - ahsyStart) % cycleLen;

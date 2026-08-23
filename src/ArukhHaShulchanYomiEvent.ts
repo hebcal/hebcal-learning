@@ -2,7 +2,7 @@ import {Locale} from '@hebcal/core/dist/esm/locale';
 import {HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {AhSYomiReading} from './arukhHaShulchanYomiBase.js';
-import {gematriyaNN, isHebrewLocale} from './common.js';
+import {gematriyaNN} from './common.js';
 import './locale.js';
 
 /**
@@ -34,10 +34,9 @@ export class ArukhHaShulchanYomiEvent extends DailyLearningEvent {
     this.reading = reading;
   }
   render(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
     const reading = this.reading;
-    const name = Locale.gettext(reading.k, loc);
-    if (isHebrewLocale(loc)) {
+    const name = Locale.gettext(reading.k, locale);
+    if (Locale.isHebrewLocale(locale)) {
       const parts = reading.v.split('-');
       const beginEnd = parts.map(x => x.split(/\./).map(gematriyaNN).join(':'));
       return name + ' ' + beginEnd.join('-');

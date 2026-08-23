@@ -1,10 +1,10 @@
-import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common.js';
+import {HDate, greg2abs} from '@hebcal/hdate';
+import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import amudJson from './amudim.json.js';
 
 // Cycle began on 1 Cheshvan 5784 = October 16, 2023
 const startDate = new Date(2023, 9, 16);
-export const dirshuAmudYomiStart = greg.greg2abs(startDate);
+export const dirshuAmudYomiStart = greg2abs(startDate);
 
 type AmudEntry = {
   name: string;
@@ -46,7 +46,7 @@ export type DirshuAmudYomi = {
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function calculateDirshuAmud(date: HDate | Date | number): DirshuAmudYomi {
+export function calculateDirshuAmud(date: LearningDate): DirshuAmudYomi {
   const cday = getAbsDate(date);
   checkTooEarly(cday, dirshuAmudYomiStart, 'Dirshu Amud HaYomi');
   const dno = (cday - dirshuAmudYomiStart) % totalAmudim;

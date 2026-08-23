@@ -1,5 +1,5 @@
-import {HDate, greg, months} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common.js';
+import {HDate, greg2abs, months} from '@hebcal/hdate';
+import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 
 /**
  * Description of one Yerushalmi (Jerusalem Talmud) Daf Yomi
@@ -17,7 +17,7 @@ export type YerushalmiYomiConfig = {
   /** First day of the cycle as a JavaScript `Date`. */
   startDate: Date;
   /** First day of the cycle as an absolute (R.D.) day number — the
-   *  Gregorian start date converted via `greg.greg2abs()`. */
+   *  Gregorian start date converted via `greg2abs()`. */
   startAbs: number;
   /** Whether to skip Yom Kippur and Tish'a B'Av (true for Vilna,
    *  false for Schottenstein, per each edition's published custom). */
@@ -40,7 +40,7 @@ const vilnaStartDate = new Date(1980, 1, 2);
 export const vilna: YerushalmiYomiConfig = {
   ed: 'vilna',
   startDate: vilnaStartDate,
-  startAbs: greg.greg2abs(vilnaStartDate),
+  startAbs: greg2abs(vilnaStartDate),
   skipYK9Av: true,
   shas: [
     ['Berakhot', 68],
@@ -94,7 +94,7 @@ const schottensteinStartDate = new Date(2022, 10, 14);
 export const schottenstein: YerushalmiYomiConfig = {
   ed: 'schottenstein',
   startDate: schottensteinStartDate,
-  startAbs: greg.greg2abs(schottensteinStartDate),
+  startAbs: greg2abs(schottensteinStartDate),
   skipYK9Av: false,
   shas: [
     ['Berakhot', 94],
@@ -272,7 +272,7 @@ export function cycleStart(config: YerushalmiYomiConfig, cday: number): number {
  *   number.
  */
 export function yerushalmiYomi(
-  date: HDate | Date | number,
+  date: LearningDate,
   config: YerushalmiYomiConfig
 ): YerushalmiReading | null {
   if (typeof config !== 'object' || !Array.isArray(config.shas)) {

@@ -1,10 +1,10 @@
 import {expect, test} from 'vitest';
 import {dailyRambam1} from '../src/rambam1Base';
-import {greg} from '@hebcal/hdate';
+import {abs2greg, greg2abs} from '@hebcal/hdate';
 import fullCycle from './rambam1cycle.json';
 
 function abs2iso(abs) {
-  return greg.abs2greg(abs).toISOString().substring(0, 10);
+  return abs2greg(abs).toISOString().substring(0, 10);
 }
 
 test('rambam1-single', () => {
@@ -40,8 +40,8 @@ test('rambam1-single2', () => {
 });
 
 test('rambam1-1984', () => {
-  const start = greg.greg2abs(new Date(1984, 3, 29));
-  const endAbs = greg.greg2abs(new Date(1984, 4, 16));
+  const start = greg2abs(new Date(1984, 3, 29));
+  const endAbs = greg2abs(new Date(1984, 4, 16));
   const actual = {};
   for (let abs = start; abs <= endAbs; abs++) {
     const reading = dailyRambam1(abs);
@@ -71,8 +71,8 @@ test('rambam1-1984', () => {
 });
 
 test('rambam1-fullCycle', () => {
-  const start = greg.greg2abs(new Date(2023, 3, 23));
-  const endAbs = greg.greg2abs(new Date(2026, 1, 2));
+  const start = greg2abs(new Date(2023, 3, 23));
+  const endAbs = greg2abs(new Date(2026, 1, 2));
   const actual = {};
   for (let abs = start; abs <= endAbs; abs++) {
     const reading = dailyRambam1(abs);

@@ -1,9 +1,9 @@
 import {expect, test} from 'vitest';
 import {perekYomi} from '../src/perekYomiBase';
-import {greg} from '@hebcal/hdate';
+import {greg2abs, abs2greg} from '@hebcal/hdate';
 
 function abs2iso(abs) {
-  return greg.abs2greg(abs).toISOString().substring(0, 10);
+  return abs2greg(abs).toISOString().substring(0, 10);
 }
 
 test('perekYomi-single', () => {
@@ -17,8 +17,8 @@ test('perekYomi-single', () => {
 });
 
 test('perekYomi-jan-2025', () => {
-  const start = greg.greg2abs(new Date(2025, 0, 1));
-  const endAbs = greg.greg2abs(new Date(2025, 0, 31));
+  const start = greg2abs(new Date(2025, 0, 1));
+  const endAbs = greg2abs(new Date(2025, 0, 31));
   const actual = {};
   for (let abs = start; abs <= endAbs; abs++) {
     const reading = perekYomi(abs);

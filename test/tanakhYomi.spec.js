@@ -1,11 +1,11 @@
 import {expect, test} from 'vitest';
 import {tanakhYomi} from '../src/tanakhYomiBase';
 import {TanakhYomiEvent} from '../src/TanakhYomiEvent';
-import {HDate, greg, months} from '@hebcal/hdate';
+import {HDate, greg2abs, abs2greg, months} from '@hebcal/hdate';
 import '../src/locale';
 
 function abs2iso(abs) {
-  return greg.abs2greg(abs).toISOString().substring(0, 10);
+  return abs2greg(abs).toISOString().substring(0, 10);
 }
 
 // ישעיהו ס' כג
@@ -792,8 +792,8 @@ test('tanakhYomi-5783', () => {
 });
 
 test('tanakhYomi-2024', () => {
-  const startAbs = greg.greg2abs(new Date(2024, 7, 22));
-  const endAbs = greg.greg2abs(new Date(2024, 9, 30));
+  const startAbs = greg2abs(new Date(2024, 7, 22));
+  const endAbs = greg2abs(new Date(2024, 9, 30));
   const actual = {};
   for (let abs = startAbs; abs <= endAbs; abs++) {
     const reading = tanakhYomi(abs);
@@ -876,8 +876,8 @@ test('tanakhYomi-2024', () => {
 });
 
 test('tanakhYomi-summer-2026', () => {
-  const startAbs = greg.greg2abs(new Date(2026, 6, 26));
-  const endAbs = greg.greg2abs(new Date(2026, 9, 9));
+  const startAbs = greg2abs(new Date(2026, 6, 26));
+  const endAbs = greg2abs(new Date(2026, 9, 9));
   const actual = {};
   for (let abs = startAbs; abs <= endAbs; abs++) {
     const reading = tanakhYomi(abs);
@@ -1358,8 +1358,8 @@ test('TanakhYomi.render', () => {
 
 
 test.skip('tanakhYomi-huge', () => {
-  const startAbs = greg.greg2abs(new Date(2001, 0, 1));
-  const endAbs = greg.greg2abs(new Date(2029, 11, 31));
+  const startAbs = greg2abs(new Date(2001, 0, 1));
+  const endAbs = greg2abs(new Date(2029, 11, 31));
   for (let abs = startAbs; abs <= endAbs; abs++) {
     tanakhYomi(abs);
   }

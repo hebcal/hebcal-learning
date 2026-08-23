@@ -1,5 +1,5 @@
-import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common.js';
+import {HDate, greg2abs} from '@hebcal/hdate';
+import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import mishnehTorahJson from './mishnehTorah.json.js';
 
 // On 9 July 2020 all three tracks completed the Rambam learning cycle.
@@ -11,7 +11,7 @@ export const rambam1cycleLen = 1017;
 
 // The cycle of Rambam began on Sunday, 27 Nissan, 5744 - Apr. 29, 1984.
 const startDate = new Date(1984, 3, 29);
-export const rambam1Start = greg.greg2abs(startDate);
+export const rambam1Start = greg2abs(startDate);
 
 type Daf = {
   name: string;
@@ -71,7 +71,7 @@ export type RambamReading = {
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function dailyRambam1(date: HDate | Date | number): RambamReading {
+export function dailyRambam1(date: LearningDate): RambamReading {
   const cday = getAbsDate(date);
   checkTooEarly(cday, rambam1Start, 'Daily Rambam 1');
   const dno = (cday - rambam1Start) % rambam1cycleLen;

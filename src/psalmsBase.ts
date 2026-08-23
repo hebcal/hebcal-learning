@@ -1,4 +1,5 @@
 import {HDate} from '@hebcal/hdate';
+import {LearningDate} from './common.js';
 
 /**
  * One day's slice of the 30-day Psalms cycle, as a two-element tuple
@@ -63,7 +64,7 @@ const schedule: PsalmBeginEnd[] = [
  * @throws {TypeError} (indirectly, via the `HDate` constructor) if
  *   `date` is not an `HDate`, `Date`, or finite number.
  */
-export function dailyPsalms(date: HDate | Date | number): PsalmBeginEnd {
+export function dailyPsalms(date: LearningDate): PsalmBeginEnd {
   const hd = new HDate(date);
   const dd = hd.getDate();
   if (dd === 29 && hd.daysInMonth() === 29) {

@@ -1,9 +1,9 @@
-import {HDate, greg, months} from '@hebcal/hdate';
+import {HDate, greg2abs, months} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {getHolidaysOnDate} from '@hebcal/core/dist/esm/holidays';
 import {DafPage} from './DafPage.js';
-import {checkTooEarly, gematriyaNN, isHebrewLocale} from './common.js';
+import {LearningDate, checkTooEarly, gematriyaNN} from './common.js';
 import masoretic0 from './masoretic.json.js';
 import './locale.js';
 
@@ -16,7 +16,7 @@ const masoretic: {
 // Sunday, Oct 11, 2020
 // Tuesday, Oct 26, 1948
 const startDate = new Date(1948, 9, 26);
-export const tanakhYomiStart = greg.greg2abs(startDate);
+export const tanakhYomiStart = greg2abs(startDate);
 
 const JOSHUA = 'Joshua';
 const JEREMIAH = 'Jeremiah';
@@ -77,7 +77,7 @@ const toSkip = new Set(['Purim', "Yom HaAtzma'ut", "Tish'a B'Av", "Tish'a B'Av (
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function tanakhYomi(date: HDate | Date | number): TanakhYomi | null {
+export function tanakhYomi(date: LearningDate): TanakhYomi | null {
   const hd: HDate = HDate.isHDate(date) ? (date as HDate) : new HDate(date);
   if (skipDay(hd)) {
     return null;
@@ -352,13 +352,12 @@ export class TanakhYomi extends DafPage {
 
   /**
    * Formats (with translation) the dafyomi result as a string like "Pesachim 34"
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
-    const name = Locale.gettext(this.name, loc);
+    const name = Locale.gettext(this.name, locale);
     const blatt = this.blatt;
-    if (isHebrewLocale(loc)) {
+    if (Locale.isHebrewLocale(locale)) {
       const prefix = name + ' ס׳ ';
       if (typeof blatt === 'string') {
         const major = blatt[0];

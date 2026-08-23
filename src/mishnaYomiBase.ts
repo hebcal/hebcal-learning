@@ -1,11 +1,11 @@
-import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common.js';
+import {HDate, greg2abs} from '@hebcal/hdate';
+import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import mishnayotJson from './mishnayot.json.js';
 
 const mishnayot = Object.entries(mishnayotJson).map(([k, v]) => ({k, v}));
 
 const cycleStartDate = new Date(1947, 4, 20);
-export const mishnaYomiStart = greg.greg2abs(cycleStartDate);
+export const mishnaYomiStart = greg2abs(cycleStartDate);
 
 const numMishnayot = 4192;
 const numDays = numMishnayot / 2;
@@ -77,7 +77,7 @@ export class MishnaYomiIndex {
    * @throws {TypeError} if `date` is not an `HDate`, `Date`, or
    *   finite number.
    */
-  lookup(date: HDate | Date | number): MishnaYomi[] {
+  lookup(date: LearningDate): MishnaYomi[] {
     const abs = getAbsDate(date);
     checkTooEarly(abs, mishnaYomiStart, 'Mishna Yomi');
     const dayNum = (abs - mishnaYomiStart) % numDays;

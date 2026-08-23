@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {HDate, greg} from '@hebcal/hdate';
+import {HDate, greg2abs, abs2greg} from '@hebcal/hdate';
 import {calculate929, nine29Start, nine29StartCycle2, TOTAL_929_CHAPTERS} from '../src/929Base';
 import {yerushalmiYomi, vilna, schottenstein, cycleStart, numSpecialDays} from '../src/yerushalmiBase';
 import {tanakhYomi} from '../src/tanakhYomiBase';
@@ -18,7 +18,7 @@ test('yerushalmi-vilna-rollover-2172', () => {
   const abs = 793162;
   const hd = new HDate(abs);
   expect(hd.toString()).toBe('18 Av 5932');
-  expect(greg.abs2greg(abs).toISOString().slice(0, 10)).toBe('2172-08-08');
+  expect(abs2greg(abs).toISOString().slice(0, 10)).toBe('2172-08-08');
 
   // A new cycle begins on this day rather than blowing up.
   expect(yerushalmiYomi(abs, vilna)).toEqual({name: 'Berakhot', blatt: 1, ed: 'vilna'});
@@ -64,7 +64,7 @@ test('yerushalmi-vilna-every-cycle-boundary-is-berakhot-1', () => {
     abs = cycleStart(vilna, next);
   }
   // 200 cycles is roughly 850 years past 1980
-  expect(greg.abs2greg(abs).getFullYear()).toBeGreaterThan(2800);
+  expect(abs2greg(abs).getFullYear()).toBeGreaterThan(2800);
 });
 
 test('929-cycle-boundaries', () => {
@@ -97,7 +97,7 @@ test('929-cycle-1-truncated-at-historical-end', () => {
   expect(first.cycleChap).toBe(1);
   // Cycle 1 followed a modified schedule and stopped early, on Israel's 70th
   // Independence Day, without reaching chapter 929.
-  const lastAbs = greg.greg2abs(new Date(2018, 3, 18));
+  const lastAbs = greg2abs(new Date(2018, 3, 18));
   const last = calculate929(lastAbs)!;
   expect(last.cycleNum).toBe(1);
   expect(last.cycleChap).toBe(869);
@@ -126,7 +126,7 @@ test('929-never-skips-or-repeats-a-chapter', () => {
 });
 
 test('far-future-year-2999-is-computable', () => {
-  const abs = greg.greg2abs(new Date(2999, 5, 15));
+  const abs = greg2abs(new Date(2999, 5, 15));
   expect(new DafYomi(abs).getName()).toBeTruthy();
   expect(calculate929(abs) === null || calculate929(abs)!.cycleChap > 0).toBe(true);
   expect(yerushalmiYomi(abs, schottenstein)).not.toBeNull();

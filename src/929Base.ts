@@ -1,5 +1,5 @@
-import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly} from './common.js';
+import {HDate, greg2abs} from '@hebcal/hdate';
+import {checkTooEarly, LearningDate} from './common.js';
 import tanakhNumChap from './tanakhNumChap.json.js';
 
 const tanakhBooks = Object.entries(tanakhNumChap) as Array<[string, number]>;
@@ -20,15 +20,15 @@ function chapterToBookAndVerse(chapter: number): {
 
 // 929 started on Sunday, 21 December 2014
 const startDate = new Date(2014, 11, 21);
-export const nine29Start = greg.greg2abs(startDate);
+export const nine29Start = greg2abs(startDate);
 
 // Cycle 1 ended Wed 18 Apr 2018 (Israel's 70th Independence Day). The historical
 // schedule had additional skip days (holidays) so the 929th chapter landed earlier
 // than our simple Fri/Sat-only formula would predict.  Cycle 2 didn't begin until
 // Sun 15 Jul 2018 — a ~3-month gap unique to this transition; subsequent cycles
 // restart the following Sunday.
-export const nine29EndCycle1 = greg.greg2abs(new Date(2018, 3, 18));
-export const nine29StartCycle2 = greg.greg2abs(new Date(2018, 6, 15));
+export const nine29EndCycle1 = greg2abs(new Date(2018, 3, 18));
+export const nine29StartCycle2 = greg2abs(new Date(2018, 6, 15));
 
 /** Total number of Bible chapters in the 929 program */
 export const TOTAL_929_CHAPTERS = 929;
@@ -100,7 +100,7 @@ export type Nine29Reading = {
  *
  * @param date - Hebrew or Gregorian date, or absolute day number
  */
-export function calculate929(date: HDate | Date | number): Nine29Reading | null {
+export function calculate929(date: LearningDate): Nine29Reading | null {
   const hd: HDate = HDate.isHDate(date) ? (date as HDate) : new HDate(date);
   const abs = hd.abs();
   checkTooEarly(abs, nine29Start, '929');

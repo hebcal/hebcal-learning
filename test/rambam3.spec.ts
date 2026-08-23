@@ -1,10 +1,10 @@
 import {expect, test} from 'vitest';
 import {dailyRambam3} from '../src/rambam3Base';
 import {collapseAdjacent, makeDesc} from '../src/DailyRambam3Event';
-import {greg} from '@hebcal/hdate';
+import {abs2greg, greg2abs} from '@hebcal/hdate';
 
 function abs2iso(abs: number): string {
-  return greg.abs2greg(abs).toISOString().substring(0, 10);
+  return abs2greg(abs).toISOString().substring(0, 10);
 }
 test('collapseAdjacent', () => {
   expect(collapseAdjacent([
@@ -58,8 +58,8 @@ test('rambam3-single3', () => {
 });
 
 test('rambam3-2020', () => {
-  const start = greg.greg2abs(new Date(2020, 7, 9));
-  const endAbs = greg.greg2abs(new Date(2020, 8, 18));
+  const start = greg2abs(new Date(2020, 7, 9));
+  const endAbs = greg2abs(new Date(2020, 8, 18));
   const actual: Record<string, string> = {};
   for (let abs = start; abs <= endAbs; abs++) {
     const reading = dailyRambam3(abs);
@@ -152,8 +152,8 @@ test('rambam3-spotcheck', () => {
   });
 
 test('rambam3-1984', () => {
-  const start = greg.greg2abs(new Date(1984, 3, 29));
-  const endAbs = greg.greg2abs(new Date(1984, 4, 20));
+  const start = greg2abs(new Date(1984, 3, 29));
+  const endAbs = greg2abs(new Date(1984, 4, 20));
   const actual: Record<string, string> = {};
   for (let abs = start; abs <= endAbs; abs++) {
     const reading = dailyRambam3(abs);

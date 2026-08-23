@@ -2,7 +2,7 @@ import {HDate, gematriya} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {PsalmBeginEnd} from './psalmsBase.js';
-import {isHebrewLocale, sefariaUrl} from './common.js';
+import {sefariaUrl} from './common.js';
 import './locale.js';
 
 /**
@@ -34,13 +34,12 @@ export class PsalmsEvent extends DailyLearningEvent {
   }
   /**
    * Returns name of reading
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
-    const book = Locale.gettext('Psalms', loc);
+    const book = Locale.gettext('Psalms', locale);
     const reading = this.reading;
-    if (isHebrewLocale(loc) && typeof reading[0] === 'number') {
+    if (Locale.isHebrewLocale(locale) && typeof reading[0] === 'number') {
       return book + ' ' + gematriya(reading[0]) + '-' + gematriya(reading[1]);
     }
     return book + ' ' + reading[0] + '-' + reading[1];

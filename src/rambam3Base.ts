@@ -1,5 +1,5 @@
 import {HDate} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common.js';
+import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
 import {
   rambam1cycleLen,
   rambam1Start,
@@ -46,7 +46,7 @@ mishnehTorah3[20].ch = 8;
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function dailyRambam3(date: HDate | Date | number): RambamReading[] {
+export function dailyRambam3(date: LearningDate): RambamReading[] {
   const cday = getAbsDate(date);
   checkTooEarly(cday, rambam1Start, 'Daily Rambam 3');
   const dno = (cday - rambam1Start) % rambam3cycleLen;

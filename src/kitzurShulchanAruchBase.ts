@@ -1,4 +1,5 @@
 import {HDate, months} from '@hebcal/hdate';
+import {LearningDate} from './common.js';
 import kitzurSaJson from './kitzurSa.json.js';
 
 /**
@@ -78,7 +79,7 @@ function getMonthName(hd: HDate, leapOption: 'A' | 'B'): IdxName {
  *   `date` is not an `HDate`, `Date`, or finite number.
  */
 export function kitzurShulchanAruch(
-  date: HDate | Date | number,
+  date: LearningDate,
   leapOption: 'A' | 'B' = 'A'
 ): KitzurShulchanAruchReading | undefined {
   const hd = new HDate(date);
