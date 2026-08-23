@@ -1,5 +1,4 @@
-import {HDate} from '@hebcal/hdate';
-import {Locale} from '@hebcal/core/dist/esm/locale';
+import {HDate, Locale} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {DirshuDafHalacha} from './dirshuDafHalachaBase.js';
 import {formatBeginEndRange, gematriyaNN, sefariaUrl} from './common.js';
