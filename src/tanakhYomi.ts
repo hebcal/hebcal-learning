@@ -1,18 +1,8 @@
-import {HDate} from '@hebcal/hdate';
-import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+import {wrapSchedule} from './wrapSchedule.js';
 import {tanakhYomi, tanakhYomiStart} from './tanakhYomiBase.js';
 import {TanakhYomiEvent} from './TanakhYomiEvent.js';
 
-function wrapper(hd: HDate): TanakhYomiEvent | null {
-  const abs = hd.abs();
-  if (abs < tanakhYomiStart) {
-    return null;
-  }
-  const daf = tanakhYomi(abs);
-  if (daf === null) {
-    return null;
-  }
-  return new TanakhYomiEvent(hd, daf);
-}
-
-DailyLearning.addCalendar('tanakhYomi', wrapper, new HDate(tanakhYomiStart));
+wrapSchedule('tanakhYomi', tanakhYomiStart, hd => {
+  const daf = tanakhYomi(hd);
+  return daf === null ? null : new TanakhYomiEvent(hd, daf);
+});

@@ -1,14 +1,5 @@
-import {HDate} from '@hebcal/hdate';
-import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+import {wrapSchedule} from './wrapSchedule.js';
 import {dailyRambam1, rambam1Start} from './rambam1Base.js';
 import {DailyRambamEvent} from './DailyRambamEvent.js';
 
-function wrapper(hd: HDate): DailyRambamEvent | null {
-  if (hd.abs() < rambam1Start) {
-    return null;
-  }
-  const reading = dailyRambam1(hd);
-  return new DailyRambamEvent(hd, reading);
-}
-
-DailyLearning.addCalendar('rambam1', wrapper, new HDate(rambam1Start));
+wrapSchedule('rambam1', rambam1Start, hd => new DailyRambamEvent(hd, dailyRambam1(hd)));

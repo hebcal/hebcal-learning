@@ -1,15 +1,5 @@
-import {HDate} from '@hebcal/hdate';
-import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+import {wrapSchedule} from './wrapSchedule.js';
 import {PerekYomiEvent} from './PerekYomiEvent.js';
 import {perekYomi, perekYomiStart} from './perekYomiBase.js';
 
-function wrapper(hd: HDate): PerekYomiEvent | null {
-  const abs = hd.abs();
-  if (abs < perekYomiStart) {
-    return null;
-  }
-  const reading = perekYomi(abs);
-  return new PerekYomiEvent(hd, reading);
-}
-
-DailyLearning.addCalendar('perekYomi', wrapper, new HDate(perekYomiStart));
+wrapSchedule('perekYomi', perekYomiStart, hd => new PerekYomiEvent(hd, perekYomi(hd)));

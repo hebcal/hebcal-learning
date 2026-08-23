@@ -1,32 +1,10 @@
-import {HDate} from '@hebcal/hdate';
-import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+import {wrapSchedule} from './wrapSchedule.js';
 import {dafWeekly, dafWeeklyStart} from './dafWeeklyBase.js';
 import {DafWeeklyEvent} from './DafWeeklyEvent.js';
 
-const startDate = new HDate(dafWeeklyStart);
+wrapSchedule('dafWeekly', dafWeeklyStart, hd => new DafWeeklyEvent(hd, dafWeekly(hd)));
 
-function wrapperDaily(hd: HDate): DafWeeklyEvent | null {
-  const abs = hd.abs();
-  if (abs < dafWeeklyStart) {
-    return null;
-  }
-  const daf = dafWeekly(abs);
-  return new DafWeeklyEvent(hd, daf);
-}
-
-function wrapperSun(hd: HDate): DafWeeklyEvent | null {
-  const abs = hd.abs();
-  if (abs < dafWeeklyStart) {
-    return null;
-  }
-  // Only return the weekly daf on Sundays
-  const dow = hd.getDay();
-  if (dow !== 0) {
-    return null;
-  }
-  const daf = dafWeekly(abs);
-  return new DafWeeklyEvent(hd, daf);
-}
-
-DailyLearning.addCalendar('dafWeekly', wrapperDaily, startDate);
-DailyLearning.addCalendar('dafWeeklySunday', wrapperSun, startDate);
+// Only return the weekly daf on Sundays
+wrapSchedule('dafWeeklySunday', dafWeeklyStart, hd =>
+  hd.getDay() === 0 ? new DafWeeklyEvent(hd, dafWeekly(hd)) : null
+);

@@ -1,12 +1,8 @@
-import {HDate} from '@hebcal/hdate';
-import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+import {wrapSchedule} from './wrapSchedule.js';
 import {pirkeiAvot} from './pirkeiAvotBase.js';
 import {PirkeiAvotSummerEvent} from './PirkeiAvotSummerEvent.js';
 
-DailyLearning.addCalendar('pirkeiAvotSummer', (hd: HDate, il: boolean) => {
+wrapSchedule('pirkeiAvotSummer', undefined, (hd, il) => {
   const reading = pirkeiAvot(hd, il);
-  if (reading === null) {
-    return null;
-  }
-  return new PirkeiAvotSummerEvent(hd, reading);
+  return reading === null ? null : new PirkeiAvotSummerEvent(hd, reading);
 });

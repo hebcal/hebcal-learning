@@ -1,9 +1,9 @@
-import {HDate, months} from '@hebcal/hdate';
-import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+import {months} from '@hebcal/hdate';
+import {wrapSchedule} from './wrapSchedule.js';
 import {kitzurShulchanAruch} from './kitzurShulchanAruchBase.js';
 import {KitzurShulchanAruchEvent} from './KitzurShulchanAruchEvent.js';
 
-DailyLearning.addCalendar('kitzurShulchanAruch', (hd: HDate) => {
+wrapSchedule('kitzurShulchanAruch', undefined, hd => {
   const reading = kitzurShulchanAruch(hd, 'A');
   if (!reading) {
     return null;

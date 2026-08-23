@@ -1,14 +1,9 @@
-import {HDate} from '@hebcal/hdate';
-import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
-import {seferHaMitzvot, seferHaMitzvotStart as startAbs} from './seferHaMitzvotBase.js';
+import {wrapSchedule} from './wrapSchedule.js';
+import {seferHaMitzvot, seferHaMitzvotStart} from './seferHaMitzvotBase.js';
 import {SeferHaMitzvotEvent} from './SeferHaMitzvotEvent.js';
 
-function wrapper(hd: HDate) {
-  if (hd.abs() < startAbs) {
-    return null;
-  }
-  const reading = seferHaMitzvot(hd);
-  return new SeferHaMitzvotEvent(hd, reading);
-}
-
-DailyLearning.addCalendar('seferHaMitzvot', wrapper, new HDate(startAbs));
+wrapSchedule(
+  'seferHaMitzvot',
+  seferHaMitzvotStart,
+  hd => new SeferHaMitzvotEvent(hd, seferHaMitzvot(hd))
+);

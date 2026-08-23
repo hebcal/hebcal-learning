@@ -21,6 +21,7 @@ src/       <name>Base.ts  pure calculation, exports the lookup function
            <name>.json    lookup table, where the cycle needs one
            common.ts      getAbsDate, checkTooEarly, formatBeginEndRange,
                           gematriyaNN, sefariaUrl, the LearningDate type
+           wrapSchedule.ts the registration helper the <name>.ts files call
            index.ts       public exports (+ imports register.js)
            register.ts    side-effect imports of every <name>.ts
            locale.ts      wires po/*.po into Locale
@@ -31,7 +32,11 @@ tools/     one-off extraction pipelines (currently only dirshu-luach)
 
 Every schedule follows the same three-module split. `*Base.ts` knows nothing
 about hebcal `Event`s and can be imported on its own (README documents these as
-the "low-level APIs"); `*Event.ts` renders; `<name>.ts` registers.
+the "low-level APIs"); `*Event.ts` renders; `<name>.ts` registers — almost
+always through the `wrapSchedule()` helper (see below). `wrapSchedule.ts` is
+deliberately *not* part of `common.ts`: it pulls in `DailyLearning`/`Event`, and
+`common.ts` must stay importable by the pure `*Base.ts` modules without dragging
+the registry in.
 
 ## Adding or changing a schedule
 
@@ -42,9 +47,18 @@ the "low-level APIs"); `*Event.ts` renders; `<name>.ts` registers.
    `render`, `renderBrief`, `url` and `getCategories`. Use
    `Locale.isHebrewLocale(locale)` to branch on Hebrew, `gematriyaNN` for
    Hebrew numerals, `sefariaUrl` to build links.
-3. `src/<name>.ts` — `DailyLearning.addCalendar('<name>', hd => …)`. **Return
-   `null` when there is no learning that day**; that is the registry's
-   contract. Throw `RangeError` only for dates before the cycle began.
+3. `src/<name>.ts` — register with
+   `wrapSchedule('<name>', startAbs, (hd, il) => …)`. The helper installs the
+   `abs < startAbs` guard and builds the `HDate` start marker, so the callback
+   just constructs and returns the day's `Event`. The `*Base.ts` calculators
+   accept an `HDate` (a `LearningDate`), so pass `hd` straight through rather
+   than `hd.abs()`; `il` is the Israel flag, needed only by `pirkeiAvotSummer`. **Return `null` when
+   there is no learning that day** (a gap in the cycle, a bounded table's data
+   horizon); that is the registry's contract. Pass `undefined` for `startAbs`
+   when the schedule has no start bound (Psalms, Pirkei Avot, Kitzur Shulchan
+   Aruch). A file may call `wrapSchedule()` more than once (see `dafWeekly.ts`,
+   `yerushalmiYomi.ts`). Reach for a raw `DailyLearning.addCalendar(...)` only
+   if some edge case truly does not fit the helper — none currently do.
 4. Wire it into **both** `src/index.ts` (exports) and `src/register.ts`
    (side-effect import). A schedule missing from `register.ts` silently fails
    to appear in `import '@hebcal/learning'`.

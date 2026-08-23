@@ -1,33 +1,14 @@
-import {HDate} from '@hebcal/hdate';
-import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
+import {wrapSchedule} from './wrapSchedule.js';
 import {schottenstein, vilna, yerushalmiYomi} from './yerushalmiBase.js';
 import {YerushalmiYomiEvent} from './YerushalmiYomiEvent.js';
 
-function wrapperVilna(hd: HDate): YerushalmiYomiEvent | null {
-  const abs = hd.abs();
-  if (abs < vilna.startAbs) {
-    return null;
-  }
-  const daf = yerushalmiYomi(abs, vilna);
-  if (daf === null) {
-    return null;
-  }
-  return new YerushalmiYomiEvent(hd, daf);
-}
+wrapSchedule('yerushalmi-vilna', vilna.startAbs, hd => {
+  const daf = yerushalmiYomi(hd, vilna);
+  return daf === null ? null : new YerushalmiYomiEvent(hd, daf);
+});
 
-DailyLearning.addCalendar('yerushalmi-vilna', wrapperVilna, new HDate(vilna.startAbs));
-
-function wrapperSchottenstein(hd: HDate): YerushalmiYomiEvent | null {
-  const abs = hd.abs();
-  if (abs < schottenstein.startAbs) {
-    return null;
-  }
-  const daf = yerushalmiYomi(abs, schottenstein);
-  return new YerushalmiYomiEvent(hd, daf!);
-}
-
-DailyLearning.addCalendar(
+wrapSchedule(
   'yerushalmi-schottenstein',
-  wrapperSchottenstein,
-  new HDate(schottenstein.startAbs)
+  schottenstein.startAbs,
+  hd => new YerushalmiYomiEvent(hd, yerushalmiYomi(hd, schottenstein)!)
 );
