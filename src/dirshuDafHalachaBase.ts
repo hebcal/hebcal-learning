@@ -1,5 +1,5 @@
-import {HDate, greg} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate} from './common.js';
+import {greg2abs} from '@hebcal/hdate';
+import {LearningDate, checkTooEarly, getAbsDate} from './common.js';
 import dafHalachaJson from './dirshuDafHalacha.json.js';
 
 /*
@@ -9,7 +9,7 @@ import dafHalachaJson from './dirshuDafHalacha.json.js';
  * This date belongs to `readings[0]`, so the two must be updated together.
  */
 const startDate = new Date(2022, 1, 20);
-export const dirshuDafHalachaStart = greg.greg2abs(startDate);
+export const dirshuDafHalachaStart = greg2abs(startDate);
 
 /**
  * One entry per learning day (Sunday through Thursday), in order from
@@ -135,7 +135,7 @@ function amudFor(idx: number): {daf: number; side: 'a' | 'b'} | Record<string, n
  * @throws {TypeError} if `date` is not an `HDate`, `Date`, or finite
  *   number.
  */
-export function dirshuDafHalacha(date: HDate | Date | number): DirshuDafHalacha | null {
+export function dirshuDafHalacha(date: LearningDate): DirshuDafHalacha | null {
   const cday = getAbsDate(date);
   checkTooEarly(cday, dirshuDafHalachaStart, "Daf HaYomi B'Halacha");
   const dow = cday % 7; // 0=Sunday

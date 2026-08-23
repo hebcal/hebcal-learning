@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {HDate, greg} from '@hebcal/hdate';
+import {HDate, greg2abs} from '@hebcal/hdate';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
 import {
   DirshuDafHalacha,
@@ -24,7 +24,7 @@ function ev(y: number, m: number, d: number): DirshuDafHalachaEvent {
 test('cycle-starts-at-siman-1', () => {
   // Sunday 20 February 2022 = 19 Adar I 5782, the third cycle's first day. The
   // second cycle's last learning day was the Thursday before.
-  expect(dirshuDafHalachaStart).toBe(greg.greg2abs(new Date(2022, 1, 20)));
+  expect(dirshuDafHalachaStart).toBe(greg2abs(new Date(2022, 1, 20)));
   expect(reading(2022, 2, 20)).toEqual({b: '1:1', e: undefined, review: false});
   expect(reading(2022, 2, 21)).toEqual({b: '1:1', e: '1:2', review: false});
   expect(reading(2022, 2, 24)).toEqual({b: '2:1', e: '2:5', review: false});
@@ -125,7 +125,7 @@ test('daf-numbering-restarts-with-each-volume', () => {
 });
 
 test('end-of-transcribed-schedule', () => {
-  expect(dirshuDafHalachaEnd).toBe(greg.greg2abs(new Date(2027, 7, 31)));
+  expect(dirshuDafHalachaEnd).toBe(greg2abs(new Date(2027, 7, 31)));
   expect(dirshuDafHalacha(dirshuDafHalachaEnd)).not.toBeNull();
   expect(dirshuDafHalacha(dirshuDafHalachaEnd + 1)).toBeNull();
   expect(dirshuDafHalacha(new Date(2028, 0, 1))).toBeNull();

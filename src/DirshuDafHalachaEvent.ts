@@ -2,7 +2,7 @@ import {HDate} from '@hebcal/hdate';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {DirshuDafHalacha} from './dirshuDafHalachaBase.js';
-import {formatBeginEndRange, gematriyaNN, isHebrewLocale, sefariaUrl} from './common.js';
+import {formatBeginEndRange, gematriyaNN, sefariaUrl} from './common.js';
 import './locale.js';
 
 const BOOK_NAME = 'Mishnah Berurah';
@@ -67,7 +67,7 @@ export class DirshuDafHalachaEvent extends DailyLearningEvent {
   /**
    * Returns the name with "Daf HaYomi B'Halacha: " prefix
    * (e.g. "Daf HaYomi B'Halacha: Mishnah Berurah 345:1-3").
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   render(locale?: string): string {
     return Locale.gettext(PROGRAM_NAME, locale) + ': ' + this.renderBrief(locale);
@@ -77,14 +77,13 @@ export class DirshuDafHalachaEvent extends DailyLearningEvent {
    * Returns the book name and reference without the program name
    * (e.g. "Mishnah Berurah 345:1-3", or "Chazarah Mishnah Berurah 345:1-346:3"
    * on the Friday and Shabbat review days).
-   * @param [locale] Optional locale name (defaults to active locale).
+   * @param [locale] Optional locale name (defaults to empty locale).
    */
   renderBrief(locale?: string): string {
-    const loc = (locale || 'en').toLowerCase();
     const reading = this.reading;
-    const prefix = reading.review ? Locale.gettext('Chazarah', loc) + ' ' : '';
-    const book = Locale.gettext(BOOK_NAME, loc);
-    return prefix + book + ' ' + renderRange(reading, isHebrewLocale(loc));
+    const prefix = reading.review ? Locale.gettext('Chazarah', locale) + ' ' : '';
+    const book = Locale.gettext(BOOK_NAME, locale);
+    return prefix + book + ' ' + renderRange(reading, Locale.isHebrewLocale(locale));
   }
 
   /**
