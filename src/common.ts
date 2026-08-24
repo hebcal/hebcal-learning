@@ -94,17 +94,22 @@ export function gematriyaNN(num: number | string): string {
 /**
  * Builds a bilingual (Hebrew/English) Sefaria URL of the form
  * `https://www.sefaria.org/{book}.{chapter}?lang=bi`. Spaces in `book` are
- * converted to underscores automatically to match Sefaria's URL slugs.
+ * converted to underscores automatically to match Sefaria's URL slugs, and
+ * commas are percent-encoded as `%2C`.
  *
  * @example
  * sefariaUrl('Jerusalem Talmud Shekalim', '2a');
  * // => 'https://www.sefaria.org/Jerusalem_Talmud_Shekalim.2a?lang=bi'
+ *
+ * @example
+ * sefariaUrl('Shulchan Arukh, Orach Chayim', '460.2-3');
+ * // => 'https://www.sefaria.org/Shulchan_Arukh%2C_Orach_Chayim.460.2-3?lang=bi'
  *
  * @param book - the Sefaria book name (spaces allowed)
  * @param chapter - the chapter, page, or verse reference
  * @returns the Sefaria URL
  */
 export function sefariaUrl(book: string, chapter: number | string): string {
-  const slug = book.replaceAll(' ', '_');
+  const slug = book.replaceAll(' ', '_').replaceAll(',', '%2C');
   return `https://www.sefaria.org/${slug}.${chapter}?lang=bi`;
 }

@@ -1,7 +1,7 @@
 import {Locale, HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {AhSYomiReading} from './arukhHaShulchanYomiBase.js';
-import {gematriyaNN} from './common.js';
+import {gematriyaNN, sefariaUrl} from './common.js';
 import './locale.js';
 
 /**
@@ -47,9 +47,7 @@ export class ArukhHaShulchanYomiEvent extends DailyLearningEvent {
    */
   url(): string {
     const reading = this.reading;
-    const name = 'Arukh HaShulchan, ' + reading.k + '.' + reading.v;
-    const urlName = encodeURIComponent(name.replaceAll(' ', '_'));
-    return `https://www.sefaria.org/${urlName}?lang=bi`;
+    return sefariaUrl('Arukh HaShulchan, ' + reading.k, reading.v);
   }
   getCategories(): string[] {
     return ['arukhHaShulchanYomi'];

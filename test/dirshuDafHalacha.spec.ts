@@ -169,20 +169,20 @@ test('render-he', () => {
 
 test('url', () => {
   expect(ev(2025, 12, 7).url()).toBe(
-    'https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.345.1-3?lang=bi'
+    'https://www.sefaria.org/Shulchan_Arukh%2C_Orach_Chayim.345.1-3?lang=bi'
   );
   expect(ev(2024, 6, 30).url()).toBe(
-    'https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.245.6-246.1?lang=bi'
+    'https://www.sefaria.org/Shulchan_Arukh%2C_Orach_Chayim.245.6-246.1?lang=bi'
   );
   expect(ev(2024, 6, 11).url()).toBe(
-    'https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.242.1?lang=bi'
+    'https://www.sefaria.org/Shulchan_Arukh%2C_Orach_Chayim.242.1?lang=bi'
   );
   // whole-siman references link to the start of the reading
   expect(ev(2024, 8, 20).url()).toBe(
-    'https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.255?lang=bi'
+    'https://www.sefaria.org/Shulchan_Arukh%2C_Orach_Chayim.255?lang=bi'
   );
   expect(ev(2025, 10, 6).url()).toBe(
-    'https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.331.10?lang=bi'
+    'https://www.sefaria.org/Shulchan_Arukh%2C_Orach_Chayim.331.10?lang=bi'
   );
 });
 
