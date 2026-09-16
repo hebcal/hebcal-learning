@@ -172,5 +172,14 @@ test('dirshu-amud-yomi-instance', () => {
 
 test('total-amudim', () => {
   const total = shas.reduce((s, a) => s + a.amudim, 0);
-  expect(total).toBe(5407);
+  expect(total).toBe(5406);
+});
+
+test('there is no Rosh Hashana 35b', () => {
+  // 2027-06-30: Rosh Hashana 35a
+  const amud1 = calculateDirshuAmud(new Date(2027, 5, 30));
+  expect(`${amud1.name} ${amud1.amud}${amud1.side}`).toBe('Rosh Hashana 35a');
+  // 2027-07-01: Taanit 2a
+  const amud2 = calculateDirshuAmud(new Date(2027, 6, 1));
+  expect(`${amud2.name} ${amud2.amud}${amud2.side}`).toBe('Taanit 2a');
 });
