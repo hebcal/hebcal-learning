@@ -1,5 +1,4 @@
 import {HDate, greg2abs, months, Locale} from '@hebcal/hdate';
-import {flags} from '@hebcal/core/dist/esm/event';
 import {getHolidaysOnDate} from '@hebcal/core/dist/esm/holidays';
 import {DafPage} from './DafPage.js';
 import {LearningDate, checkTooEarly, gematriyaNN} from './common.js';
@@ -146,7 +145,7 @@ function skipDay(hd: HDate): boolean {
     return false;
   }
   for (const ev of holidays) {
-    if (ev.getFlags() & flags.CHAG || toSkip.has(ev.getDesc())) {
+    if (ev.hasFlag('CHAG') || toSkip.has(ev.getDesc())) {
       return true;
     }
   }
