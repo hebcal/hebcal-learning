@@ -1,6 +1,6 @@
 import {greg2abs} from '@hebcal/hdate';
 import {DafPage} from './DafPage.js';
-import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
+import {checkTooEarly, getAbsDate, type LearningDate} from './common.js';
 import {
   DAF_OFFSETS,
   NEW_CYCLE_LENGTH,

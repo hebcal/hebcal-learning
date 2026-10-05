@@ -1,6 +1,6 @@
-import {HDate} from '@hebcal/hdate';
+import type {HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {DafPage} from './DafPage.js';
+import type {DafPage} from './DafPage.js';
 import {sefariaUrl} from './common.js';
 import shekalimDafYomiMap0 from './shekalimDafYomiMap.json.js';
 import './locale.js';
@@ -18,7 +18,7 @@ export const dafYomiSefaria: Record<string, string> = {
   Arachin: 'Arakhin',
   Midot: 'Middot',
   Shekalim: 'Jerusalem_Talmud_Shekalim',
-} as const;
+};
 
 /**
  * Abstract event wrapper around any kind of Talmud page ({@link DafPage}),
@@ -41,20 +41,20 @@ export abstract class DafPageEvent extends DailyLearningEvent {
    * Returns Daf Yomi name including the 'Daf Yomi: ' prefix (e.g. "Daf Yomi: Pesachim 107").
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     return this.daf.render(locale);
   }
   /**
    * Returns Daf Yomi name without the 'Daf Yomi: ' prefix (e.g. "Pesachim 107").
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  renderBrief(locale?: string): string {
+  override renderBrief(locale?: string): string {
     return this.daf.render(locale);
   }
   /**
    * Returns a link to sefaria.org or dafyomi.org
    */
-  url(): string {
+  override url(): string {
     const daf = this.daf;
     const tractate = daf.getName();
     const blatt = daf.getBlatt();

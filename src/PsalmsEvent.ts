@@ -1,6 +1,6 @@
-import {HDate, gematriya, Locale} from '@hebcal/hdate';
+import {type HDate, gematriya, Locale} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {PsalmBeginEnd} from './psalmsBase.js';
+import type {PsalmBeginEnd} from './psalmsBase.js';
 import {sefariaUrl} from './common.js';
 import './locale.js';
 
@@ -24,7 +24,7 @@ import './locale.js';
  */
 export class PsalmsEvent extends DailyLearningEvent {
   readonly reading: PsalmBeginEnd;
-  get category(): string {
+  override get category(): string {
     return 'Psalms';
   }
   constructor(date: HDate, reading: PsalmBeginEnd) {
@@ -35,7 +35,7 @@ export class PsalmsEvent extends DailyLearningEvent {
    * Returns name of reading
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     const book = Locale.gettext('Psalms', locale);
     const reading = this.reading;
     if (Locale.isHebrewLocale(locale) && typeof reading[0] === 'number') {
@@ -47,12 +47,12 @@ export class PsalmsEvent extends DailyLearningEvent {
    * Returns a link to sefaria.org
    *  e.g. https://www.sefaria.org/Psalms.1-9?lang=b
    */
-  url(): string {
+  override url(): string {
     const r = this.reading;
     const chapter = `${r[0]}-${r[1]}`.replaceAll(':', '.');
     return sefariaUrl('Psalms', chapter);
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['dailyPsalms'];
   }
 }

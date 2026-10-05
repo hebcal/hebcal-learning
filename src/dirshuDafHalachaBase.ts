@@ -43,7 +43,7 @@
  */
 
 import {greg2abs} from '@hebcal/hdate';
-import {LearningDate, checkTooEarly, getAbsDate} from './common.js';
+import {type LearningDate, checkTooEarly, getAbsDate} from './common.js';
 import dafHalachaJson from './dirshuDafHalacha.json.js';
 
 /*
@@ -75,7 +75,7 @@ const amudFrom: number = dafHalachaJson.amud.from;
 const amudVolumes: number[] = dafHalachaJson.amud.volumes;
 const amudExtra: [number, number][] = Object.entries(dafHalachaJson.amud.extra).map(([idx, n]) => [
   Number(idx),
-  n as number,
+  n,
 ]);
 
 /** Sunday on or before `dirshuDafHalachaStart` (R.D. `n % 7 === 0` is a Sunday) */

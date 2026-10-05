@@ -1,8 +1,8 @@
-import {HDate, greg2abs} from '@hebcal/hdate';
-import {checkTooEarly, LearningDate} from './common.js';
+import {greg2abs} from '@hebcal/hdate';
+import {checkTooEarly, getAbsDate, type LearningDate} from './common.js';
 import tanakhNumChap from './tanakhNumChap.json.js';
 
-const tanakhBooks = Object.entries(tanakhNumChap) as Array<[string, number]>;
+const tanakhBooks = Object.entries(tanakhNumChap);
 
 function chapterToBookAndVerse(chapter: number): {
   book: string;
@@ -101,13 +101,8 @@ export type Nine29Reading = {
  * @param date - Hebrew or Gregorian date, or absolute day number
  */
 export function calculate929(date: LearningDate): Nine29Reading | null {
-  const hd: HDate = HDate.isHDate(date) ? (date as HDate) : new HDate(date);
-  const abs = hd.abs();
+  const abs = getAbsDate(date);
   checkTooEarly(abs, nine29Start, '929');
-
-  if (abs < nine29Start) {
-    return null;
-  }
 
   // Locate the cycle containing this date directly. Cycle 1→2 has a unique
   // ~3-month gap, so cycle 1 is special-cased; from cycle 2 onward the cycles

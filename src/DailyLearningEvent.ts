@@ -1,4 +1,4 @@
-import {HDate} from '@hebcal/hdate';
+import type {HDate} from '@hebcal/hdate';
 import {Event, flags} from '@hebcal/core/dist/esm/event';
 
 /**

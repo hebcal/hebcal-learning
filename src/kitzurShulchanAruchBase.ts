@@ -1,5 +1,5 @@
 import {HDate, months} from '@hebcal/hdate';
-import {LearningDate} from './common.js';
+import type {LearningDate} from './common.js';
 import kitzurSaJson from './kitzurSa.json.js';
 
 /**

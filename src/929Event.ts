@@ -1,5 +1,5 @@
-import {HDate, gematriya, Locale} from '@hebcal/hdate';
-import {Nine29Reading} from './929Base.js';
+import {type HDate, gematriya, Locale} from '@hebcal/hdate';
+import type {Nine29Reading} from './929Base.js';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {sefariaUrl} from './common.js';
 import './locale.js';
@@ -31,7 +31,6 @@ export class Nine29Event extends DailyLearningEvent {
   constructor(date: HDate, reading: Nine29Reading) {
     super(date, `${reading.book} ${reading.bookChap} (${reading.cycleChap})`);
     this.reading = reading;
-    this.alarm = false;
   }
 
   /**
@@ -39,18 +38,15 @@ export class Nine29Event extends DailyLearningEvent {
    * In Hebrew the chapter is rendered with gematriya: "דברים ל״ד (187)".
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
-    const {book, bookChap, cycleChap} = this.reading;
-    const bookName = Locale.gettext(book, locale);
-    const chapStr = Locale.isHebrewLocale(locale) ? gematriya(bookChap) : String(bookChap);
-    return `${bookName} ${chapStr} (${cycleChap})`;
+  override render(locale?: string): string {
+    return `${this.renderBrief(locale)} (${this.reading.cycleChap})`;
   }
 
   /**
    * Returns a brief description without the day-number suffix,
    * e.g. "Deuteronomy 34".
    */
-  renderBrief(locale?: string): string {
+  override renderBrief(locale?: string): string {
     const {book, bookChap} = this.reading;
     const bookName = Locale.gettext(book, locale);
     const chapStr = Locale.isHebrewLocale(locale) ? gematriya(bookChap) : String(bookChap);
@@ -61,18 +57,18 @@ export class Nine29Event extends DailyLearningEvent {
    * Returns a link to sefaria.org for the current chapter,
    * e.g. https://www.sefaria.org/Deuteronomy.34?lang=bi
    */
-  url(): string {
+  override url(): string {
     return sefariaUrl(this.reading.book, this.reading.bookChap);
   }
 
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['929'];
   }
 
   /**
    * Category name used as the location field in iCalendar event feeds.
    */
-  get category(): string {
+  override get category(): string {
     return '929';
   }
 }

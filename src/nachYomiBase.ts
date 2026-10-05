@@ -1,9 +1,9 @@
 import {greg2abs} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
+import {checkTooEarly, getAbsDate, type LearningDate} from './common.js';
 import tanakhNumChap from './tanakhNumChap.json.js';
 
 // Nach Yomi covers Nevi'im and Ketuvim — all books after the 5 Torah books.
-const nach = (Object.entries(tanakhNumChap) as Array<[string, number]>).slice(5);
+const nach = Object.entries(tanakhNumChap).slice(5);
 
 const cycleStartDate = new Date(2007, 10, 1);
 export const nachYomiStart = greg2abs(cycleStartDate);
@@ -47,9 +47,7 @@ export class NachYomiIndex {
   constructor() {
     const days = Array.from<NachYomi>({length: numChapters});
     let i = 0;
-    for (const element of nach) {
-      const book = element[0];
-      const chapters = element[1];
+    for (const [book, chapters] of nach) {
       for (let chap = 1; chap <= chapters; chap++) {
         days[i++] = {k: book, v: chap};
       }

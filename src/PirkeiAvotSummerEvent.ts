@@ -1,4 +1,4 @@
-import {HDate, gematriya, Locale} from '@hebcal/hdate';
+import {type HDate, gematriya, Locale} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {sefariaUrl} from './common.js';
 import './locale.js';
@@ -25,7 +25,7 @@ const PIRKEI_AVOT = 'Pirkei Avot';
  */
 export class PirkeiAvotSummerEvent extends DailyLearningEvent {
   readonly reading: number[];
-  get category(): string {
+  override get category(): string {
     return PIRKEI_AVOT;
   }
   constructor(date: HDate, reading: number[]) {
@@ -36,7 +36,7 @@ export class PirkeiAvotSummerEvent extends DailyLearningEvent {
    * Returns name of reading
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     const book = Locale.gettext(PIRKEI_AVOT, locale);
     const reading = this.reading;
     if (Locale.isHebrewLocale(locale)) {
@@ -47,11 +47,11 @@ export class PirkeiAvotSummerEvent extends DailyLearningEvent {
   /**
    * Returns a link to sefaria.org
    */
-  url(): string {
+  override url(): string {
     const chaps = this.reading.join('-');
     return sefariaUrl('Pirkei Avot', chaps);
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['pirkeiAvotSummer'];
   }
 }

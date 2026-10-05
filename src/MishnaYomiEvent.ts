@@ -1,7 +1,7 @@
-import {HDate, Locale} from '@hebcal/hdate';
+import {type HDate, Locale} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {MishnaYomi} from './mishnaYomiBase.js';
+import type {MishnaYomi} from './mishnaYomiBase.js';
 import './locale.js';
 
 function formatMyomi(mishnaYomi: MishnaYomi[], locale?: string): string {
@@ -41,7 +41,7 @@ function formatMyomi(mishnaYomi: MishnaYomi[], locale?: string): string {
  */
 export class MishnaYomiEvent extends DailyLearningEvent {
   readonly mishnaYomi: MishnaYomi[];
-  get category(): string {
+  override get category(): string {
     return 'Mishna Yomi';
   }
   constructor(date: HDate, mishnaYomi: MishnaYomi[]) {
@@ -52,13 +52,13 @@ export class MishnaYomiEvent extends DailyLearningEvent {
    * Returns Mishna Yomi name (e.g. "Bava Metzia 10:5-6" or "Berakhot 9:5-Peah 1:1").
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     return formatMyomi(this.mishnaYomi, locale);
   }
   /**
    * Returns a link to sefaria.org
    */
-  url(): string {
+  override url(): string {
     const mishnaYomi = this.mishnaYomi;
     const k1 = mishnaYomi[0].k;
     const mishna = k1 === 'Avot' ? 'Pirkei' : 'Mishnah';
@@ -76,7 +76,7 @@ export class MishnaYomiEvent extends DailyLearningEvent {
     const verse2 = p1[0] === p2[0] ? p2[1] : p2.join('.');
     return `${prefix}.${verse1}-${verse2}?lang=bi`;
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['mishnayomi'];
   }
 }

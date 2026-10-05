@@ -1,5 +1,5 @@
 import {HDate, greg2abs, months} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
+import {checkTooEarly, getAbsDate, type LearningDate} from './common.js';
 
 /**
  * Description of one Yerushalmi (Jerusalem Talmud) Daf Yomi
@@ -84,7 +84,7 @@ export const vilna: YerushalmiYomiConfig = {
     ['Niddah', 13],
   ],
   numDapim: 0,
-} as const;
+};
 
 const schottensteinStartDate = new Date(2022, 10, 14);
 /**
@@ -138,7 +138,7 @@ export const schottenstein: YerushalmiYomiConfig = {
     ['Niddah', 11],
   ],
   numDapim: 0,
-} as const;
+};
 
 const SUN = 0;
 const SAT = 6;

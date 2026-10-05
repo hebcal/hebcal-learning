@@ -1,6 +1,6 @@
-import {HDate} from '@hebcal/hdate';
+import type {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
-import {DafPage} from './DafPage.js';
+import type {DafPage} from './DafPage.js';
 import {DafPageEvent} from './DafPageEvent.js';
 
 /**
@@ -26,13 +26,13 @@ import {DafPageEvent} from './DafPageEvent.js';
  * // => "Ketubot 83"
  */
 export class DafWeeklyEvent extends DafPageEvent {
-  get category(): string {
+  override get category(): string {
     return 'Daf Weekly';
   }
   constructor(date: HDate, daf: DafPage) {
     super(date, daf, flags.DAILY_LEARNING);
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['dafWeekly'];
   }
 }

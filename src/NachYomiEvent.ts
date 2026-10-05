@@ -1,7 +1,7 @@
-import {HDate} from '@hebcal/hdate';
+import type {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DailyChapterEvent} from './DailyChapterEvent.js';
-import {NachYomi} from './nachYomiBase.js';
+import type {NachYomi} from './nachYomiBase.js';
 
 /**
  * Event wrapper around a Nach Yomi reading — one chapter from
@@ -22,13 +22,13 @@ import {NachYomi} from './nachYomiBase.js';
  * // => "I Samuel 23"
  */
 export class NachYomiEvent extends DailyChapterEvent {
-  get category(): string {
+  override get category(): string {
     return 'Nach Yomi';
   }
   constructor(date: HDate, reading: NachYomi) {
     super(date, reading.k, reading.v, flags.NACH_YOMI);
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['nachyomi'];
   }
 }

@@ -1,7 +1,7 @@
-import {Locale, HDate} from '@hebcal/hdate';
+import {Locale, type HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {
-  ChofetzChaimReading,
+  type ChofetzChaimReading,
   formatReadingPages,
   englishNames,
   HilchosLH,
@@ -32,7 +32,7 @@ import './locale.js';
  */
 export class ChofetzChaimEvent extends DailyLearningEvent {
   readonly reading: ChofetzChaimReading;
-  get category(): string {
+  override get category(): string {
     return 'Chofetz Chaim';
   }
   constructor(date: HDate, reading: ChofetzChaimReading) {
@@ -45,7 +45,7 @@ export class ChofetzChaimEvent extends DailyLearningEvent {
    * Returns name of reading
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  renderBrief(locale?: string): string {
+  override renderBrief(locale?: string): string {
     const reading = this.reading;
     const book = reading.k;
     const book2 = book.replace('Hilchos', 'Hilchos ');
@@ -57,7 +57,7 @@ export class ChofetzChaimEvent extends DailyLearningEvent {
    * Returns name of reading
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     const str = this.renderBrief(locale);
     const reading = this.reading;
     if (typeof reading.textBegin === 'string') {
@@ -70,7 +70,7 @@ export class ChofetzChaimEvent extends DailyLearningEvent {
    * Returns a link to sefaria.org
    *  e.g. https://www.sefaria.org/Chofetz_Chaim%2C_Part_One%2C_The_Prohibition_Against_Lashon_Hara%2C_Principle_7.7
    */
-  url(): string {
+  override url(): string {
     const reading = this.reading;
     const book = reading.k;
     let name = 'Chofetz Chaim, ' + englishNames[book];
@@ -88,7 +88,7 @@ export class ChofetzChaimEvent extends DailyLearningEvent {
     const urlName = encodeURIComponent(name.replaceAll(' ', '_'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['chofetzChaim'];
   }
 }

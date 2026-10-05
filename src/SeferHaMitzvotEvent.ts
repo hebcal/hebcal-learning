@@ -1,11 +1,15 @@
-import {HDate} from '@hebcal/hdate';
+import type {HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {SeferHaMitzvotReading} from './seferHaMitzvotBase.js';
+import type {SeferHaMitzvotReading} from './seferHaMitzvotBase.js';
 
-enum ReadingType {
-  Other,
-  Positive,
-  Negative,
+type CommandmentType = 'Positive' | 'Negative';
+
+/** `"P186"` -> `'Positive'`, `"N10"` -> `'Negative'`, anything else -> `undefined` */
+function commandmentType(part: string): CommandmentType | undefined {
+  if (!/^[PN]\d/.test(part)) {
+    return undefined;
+  }
+  return part[0] === 'P' ? 'Positive' : 'Negative';
 }
 
 /**
@@ -29,7 +33,7 @@ enum ReadingType {
  */
 export class SeferHaMitzvotEvent extends DailyLearningEvent {
   readonly reading: SeferHaMitzvotReading;
-  get category(): string {
+  override get category(): string {
     return 'Sefer Hamitzvot';
   }
   constructor(date: HDate, reading: SeferHaMitzvotReading) {
@@ -40,29 +44,18 @@ export class SeferHaMitzvotEvent extends DailyLearningEvent {
       this.memo = reading.note;
     }
   }
-  render(_locale?: string): string {
+  override render(_locale?: string): string {
     const r = this.reading;
     const parts = r.reading.split(', ');
-    let prev = ReadingType.Other;
+    let prev: CommandmentType | undefined;
     let str = '';
     for (const part of parts) {
-      const ch = part[0];
-      const isPos = ch === 'P';
-      const isNeg = ch === 'N';
-      const code = part.charCodeAt(1);
-      const isNumber = code >= 48 && code <= 57;
-      const type =
-        isPos && isNumber
-          ? ReadingType.Positive
-          : isNeg && isNumber
-            ? ReadingType.Negative
-            : ReadingType.Other;
+      const type = commandmentType(part);
       const suffix = part.substring(1);
-      if (type === prev && type !== ReadingType.Other) {
+      if (type && type === prev) {
         str += `, ${suffix}`;
-      } else if (type !== ReadingType.Other) {
-        const prefix = isPos ? 'Positive' : 'Negative';
-        str += `; ${prefix} Commandment ${suffix}`;
+      } else if (type) {
+        str += `; ${type} Commandment ${suffix}`;
       } else {
         str += `; ${part}`;
       }
@@ -73,13 +66,13 @@ export class SeferHaMitzvotEvent extends DailyLearningEvent {
     }
     return `Day ${r.day}: ` + str.substring(2);
   }
-  renderBrief(_locale?: string): string {
+  override renderBrief(_locale?: string): string {
     return this.getDesc();
   }
   /**
    * Returns a link to chabad.org
    */
-  url(): string {
+  override url(): string {
     const dt = this.getDate().greg();
     const yy = dt.getFullYear();
     const mm = dt.getMonth() + 1;
@@ -87,7 +80,7 @@ export class SeferHaMitzvotEvent extends DailyLearningEvent {
     const dateStr = `${mm}/${dd}/${yy}`;
     return `https://www.chabad.org/dailystudy/seferHamitzvos.asp?tdate=${dateStr}`;
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['seferHaMitzvot'];
   }
 }

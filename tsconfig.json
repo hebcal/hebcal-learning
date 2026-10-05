@@ -4,6 +4,9 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "strict": true,
+    "erasableSyntaxOnly": true,
+    "noImplicitOverride": true,
+    "verbatimModuleSyntax": true,
     "declaration": true,
     "rootDir": "./src",
     "outDir": "./dist/esm"

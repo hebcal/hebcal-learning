@@ -1,5 +1,5 @@
 import {greg2abs} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
+import {checkTooEarly, getAbsDate, type LearningDate} from './common.js';
 import mishnayotJson from './mishnayot.json.js';
 
 const mishnayot = Object.entries(mishnayotJson).map(([k, v]) => ({k, v}));

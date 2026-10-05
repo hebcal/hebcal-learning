@@ -1,21 +1,16 @@
-import {HDate} from '@hebcal/hdate';
+import type {HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {RambamReading} from './rambam1Base.js';
+import type {RambamReading} from './rambam1Base.js';
 import {DailyRambamEvent} from './DailyRambamEvent.js';
 import './locale.js';
 
 function combinePair(r1: RambamReading, r2: RambamReading): RambamReading {
-  const name = r1.name;
-  const perek0 = r1.perek;
-  const perek2 = r2.perek as string;
-  let perek;
-  if (typeof perek0 === 'number') {
-    perek = `${perek0}-${perek2}`;
-  } else {
-    const first = perek0.split('-');
-    const last = perek2.split('-');
-    perek = `${first[0]}-${last[1]}`;
-  }
+  const {name, perek: perek1} = r1;
+  const perek2 = String(r2.perek);
+  const perek =
+    typeof perek1 === 'number'
+      ? `${perek1}-${perek2}`
+      : `${perek1.split('-')[0]}-${perek2.split('-')[1]}`;
   return {name, perek};
 }
 
@@ -62,40 +57,35 @@ export function makeDesc(readings: RambamReading[]): string {
 export class DailyRambam3Event extends DailyLearningEvent {
   readonly readings: RambamReading[];
   readonly events: DailyRambamEvent[];
-  get category(): string {
+  override get category(): string {
     return 'Daily Rambam';
   }
   constructor(date: HDate, readings: RambamReading[]) {
     const collapsed = collapseAdjacent(readings);
-    const desc = collapsed.map(r => `${r.name} ${r.perek}`).join(', ');
-    super(date, desc);
+    super(date, collapsed.map(r => `${r.name} ${r.perek}`).join(', '));
     this.readings = collapsed;
     this.events = collapsed.map(r => new DailyRambamEvent(date, r));
     if (collapsed.length > 1) {
-      this.memo = this.events
-        .map(ev => {
-          return ev.getDesc() + '\n' + ev.url();
-        })
-        .join('\n\n');
+      this.memo = this.events.map(ev => ev.getDesc() + '\n' + ev.url()).join('\n\n');
     }
   }
   /**
    * Returns name of reading
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     return this.events.map(ev => ev.render(locale)).join(', ');
   }
   /**
    * Returns a link to sefaria.org
    */
-  url(): string | undefined {
+  override url(): string | undefined {
     if (this.events.length === 1) {
       return this.events[0].url();
     }
     return undefined;
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['dailyRambam3'];
   }
 }

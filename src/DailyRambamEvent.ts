@@ -1,6 +1,6 @@
-import {Locale, HDate} from '@hebcal/hdate';
+import {Locale, type HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {RambamReading} from './rambam1Base.js';
+import type {RambamReading} from './rambam1Base.js';
 import {gematriyaNN} from './common.js';
 import './locale.js';
 
@@ -27,7 +27,7 @@ import './locale.js';
  */
 export class DailyRambamEvent extends DailyLearningEvent {
   readonly reading: RambamReading;
-  get category(): string {
+  override get category(): string {
     return 'Daily Rambam';
   }
   constructor(date: HDate, reading: RambamReading) {
@@ -38,7 +38,7 @@ export class DailyRambamEvent extends DailyLearningEvent {
    * Returns name of reading
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     const reading = this.reading;
     const name = Locale.gettext(reading.name, locale);
     if (Locale.isHebrewLocale(locale)) {
@@ -51,13 +51,13 @@ export class DailyRambamEvent extends DailyLearningEvent {
   /**
    * Returns a link to sefaria.org
    */
-  url(): string {
+  override url(): string {
     const reading = this.reading;
     const name = 'Mishneh Torah, ' + reading.name + '.' + reading.perek;
     const urlName = encodeURIComponent(name.replaceAll(' ', '_').replaceAll(':', '.'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['dailyRambam1'];
   }
 }

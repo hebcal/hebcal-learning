@@ -1,6 +1,6 @@
-import {HDate, Locale} from '@hebcal/hdate';
+import {type HDate, Locale} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {DirshuDafHalacha} from './dirshuDafHalachaBase.js';
+import type {DirshuDafHalacha} from './dirshuDafHalachaBase.js';
 import {formatBeginEndRange, gematriyaNN, sefariaUrl} from './common.js';
 import './locale.js';
 
@@ -52,7 +52,7 @@ function renderRange(reading: DirshuDafHalacha, hebrew: boolean): string {
  */
 export class DirshuDafHalachaEvent extends DailyLearningEvent {
   readonly reading: DirshuDafHalacha;
-  get category(): string {
+  override get category(): string {
     return PROGRAM_NAME;
   }
 
@@ -68,7 +68,7 @@ export class DirshuDafHalachaEvent extends DailyLearningEvent {
    * (e.g. "Daf HaYomi B'Halacha: Mishnah Berurah 345:1-3").
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     return Locale.gettext(PROGRAM_NAME, locale) + ': ' + this.renderBrief(locale);
   }
 
@@ -78,7 +78,7 @@ export class DirshuDafHalachaEvent extends DailyLearningEvent {
    * on the Friday and Shabbat review days).
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  renderBrief(locale?: string): string {
+  override renderBrief(locale?: string): string {
     const reading = this.reading;
     const prefix = reading.review ? Locale.gettext('Chazarah', locale) + ' ' : '';
     const book = Locale.gettext(BOOK_NAME, locale);
@@ -89,7 +89,7 @@ export class DirshuDafHalachaEvent extends DailyLearningEvent {
    * Returns a link to sefaria.org for the Shulchan Arukh, Orach Chayim
    * siman and se'if covered by this reading.
    */
-  url(): string {
+  override url(): string {
     const {b, e} = this.reading;
     // a reference without a se'if means the whole siman, whose final se'if
     // this package does not know; link to the start of the reading instead
@@ -98,7 +98,7 @@ export class DirshuDafHalachaEvent extends DailyLearningEvent {
     return sefariaUrl(SEFARIA_BOOK, range.replaceAll(':', '.'));
   }
 
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['dirshuDafHalacha'];
   }
 }

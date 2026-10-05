@@ -1,7 +1,7 @@
-import {Locale, HDate, gematriya} from '@hebcal/hdate';
+import {Locale, type HDate, gematriya} from '@hebcal/hdate';
 import {dafYomiSefaria, shekalimDafYomiMap} from './DafPageEvent.js';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {DirshuAmudYomi, calculateDirshuAmud} from './dirshuAmudYomiBase.js';
+import {type DirshuAmudYomi, calculateDirshuAmud} from './dirshuAmudYomiBase.js';
 import {sefariaUrl} from './common.js';
 import './locale.js';
 
@@ -26,7 +26,7 @@ import './locale.js';
  */
 export class DirshuAmudYomiEvent extends DailyLearningEvent {
   readonly amud: DirshuAmudYomi;
-  get category(): string {
+  override get category(): string {
     return 'Dirshu Amud HaYomi';
   }
 
@@ -41,7 +41,7 @@ export class DirshuAmudYomiEvent extends DailyLearningEvent {
    * In Hebrew, uses full amud notation with "דף" and "ע״א"/"ע״ב" (e.g. "פסחים דף פ״ד ע״ב").
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     const prefix = Locale.gettext('Dirshu Amud HaYomi', locale);
     const amud = this.amud;
     const name = Locale.gettext(amud.name, locale);
@@ -60,7 +60,7 @@ export class DirshuAmudYomiEvent extends DailyLearningEvent {
    * In Hebrew, uses short notation without "דף" and with plain "א"/"ב" (e.g. "פסחים פ״ד ב").
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  renderBrief(locale?: string): string {
+  override renderBrief(locale?: string): string {
     const amud = this.amud;
     const name = Locale.gettext(amud.name, locale);
     if (Locale.isHebrewLocale(locale)) {
@@ -73,7 +73,7 @@ export class DirshuAmudYomiEvent extends DailyLearningEvent {
   /**
    * Returns a link to sefaria.org
    */
-  url(): string {
+  override url(): string {
     const amud = this.amud;
     const tractate = amud.name;
     if (tractate === 'Shekalim') {
@@ -85,7 +85,7 @@ export class DirshuAmudYomiEvent extends DailyLearningEvent {
     return sefariaUrl(name0, `${amud.amud}${amud.side}`);
   }
 
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['dirshuAmudYomi'];
   }
 }

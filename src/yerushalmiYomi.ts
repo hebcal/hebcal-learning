@@ -7,8 +7,7 @@ wrapSchedule('yerushalmi-vilna', vilna.startAbs, hd => {
   return daf === null ? null : new YerushalmiYomiEvent(hd, daf);
 });
 
-wrapSchedule(
-  'yerushalmi-schottenstein',
-  schottenstein.startAbs,
-  hd => new YerushalmiYomiEvent(hd, yerushalmiYomi(hd, schottenstein)!)
-);
+wrapSchedule('yerushalmi-schottenstein', schottenstein.startAbs, hd => {
+  const daf = yerushalmiYomi(hd, schottenstein);
+  return daf === null ? null : new YerushalmiYomiEvent(hd, daf);
+});

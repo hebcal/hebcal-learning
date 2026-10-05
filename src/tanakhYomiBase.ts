@@ -1,7 +1,7 @@
 import {HDate, greg2abs, months, Locale} from '@hebcal/hdate';
 import {getHolidaysOnDate} from '@hebcal/core/dist/esm/holidays';
 import {DafPage} from './DafPage.js';
-import {LearningDate, checkTooEarly, gematriyaNN} from './common.js';
+import {type LearningDate, checkTooEarly, gematriyaNN} from './common.js';
 import masoretic0 from './masoretic.json.js';
 import './locale.js';
 
@@ -26,28 +26,30 @@ type Daf = {
   blatt: number;
 };
 
-const books: Daf[] = [
-  [JOSHUA, 14],
-  ['Judges', 14],
-  ['Samuel', 34],
-  ['Kings', 35],
-  ['Isaiah', 26],
-  [JEREMIAH, 31],
-  ['Ezekiel', 29],
-  ['Minor Prophets', 21], // תרי עשר
-  ['Psalms', 19],
-  ['Proverbs', 8],
-  ['Job', 8],
-  [SHIR_HASHIRIM, 1],
-  [RUTH, 1], // רות ס' א1, רות ס' א2
-  ['Lamentations', 1],
-  ['Ecclesiastes', 4],
-  ['Esther', 5],
-  ['Daniel', 7],
-  ['Ezra and Nehemiah', 10],
-  ['Chronicles', 25],
-  ['Chronicles', 25],
-].map(([n, b]) => ({name: n as string, blatt: b as number}));
+const books: Daf[] = (
+  [
+    [JOSHUA, 14],
+    ['Judges', 14],
+    ['Samuel', 34],
+    ['Kings', 35],
+    ['Isaiah', 26],
+    [JEREMIAH, 31],
+    ['Ezekiel', 29],
+    ['Minor Prophets', 21], // תרי עשר
+    ['Psalms', 19],
+    ['Proverbs', 8],
+    ['Job', 8],
+    [SHIR_HASHIRIM, 1],
+    [RUTH, 1], // רות ס' א1, רות ס' א2
+    ['Lamentations', 1],
+    ['Ecclesiastes', 4],
+    ['Esther', 5],
+    ['Daniel', 7],
+    ['Ezra and Nehemiah', 10],
+    ['Chronicles', 25],
+    ['Chronicles', 25],
+  ] satisfies [string, number][]
+).map(([name, blatt]) => ({name, blatt}));
 
 // Also Pesach 1 and 7, Shavuot, RH 1 and 2, YK, Sukkot 1, Shmini Atz,
 const toSkip = new Set(['Purim', "Yom HaAtzma'ut", "Tish'a B'Av", "Tish'a B'Av (observed)"]);
@@ -352,7 +354,7 @@ export class TanakhYomi extends DafPage {
    * Formats (with translation) the dafyomi result as a string like "Pesachim 34"
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     const name = Locale.gettext(this.name, locale);
     const blatt = this.blatt;
     if (Locale.isHebrewLocale(locale)) {

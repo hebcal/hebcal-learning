@@ -1,7 +1,7 @@
-import {Locale, HDate} from '@hebcal/hdate';
+import {Locale, type HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {YerushalmiReading} from './yerushalmiBase.js';
+import type {YerushalmiReading} from './yerushalmiBase.js';
 import {gematriyaNN, sefariaUrl} from './common.js';
 import './locale.js';
 import vilnaMap0 from './yerushalmiVilnaMap.json.js';
@@ -38,7 +38,7 @@ const vilnaMap: Record<string, (string | null)[]> = vilnaMap0;
  */
 export class YerushalmiYomiEvent extends DailyLearningEvent {
   readonly daf: YerushalmiReading;
-  get category(): string {
+  override get category(): string {
     return 'Yerushalmi Yomi';
   }
   constructor(date: HDate, daf: YerushalmiReading) {
@@ -49,7 +49,7 @@ export class YerushalmiYomiEvent extends DailyLearningEvent {
    * Returns name of tractate and page (e.g. "Yerushalmi Beitzah 21").
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     const prefix = Locale.gettext('Yerushalmi', locale);
     return prefix + ' ' + this.renderBrief(locale);
   }
@@ -57,7 +57,7 @@ export class YerushalmiYomiEvent extends DailyLearningEvent {
    * Returns name of tractate and page (e.g. "Beitzah 21").
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  renderBrief(locale?: string): string {
+  override renderBrief(locale?: string): string {
     const name = Locale.gettext(this.daf.name, locale);
     if (Locale.isHebrewLocale(locale)) {
       return name + ' דף ' + gematriyaNN(this.daf.blatt);
@@ -67,7 +67,7 @@ export class YerushalmiYomiEvent extends DailyLearningEvent {
   /**
    * Returns a link to sefaria.org
    */
-  url(): string | undefined {
+  override url(): string | undefined {
     const daf = this.daf;
     if (daf.ed !== 'vilna') {
       return undefined;
@@ -86,7 +86,7 @@ export class YerushalmiYomiEvent extends DailyLearningEvent {
     const verses = verses0.replaceAll(':', '.');
     return sefariaUrl(name0, verses);
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['yerushalmi', this.daf.ed];
   }
 }

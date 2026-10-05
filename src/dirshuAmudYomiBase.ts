@@ -1,5 +1,5 @@
 import {greg2abs} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
+import {checkTooEarly, getAbsDate, type LearningDate} from './common.js';
 import amudJson from './amudim.json.js';
 
 // Cycle began on 1 Cheshvan 5784 = October 16, 2023

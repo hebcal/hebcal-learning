@@ -1,7 +1,7 @@
-import {HDate} from '@hebcal/hdate';
+import type {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DailyChapterEvent} from './DailyChapterEvent.js';
-import {PerekYomi} from './perekYomiBase.js';
+import type {PerekYomi} from './perekYomiBase.js';
 import {sefariaUrl} from './common.js';
 
 /**
@@ -23,7 +23,7 @@ import {sefariaUrl} from './common.js';
  * // => "Sotah 8"
  */
 export class PerekYomiEvent extends DailyChapterEvent {
-  get category(): string {
+  override get category(): string {
     return 'Perek Yomi';
   }
   constructor(date: HDate, reading: PerekYomi) {
@@ -32,13 +32,13 @@ export class PerekYomiEvent extends DailyChapterEvent {
   /**
    * Returns a link to sefaria.org
    */
-  url(): string {
+  override url(): string {
     const masechta = this.k;
     const prefix = masechta === 'Avot' ? 'Pirkei' : 'Mishnah';
     const name = masechta.replaceAll(' ', '_');
     return sefariaUrl(`${prefix} ${name}`, this.v);
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['perekYomi'];
   }
 }

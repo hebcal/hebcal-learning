@@ -19,7 +19,7 @@
 
 import {greg2abs} from '@hebcal/hdate';
 import {DafPage} from './DafPage.js';
-import {LearningDate, checkTooEarly, getAbsDate} from './common.js';
+import {type LearningDate, checkTooEarly, getAbsDate} from './common.js';
 import bavliJson from './bavli.json.js';
 
 /** Masechtos in Daf Yomi order. */

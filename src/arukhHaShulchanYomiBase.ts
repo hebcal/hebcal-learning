@@ -1,5 +1,5 @@
 import {greg2abs} from '@hebcal/hdate';
-import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
+import {checkTooEarly, getAbsDate, type LearningDate} from './common.js';
 import ahsyJson from './arukhHaShulchanYomi.json.js';
 
 /**
@@ -15,7 +15,9 @@ export type AhSYomiReading = {
   v: string;
 };
 
-const cycleLen = ahsyJson.length; // 1719
+/** `[sectionIndex, verseRange]` per day; JSON can't express the tuple type */
+const ahsyTable = ahsyJson as [number, string][];
+const cycleLen = ahsyTable.length; // 1719
 
 const cycleStartDate = new Date(2020, 4, 29);
 export const ahsyStart = greg2abs(cycleStartDate);
@@ -45,6 +47,6 @@ export function arukhHaShulchanYomi(date: LearningDate): AhSYomiReading {
   const cday = getAbsDate(date);
   checkTooEarly(cday, ahsyStart, 'Arukh HaShulchan Yomi');
   const dayNum = (cday - ahsyStart) % cycleLen;
-  const [s, v] = (ahsyJson as [number, string][])[dayNum];
+  const [s, v] = ahsyTable[dayNum];
   return {k: sections[s], v};
 }

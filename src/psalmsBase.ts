@@ -1,5 +1,5 @@
 import {HDate} from '@hebcal/hdate';
-import {LearningDate} from './common.js';
+import type {LearningDate} from './common.js';
 
 /**
  * One day's slice of the 30-day Psalms cycle, as a two-element tuple

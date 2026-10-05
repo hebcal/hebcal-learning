@@ -38,9 +38,18 @@ export const englishNames: Record<string, string> = {
   HilchosLH: 'Part One, The Prohibition Against Lashon Hara',
   HilchosRechilus: 'Part Two, The Prohibition Against Rechilut',
   Tziyurim: 'Illustrations',
-} as const;
+};
 
-const simple = [
+type Entry = [
+  [number, number, number, number, number, number], // dates in years 1, 2 and 3
+  string, // Book name
+  (number | string)?, // begin chapter (absent when the whole section is read)
+  (number | string | number[])?, // end chapter
+  string?, // Hebrew incipit
+  string?, // Hebrew explicit
+];
+
+const simple: Entry[] = [
   [[1, Tishrei, 1, Shvat, 1, Sivan], Hakdamah, 1, 4, 'ברוך ד׳', 'שכינתו בתוכנו'],
   [[2, Tishrei, 2, Shvat, 2, Sivan], Hakdamah, 5, 10, 'וכאשר נחפשה', 'מגדל העון'],
   [[3, Tishrei, 3, Shvat, 3, Sivan], Hakdamah, 11, 16, 'ונראה פשוט', 'לאין שעור'],
@@ -162,7 +171,7 @@ const simple = [
   [[29, Teves, 29, Iyyar, 29, Elul], Tziyurim, 10, 11],
 ];
 
-const leap = [
+const leap: Entry[] = [
   [[1, Tishrei, 11, Shvat, 20, Iyyar], Hakdamah, 1, 4, 'ברוך ד׳', 'שכינתו בתוכנו'],
   [[2, Tishrei, 12, Shvat, 21, Iyyar], Hakdamah, 5, 10, 'וכאשר נחפשה', 'מגדל העון'],
   [[3, Tishrei, 13, Shvat, 22, Iyyar], Hakdamah, 11, 16, 'ונראה פשוט', 'לאין שעור'],
@@ -331,15 +340,6 @@ export type ChofetzChaimReading = {
   textEnd?: string;
 };
 
-type Entry = [
-  [number, number, number, number, number, number], // dates in years 1, 2 and 3
-  string, // Book name
-  number, // begin chapter
-  number | number[], // end chapter
-  string | undefined,
-  string | undefined,
-];
-
 /**
  * Returns the Sefer Chofetz Chaim reading scheduled for the given
  * Hebrew date.
@@ -376,7 +376,7 @@ export function chofetzChaim(hdate: HDate): ChofetzChaimReading {
   const readings = hdate.isLeapYear() ? leap : simple;
   const day = hdate.getDate();
   const month = hdate.getMonth();
-  const result = lookupReading(readings as Entry[], day, month);
+  const result = lookupReading(readings, day, month);
 
   const year = hdate.getFullYear();
   if (
@@ -384,7 +384,7 @@ export function chofetzChaim(hdate: HDate): ChofetzChaimReading {
     ((month === Kislev && HDate.shortKislev(year)) ||
       (month === Cheshvan && !HDate.longCheshvan(year)))
   ) {
-    const extra = lookupReading(readings as Entry[], 30, month);
+    const extra = lookupReading(readings, 30, month);
     result.e = extra.e;
   }
 
@@ -393,8 +393,8 @@ export function chofetzChaim(hdate: HDate): ChofetzChaimReading {
 
 function lookupReading(readings: Entry[], day: number, month: number): ChofetzChaimReading {
   let k = '';
-  let b: string | number = 0;
-  let e: string | number | number[] = 0;
+  let b: string | number | undefined = 0;
+  let e: string | number | number[] | undefined = 0;
   let textBegin = '';
   let textEnd = '';
   for (const reading of readings) {
@@ -422,7 +422,10 @@ function lookupReading(readings: Entry[], day: number, month: number): ChofetzCh
       }
     }
   }
-  const result: ChofetzChaimReading = {k, b, e};
+  // `b` and `e` are undefined for whole-section readings (e.g. Arurin), which
+  // the public ChofetzChaimReading type does not admit; formatReadingPages()
+  // and ChofetzChaimEvent.url() already check for it.
+  const result = {k, b, e} as ChofetzChaimReading;
   if (textBegin) {
     result.textBegin = textBegin;
   }

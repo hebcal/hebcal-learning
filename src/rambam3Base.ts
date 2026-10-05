@@ -1,9 +1,9 @@
-import {checkTooEarly, getAbsDate, LearningDate} from './common.js';
+import {checkTooEarly, getAbsDate, type LearningDate} from './common.js';
 import {
   rambam1cycleLen,
   rambam1Start,
   getChap,
-  RambamReading,
+  type RambamReading,
   mishnehTorah1,
 } from './rambam1Base.js';
 

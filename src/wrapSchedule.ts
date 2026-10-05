@@ -1,5 +1,5 @@
 import {HDate} from '@hebcal/hdate';
-import {Event} from '@hebcal/core/dist/esm/event';
+import type {Event} from '@hebcal/core/dist/esm/event';
 import {DailyLearning} from '@hebcal/core/dist/esm/DailyLearning';
 
 /**

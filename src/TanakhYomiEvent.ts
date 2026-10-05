@@ -1,7 +1,7 @@
-import {HDate} from '@hebcal/hdate';
+import type {HDate} from '@hebcal/hdate';
 import {flags} from '@hebcal/core/dist/esm/event';
 import {DafPageEvent} from './DafPageEvent.js';
-import {TanakhYomi} from './tanakhYomiBase.js';
+import type {TanakhYomi} from './tanakhYomiBase.js';
 import {sefariaUrl} from './common.js';
 
 /**
@@ -22,7 +22,7 @@ import {sefariaUrl} from './common.js';
  * console.log(ev.render('en'));  // => "Ezekiel Seder 3"
  */
 export class TanakhYomiEvent extends DafPageEvent {
-  get category(): string {
+  override get category(): string {
     return 'Tanakh Yomi';
   }
   constructor(date: HDate, daf: TanakhYomi) {
@@ -32,14 +32,14 @@ export class TanakhYomiEvent extends DafPageEvent {
   /**
    * Returns a link to sefaria.org
    */
-  url(): string {
+  override url(): string {
     const memo: string = this.memo!;
     const space = memo.lastIndexOf(' ');
     const book = memo.substring(0, space);
     const verses = memo.substring(space + 1).replaceAll(':', '.');
     return sefariaUrl(book, verses);
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['tanakhYomi'];
   }
 }

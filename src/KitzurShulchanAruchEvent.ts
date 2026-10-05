@@ -1,6 +1,6 @@
-import {HDate, months, Locale} from '@hebcal/hdate';
+import {type HDate, months, Locale} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {KitzurShulchanAruchReading} from './kitzurShulchanAruchBase.js';
+import type {KitzurShulchanAruchReading} from './kitzurShulchanAruchBase.js';
 import {gematriyaNN, formatBeginEndRange} from './common.js';
 import './locale.js';
 
@@ -69,7 +69,7 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
   readonly reading: KitzurShulchanAruchReading;
   readonly optionB?: KitzurShulchanAruchReading;
   readonly leapAdar2: boolean;
-  get category(): string {
+  override get category(): string {
     return BOOK_NAME;
   }
   constructor(
@@ -93,7 +93,7 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
    * Returns name of reading
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     const prefix = this.leapAdar2 ? '' : Locale.gettext(BOOK_NAME, locale) + ' ';
     return prefix + this.renderBrief(locale);
   }
@@ -101,7 +101,7 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
    * Returns a brief (translated) description of this event.
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  renderBrief(locale?: string): string {
+  override renderBrief(locale?: string): string {
     let str = '';
     if (this.leapAdar2) {
       str += Locale.gettext("Hilchot Shmita v'Terumah", locale) + ' ';
@@ -116,7 +116,7 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
   /**
    * Returns a link to sefaria.org
    */
-  url(): string | undefined {
+  override url(): string | undefined {
     if (this.leapAdar2) {
       return undefined;
     }
@@ -131,7 +131,7 @@ export class KitzurShulchanAruchEvent extends DailyLearningEvent {
     const rangeDot = range.replace(':', '.');
     return `${prefix}.${rangeDot}?lang=bi`;
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['kitzurShulchanAruch'];
   }
 }

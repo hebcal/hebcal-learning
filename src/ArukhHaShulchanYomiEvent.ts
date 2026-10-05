@@ -1,6 +1,6 @@
-import {Locale, HDate} from '@hebcal/hdate';
+import {Locale, type HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
-import {AhSYomiReading} from './arukhHaShulchanYomiBase.js';
+import type {AhSYomiReading} from './arukhHaShulchanYomiBase.js';
 import {gematriyaNN, sefariaUrl} from './common.js';
 import './locale.js';
 
@@ -25,14 +25,14 @@ import './locale.js';
  */
 export class ArukhHaShulchanYomiEvent extends DailyLearningEvent {
   readonly reading: AhSYomiReading;
-  get category(): string {
+  override get category(): string {
     return 'Arukh HaShulchan Yomi';
   }
   constructor(date: HDate, reading: AhSYomiReading) {
     super(date, `${reading.k} ${reading.v}`);
     this.reading = reading;
   }
-  render(locale?: string): string {
+  override render(locale?: string): string {
     const reading = this.reading;
     const name = Locale.gettext(reading.k, locale);
     if (Locale.isHebrewLocale(locale)) {
@@ -45,11 +45,11 @@ export class ArukhHaShulchanYomiEvent extends DailyLearningEvent {
   /**
    * Returns a link to sefaria.org
    */
-  url(): string {
+  override url(): string {
     const reading = this.reading;
     return sefariaUrl('Arukh HaShulchan, ' + reading.k, reading.v);
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['arukhHaShulchanYomi'];
   }
 }

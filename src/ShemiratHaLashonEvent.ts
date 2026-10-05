@@ -1,8 +1,8 @@
-import {Locale, HDate} from '@hebcal/hdate';
+import {Locale, type HDate} from '@hebcal/hdate';
 import {DailyLearningEvent} from './DailyLearningEvent.js';
 import {formatReadingPages} from './chofetzChaimBase.js';
 import {sefariaUrl} from './common.js';
-import {ShemiratHaLashonReading, Chapters, englishNames} from './shemiratHaLashonBase.js';
+import {type ShemiratHaLashonReading, Chapters, englishNames} from './shemiratHaLashonBase.js';
 import './locale.js';
 
 /**
@@ -27,8 +27,8 @@ import './locale.js';
  */
 export class ShemiratHaLashonEvent extends DailyLearningEvent {
   readonly reading: ShemiratHaLashonReading;
-  readonly memo: string;
-  get category(): string {
+  declare readonly memo: string;
+  override get category(): string {
     return 'Shemirat HaLashon';
   }
   constructor(date: HDate, reading: ShemiratHaLashonReading) {
@@ -43,7 +43,7 @@ export class ShemiratHaLashonEvent extends DailyLearningEvent {
    * Returns name of reading
    * @param [locale] Optional locale name (defaults to empty locale).
    */
-  render(locale?: string): string {
+  override render(locale?: string): string {
     const prefix = this.renderPrefix(locale);
     return prefix + formatReadingPages(this.reading);
   }
@@ -69,10 +69,10 @@ export class ShemiratHaLashonEvent extends DailyLearningEvent {
    * Returns a link to sefaria.org
    *  e.g. https://www.sefaria.org/Shemirat_HaLashon%2C_Book_I%2C_The_Gate_of_Torah.4.2?lang=b
    */
-  url(): string {
+  override url(): string {
     return sefariaUrl('Shemirat HaLashon, ' + this.renderPrefix('memo'), this.reading.b);
   }
-  getCategories(): string[] {
+  override getCategories(): string[] {
     return ['shemiratHaLashon'];
   }
 }
