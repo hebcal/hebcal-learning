@@ -28,7 +28,7 @@ test('TanakhYomiEvent', () => {
   const reading = tanakhYomi(dt);
   const ev = new TanakhYomiEvent(new HDate(dt), reading);
   expect(ev.render('en')).toBe('Isaiah Seder 23 (55:13-58:13)');
-  expect(ev.renderBrief('en')).toBe('Isaiah Seder 23 (55:13-58:13)');
+  expect(ev.renderBrief('en')).toBe('Isaiah S23 (55:13-58:13)');
   expect(ev.getDesc()).toBe('Isaiah Seder 23');
   expect(ev.render('he')).toBe('יְשַׁעְיָהוּ ס׳ כג (נה:יג-נח:יג)');
   expect(ev.render('he-x-NoNikud')).toBe('ישעיהו ס׳ כג (נה:יג-נח:יג)');

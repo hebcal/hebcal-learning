@@ -91,7 +91,8 @@ export class TanakhYomiEvent extends DafPageEvent {
    * @param [locale] Optional locale name (defaults to empty locale).
    */
   override renderBrief(locale?: string): string {
-    return this.render(locale);
+    const str = this.render(locale);
+    return str.replace(' Seder ', ' S');
   }
   /**
    * Renders just the verse range, e.g. "14:15-17:3" or
