@@ -328,9 +328,9 @@ function masoreticVerses(name: string, blatt: number | string): string {
  * seder (verse range) within one of the books of Tanakh.
  *
  * Inherits {@link DafPage}'s `name` (book) and `blatt` (seder
- * number); the `verses` property is set to the verse range string
- * (e.g. `"Joshua 1:1-9"`) consumed by the wrapper event's URL
- * builder.
+ * number); the `verses` property is set to the verse range string,
+ * e.g. `"Joshua 1:1-3:6"`, or `"Hosea 14:6-Joel 2:26"` for a seder that
+ * runs into the next book.
  */
 export class TanakhYomi extends DafPage {
   readonly verses: string;

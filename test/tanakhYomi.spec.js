@@ -27,9 +27,11 @@ test('TanakhYomiEvent', () => {
   const dt = new Date(2021, 1, 28);
   const reading = tanakhYomi(dt);
   const ev = new TanakhYomiEvent(new HDate(dt), reading);
-  expect(ev.render('en')).toBe('Isaiah Seder 23');
-  expect(ev.render('he')).toBe('יְשַׁעְיָהוּ ס׳ כג');
-  expect(ev.render('he-x-NoNikud')).toBe('ישעיהו ס׳ כג');
+  expect(ev.render('en')).toBe('Isaiah Seder 23 (55:13-58:13)');
+  expect(ev.renderBrief('en')).toBe('Isaiah Seder 23 (55:13-58:13)');
+  expect(ev.getDesc()).toBe('Isaiah Seder 23');
+  expect(ev.render('he')).toBe('יְשַׁעְיָהוּ ס׳ כג (נה:יג-נח:יג)');
+  expect(ev.render('he-x-NoNikud')).toBe('ישעיהו ס׳ כג (נה:יג-נח:יג)');
   expect(ev.url()).toBe('https://www.sefaria.org/Isaiah.55.13-58.13?lang=bi');
   expect(ev.memo).toBe('Isaiah 55:13-58:13');
 });
@@ -38,17 +40,18 @@ test('TanakhYomiEvent-2', () => {
   const dt = new Date(2021, 5, 2);
   const reading = tanakhYomi(dt);
   const ev = new TanakhYomiEvent(new HDate(dt), reading);
-  expect(ev.render('en')).toBe('Minor Prophets Seder 15');
-  expect(ev.render('he')).toBe('תְּרֵי עֲשַׂר ס׳ טו');
-  expect(ev.memo).toBe('Zephaniah 3:20');
+  expect(ev.render('en')).toBe('Minor Prophets Seder 15 (Zephaniah 3:20-Haggai 2:22)');
+  expect(ev.render('he')).toBe('תְּרֵי עֲשַׂר ס׳ טו (צְפַנְיָה ג:כ-חַגַּי ב:כב)');
+  expect(ev.memo).toBe('Zephaniah 3:20-Haggai 2:22');
+  expect(ev.url()).toBe('https://www.sefaria.org/Zephaniah.3.20?lang=bi');
 });
 
 test('TanakhYomiEvent-3', () => {
   const dt = new Date(2021, 8, 22);
   const reading = tanakhYomi(dt);
   const ev = new TanakhYomiEvent(new HDate(dt), reading);
-  expect(ev.render('en')).toBe('Chronicles Seder 21');
-  expect(ev.render('he')).toBe('דִברֵי הַיָמִים ס׳ כא');
+  expect(ev.render('en')).toBe('Chronicles Seder 21 (II Chronicles 26:2-29:10)');
+  expect(ev.render('he')).toBe('דִברֵי הַיָמִים ס׳ כא (דִברֵי הַיָמִים ב׳ כו:ב-כט:י)');
   expect(ev.url()).toBe('https://www.sefaria.org/II_Chronicles.26.2-29.10?lang=bi');
   expect(ev.memo).toBe('II Chronicles 26:2-29:10');
 });
@@ -978,13 +981,45 @@ test('Joshua', () => {
   // '2026-10-08': 'Joshua 4.2',
   // '2026-10-09': 'Joshua 5',
   const expected = [
-    'יהושע ס׳ ג',
-    'יהושע ס׳ ד1',
-    'יהושע ס׳ ד2',
-    'יהושע ס׳ ה',
+    'יהושע ס׳ ג (ד:כד-ו:כו)',
+    'יהושע ס׳ ד1 (ו:כז-ז:כו)',
+    'יהושע ס׳ ד2 (ח:א-לב)',
+    'יהושע ס׳ ה (ח:לג-י:ז)',
   ];
   const strs = events.map((ev) => ev.render('he-x-NoNikud'));
   expect(strs).toEqual(expected);
+});
+
+test('TanakhYomiEvent-joshua-split-en', () => {
+  const dt = new Date(2026, 9, 7);
+  const ev = new TanakhYomiEvent(new HDate(dt), tanakhYomi(dt));
+  expect(ev.render('en')).toBe('Joshua Seder 4.1 (6:27-7:26)');
+  expect(ev.url()).toBe('https://www.sefaria.org/Joshua.6.27-7.26?lang=bi');
+});
+
+// Sedarim that run into the next book. Sefaria's calendar (and its Ref
+// syntax) cannot express a range across two books, so these used to stop at
+// the first book's last verse, or at the seder's first verse, leaving e.g.
+// Joel 1:1-2:26 in no seder at all.
+test('TanakhYomiEvent-cross-book', () => {
+  const cases = [
+    [new Date(2026, 10, 29), 'Samuel Seder 20 (I Samuel 30:25-II Samuel 2:6)',
+      'I_Samuel.30.25-31.13'],
+    [new Date(2027, 4, 16), 'Minor Prophets Seder 4 (Hosea 14:6-Joel 2:26)',
+      'Hosea.14.6-14.10'],
+    [new Date(2027, 4, 21), 'Minor Prophets Seder 9 (Obadiah 1:21-Jonah 4:11)',
+      'Obadiah.1.21'],
+    [new Date(2027, 5, 4), 'Minor Prophets Seder 21 (Zechariah 14:21-Malachi 3:24)',
+      'Zechariah.14.21'],
+  ];
+  for (const [dt, en, ref] of cases) {
+    const ev = new TanakhYomiEvent(new HDate(dt), tanakhYomi(dt));
+    expect(ev.render('en')).toBe(en);
+    expect(ev.url()).toBe(`https://www.sefaria.org/${ref}?lang=bi`);
+  }
+  const dt = new Date(2027, 4, 16);
+  const ev = new TanakhYomiEvent(new HDate(dt), tanakhYomi(dt));
+  expect(ev.render('he-x-NoNikud')).toBe('תרי עשר ס׳ ד (הושע יד:ו-יואל ב:כו)');
 });
 
 test('TanakhYomi.render', () => {
