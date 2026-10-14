@@ -14,7 +14,7 @@ import {tanakhYomi, tanakhYomiStart} from '../src/tanakhYomiBase';
  * (git 7ff78e0) before the optimization, so any change in output for any
  * single day in ~200 years will fail here.
  *
- * The one deliberate exception is documented on the Vilna table.
+ * The deliberate exceptions are documented on the Vilna and Tanakh Yomi tables.
  */
 
 /** FNV-1a, 32-bit. @private */
@@ -93,18 +93,22 @@ test('yerushalmi-schottenstein-differential-through-2200', () => {
 });
 
 test('tanakhYomi-differential-through-2200', () => {
+  // Regenerated when masoretic.json gained the second-book half of the 12
+  // sedarim that cross a book boundary (and colons in the Joshua 4.1/4.2
+  // split). With those 14 verse strings mapped back to their old values,
+  // every block reproduced the original checksum, so the cycle is unchanged.
   const blocks: Block[] = [
-    [711426, 720258, 8833, 0x610d492e],
-    [720259, 729389, 9131, 0x65ed7a99],
-    [729390, 738520, 9131, 0x49cac80c],
-    [738521, 747651, 9131, 0x653f4cf5],
-    [747652, 756783, 9132, 0xf8fedf8c],
-    [756784, 765914, 9131, 0xc6533744],
-    [765915, 775044, 9130, 0x84caa6c1],
-    [775045, 784175, 9131, 0x7b198f31],
-    [784176, 793307, 9132, 0xd305e72c],
-    [793308, 802438, 9131, 0xdf58e4d2],
-    [802439, 803533, 1095, 0x350da8f0],
+    [711426, 720258, 8833, 0xd02eb88d],
+    [720259, 729389, 9131, 0xf5c93953],
+    [729390, 738520, 9131, 0x5c998f30],
+    [738521, 747651, 9131, 0xceb9463b],
+    [747652, 756783, 9132, 0x04ac4d28],
+    [756784, 765914, 9131, 0xb802a68c],
+    [765915, 775044, 9130, 0xcbebba9b],
+    [775045, 784175, 9131, 0xa8c231bb],
+    [784176, 793307, 9132, 0x2860e6ba],
+    [793308, 802438, 9131, 0xcee866fa],
+    [802439, 803533, 1095, 0xf11943d4],
   ];
   expect(blocks[0][0]).toBe(tanakhYomiStart);
   checkBlocks(blocks, abs => tanakhYomi(abs));

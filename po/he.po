@@ -750,6 +750,9 @@ msgstr "יוֹנָה"
 msgid "Micah"
 msgstr "מִיכָה"
 
+msgid "Nahum"
+msgstr "נַחוּם"
+
 msgid "Nachum"
 msgstr "נַחוּם"
 
