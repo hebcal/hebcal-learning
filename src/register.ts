@@ -15,5 +15,6 @@ import './perekYomi.js';
 import './seferHaMitzvot.js';
 import './shemiratHaLashon.js';
 import './tanakhYomi.js';
+import './tanyaYomi.js';
 import './yerushalmiYomi.js';
 import './929.js';

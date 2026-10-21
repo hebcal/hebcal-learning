@@ -53,5 +53,7 @@ export {
   dirshuDafHalachaStart,
 } from './dirshuDafHalachaBase.js';
 export {DirshuDafHalachaEvent} from './DirshuDafHalachaEvent.js';
+export {type TanyaYomiReading, tanyaYomi, tanyaYomiSefariaRef} from './tanyaYomiBase.js';
+export {TanyaYomiEvent} from './TanyaYomiEvent.js';
 export {type Nine29Reading, calculate929, nine29Start} from './929Base.js';
 export {Nine29Event} from './929Event.js';

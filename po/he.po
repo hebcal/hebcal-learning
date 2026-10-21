@@ -820,3 +820,38 @@ msgstr "מִשְׁנָה בְּרוּרָה"
 
 msgid "Chazarah"
 msgstr "חֲזָרָה"
+
+# Tanya Yomi
+
+msgid "Tanya Yomi"
+msgstr "תַּנְיָא יוֹמִי"
+
+msgid "Tanya"
+msgstr "תַּנְיָא"
+
+msgid "Likkutei Amarim"
+msgstr "לִקּוּטֵי אֲמָרִים"
+
+msgid "Shaar HaYichud VehaEmunah"
+msgstr "שַׁעַר הַיִּחוּד וְהָאֱמוּנָה"
+
+msgid "Iggeret HaTeshuvah"
+msgstr "אִגֶּרֶת הַתְּשׁוּבָה"
+
+msgid "Iggeret HaKodesh"
+msgstr "אִגֶּרֶת הַקֹּדֶשׁ"
+
+msgid "Kuntres Acharon"
+msgstr "קוּנְטְרֵס אַחֲרוֹן"
+
+msgid "Title Page"
+msgstr "שַׁעַר הַסֵּפֶר"
+
+msgid "Approbation"
+msgstr "הַסְכָּמָה"
+
+msgid "Compiler's Foreword"
+msgstr "הַקְדָּמַת הַמְלַקֵּט"
+
+msgid "Chinukh Katan"
+msgstr "חִנּוּךְ קָטָן"

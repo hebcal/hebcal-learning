@@ -77,6 +77,13 @@ deals with the Jewish ethics and laws of speech
 #### Pirkei Avot - `pirkeiAvotSummer`
 “Ethics of the Fathers”, studied one chapter on each Shabbat of the summer between Passover and Rosh Hashanah
 
+### Chasidut
+
+#### Tanya Yomi - `tanyaYomi`
+Daily study of the Tanya by Rabbi Schneur Zalman of Liadi, completing all five
+parts each year. The cycle begins on 19 Kislev, “Rosh Hashanah of Chasidut”,
+and concludes on 18 Kislev, with separate divisions for leap and regular years
+
 ## Installation
 ```bash
 $ npm install @hebcal/learning
@@ -144,7 +151,7 @@ example `dailyRambam1`, `dailyRambam3`, `dafWeekly`, `calculate929`,
 `calculateDirshuAmud`, `arukhHaShulchanYomi`, `yerushalmiYomi`,
 `kitzurShulchanAruch`, `seferHaMitzvot`, `chofetzChaim`,
 `shemiratHaLashon`, `dailyPsalms`, `perekYomi`, `pirkeiAvot`,
-`tanakhYomi`, plus the `DafYomi`, `MishnaYomiIndex` and `NachYomiIndex`
+`tanakhYomi`, `tanyaYomi`, plus the `DafYomi`, `MishnaYomiIndex` and `NachYomiIndex`
 classes. See the per-function JSDoc for the exact return shape and the
 conditions under which a function throws (date before the cycle began,
 invalid date type) or returns `null` (no reading on this date).

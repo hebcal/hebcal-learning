@@ -91,3 +91,10 @@ msgstr "Mishnah Berurah"
 
 msgid "Chazarah"
 msgstr "Chazarah"
+
+# Tanya Yomi
+msgid "Iggeret HaTeshuvah"
+msgstr "Iggeres HaTeshuvah"
+
+msgid "Iggeret HaKodesh"
+msgstr "Iggeres HaKodesh"
