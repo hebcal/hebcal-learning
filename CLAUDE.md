@@ -94,11 +94,11 @@ the registry in.
 
 Most calendars here are **perpetual**: a start date plus arithmetic, optionally
 with a fixed table for one cycle's worth of content (`bavli.json`,
-`mishnayot.json`, `arukhHaShulchanYomi.json`, `kitzurSa.json`). `tanyaYomi.json`
-and `kitzurSa.json` are keyed by Hebrew month and day rather than by day of
-cycle; `tanyaYomi.json` is rebuilt from a Sefaria crawl by
-`tools/tanya-yomi/` and checked against that crawl in `test/tanyaYomi.spec.ts`. They answer for
-any date from their start onward.
+`mishnayot.json`, `arukhHaShulchanYomi.json`, `kitzurSa.json`). They answer for
+any date from their start onward. `kitzurSa.json` and `tanyaYomi.json` are
+keyed by Hebrew month and day rather than by day of cycle; `tanyaYomi.json` is
+rebuilt from a Sefaria crawl by `tools/tanya-yomi/` and checked against that
+crawl in `test/tanyaYomi.spec.ts`.
 
 `dirshuDafHalacha` is the exception: a **bounded table** with a data horizon,
 which returns `null` past the end. Both the timing rule and the cycle boundary
