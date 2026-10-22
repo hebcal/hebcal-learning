@@ -41,6 +41,15 @@ const PARTS: Record<string, string> = {
   'Kuntres Acharon': 'Part V',
 };
 
+/** Book abbreviations used in `tanyaYomi.json` to keep the bundle small */
+const BOOKS: Record<string, string> = {
+  LA: 'Likkutei Amarim',
+  SY: 'Shaar HaYichud VehaEmunah',
+  IT: 'Iggeret HaTeshuvah',
+  IK: 'Iggeret HaKodesh',
+  KA: 'Kuntres Acharon',
+};
+
 type MonthTable = Record<string, string[]>;
 const tables = tanyaYomiJson as {regular: MonthTable; leap: MonthTable};
 
@@ -65,13 +74,13 @@ function cycleYear(hd: HDate): number {
 }
 
 function parseRef(ref: string): TanyaYomiReading {
-  // "Likkutei Amarim 33:6", "Kuntres Acharon 3:1",
-  // "Likkutei Amarim, Compiler's Foreword 9", "Likkutei Amarim, Approbation 3:1"
+  // "LA 33:6", "KA 3:1", "LA, Compiler's Foreword 9", "LA, Approbation 3:1"
   const m = /^([^,]+?)(?:, ([^\d]+?))? (\d+)(?::(\d+))?$/.exec(ref);
   if (!m) {
     throw new Error(`Unparseable Tanya ref: ${ref}`);
   }
-  const [, book, section, n1, n2] = m;
+  const [, abbr, section, n1, n2] = m;
+  const book = BOOKS[abbr];
   const reading: TanyaYomiReading =
     n2 === undefined ? {book, verse: Number(n1)} : {book, chap: Number(n1), verse: Number(n2)};
   if (section) {

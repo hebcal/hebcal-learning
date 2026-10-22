@@ -16,6 +16,16 @@ import {HDate, months} from '@hebcal/hdate';
 
 const PREFIX = /^Tanya, Part [IV]+; /;
 
+// Book abbreviations keep the table small; tanyaYomiBase.ts expands them.
+const ABBR = {
+  'Likkutei Amarim': 'LA',
+  'Shaar HaYichud VehaEmunah': 'SY',
+  'Iggeret HaTeshuvah': 'IT',
+  'Iggeret HaKodesh': 'IK',
+  'Kuntres Acharon': 'KA',
+};
+const BOOK = new RegExp(`^(${Object.keys(ABBR).join('|')})(?=[ ,])`);
+
 function cycleYear(hd) {
   const mm = hd.getMonth();
   const before =
@@ -30,7 +40,7 @@ for (const file of process.argv.slice(2)) {
     const hd = new HDate(new Date(iso + 'T12:00:00'));
     const kind = HDate.isLeapYear(cycleYear(hd)) ? 'leap' : 'regular';
     const month = (tables[kind][hd.getMonthName()] ??= []);
-    const short = ref.replace(PREFIX, '');
+    const short = ref.replace(PREFIX, '').replace(BOOK, b => ABBR[b]);
     const prev = month[hd.getDate() - 1];
     if (prev && prev !== short) {
       throw new Error(`${iso} ${kind} ${hd}: ${prev} != ${short}`);
