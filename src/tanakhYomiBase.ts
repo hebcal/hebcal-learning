@@ -1,5 +1,5 @@
-import {HDate, greg2abs, months, Locale} from '@hebcal/hdate';
-import {getHolidaysOnDate} from '@hebcal/core/dist/esm/holidays';
+import {HDate, greg2abs, months, Locale, hebrew2abs, isLeapYear} from '@hebcal/hdate';
+import QuickLRU from 'quick-lru';
 import {DafPage} from './DafPage.js';
 import {type LearningDate, checkTooEarly, gematriyaNN} from './common.js';
 import masoretic0 from './masoretic.json.js';
@@ -51,9 +51,6 @@ const books: Daf[] = (
   ] satisfies [string, number][]
 ).map(([name, blatt]) => ({name, blatt}));
 
-// Also Pesach 1 and 7, Shavuot, RH 1 and 2, YK, Sukkot 1, Shmini Atz,
-const toSkip = new Set(['Purim', "Yom HaAtzma'ut", "Tish'a B'Av", "Tish'a B'Av (observed)"]);
-
 /**
  * Calculates the Tanakh Yomi reading for the given date.
  *
@@ -85,73 +82,131 @@ export function tanakhYomi(date: LearningDate): TanakhYomi | null {
   const cday = hd.abs();
   checkTooEarly(cday, tanakhYomiStart, 'Tanakh Yomi');
   const hyear = hd.getFullYear();
-  const rh = HDate.hebrew2abs(hyear, months.TISHREI, 1);
+  const rh = hebrew2abs(hyear, months.TISHREI, 1);
   const startAbs = rh + 22;
   if (cday < startAbs) {
-    const rhDow = rh % 7;
-    let blatt = rhDow === 4 ? 11 : rhDow === 6 ? 10 : 12;
-    blatt += countReadingDays(rh + 2, cday);
-    if (blatt === 26) {
-      throw new Error(`${hd.toString()} Chronicles ${blatt}`);
-    }
-    return new TanakhYomi('Chronicles', blatt);
+    return endOfPreviousCycle(hd, rh);
   }
   let total = countReadingDays(startAbs, cday);
-  const readingTable = makeReadingTable(hyear);
-  const table = readingTable.table;
-
-  for (const element of table) {
-    if (total < element.blatt) {
-      const blatt = total + 1;
-      const name = element.name;
-      if (
-        (readingTable.longShirHaShirim && name === SHIR_HASHIRIM) ||
-        (readingTable.longRuth && name === RUTH)
-      ) {
-        return new TanakhYomi(name, '1.' + blatt);
-      }
-      if (readingTable.longJoshua && name === JOSHUA && blatt >= 4) {
-        if (blatt === 4) {
-          return new TanakhYomi(name, '4.1');
-        } else if (blatt === 5) {
-          return new TanakhYomi(name, '4.2');
-        } else {
-          return new TanakhYomi(name, blatt - 1);
-        }
-      }
-      if (readingTable.longJeremiah && name === JEREMIAH && blatt >= 9) {
-        if (blatt === 9) {
-          return new TanakhYomi(name, '9.1');
-        } else if (blatt === 10) {
-          return new TanakhYomi(name, '9.2');
-        } else {
-          return new TanakhYomi(name, blatt - 1);
-        }
-      }
-      return new TanakhYomi(name, blatt);
+  const readings = makeReadingTable(hyear);
+  for (const {name, blatt} of readings.table) {
+    if (total < blatt) {
+      return new TanakhYomi(name, sederFor(readings, name, total + 1));
     }
-    total -= element.blatt;
+    total -= blatt;
   }
   throw new Error(`Interal error with ${hd.toString()}`);
+}
+
+/**
+ * Between Rosh Hashana and Shmini Atzeret the previous year's cycle is
+ * still finishing the second half of Chronicles.
+ * @private
+ */
+function endOfPreviousCycle(hd: HDate, rh: number): TanakhYomi {
+  const rhDow = rh % 7;
+  let blatt = 12;
+  if (rhDow === 4) {
+    blatt = 11;
+  } else if (rhDow === 6) {
+    blatt = 10;
+  }
+  blatt += countReadingDays(rh + 2, hd.abs());
+  if (blatt === 26) {
+    throw new Error(`${hd.toString()} Chronicles ${blatt}`);
+  }
+  return new TanakhYomi('Chronicles', blatt);
+}
+
+/**
+ * Maps the 1-based day within a book to its seder, accounting for the
+ * books that a longer year stretches over an extra day.
+ * @private
+ */
+function sederFor(readings: ReadingsForYear, name: string, day: number): number | string {
+  if (
+    (readings.longShirHaShirim && name === SHIR_HASHIRIM) ||
+    (readings.longRuth && name === RUTH)
+  ) {
+    return '1.' + day;
+  }
+  if (readings.longJoshua && name === JOSHUA) {
+    return splitSeder(day, 4);
+  }
+  if (readings.longJeremiah && name === JEREMIAH) {
+    return splitSeder(day, 9);
+  }
+  return day;
+}
+
+/**
+ * For a book where seder `splitAt` is read over two days (as
+ * `"<splitAt>.1"` and `"<splitAt>.2"`), maps the 1-based day within the
+ * book to its seder.
+ * @private
+ */
+function splitSeder(day: number, splitAt: number): number | string {
+  if (day < splitAt) {
+    return day;
+  } else if (day === splitAt) {
+    return `${splitAt}.1`;
+  } else if (day === splitAt + 1) {
+    return `${splitAt}.2`;
+  }
+  return day - 1;
 }
 
 /**
  * @private
  */
 function skipDay(hd: HDate): boolean {
-  if (hd.getDay() === 6) {
+  const dow = hd.getDay();
+  if (dow === 6) {
     return true;
   }
-  const holidays = getHolidaysOnDate(hd, true);
-  if (!holidays) {
-    return false;
+  const mm = hd.getMonth();
+  const dd = hd.getDate();
+  switch (mm) {
+    case months.TISHREI:
+      // Rosh Hashana, Yom Kippur, Sukkot 1, Shmini Atzeret (Israel)
+      return dd === 1 || dd === 2 || dd === 10 || dd === 15 || dd === 22;
+    case months.NISAN:
+      // Pesach 1 and 7 (Israel)
+      return dd === 15 || dd === 21;
+    case months.IYYAR:
+      return dd === yomHaAtzmautDay(hd.getFullYear());
+    case months.SIVAN:
+      // Shavuot (Israel)
+      return dd === 6;
+    case months.AV:
+      // Tish'a B'Av, or observed on 10 Av when 9 Av is Shabbat
+      return dd === 9 || (dd === 10 && dow === 0);
+    case months.ADAR_I:
+      return dd === 14 && !isLeapYear(hd.getFullYear());
+    case months.ADAR_II:
+      return dd === 14;
+    default:
+      return false;
   }
-  for (const ev of holidays) {
-    if (ev.hasFlag('CHAG') || toSkip.has(ev.getDesc())) {
-      return true;
-    }
+}
+
+/**
+ * Day of Iyyar on which Yom HaAtzma'ut is observed: 5 Iyyar, moved
+ * earlier to Thursday when it would fall on Friday or Shabbat, and
+ * (from 5764) moved from Monday to Tuesday so Yom HaZikaron does not
+ * begin on Motzei Shabbat. Mirrors `dateYomHaZikaron` in @hebcal/core.
+ * @private
+ */
+function yomHaAtzmautDay(year: number): number {
+  const pdow = hebrew2abs(year, months.NISAN, 15) % 7;
+  if (pdow === 0) {
+    return 3;
+  } else if (pdow === 6) {
+    return 4;
+  } else if (year >= 5764 && pdow === 2) {
+    return 6;
   }
-  return false;
+  return 5;
 }
 
 type YearReadingDays = {
@@ -163,19 +218,17 @@ type YearReadingDays = {
   prefix: Int32Array;
 };
 
+/** Keeps the caches bounded when callers sweep across many years. @private */
+const MAX_CACHED_YEARS = 64;
+
 /**
- * Determining whether a day is skipped requires a holiday lookup, which is by
- * far the most expensive part of this calendar. Counting reading days one at a
- * time therefore costs hundreds of holiday lookups per query. Instead, resolve
- * a whole Hebrew year at once and cache the prefix sums, so that repeated
- * queries -- overwhelmingly for dates in the same year or two -- reduce to
- * array subtraction.
+ * Counting reading days one at a time costs hundreds of `skipDay` calls per
+ * query. Instead, resolve a whole Hebrew year at once and cache the prefix
+ * sums, so that repeated queries -- overwhelmingly for dates in the same
+ * year or two -- reduce to array subtraction.
  * @private
  */
-const yearCache = new Map<number, YearReadingDays>();
-
-/** Keeps the cache bounded when callers sweep across many years. @private */
-const MAX_CACHED_YEARS = 64;
+const yearCache = new QuickLRU<number, YearReadingDays>({maxSize: MAX_CACHED_YEARS});
 
 /**
  * @private
@@ -185,8 +238,8 @@ function getYearReadingDays(year: number): YearReadingDays {
   if (cached) {
     return cached;
   }
-  const rh = HDate.hebrew2abs(year, months.TISHREI, 1);
-  const len = HDate.hebrew2abs(year + 1, months.TISHREI, 1) - rh;
+  const rh = hebrew2abs(year, months.TISHREI, 1);
+  const len = hebrew2abs(year + 1, months.TISHREI, 1) - rh;
   const prefix = new Int32Array(len + 1);
   let count = 0;
   for (let i = 0; i < len; i++) {
@@ -197,9 +250,6 @@ function getYearReadingDays(year: number): YearReadingDays {
   }
   prefix[len] = count;
   const info: YearReadingDays = {rh, len, prefix};
-  if (yearCache.size >= MAX_CACHED_YEARS) {
-    yearCache.clear();
-  }
   yearCache.set(year, info);
   return info;
 }
@@ -225,8 +275,8 @@ function countReadingDays(startAbs: number, endAbs: number): number {
  * @private
  */
 function calculateNumDaysToRead(year: number): number {
-  const startAbs = HDate.hebrew2abs(year, months.TISHREI, 23);
-  const endAbs = HDate.hebrew2abs(year + 1, months.TISHREI, 22);
+  const startAbs = hebrew2abs(year, months.TISHREI, 23);
+  const endAbs = hebrew2abs(year + 1, months.TISHREI, 22);
   return countReadingDays(startAbs, endAbs + 1);
 }
 
@@ -256,7 +306,7 @@ type ReadingsForYear = {
  *
  * @private
  */
-const readingTableCache = new Map<number, ReadingsForYear>();
+const readingTableCache = new QuickLRU<number, ReadingsForYear>({maxSize: MAX_CACHED_YEARS});
 
 function makeReadingTable(year: number): ReadingsForYear {
   const cached = readingTableCache.get(year);
@@ -264,9 +314,6 @@ function makeReadingTable(year: number): ReadingsForYear {
     return cached;
   }
   const result = buildReadingTable(year);
-  if (readingTableCache.size >= MAX_CACHED_YEARS) {
-    readingTableCache.clear();
-  }
   readingTableCache.set(year, result);
   return result;
 }
@@ -276,7 +323,7 @@ function makeReadingTable(year: number): ReadingsForYear {
  */
 function buildReadingTable(year: number): ReadingsForYear {
   const numDays = calculateNumDaysToRead(year);
-  const count = HDate.isLeapYear(year) ? numDays - 25 : numDays;
+  const count = isLeapYear(year) ? numDays - 25 : numDays;
   const extra = count - 293;
   const table = books.slice();
   const result: ReadingsForYear = {

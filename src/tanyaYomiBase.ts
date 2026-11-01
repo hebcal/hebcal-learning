@@ -1,4 +1,4 @@
-import {HDate, months} from '@hebcal/hdate';
+import {HDate, months, isLeapYear} from '@hebcal/hdate';
 import type {LearningDate} from './common.js';
 import tanyaYomiJson from './tanyaYomi.json.js';
 
@@ -133,7 +133,7 @@ export function tanyaYomiSefariaRef(reading: TanyaYomiReading): string {
  */
 export function tanyaYomi(date: LearningDate): TanyaYomiReading {
   const hd = new HDate(date);
-  const table = HDate.isLeapYear(cycleYear(hd)) ? tables.leap : tables.regular;
+  const table = isLeapYear(cycleYear(hd)) ? tables.leap : tables.regular;
   const ref = table[hd.getMonthName()]?.[hd.getDate() - 1];
   if (!ref) {
     // this shouldn't happen

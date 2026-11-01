@@ -1,4 +1,4 @@
-import {HDate, months} from '@hebcal/hdate';
+import {HDate, months, shortKislev, longCheshvan} from '@hebcal/hdate';
 
 const Nisan = months.NISAN;
 const Iyyar = months.IYYAR;
@@ -381,8 +381,7 @@ export function chofetzChaim(hdate: HDate): ChofetzChaimReading {
   const year = hdate.getFullYear();
   if (
     day === 29 &&
-    ((month === Kislev && HDate.shortKislev(year)) ||
-      (month === Cheshvan && !HDate.longCheshvan(year)))
+    ((month === Kislev && shortKislev(year)) || (month === Cheshvan && !longCheshvan(year)))
   ) {
     const extra = lookupReading(readings, 30, month);
     result.e = extra.e;

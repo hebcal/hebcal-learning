@@ -1,4 +1,4 @@
-import {HDate, greg2abs, months} from '@hebcal/hdate';
+import {HDate, greg2abs, months, hebrew2abs} from '@hebcal/hdate';
 import {checkTooEarly, getAbsDate, type LearningDate} from './common.js';
 
 /**
@@ -172,7 +172,7 @@ function countDapim(config: YerushalmiYomiConfig) {
 }
 
 function yomKippurAbs(year: number): number {
-  return HDate.hebrew2abs(year, months.TISHREI, 10);
+  return hebrew2abs(year, months.TISHREI, 10);
 }
 
 function tishaBavObservedAbs(year: number): number {
