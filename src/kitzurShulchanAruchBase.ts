@@ -21,7 +21,7 @@ export type KitzurShulchanAruchReading = {
   e: string | undefined;
 };
 
-const Adar1 = months.ADAR_I;
+const {CHESHVAN, ADAR_I, ADAR_II} = months;
 
 type IdxName =
   | 'Nisan'
@@ -48,10 +48,10 @@ type IdxName =
  */
 function getMonthName(hd: HDate, leapOption: 'A' | 'B'): IdxName {
   const mm = hd.getMonth();
-  if (hd.isLeapYear() && mm === months.ADAR_II) {
+  if (hd.isLeapYear() && mm === ADAR_II) {
     return `Leap Option ${leapOption}`;
   }
-  return mm === Adar1 ? 'Adar' : hd.getMonthName();
+  return mm === ADAR_I ? 'Adar' : hd.getMonthName();
 }
 
 /**
@@ -86,7 +86,7 @@ export function kitzurShulchanAruch(
   const dd = hd.getDate();
   const mm = hd.getMonth();
   // no reading defined for Long Cheshvan or leap year 30 Adar I
-  if (dd === 30 && (mm === Adar1 || mm === months.CHESHVAN)) {
+  if (dd === 30 && (mm === ADAR_I || mm === CHESHVAN)) {
     return undefined;
   }
   const monthName = getMonthName(hd, leapOption);

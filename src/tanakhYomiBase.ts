@@ -5,6 +5,8 @@ import {type LearningDate, checkTooEarly, gematriyaNN} from './common.js';
 import masoretic0 from './masoretic.json.js';
 import './locale.js';
 
+const {TISHREI, ADAR_I, ADAR_II, NISAN, IYYAR, SIVAN, AV} = months;
+
 const masoretic: {
   split: Record<string, Record<string, string>>;
   regular: Record<string, string[]>;
@@ -82,7 +84,7 @@ export function tanakhYomi(date: LearningDate): TanakhYomi | null {
   const cday = hd.abs();
   checkTooEarly(cday, tanakhYomiStart, 'Tanakh Yomi');
   const hyear = hd.getFullYear();
-  const rh = hebrew2abs(hyear, months.TISHREI, 1);
+  const rh = hebrew2abs(hyear, TISHREI, 1);
   const startAbs = rh + 22;
   if (cday < startAbs) {
     return endOfPreviousCycle(hd, rh);
@@ -167,23 +169,23 @@ function skipDay(hd: HDate): boolean {
   const mm = hd.getMonth();
   const dd = hd.getDate();
   switch (mm) {
-    case months.TISHREI:
+    case TISHREI:
       // Rosh Hashana, Yom Kippur, Sukkot 1, Shmini Atzeret (Israel)
       return dd === 1 || dd === 2 || dd === 10 || dd === 15 || dd === 22;
-    case months.NISAN:
+    case NISAN:
       // Pesach 1 and 7 (Israel)
       return dd === 15 || dd === 21;
-    case months.IYYAR:
+    case IYYAR:
       return dd === yomHaAtzmautDay(hd.getFullYear());
-    case months.SIVAN:
+    case SIVAN:
       // Shavuot (Israel)
       return dd === 6;
-    case months.AV:
+    case AV:
       // Tish'a B'Av, or observed on 10 Av when 9 Av is Shabbat
       return dd === 9 || (dd === 10 && dow === 0);
-    case months.ADAR_I:
+    case ADAR_I:
       return dd === 14 && !isLeapYear(hd.getFullYear());
-    case months.ADAR_II:
+    case ADAR_II:
       return dd === 14;
     default:
       return false;
@@ -198,7 +200,7 @@ function skipDay(hd: HDate): boolean {
  * @private
  */
 function yomHaAtzmautDay(year: number): number {
-  const pdow = hebrew2abs(year, months.NISAN, 15) % 7;
+  const pdow = hebrew2abs(year, NISAN, 15) % 7;
   if (pdow === 0) {
     return 3;
   } else if (pdow === 6) {
@@ -238,8 +240,8 @@ function getYearReadingDays(year: number): YearReadingDays {
   if (cached) {
     return cached;
   }
-  const rh = hebrew2abs(year, months.TISHREI, 1);
-  const len = hebrew2abs(year + 1, months.TISHREI, 1) - rh;
+  const rh = hebrew2abs(year, TISHREI, 1);
+  const len = hebrew2abs(year + 1, TISHREI, 1) - rh;
   const prefix = new Int32Array(len + 1);
   let count = 0;
   for (let i = 0; i < len; i++) {
@@ -275,8 +277,8 @@ function countReadingDays(startAbs: number, endAbs: number): number {
  * @private
  */
 function calculateNumDaysToRead(year: number): number {
-  const startAbs = hebrew2abs(year, months.TISHREI, 23);
-  const endAbs = hebrew2abs(year + 1, months.TISHREI, 22);
+  const startAbs = hebrew2abs(year, TISHREI, 23);
+  const endAbs = hebrew2abs(year + 1, TISHREI, 22);
   return countReadingDays(startAbs, endAbs + 1);
 }
 
