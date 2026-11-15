@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/learning",
-  "version": "6.13.1",
+  "version": "6.13.2",
   "description": "Daily learning schedules: Daf Yomi, Mishna Yomi, etc",
   "module": "dist/esm/index.js",
   "type": "module",
@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/hebcal/hebcal-learning#readme",
   "dependencies": {
-    "@hebcal/core": "^6.14.7",
+    "@hebcal/core": "^6.16.0",
     "@hebcal/hdate": "^0.23.1",
-    "quick-lru": "^7.3.0"
+    "quick-lru": "^8.0.0"
   },
   "files": [
     "dist",
@@ -49,9 +49,9 @@
   "devDependencies": {
     "@types/node": "^26.6.6",
     "gettext-parser": "^10.0.0",
-    "oxlint": "^1.90.0",
-    "prettier": "^3.9.10",
+    "oxlint": "^1.93.0",
+    "prettier": "^3.10.1",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.5"
+    "vitest": "^5.1.0"
   }
 }
